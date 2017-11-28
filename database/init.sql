@@ -57,9 +57,20 @@ create table trail_making(
     mistakes    int64   not null,
 );
 
+create table test_results(
+    t_id        int64 not null references participant_tests(t_id),
+    p_id        int64 not null references participants(p_id),
+    c_id        int64 not null references clinicians(c_id),
+);
+
+create table algorithms_names(
+    a_id        int64 not null primary key,
+    string      text  not null unique,
+);
+
 create table test_interactions(
     t_id        int64   not null references participant_tests(p_id),
-
+    interaciton jsonb   not null
 );
 
 create table 
