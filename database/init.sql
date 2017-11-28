@@ -4,7 +4,6 @@ begin;
 --  
 ----------------------------------------------------
 
-
 -----
 --  Example: participant_id: 12345
 -----
@@ -59,7 +58,7 @@ create table compass_directions(
 create table road_scenarios(
     test_id     serial  not null references participant_tests(test_id) primary key,
     time_take   int64   not null,
-    points      int64,
+    points      int64   not null,
 );
 
 create table trail_making(
