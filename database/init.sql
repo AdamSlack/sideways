@@ -8,14 +8,14 @@ begin;
 --  Example: participant_id: 12345
 -----
 create table participants(
-    participant_id  int64   not null primary key,
+    participant_id  smallint   not null primary key,
 );
 
 -----
 --  Example: clinician_id: 54321
 -----
 create table clinicians(
-    clinician_id    int64   not null primary key,
+    clinician_id    smallint   not null primary key,
 );
 
 -----
@@ -23,8 +23,8 @@ create table clinicians(
 -----
 create table participant_tests(
     test_id         serial  not null primary key,
-    participant_id  int64   not null references participants(participant_id),
-    clinician_id    int64   not null, references clinican(clinician_id),
+    participant_id  smallint   not null references participants(participant_id),
+    clinician_id    smallint   not null, references clinican(clinician_id),
 );
 
 ----------------------------------------------------
@@ -37,34 +37,34 @@ create table participant_tests(
 -----
 create table dot_cancellation(
     test_id     serial  not null references participant_tests(test_id) primary key,
-    time_taken  int64   not null,
-    true_pos    int64   not null,
-    false_pos   int64   not null,
-    false_neg   int64   not null,
+    time_taken  smallint   not null,
+    true_pos    smallint   not null,
+    false_pos   smallint   not null,
+    false_neg   smallint   not null,
 );
 
 create table car_directions(
     test_id     serial  not null references participant_tests(test_id)  primary key,
-    time_taken  int64   not null,
-    points      int64   not null,
+    time_taken  smallint   not null,
+    points      smallint   not null,
 );
 
 create table compass_directions(
     test_id     serial  not null references participant_tests(test_id)  primary key,
-    time_taken  int64   not null,
-    points      int64   not null,
+    time_taken  smallint   not null,
+    points      smallint   not null,
 );
 
 create table road_scenarios(
     test_id     serial  not null references participant_tests(test_id) primary key,
-    time_take   int64   not null,
-    points      int64   not null,
+    time_take   smallint   not null,
+    points      smallint   not null,
 );
 
 create table trail_making(
     test_id     serial  not null references participant_tests(test_id)  primary key,
-    time_taken  int64   not null,
-    mistakes    int64   not null,
+    time_taken  smallint   not null,
+    mistakes    smallint   not null,
 );
 
 ----------------------------------------------------
@@ -104,7 +104,7 @@ create table test_interactions(
 -----
 create table algorithm_results(
     test_id         serial,
-    algorthim_id    int64 not null references algorithms(algorithm_id),
+    algorthim_id    smallint not null references algorithms(algorithm_id),
     results         jsonb,
     primary key(test_id)
 );
@@ -114,7 +114,7 @@ create table algorithm_results(
 -----
 create table algorithms(
     algorithm_id    serial not null primary key,
-    clinician_id    int64  not null references clinicians(clinician_id),
+    clinician_id    smallint  not null references clinicians(clinician_id),
     algorithm_name  text   not null
 )
 
