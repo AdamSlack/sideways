@@ -58,7 +58,7 @@ Re-roots: clincians, admin
 
 **Partcipant Test Results**
 * **URL**
-  /<participant_id>/results
+  /<participant_id>/getResults
 * **Method:**
   `GET`
 *  **URL Params**
@@ -105,33 +105,14 @@ Re-roots: clincians, admin
 * **Notes:**
     If you would like data on all participants ids iterate these requests for each. This is done seprately for security 
 
-**Partcipant Settings**
-* **URL**
-  /results/<participant_id>/
-* **Method:**
-  `GET`
-*  **URL Params**
-   **Optional:**
-   `settings={json}`
-* **Data Params**
-  OAuth_token?
-* **Success Response:**
-  * **Code:** 200 <br />
-    **Content:**               `{}`
-
-* **Error Response:**
- * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Participant is a invalid id" }`
-* **Notes:**
-    If you would like data on all participants ids iterate these requests for each. This is done seprately for security 
-
 **Upload Data**
+
 * **URL**
-  /upload/<test_name>
+  /tests/<test_name>
 * **Method:**  
   `POST`
 *  **URL Params**
-   **Optional:**
+   **Required:**
    `test_data_setting={json}`
 * **Data Params**
     OAuth_token?
@@ -145,7 +126,13 @@ Re-roots: clincians, admin
     **Content:** `{  }`
 * **Error Response:**
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Test name is a valid test, please try {test_names}" }`
+    **Content:** `{ error : "Test name is a valid test, please try {test_name}" }`
+  * **Code:** 501 NOT IMPLEMENTED <br />
+    **Content:** `{ error : "The test requested does not currently support update configurations {test_name}" }`
+  * **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "The test json configuration is incorrectly formatted please try {json format}" }`
+
 
 
 
@@ -172,12 +159,9 @@ Re-routers: participant
     **Content:** `{ token_participan : x }`
 * **Error Response:**
   * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+    **Content:** `{ error : "Log in unauthorised" }`
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Cliciian Invalid" }
-    `
-* **Example:**
-  /assement
+    **Content:** `{ error : "Cliciian Invalid" }`
 * **Notes:**
   Must be pre-registered before can login
 
@@ -201,7 +185,7 @@ Re-routers: participant
   * **Code:**  <br />
     **Content:** `{ error : "this is incorrectly formatted test data" }`
 
-**Send Dot Cancellation**
+**Send Car Directions**
 * **URL**
   <participant_id>/tests/car_directions
 * **Method:**  
@@ -220,7 +204,7 @@ Re-routers: participant
 
 **Send Dot Compass Directions**
 * **URL**
-  <participant_id>/tests/car_directions
+  <participant_id>/tests/compass_directions
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -271,7 +255,7 @@ Re-routers: participant
 
 **Gather Participant Localisation Presets**
 * **URL**
-  <participant_id>/tests/<test_name>localisation_preset
+  <participant_id>/tests/<test_name>/localisation_preset
 * **Method:**
   `GET`
 *  **URL Params**
