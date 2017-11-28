@@ -49,9 +49,12 @@ Re-roots: clincians, admin
     OAuth_token?
 * **Success Response:**
   * **Code:** 200 <br />
-    **Content:** `{ participant_id : x }`
+    **Content:** `{ participant_id : x, participant_token }`
 * **Error Response:**
   None
+
+
+
 
 **Partcipant Test Results**
 * **URL**
@@ -149,18 +152,41 @@ Re-roots: clincians, admin
 
 
 
-
 ##Participant
 
 Root: /p/
 Re-routers: participant
+
+**Request Particpant Access**
+* **URL**
+    /<participant_id>
+* **Method:** 
+    `POST`
+*  **URL Params**
+   **Required:**
+   `Oauth=[json]`
+* **Data Params**
+  TODO: WHAT OAuth looks like here
+* **Success Response:**
+  * **Code:** 200 <br />
+    **Content:** `{ token_participan : x }`
+* **Error Response:**
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Log in" }`
+  * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Cliciian Invalid" }
+    `
+* **Example:**
+  /assement
+* **Notes:**
+  Must be pre-registered before can login
 
 
 **Send Test Data**
 
 **Send Dot Cancellation**
 * **URL**
-  /tests/dot_cancellation
+  <participant_id>/tests/dot_cancellation
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -177,7 +203,7 @@ Re-routers: participant
 
 **Send Dot Cancellation**
 * **URL**
-  /tests/car_directions
+  <participant_id>/tests/car_directions
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -194,7 +220,7 @@ Re-routers: participant
 
 **Send Dot Compass Directions**
 * **URL**
-  /tests/car_directions
+  <participant_id>/tests/car_directions
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -211,7 +237,7 @@ Re-routers: participant
 
 **Send Dot Compass Road Scenarios**
 * **URL**
-  /tests/road_scenarios
+  <participant_id>/tests/road_scenarios
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -228,7 +254,7 @@ Re-routers: participant
 
 **Send Dot Compass Trail Making**
 * **URL**
-  /tests/trail_making
+  <participant_id>/tests/trail_making
 * **Method:**  
   `POST`
 *  **URL Params**
@@ -245,7 +271,7 @@ Re-routers: participant
 
 **Gather Participant Localisation Presets**
 * **URL**
-  /test/<test_name>localisation_preset
+  <participant_id>/tests/<test_name>localisation_preset
 * **Method:**
   `GET`
 *  **URL Params**
