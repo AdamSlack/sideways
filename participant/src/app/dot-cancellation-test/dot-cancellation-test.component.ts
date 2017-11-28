@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultsService } from '../services/results.service';
 
 @Component({
   selector: 'app-dot-cancellation-test',
@@ -7,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DotCancellationTestComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rs: ResultsService) { }
 
+  public sendResults() {
+    this.rs.insertDotCancellationResults(1, 123, 1, 2, 3);
+  }
+  
   ngOnInit() {
   }
 

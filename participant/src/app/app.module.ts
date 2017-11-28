@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'
 
-
+// Components
 import { AppComponent } from './app.component';
 import { TestInstructionsComponent } from './test-instructions/test-instructions.component';
 import { DotCancellationTestComponent } from './dot-cancellation-test/dot-cancellation-test.component';
@@ -10,6 +12,9 @@ import { CompassDirectionsTestComponent } from './compass-directions-test/compas
 import { RoadScenariosTestComponent } from './road-scenarios-test/road-scenarios-test.component';
 import { TrailMakingTestComponent } from './trail-making-test/trail-making-test.component';
 import { LoginScreenComponent } from './login-screen/login-screen.component';
+
+// services
+import { ResultsService } from './services/results.service';
 
 
 @NgModule({
@@ -21,12 +26,14 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
     CompassDirectionsTestComponent,
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
-    LoginScreenComponent
+    LoginScreenComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [ResultsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
