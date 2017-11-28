@@ -11,6 +11,10 @@ This will include .NET implmentations of the REST API.
 
 ## Clinician API
 
+
+Root: /c/
+Re-roots: clincians, admin
+
 **Login Procedure**
 * **URL**
     /login
@@ -118,11 +122,6 @@ This will include .NET implmentations of the REST API.
 * **Notes:**
     If you would like data on all participants ids iterate these requests for each. This is done seprately for security 
 
-
-
-
-
-
 **Upload Data**
 * **URL**
   /upload/<test_name>
@@ -136,12 +135,11 @@ This will include .NET implmentations of the REST API.
 * **Success Response:** 
   * **Code:** 200 <br />
     **Content:** `{  }`
-    /TODO: error codes for following
+    //TODO: error codes for following
   * **Code:**  <br />
     **Content:** `{ invalid already existing data }`
   * **Code:**  <br />
     **Content:** `{  }`
-
 * **Error Response:**
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Test name is a valid test, please try {test_names}" }`
@@ -151,25 +149,115 @@ This will include .NET implmentations of the REST API.
 
 
 
-**Participant**
 
-**Partcipant Results**
+##Participant
+
+Root: /p/
+Re-routers: participant
+
+
+**Send Test Data**
+
+**Send Dot Cancellation**
 * **URL**
-  /<participant_id>/
+  /tests/dot_cancellation
+* **Method:**  
+  `POST`
+*  **URL Params**
+   **Required:**
+   test_data=`{time_taken: x, true_pos: x, false_pos: x, false_neg: x}`
+* **Data Params**
+    OAuth_token?
+* **Success Response:** 
+  * **Code:** 200 <br />
+    **Content:** `{  }`
+* **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "this is incorrectly formatted test data" }`
+
+**Send Dot Cancellation**
+* **URL**
+  /tests/car_directions
+* **Method:**  
+  `POST`
+*  **URL Params**
+   **Required:**
+   test_data=`{time_taken: x, points: x}`
+* **Data Params**
+    OAuth_token?
+* **Success Response:** 
+  * **Code:** 200 <br />
+    **Content:** `{  }`
+* **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "this is incorrectly formatted test data" }`
+
+**Send Dot Compass Directions**
+* **URL**
+  /tests/car_directions
+* **Method:**  
+  `POST`
+*  **URL Params**
+   **Required:**
+   test_data=`{time_taken: x, points: x}`
+* **Data Params**
+    OAuth_token?
+* **Success Response:** 
+  * **Code:** 200 <br />
+    **Content:** `{  }`
+* **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "this is incorrectly formatted test data" }`
+
+**Send Dot Compass Road Scenarios**
+* **URL**
+  /tests/road_scenarios
+* **Method:**  
+  `POST`
+*  **URL Params**
+   **Required:**
+   test_data=`{time_taken: x, points: x}`
+* **Data Params**
+    OAuth_token?
+* **Success Response:** 
+  * **Code:** 200 <br />
+    **Content:** `{  }`
+* **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "this is incorrectly formatted test data" }`
+
+**Send Dot Compass Trail Making**
+* **URL**
+  /tests/trail_making
+* **Method:**  
+  `POST`
+*  **URL Params**
+   **Required:**
+   test_data=`{time_taken: x, points: x}`
+* **Data Params**
+    OAuth_token?
+* **Success Response:** 
+  * **Code:** 200 <br />
+    **Content:** `{  }`
+* **Error Response:**
+  * **Code:**  <br />
+    **Content:** `{ error : "this is incorrectly formatted test data" }`
+
+**Gather Participant Localisation Presets**
+* **URL**
+  /test/<test_name>localisation_preset
 * **Method:**
   `GET`
 *  **URL Params**
-   **Required:**
-   `test=[string]`
-   **Optional:**
-   `photo_id=[alphanumeric]`
+    None
 * **Data Params**
     OAuth_token
 * **Success Response:**
   * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+    **Content:** `{ localisation_presents }`
 * **Error Response:**
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Email Invalid" }`
+
 
 
