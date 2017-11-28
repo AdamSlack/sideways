@@ -8,14 +8,14 @@ begin;
 --  Example: participant_id: 12345
 -----
 create table participants(
-    participant_id  smallint   not null primary key,
+    participant_id  serial   not null primary key,
 );
 
 -----
 --  Example: clinician_id: 54321
 -----
 create table clinicians(
-    clinician_id    smallint   not null primary key,
+    clinician_id    serial   not null primary key,
 );
 
 -----
@@ -24,7 +24,7 @@ create table clinicians(
 create table participant_tests(
     test_id         serial  not null primary key,
     participant_id  smallint   not null references participants(participant_id),
-    clinician_id    smallint   not null, references clinican(clinician_id),
+    clinician_id    smallint   not null references clinican(clinician_id),
 );
 
 ----------------------------------------------------
