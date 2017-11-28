@@ -63,6 +63,8 @@ create table test_results(
     c_id        int64 not null references clinicians(c_id),
 );
 
+
+
 create table algorithms_names(
     a_id        int64 not null primary key,
     string      text  not null unique,
