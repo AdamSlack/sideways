@@ -5,7 +5,7 @@
         "host": "localhost"
     },
     "api" : {
-        "user": "postgre",
+        "user": "postgres",
         "passwd": "password"
     }
 }

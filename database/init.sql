@@ -117,8 +117,6 @@ create table algorithms(
     algorithm_id    serial not null primary key,
     clinician_id    int64  not null references clinicians(clinician_id),
     algorithm_name  text   not null
-)
-
-
+);
 
 commit;

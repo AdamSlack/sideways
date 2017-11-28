@@ -21,7 +21,7 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
     CompassDirectionsTestComponent,
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
-    LoginScreenComponent
+    LoginScreenComponent,
   ],
   imports: [
     BrowserModule
