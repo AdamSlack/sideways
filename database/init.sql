@@ -98,25 +98,25 @@ create table test_interactions(
 ----------------------------------------------------
 --  Results for the 
 --
--- ----------------------------------------------------
+----------------------------------------------------
 
--- -----
--- --  Example: algorithm_id: 2222, clinician_id: 54321, algorithm_name: 'SDSA'
--- -----
--- create table algorithms(
---     algorithm_id    serial  primary key not null,
---     clinician_id    smallint references clinicians(clinician_id)  not null,
---     algorithm_name  text   not null
--- )
+-----
+--  Example: algorithm_id: 2222, clinician_id: 54321, algorithm_name: 'SDSA'
+-----
+create table algorithms(
+    algorithm_id    serial  primary key not null,
+    clinician_id    smallint references clinicians(clinician_id)  not null,
+    algorithm_name  text   not null
+)
 
--- -----
--- --  Example: test_id: 1111, algorithm_id: 2222, results: {recommendation_score: -0.004, probability: 0.005, recommend: 'No'}
--- -----
--- create table algorithm_results(
---     test_id         serial,
---     algorthim_id    smallint references algorithms(algorithm_id) not null,
---     results         jsonb,
---     primary key(test_id)
--- );
+-----
+--  Example: test_id: 1111, algorithm_id: 2222, results: {recommendation_score: -0.004, probability: 0.005, recommend: 'No'}
+-----
+create table algorithm_results(
+    test_id         serial,
+    algorthim_id    smallint references algorithms(algorithm_id) not null,
+    results         jsonb,
+    primary key(test_id)
+);
 
 commit;
