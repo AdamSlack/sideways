@@ -104,7 +104,7 @@ create table test_interactions(
 -----
 create table algorithm_results(
     test_id         serial,
-    algorthim_id    int64,
+    algorthim_id    int64 not null references algorithms(algorithm_id),
     results         jsonb,
     primary key(test_id)
 );
