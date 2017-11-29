@@ -53,9 +53,6 @@ Re-roots: clincians, admin
 * **Error Response:**
   None
 
-
-
-
 **Partcipant Test Results**
 * **URL**
   /<participant_id>/getResults
@@ -84,6 +81,42 @@ Re-roots: clincians, admin
     **Content:** `{ error : "Participant is a invalid id" }`
 * **Notes:**
     If you would like data on all participants ids iterate these requests for each. This is done seprately for security 
+
+**Partcipant Per Test Results**
+* **URL**
+  /<participant_id>/<test_id>/getResults
+* **Method:**
+  `GET`
+*  **URL Params**
+   **Optional:**
+   `filter=[string]`
+   `sort=[]`
+* **Data Params**
+  OAuth_token?
+* **Success Response:**
+  * **Code:** 200 <br />
+    **Content:**               `{defualt: { tests: [dot_cancellation,car_directions,compass_directions,road_scenarios,trail_making]}}`
+    ***dot_cancellation:**     `{time_taken: x, true_pos: x, false_pos: x, false_neg: x}`
+    ***car_directions:**       `{time_taken: x, points: x}`
+    ***compass_directions:**   `{time_taken: x, points: x}`
+    ***road_scenarios:**       `{time_take: x, points: x}`
+    ***trail_making:**         `{time_take: x, mistakes: x}`
+
+* **Error Response:**
+ * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Participant is a invalid id" }`
+* **Notes:**
+    If you would like data on all participants ids iterate these requests for each. This is done seprately for security 
+
+
+
+
+
+
+
+
+
+
 
 **Participant Settings**
 * **URL**
