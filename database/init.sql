@@ -26,7 +26,7 @@ create table participant_tests(
     test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_id       smallint    refernces localisation_presets(preset_id) not null
+    preset_id       smallint    references localisation_presets(preset_id) not null
 );
 
 ----------------------------------------------------
