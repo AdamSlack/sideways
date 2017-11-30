@@ -4,7 +4,27 @@
     
 }
 
-input {
+input.submit {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: 2px solid #227722;
+    background: #fff;
+    color: #222222;
+    transition: 0.2s;
+    &:focus {
+        outline: none;
+        border: 2px solid #447744;
+        transition: 0.2s;
+    }
+}
+
+input.search {
     margin-top: 5px;
     margin-left: 10px;
     margin-bottom: 10px;

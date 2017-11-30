@@ -1,11 +1,14 @@
 
 
 <div class="search">
-  <input class="bar" type="text"  [(ngModel)]=c_id  placeholder="Enter a Clinician ID">
+  <input class="bar search" type="text"  [(ngModel)]=c_id (submit)=connectToSDSA()  placeholder="Enter a Clinician ID">
 </div>
 <div class="search">
-  <input class="bar" type="password"  [(ngModel)]=password  placeholder="Enter your Password ID">
+  <input class="bar search" type="password"  [(ngModel)]=password  placeholder="Enter your Password ID">
 </div>
 <div class="search">
-  <input class="bar" type="text"  [(ngModel)]=p_id  placeholder="Enter a Participant ID">
+  <input class="bar search" type="text"  [(ngModel)]=p_id  placeholder="Enter a Participant ID">
+</div>
+<div class="submit">
+  <input class="button search" type="button">
 </div>
