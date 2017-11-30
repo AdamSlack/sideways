@@ -81,6 +81,7 @@ create table localisation_presets(
     preset_id       serial  primary key  not null,
     region          text    not null,
     localisation    jsonb   not null
+
 );
 
 ----------------------------------------------------
@@ -94,6 +95,7 @@ create table localisation_presets(
 create table test_interactions(
     test_id      serial  references participant_tests(test_id) primary key not null ,
     interaction  jsonb   not null
+
 );
 
 ----------------------------------------------------
@@ -114,10 +116,8 @@ create table algorithms(
 --  Example: test_id: 1111, algorithm_id: 2222, results: {recommendation_score: -0.004, probability: 0.005, recommend: 'No'}
 -----
 create table algorithm_results(
-    test_id         serial,
+    test_id         serial primary key not null,
     algorthim_id    smallint references algorithms(algorithm_id) not null,
-    results         jsonb,
-    primary key(test_id)
+    results         jsonb
 );
-
 commit;
