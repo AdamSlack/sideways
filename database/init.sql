@@ -9,7 +9,7 @@ begin;
 --  Example: participant_id: 12345
 -----
 create table participants(
-    participant_id  serial primary key  not null 
+    participant_id  serial   primary key  not null 
 );
 
 -----
@@ -23,10 +23,10 @@ create table clinicians(
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
 create table participant_tests(
-    test_id         serial      primary key  not null,
+    test_id         serial   primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_id       smallint    references localisation_presets(preset_id) not null
+    preset_id       smallint    references localisation_presets(preset_id) not null,
 );
 
 ----------------------------------------------------
@@ -38,35 +38,40 @@ create table participant_tests(
 --  Example: test_id: 1111, time_taken: 900, true_pos: 12, false_pos: 13, false_neg: 15
 -----
 create table dot_cancellation(
-    test_id     serial  references participant_tests(test_id) primary key  not null,
+    test_id     serial     references participant_tests(test_id) primary key  not null,
     time_taken  smallint   not null,
     true_pos    smallint   not null,
     false_pos   smallint   not null,
-    false_neg   smallint   not null
+    false_neg   smallint   not null,
+    test_date   date       not null
 );
 
 create table car_directions(
-    test_id     serial  references participant_tests(test_id)  primary key  not null,
+    test_id     serial     references participant_tests(test_id)  primary key  not null,
     time_taken  smallint   not null,
-    points      smallint   not null
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table compass_directions(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    points      smallint   not null
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table road_scenarios(
     test_id     serial  references participant_tests(test_id) primary key  not null,
     time_take   smallint   not null,
-    points      smallint   not null
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table trail_making(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    mistakes    smallint   not null
+    mistakes    smallint   not null,
+    test_date   date       not null
 );
 
 ----------------------------------------------------
@@ -81,7 +86,6 @@ create table localisation_presets(
     preset_id       serial  primary key  not null,
     region          text    not null,
     localisation    jsonb   not null
-
 );
 
 ----------------------------------------------------
@@ -95,7 +99,6 @@ create table localisation_presets(
 create table test_interactions(
     test_id      serial  references participant_tests(test_id) primary key not null ,
     interaction  jsonb   not null
-
 );
 
 ----------------------------------------------------
