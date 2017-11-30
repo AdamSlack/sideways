@@ -23,9 +23,10 @@ create table clinicians(
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
 create table participant_tests(
-    test_id         serial  primary key  not null,
-    participant_id  smallint   references participants(participant_id)  not null,
-    clinician_id    smallint    references clinicians(clinician_id) not null
+    test_id         serial      primary key  not null,
+    participant_id  smallint    references participants(participant_id)  not null,
+    clinician_id    smallint    references clinicians(clinician_id) not null,
+    preset_id       smallint    refernces localisation_presets(preset_id) not null
 );
 
 ----------------------------------------------------
@@ -107,7 +108,7 @@ create table algorithms(
     algorithm_id    serial  primary key not null,
     clinician_id    smallint references clinicians(clinician_id)  not null,
     algorithm_name  text   not null
-)
+);
 
 -----
 --  Example: test_id: 1111, algorithm_id: 2222, results: {recommendation_score: -0.004, probability: 0.005, recommend: 'No'}
