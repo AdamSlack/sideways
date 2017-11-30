@@ -120,7 +120,7 @@ Re-roots: clincians, admin
 
 **Participant Settings**
 * **URL**
-  /<participant_id>/localisation_presents
+  /<participant_id>/user_details
 * **Method:**
   `GET`
 *  **URL Params**
@@ -288,7 +288,7 @@ Re-routers: participant
 
 **Gather Participant Localisation Presets**
 * **URL**
-  <participant_id>/tests/<test_name>/localisation_preset
+  <test_name>/localisation_preset
 * **Method:**
   `GET`
 *  **URL Params**
