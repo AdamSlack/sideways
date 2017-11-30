@@ -1,7 +1,6 @@
 .search {
     width: 100%;
     height:10%;
-    
 }
 
 input.submit {
@@ -15,11 +14,21 @@ input.submit {
     box-sizing: border-box;
     border: 2px solid #227722;
     background: #fff;
-    color: #222222;
+    color: #eee;
+    background: #227722;
     transition: 0.2s;
-    &:focus {
+
+    &:hover {
         outline: none;
         border: 2px solid #447744;
+        background: #447744;
+        transition: 0.2s;
+    }
+    
+    &:active {
+        outline: none;
+        border: 2px solid #225522;
+        background: #225522;
         transition: 0.2s;
     }
 }
@@ -34,13 +43,13 @@ input.search {
     font-weight: 400;
     box-sizing: border-box;
     border: none;
-    border-bottom: 2px solid #222277;
+    border-bottom: 2px solid #225522;
     background: #fff;
     color: #222222;
     transition: 0.2s;
     &:focus {
         outline: none;
-        border-bottom: 2px solid #444477;
+        border-bottom: 2px solid #445544;
         transition: 0.2s;
     }
     .icon .bar {
