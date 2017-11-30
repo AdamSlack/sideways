@@ -8,9 +8,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('../../config/example_config');
 
+//postgres connection
+const pg = () => {};
 
 // CONSTANTS
 const server = express();
+
 
 
 server.use(function(req, res, next) {
@@ -20,14 +23,132 @@ server.use(function(req, res, next) {
     next();
   });
 
-  server.get('/', (req, res) => {
-    res.send('Hello World');
+//Catch all error handler
+server.user(function (err, req, res, next) {
+    res.status(500)
+    res.render('error, please refer to https://github.com/AdamSlack/stroke_drivers_screening_assessment', { error: err })
+  });
+
+
+//Create router
+//NOTE: Did a router to make more clearly seperated content
+var router = express.Router(); //Routing for endpoint
+
+// Middleware to use for all requests
+// TODO: middleware checks token autheticaity?
+router.use(function(req, res, next) {
+    console.log('Something is happening.');
+    next(); // make sure we go to the next routes and don't stop here
 });
 
-server.get('/p/:participant/dot_cancellation', (req, res) => {
-    var participant = req.params.participant;
-    res.send('Participant: ' + participant);
+router.get('/', (req, res) => {
+    res.send('Welcome to the stroke driving assement API (https://github.com/AdamSlack/stroke_drivers_screening_assessment)');
 });
 
-server.listen(12345);
-console.log('Running on: localhost:12345')
+
+/*
+    Login checks
+*/
+router.route('/login')
+    //Check all POST
+    .post(req, res => {
+        var tok = 'create_token or show sucess in middleware'
+        return token;
+    });
+    //Check all GET
+    // .get(req, res => {
+
+    // });
+
+router.route('/register_participant')
+    .post(req,res => {
+        //func call
+    });
+
+//Test clician id and then participant id
+router.router('/:clincian/:participant')
+    .post(req,res => {
+
+    }).get(req,res => {
+
+    });
+
+
+
+
+
+
+//Results handle
+router.route('/dot_cancellation')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let true_pos = data.true_pos;
+        let false_pos = data.false_pos;
+        let false_neg = data.false_neg;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+
+    });
+
+router.route('/car_direction')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let points = data.points;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+
+    });
+
+router.route('/compass_directions')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let points = data.points;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+
+    });
+
+router.route('/road_scenarios')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let points = data.points;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+
+    });
+
+router.route('/trail_making')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let mistakes = data.mistakes;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+
+    });
+
+
+//Test Data Configuration
+router.route('trail_making')
+    .post(req,res => {
+        let data = body;
+        let time_taken = data.time_taken
+        let mistakes = data.mistakes;
+        //TODO: validation + beginign to insert
+    }).get(req,res => {
+    });
+
+
+
+//Register Routes
+app.user('/',router)
+
+
+
+
+server.listen(8080);
+console.log('Running on: localhost:8080')
