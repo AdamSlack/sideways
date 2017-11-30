@@ -1,0 +1,11 @@
+{
+    "db": {
+        "database": "sdsa",
+        "port": 5432,
+        "host": "localhost"
+    },
+    "api" : {
+        "user": "postgres",
+        "passwd": "password"
+    }
+}
