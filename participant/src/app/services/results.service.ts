@@ -74,10 +74,12 @@ export class ResultsService {
 
   public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
     let url =  this.ROOT + p_id + '/results/road_scenarios';
+    
     let body = {
       'time_taken': time_taken,
       'mistakes': mistakes
     }
+
     console.log('TRAIL MAKING: ')
     console.log(body);
     
