@@ -1,46 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SDSA.Repository.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using SDSA.Repository;
-
+using SDSA.Repository.Interfaces;
 using SDSA.Service;
 using SDSA.Service.Interfaces;
+using System.Text;
 
 namespace SDSA
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+ 
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]));
             // Add framework services.
-            
+            var issuer = Configuration.GetValue<string>("JWT:issuer");
+           // services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    // ValidAudience = Configuration.GetValue<string>("JWT:domain"),
+                    IssuerSigningKey = key,
+                
+                };
+               
+                
+            });
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
 
             //Dependency injection
             //add repository first to avoid missing dependencies
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
-            services.AddTransient<ITestRepository, TestRepository>  ();
+            services.AddTransient<ITestRepository, TestRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
@@ -61,8 +78,8 @@ namespace SDSA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-          
-
+            app.UseAuthentication();
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -71,7 +88,7 @@ namespace SDSA
                     name: "default",
                     template: "{controller=Test}/{id?}/{action=Index}")
                     ;
-              
+
             });
         }
     }

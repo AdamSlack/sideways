@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using SDSA.Repository.Interfaces;
 using SDSA.Service.Interfaces;
 using SDSA.Models.Tests;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace SDSA.Controllers
 {
     public class TestController : Controller
@@ -27,8 +30,12 @@ namespace SDSA.Controllers
         {
             return Json(_clinicianService.GetAllClinicians());
         }
-    
-
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
+        public IActionResult authorized ()
+        {
+            return (Json("Welcome authorized user"));
+        }
 
         public IActionResult Contact()
         {

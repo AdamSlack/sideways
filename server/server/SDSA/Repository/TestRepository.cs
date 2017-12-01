@@ -16,7 +16,7 @@ namespace SDSA.Repository
         private readonly IDbConnection db;
         public TestRepository(IConfiguration config)
         {
-            DBFactory.getConnection(config);
+            db = DBFactory.getConnection(config);
         }
         #region participantTest
         public int SavePatricipantTest(ParticipantTest PT)

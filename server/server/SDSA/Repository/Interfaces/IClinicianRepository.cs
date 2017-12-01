@@ -9,5 +9,6 @@ namespace SDSA.Repository.Interfaces
     {
        Clinician GetClinician(int clinicianId);
        IEnumerable<Clinician> GetAllClinicians();
+       bool ValidateClinician(SDSAUser user);
     }
 }

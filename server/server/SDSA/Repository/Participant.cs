@@ -15,7 +15,7 @@ namespace SDSA.Repository
         private readonly IDbConnection db;
         public ParticipantRepository(IConfiguration config)
         {
-            DBFactory.getConnection(config);
+            db =DBFactory.getConnection(config);
         }
         public int SaveParticipant(Participant p)
             => db.ExecuteScalar<int>(

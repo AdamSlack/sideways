@@ -20,5 +20,7 @@ namespace SDSA.Service
 
         public Clinician GetClinician(int clinicianId)
            => _clinicianRepository.GetClinician(clinicianId);
+        public bool ValidateClinician(SDSAUser user)
+            => _clinicianRepository.ValidateClinician(user);
     }
 }
