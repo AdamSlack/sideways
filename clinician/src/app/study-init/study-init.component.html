@@ -1,0 +1,27 @@
+
+
+<div class="title">
+  Study Initialisation
+</div>
+
+<div class="search">
+  <div class="heading">
+   
+  </div>
+  <input class="bar search" type="text"  [(ngModel)]=p_id (submit)=initialiseStudy()  placeholder=" Enter a participant ID (leave blank if new participant)">
+</div>
+<div class="selection">
+  <select [(ngModel)]=localeChoice>
+      <option value="0" disabled selected hidden>Select Localisation Preset</option>
+      <option *ngFor="let locale of localeOptions" value="{{locale}}">{{locale}}</option>      
+    </select>
+</div>
+<div class="selection">
+    <select [(ngModel)]=testChoice>
+        <option value="0" disabled selected hidden>Select Type of Test</option>
+        <option *ngFor="let test of testOptions" value="{{test}}">{{test}}</option>
+      </select>
+  </div>
+<div class="submit">
+  <input class="button submit" type="button" (click)=initialiseStudy() value="Initialise">
+</div>

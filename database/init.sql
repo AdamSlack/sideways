@@ -19,6 +19,20 @@ create table clinicians(
     clinician_id    serial   primary key  not null
 );
 
+
+----------------------------------------------------
+-- Localisation Presets
+--
+----------------------------------------------------
+
+-----
+--  Example: preset_id: 0001, region: en-gb, localisation: { dot_cancellation: {instructions: 'fooo baar'}}
+-----
+create table localisation_presets(
+    preset_id       serial  primary key  not null,
+    region          text    not null,
+    localisation    jsonb   not null
+);
 -----
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
@@ -26,7 +40,7 @@ create table participant_tests(
     test_id         serial   primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_id       smallint    references localisation_presets(preset_id) not null,
+    preset_id       smallint    references localisation_presets(preset_id) not null
 );
 
 ----------------------------------------------------
@@ -74,19 +88,6 @@ create table trail_making(
     test_date   date       not null
 );
 
-----------------------------------------------------
--- Localisation Presets
---
-----------------------------------------------------
-
------
---  Example: preset_id: 0001, region: en-gb, localisation: { dot_cancellation: {instructions: 'fooo baar'}}
------
-create table localisation_presets(
-    preset_id       serial  primary key  not null,
-    region          text    not null,
-    localisation    jsonb   not null
-);
 
 ----------------------------------------------------
 --  Test Interaction Recordings
