@@ -10,6 +10,7 @@ import { ParticipantService } from './services/participant.service';
 import { InitialisationService } from './services/initialisation.service';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResultsViewerComponent } from './results-viewer/results-viewer.component';
+import { LocalisationCreatorComponent } from './localisation-creator/localisation-creator.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ResultsViewerComponent } from './results-viewer/results-viewer.componen
     AppComponent,
     StudyInitComponent,
     HomePageComponent,
-    ResultsViewerComponent
+    ResultsViewerComponent,
+    LocalisationCreatorComponent
   ],
   imports: [
     BrowserModule,
