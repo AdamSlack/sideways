@@ -8,12 +8,16 @@ import { AppComponent } from './app.component';
 import { StudyInitComponent } from './study-init/study-init.component';
 import { ParticipantService } from './services/participant.service';
 import { InitialisationService } from './services/initialisation.service';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ResultsViewerComponent } from './results-viewer/results-viewer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    StudyInitComponent
+    StudyInitComponent,
+    HomePageComponent,
+    ResultsViewerComponent
   ],
   imports: [
     BrowserModule,

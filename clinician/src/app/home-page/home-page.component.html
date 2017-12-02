@@ -1,0 +1,18 @@
+<div class="header">
+  <div *ngIf="optionSelected" class="go-back"  (click)=resetSelection()> Go Back </div>
+  <div class="title"> SDSA </div>
+</div>
+
+
+<div *ngIf="!optionSelected">
+  <div (click)=selectInitialisation() class="button"> Initialise Study </div>
+  <div (click)=selectViewResults() class="button"> View Results </div>
+</div>
+
+<div *ngIf="initialisationSelected" >
+  <app-study-init></app-study-init>
+</div>
+
+<div *ngIf="viewResultsSelected" >
+  <app-results-viewer></app-results-viewer>
+</div>

@@ -14,10 +14,12 @@ export class StudyInitComponent implements OnInit {
   public p_id : string;
   public localeChoice : string;
   public testChoice : string;
+  public initialisationDetails : {c_id : number, p_id : number, t_id : number, testType : string};
 
   public localOptionsSubscription : Subscription;
   public testOptionSubscription : Subscription;
   public testInitSubscription : Subscription;
+  
 
   constructor(private init : InitialisationService) { }
 
@@ -26,6 +28,12 @@ export class StudyInitComponent implements OnInit {
     console.log(this.localeChoice);
     console.log(this.testChoice);
     this.testInitSubscription = this.init.requestStudyInit(this.p_id, this.localeChoice, this.testChoice).subscribe((res) => {
+      this.initialisationDetails = {
+        c_id : res.c_id,
+        p_id : res.p_id,
+        t_id : res.t_id,
+        testType : res.testType
+      }
       console.log(res);
     });
   }
