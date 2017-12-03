@@ -8,45 +8,93 @@ using SDSA.Service.Interfaces;
 using SDSA.Models.Tests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SDSA.ViewModels;
 
 namespace SDSA.Controllers
 {
+    //[Authorize (Roles ="Clinician")]
     public class TestController : Controller
     {
         private readonly IClinicianService _clinicianService;
-        public TestController (IClinicianService clinRepo)
+        private readonly ITestService _testService;
+        public TestController (IClinicianService clinRepo, ITestService testServ)
         {
             _clinicianService= clinRepo;
+            _testService = testServ;
         }
-     
-        [HttpGet]
-        public IActionResult Index(int j)
-        {
-            return Json(_clinicianService.GetAllClinicians());
-        }
-        
         [HttpPost]
-        public IActionResult Index( DotCancellationTest DCT)
+        public IActionResult DotCancellationResult (int TestId, DotCancellationTest DCT)
         {
-            return Json(_clinicianService.GetAllClinicians());
+            DCT.TestId = TestId;
+            if(ModelState.IsValid)
+            {
+             _testService.SaveDotCancellationTest(DCT);
+             return Ok();
+            }
+            
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Authorize]
-        public IActionResult authorized ()
+        [HttpPost]
+        public IActionResult CarDirectionResult(int TestId, CarDirectionsTest CDT)
         {
-            return (Json("Welcome authorized user"));
-        }
+            CDT.TestId = TestId;
+            if (ModelState.IsValid)
+            {
+                _testService.SaveCarDirectionTest(CDT);
+                return Ok();
+            }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult TrailMakingTest(int TestId, TrailMakingTest TMT)
         {
-            return View();
+            TMT.TestId = TestId;
+            if (ModelState.IsValid)
+            {
+                _testService.SaveTrailMakingTest(TMT);
+                return Ok();
+            }
+
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
+        [HttpPost]
+        public IActionResult RoadScenarioResult(int TestId, RoadScenariosTest RST)
+        {
+            RST.TestId = TestId;
+            if (ModelState.IsValid)
+            {
+                _testService.SaveRoadScenarioTest(RST);
+                return Ok();
+            }
+
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
+        }
+        [HttpPost]
+        public IActionResult CompassDirectionResult(int TestId, CompassDirectionsTest CDT)
+        {
+            CDT.TestId = TestId;
+            if (ModelState.IsValid)
+            {
+                _testService.SaveCompassDirectionsTest(CDT);
+                return Ok();
+            }
+
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
+        }
+    
+        [HttpGet("[controller]/{TestId}/results")]
+        public async  Task<IActionResult> TestResults (int TestId)
+        {   
+            var resusts = new TestResults();
+            //TODO write this into repository in single query
+            resusts.CarDirectionsTest = await Task.Run( () =>_testService.GetCarDirectionsTest(TestId));
+            resusts.CompassDirectionsTest = await Task.Run(() => _testService.GetCompassDirectionsTest(TestId));
+            resusts.DotCancellationTest = await Task.Run(() => _testService.GetDotCancellationTest(TestId));
+            resusts.TrailMakingTest = await Task.Run(()=> _testService.GetTrailMakingTest(TestId));
+            resusts.RoadScenariosTest = await Task.Run(() => _testService.GetRoadScenarioTest(TestId));
+            return Json(resusts);
+        }
+       
     }
 }

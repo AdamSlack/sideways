@@ -33,7 +33,7 @@ namespace SDSA.Controllers
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Email , User.Email),
-                    new Claim(ClaimTypes.Role , "Clinicial")
+                    new Claim(ClaimTypes.Role , "Clinician")
                     
                 };
                 var bytes = Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]);

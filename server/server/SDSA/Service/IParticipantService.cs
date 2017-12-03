@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SDSA.Service.Interfaces
 {
-    interface IParticipantService
+    public interface IParticipantService
     {
         IEnumerable<int> GetParticipantTests(int participantId);
         int SaveParticipant(Participant p);
