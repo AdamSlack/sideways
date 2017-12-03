@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SDSA.Models
 {
-    public class Algorythm
+    public class Algorithm
     {
         public int AlgorythmId { get; set; }
         public int ClinicianId { get; set; }
