@@ -87,11 +87,15 @@ namespace SDSA
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
-                    );
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Test}/{id?}/{action=Index}")
-                    ;
+            );
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Test}/{id?}/{action=Index}"
+            );
+            routes.MapRoute(
+                name: "whatisthis",
+                template: "foo/bar/{action=whatislife}"
+            );
 
             });
         }

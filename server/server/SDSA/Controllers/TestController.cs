@@ -101,6 +101,12 @@ namespace SDSA.Controllers
             resusts.RoadScenariosTest = await Task.Run(() => _testService.GetRoadScenarioTest(TestId));
             return Json(resusts);
         }
+
+        [HttpGet("[controller]/foo/bar")]
+        public IActionResult whatislife() {
+            var results = new { whatislife = "whatislife"};
+            return Json(results);
+        }
        
     }
 }
