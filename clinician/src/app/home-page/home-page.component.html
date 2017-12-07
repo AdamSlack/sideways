@@ -1,0 +1,26 @@
+<div class="header">
+  <div *ngIf="optionSelected" class="go-back"  (click)=resetSelection()>🏠</div>
+
+  <div class="sdsa">SDSA</div>
+</div>
+
+<div class="title"> {{pageTitle}} </div>
+
+
+<div *ngIf="!optionSelected">
+  <div (click)=selectInitialisation() class="button"> Initialise Study </div>
+  <div (click)=selectViewResults() class="button"> View Results </div>
+  <div (click)=selectLocalisationCreator() class="button"> Add Localisation Preset</div>  
+</div>
+
+<div *ngIf="initialisationSelected" >
+  <app-study-init></app-study-init>
+</div>
+
+<div *ngIf="viewResultsSelected" >
+  <app-results-viewer></app-results-viewer>
+</div>
+
+<div *ngIf="localisationCreatorSelected" >
+  <app-localisation-creator></app-localisation-creator>
+</div>
