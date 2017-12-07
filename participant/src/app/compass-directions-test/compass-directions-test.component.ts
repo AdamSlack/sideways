@@ -21,20 +21,14 @@ export class CompassDirectionsTestComponent implements OnInit {
   ngOnInit() {
     console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
-    this.canvas = new fabric.Canvas('canvas', { selection: false });
-        
-    // create a rectangle object
-    var rect = new fabric.Rect({
-      left: 100,
-      top: 100,
-      fill: 'red',
-      width: 20,
-      height: 20
-    });
+    //this.canvas = new fabric.Canvas('canvas', { selection: false });
+    this.canvas = this.fab.generateFabricCanvas('canvas');
+    this.fab.placeBox(this.canvas);
+
     
-    // "add" rectangle onto canvas
-    this.canvas.add(rect);
   }
+
+
   public sendResults() {
     this.rs.insertCompassDirectionResults(1, 123, 456);
   }
