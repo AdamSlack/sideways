@@ -13,6 +13,8 @@ using SDSA.ViewModels;
 namespace SDSA.Controllers
 {
     //[Authorize (Roles ="Clinician")]
+
+    [Route("api/[test]")]
     public class TestController : Controller
     {
         private readonly IClinicianService _clinicianService;
@@ -102,7 +104,7 @@ namespace SDSA.Controllers
             return Json(resusts);
         }
 
-        [HttpGet("[controller]/foo/bar")]
+        [HttpGet()]
         public IActionResult whatislife() {
             var results = new { whatislife = "whatislife"};
             return Json(results);
