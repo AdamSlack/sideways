@@ -14,7 +14,7 @@ namespace SDSA.Controllers
 {
     //[Authorize (Roles ="Clinician")]
 
-    [Route("api/[test]")]
+    [Route("api/test")]
     public class TestController : Controller
     {
         private readonly IClinicianService _clinicianService;
@@ -106,6 +106,7 @@ namespace SDSA.Controllers
 
         [HttpGet()]
         public IActionResult whatislife() {
+            Console.WriteLine("whatislife");
             var results = new { whatislife = "whatislife"};
             return Json(results);
         }

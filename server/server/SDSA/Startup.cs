@@ -92,10 +92,6 @@ namespace SDSA
                 name: "default",
                 template: "{controller=Test}/{id?}/{action=Index}"
             );
-            routes.MapRoute(
-                name: "whatisthis",
-                template: "foo/bar/{action=whatislife}"
-            );
 
             });
         }
