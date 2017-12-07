@@ -27,6 +27,16 @@ export class FabricService {
       canvas.add(rect);
   }
 
+  public createGridBase(canvas: any, gridSize: number) {
+
+    var box_length = canvas.width / gridSize;
+
+    for (var i = 0; i < (canvas.width / box_length); ++i) {
+      canvas.add(new fabric.Line([ i * box_length, 0, i * box_length, canvas.width], { stroke: '#ccc', selectable: false }));
+      canvas.add(new fabric.Line([ 0, i * box_length, canvas.height, i * box_length], { stroke: '#ccc', selectable: false }))
+    }
+  }
+
 }
 
 

@@ -24,9 +24,9 @@ export class CompassDirectionsTestComponent implements OnInit {
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     this.canvas = this.fab.generateFabricCanvas('canvas');
     this.fab.placeBox(this.canvas);
-
-    
+    this.fab.createGridBase(this.canvas, 4);
   }
+
 
 
   public sendResults() {
