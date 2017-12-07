@@ -25,6 +25,7 @@ namespace SDSA.Controllers
         [HttpPost]
         public IActionResult DotCancellationResult (int TestId, DotCancellationTest DCT)
         {
+            Console.WriteLine("Test Conctroller: Dot Cancellation Result");
             DCT.TestId = TestId;
             if(ModelState.IsValid)
             {
@@ -37,6 +38,7 @@ namespace SDSA.Controllers
         [HttpPost]
         public IActionResult CarDirectionResult(int TestId, CarDirectionsTest CDT)
         {
+            Console.WriteLine("Test Controller: Car Direction Results");
             CDT.TestId = TestId;
             if (ModelState.IsValid)
             {
@@ -49,6 +51,7 @@ namespace SDSA.Controllers
         [HttpPost]
         public IActionResult TrailMakingTest(int TestId, TrailMakingTest TMT)
         {
+            Console.WriteLine("Test Controller: Trail Making Test");
             TMT.TestId = TestId;
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace SDSA.Controllers
         [HttpPost]
         public IActionResult RoadScenarioResult(int TestId, RoadScenariosTest RST)
         {
+            Console.WriteLine("Test Controller: Road Scenario Results");
             RST.TestId = TestId;
             if (ModelState.IsValid)
             {
@@ -73,6 +77,7 @@ namespace SDSA.Controllers
         [HttpPost]
         public IActionResult CompassDirectionResult(int TestId, CompassDirectionsTest CDT)
         {
+            Console.WriteLine("Test Controller: Compass Direction Result");
             CDT.TestId = TestId;
             if (ModelState.IsValid)
             {
@@ -86,6 +91,7 @@ namespace SDSA.Controllers
         [HttpGet("[controller]/{TestId}/results")]
         public async  Task<IActionResult> TestResults (int TestId)
         {   
+            Console.WriteLine("Test Controller: Test Results");
             var resusts = new TestResults();
             //TODO write this into repository in single query
             resusts.CarDirectionsTest = await Task.Run( () =>_testService.GetCarDirectionsTest(TestId));

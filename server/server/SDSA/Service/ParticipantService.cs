@@ -15,9 +15,9 @@ namespace SDSA.Service
             _participantRepository = participantRepo;
         }
         public IEnumerable<int> GetParticipantTests(int participantId)
-        => _participantRepository.GetParticipantTests(participantId);
+            => _participantRepository.GetParticipantTests(participantId);
 
         public int SaveParticipant(Participant p)
-        => _participantRepository.SaveParticipant(p);
+            => _participantRepository.SaveParticipant(p);
     }
 }
