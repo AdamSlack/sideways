@@ -57,6 +57,7 @@ The TypeScript component will look something along the lines of :
     constructor(public authenticator : AuthenticatorService) {} 
     
     public authenticateUser() : void => this.authenticator().authenticate(this.email, this.password);
+    
 ```
 **Results Viewer**
 
