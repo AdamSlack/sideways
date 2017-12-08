@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import "fabric"
+import { deprecate } from 'util';
 declare const fabric: any;
 
-
+/*
+  Note: would be singleton service
+  TODO: any to a canvas type..
+*/
 @Injectable()
 export class FabricService {
 
@@ -15,20 +19,11 @@ export class FabricService {
     return canvas;
   }
 
-  //TODO: any to a canvas type..
   public createCard(canvas: any, x: number, y: number) {
       // create a rectangle object
       var rect = new fabric.Rect({
-        // left: x,
-        // top: y,
-        // fill: 'red',
-        // width: this.box_length,
-        // height: this.box_length,
-        // originX: 'left', 
-        // originY: 'top',
-        // centeredRotation: true
-        left: 100, 
-        top: 100, 
+        left: x, 
+        top: y, 
         width: 50, 
         height: 50, 
         fill: '#faa', 
@@ -50,6 +45,51 @@ export class FabricService {
     }
   }
 
+  public addCompassImage(canvas: any) {
+    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
+    //   oImg.width = this.box_length
+      
+    //   oImg.height = this.box_length;
+    //   canvas.add(oImg);
+    // });
+    var compass_url = '../assets/compass_north.svg';
+
+    var group = [];
+    var rotate = 0;
+    var increment_rotation = 45;
+
+    //Top row
+
+    //Just messing... es6
+    // let times=(n,f)=>{while(n-->0)f();}
+    // times (3, console.log('times repeat'));
+    const times = n => f => {
+      let iter = i => {
+        if (i === n) return
+        f (i)
+        iter (i + 1)
+      }
+      return iter (0)
+    }
+    
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: 0 + (this.box_length * (i+1)),
+          top: 0,
+          selectable: true,
+          rotate: (rotate + increment_rotation)
+        });
+        rotate += increment_rotation;
+        obj.scaleToWidth(this.box_length);
+        canvas.add(obj).renderAll();
+      });
+    })
+  }
+
+  /*
+  @deprecate why even even activate snapping though?
+  */
   public activateSnapping(canvas: any) {
     if (typeof this.box_length === "undefined") {
       console.log('Have not initilaised box_length');      
@@ -60,7 +100,7 @@ export class FabricService {
           left: Math.round(options.target.left / this.box_length) * this.box_length,
           top: Math.round(options.target.top / this.box_length) * this.box_length
         });
-      });z
+      });
     }
   }
 
