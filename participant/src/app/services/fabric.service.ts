@@ -75,16 +75,38 @@ export class FabricService {
     times (4) (i => {
       fabric.loadSVGFromURL(compass_url, (objects, options) => {
         var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (this.box_length * (i+1)),
-          top: 0,
-          selectable: true,
-          rotate: (rotate + increment_rotation)
+          left: 0 + (this.box_length/2) + (this.box_length * (i+1)),
+          top: 0 + (this.box_length/2),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
         });
+        console.log(obj.rotate);
+        obj.rotate(rotate);
+        rotate += increment_rotation;
+        obj.scaleToWidth(this.box_length);
+        canvas.add(obj).renderAll();
+        
+      });
+    })
+
+    rotate = 0;
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: 0 + (this.box_length/2),
+          top: 0 + ((this.box_length/2)  + (this.box_length * (i+1))),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
+        });
+        obj.rotate(rotate);
         rotate += increment_rotation;
         obj.scaleToWidth(this.box_length);
         canvas.add(obj).renderAll();
       });
     })
+
   }
 
   /*
@@ -105,5 +127,4 @@ export class FabricService {
   }
 
 }
-
 
