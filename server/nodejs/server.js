@@ -24,7 +24,7 @@ server.use(function(req, res, next) {
   });
 
 //Catch all error handler
-server.user(function (err, req, res, next) {
+server.use(function (err, req, res, next) {
     res.status(500)
     res.render('error, please refer to https://github.com/AdamSlack/stroke_drivers_screening_assessment', { error: err })
   });
@@ -51,101 +51,85 @@ router.get('/', (req, res) => {
 */
 router.route('/login')
     //Check all POST
-    .post(req, res => {
+    .post((req, res) => {
         var tok = 'create_token or show sucess in middleware'
         return token;
-    });
+    })
     //Check all GET
-    // .get(req, res => {
-
-    // });
+    .get((req, res) => {
+        return ;
+    });
 
 router.route('/register_participant')
-    .post(req,res => {
+    .post((req,res) => {
         //func call
     });
 
 //Test clician id and then participant id
-router.router('/:clincian/:participant')
-    .post(req,res => {
-
-    }).get(req,res => {
-
+router.route('/:clincian/:participant')
+    .post((req,res) => {
+        return "noice";
+    }).get((req,res) => {
+        return "noice_get";
     });
-
-
-
-
-
 
 //Results handle
 router.route('/dot_cancellation')
-    .post(req,res => {
+    .post((req,res) => {
         let data = body;
         let time_taken = data.time_taken
         let true_pos = data.true_pos;
         let false_pos = data.false_pos;
         let false_neg = data.false_neg;
         //TODO: validation + beginign to insert
-    }).get(req,res => {
+    }).get((req,res) => {
 
     });
 
 router.route('/car_direction')
-    .post(req,res => {
+    .post((req,res) => {
         let data = body;
         let time_taken = data.time_taken
         let points = data.points;
         //TODO: validation + beginign to insert
-    }).get(req,res => {
+    }).get((req,res) => {
 
     });
 
 router.route('/compass_directions')
-    .post(req,res => {
+    .post((req,res) => {
         let data = body;
         let time_taken = data.time_taken
         let points = data.points;
         //TODO: validation + beginign to insert
-    }).get(req,res => {
+    }).get((req,res) => {
 
     });
 
 router.route('/road_scenarios')
-    .post(req,res => {
+    .post((req,res) => {
         let data = body;
         let time_taken = data.time_taken
         let points = data.points;
         //TODO: validation + beginign to insert
-    }).get(req,res => {
+    }).get((req,res) => {
 
     });
 
 router.route('/trail_making')
-    .post(req,res => {
+    .post((req,res) => {
         let data = body;
         let time_taken = data.time_taken
         let mistakes = data.mistakes;
         //TODO: validation + beginign to insert
-    }).get(req,res => {
+    }).get((req,res) => {
 
-    });
-
-
-//Test Data Configuration
-router.route('trail_making')
-    .post(req,res => {
-        let data = body;
-        let time_taken = data.time_taken
-        let mistakes = data.mistakes;
-        //TODO: validation + beginign to insert
-    }).get(req,res => {
     });
 
 
 
 //Register Routes
-app.user('/',router)
+server.use('/',router)
 
 
 
