@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ using SDSA.Repository.Interfaces;
 using SDSA.Service;
 using SDSA.Service.Interfaces;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace SDSA
 {
@@ -61,6 +63,7 @@ namespace SDSA
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +84,32 @@ namespace SDSA
             app.UseAuthentication();
             
             app.UseStaticFiles();
-
+            app.UseStatusCodePages(
+                async context =>
+             {
+                 context.HttpContext.Response.ContentType =  "text/plain";
+                 var x = context.HttpContext.Response;
+                 string statusMessage;
+                 switch (x.StatusCode)
+                 {
+                     case 403:
+                         statusMessage = "Forbidden";
+                         break;
+                     case 404:
+                         statusMessage = "Not found";
+                         break;
+                     case 401:
+                         statusMessage = "Unathorized";
+                         break;
+                     default:
+                         statusMessage = "";
+                         break;
+                 }
+                 await context.HttpContext.Response.WriteAsync(
+        JsonConvert.SerializeObject(new { message = statusMessage }));
+       // context.HttpContext.Response.StatusCode + $": {statusMessage}");
+             } 
+            );
             app.UseMvc(routes =>
             {
             routes.MapRoute(
