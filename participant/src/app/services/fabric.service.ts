@@ -19,7 +19,7 @@ export class FabricService {
     return canvas;
   }
 
-  public createCard(canvas: any, x: number, y: number) {
+  public createInteractableCard(canvas: any, x: number, y: number) {
       // create a rectangle object
       var rect = new fabric.Rect({
         left: x, 
@@ -31,14 +31,31 @@ export class FabricService {
         originY: 'top',
         centeredRotation: true
       });
+
+      canvas.on('mouse:down', function(options) {
+        if (options.target) {
+          console.log('an object was clicked! ', options.target.type);
+          if (options.target.type == rect.type) {
+            rect.animate('angle', '+=5', { onChange: canvas.renderAll.bind(canvas) });        
+          }
+        }
+      });
+
+      canvas.on('mouse:up', function(options) {
+        if (options.target) {
+          console.log('an object was clicked! ', options.target.type);
+          if (options.target.type == rect.type) {
+            rect.animate('angle', '-=5', { onChange: canvas.renderAll.bind(canvas) });        
+          }
+        }
+      });
+
       // "add" rectangle onto canvas
       canvas.add(rect);
   }
 
   public createGridBase(canvas: any, gridSize: number) {
-
     this.box_length = canvas.width / gridSize;
-
     for (var i = 0; i < (canvas.width / this.box_length); ++i) {
       canvas.add(new fabric.Line([ i * this.box_length, 0, i * this.box_length, canvas.width], { stroke: '#ccc', selectable: false }));
       canvas.add(new fabric.Line([ 0, i * this.box_length, canvas.height, i * this.box_length], { stroke: '#ccc', selectable: false }))
@@ -127,4 +144,5 @@ export class FabricService {
   }
 
 }
+
 

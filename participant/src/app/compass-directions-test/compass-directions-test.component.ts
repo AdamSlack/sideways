@@ -13,6 +13,9 @@ export class CompassDirectionsTestComponent implements OnInit {
   //Canvas for displaying things
   canvas:any;
 
+  //Should be a json defined classed
+  deck:any[];
+
   constructor(private rs: ResultsService, private fab: FabricService) { }
   
   ngOnInit() {
@@ -22,8 +25,13 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.canvas = this.fab.generateFabricCanvas('canvas');
     this.fab.createGridBase(this.canvas, 5);
     //this.fab.activateSnapping(this.canvas);
-    this.fab.createCard(this.canvas,20,20);
     this.fab.addCompassImage(this.canvas);
+    
+    //Initialise deck of compass cards
+    this.fab.createCard(this.canvas,20,20);
+    
+
+
   }
 
 
