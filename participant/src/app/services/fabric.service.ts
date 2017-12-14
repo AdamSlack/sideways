@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import "fabric"
 import { deprecate } from 'util';
+import "fabric"
 declare const fabric: any;
 
 /*
@@ -15,43 +15,40 @@ export class FabricService {
   constructor() { }
 
   public generateFabricCanvas(id: string) {
-    var canvas = new fabric.Canvas(id);
+    let canvas = new fabric.Canvas(id);
     return canvas;
   }
 
-  public createInteractableCard(canvas: any, x: number, y: number) {
+  public createReactingObj(canvas: any, x: number, y: number, identifer: string) {
       // create a rectangle object
-      var rect = new fabric.Rect({
+      var card = new fabric.Rect({
         left: x, 
         top: y, 
-        width: 50, 
-        height: 50, 
+        width: 60, 
+        height: 60, 
         fill: '#faa', 
         originX: 'left', 
         originY: 'top',
-        centeredRotation: true
+        centeredRotation: true,
+        lockUniScaling: true,        
+        id: identifer,
       });
 
-      canvas.on('mouse:down', function(options) {
-        if (options.target) {
-          console.log('an object was clicked! ', options.target.type);
-          if (options.target.type == rect.type) {
-            rect.animate('angle', '+=5', { onChange: canvas.renderAll.bind(canvas) });        
-          }
-        }
+      card.type = "card"
+      /* Card interaction logic */
+      card.on('mousedown', function(options) {
+        card.setShadow({ color:"rgba(0,0,0,0.3)",blur:20,offsetX:2,offsetY:2 });            
+        card.animate('angle', '15', { onChange: canvas.renderAll.bind(canvas) });    
       });
 
-      canvas.on('mouse:up', function(options) {
-        if (options.target) {
-          console.log('an object was clicked! ', options.target.type);
-          if (options.target.type == rect.type) {
-            rect.animate('angle', '-=5', { onChange: canvas.renderAll.bind(canvas) });        
-          }
-        }
+      card.on('mouseup', function(options) {
+        card.setShadow(null);
+        card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });  
       });
 
-      // "add" rectangle onto canvas
-      canvas.add(rect);
+
+
+      return card;
   }
 
   public createGridBase(canvas: any, gridSize: number) {
