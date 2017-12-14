@@ -4,9 +4,6 @@ import "fabric"
 import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 declare const fabric: any;
 
-
-
-
 /*  
   Note: would be singleton service
   TODO: any to a canvas type..

@@ -12,6 +12,8 @@ var Canvas: any;
 //Should be a json defined classed
 var Deck:any[];
 
+var GridSquares:any[];
+
 //Reads row, column
 enum compassDir {
   //Row one
@@ -51,10 +53,11 @@ export class CompassDirectionsTestComponent implements OnInit {
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
+    GridSquares = this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
     this.fab.addCompassImages(Canvas,(Canvas.width-100)/5);
     this.createDeck(Canvas.width - 100, Canvas.width - 110);
     this.createShuffleButton(Canvas.width - 100, Canvas.width - 150);
+    this.createDonezoButton(Canvas.width - 100, Canvas.width - 300);
   }
 
   private createDeck(xOffset = 0, yOffset  =0 ) {
@@ -76,6 +79,46 @@ export class CompassDirectionsTestComponent implements OnInit {
       console.log("Deck: ",Deck);
   }
 
+  private gatherResults() {
+    var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
+  
+    console.log(squareMatches.length);
+    GridSquares.forEach( square => {
+      Deck.forEach( card => {
+        //card.intersectsWithObject()
+        if (card.intersectsWithObject(square)) {
+          squareMatches[square.id] = card.id;
+        }
+      });
+    });
+    
+    console.log(squareMatches);
+  
+  }
+
+  private createDonezoButton(x: number, y: number) {
+
+    var butt = new fabric.Text( 'Donezo', {
+      left:x,
+      top:y,
+      width:40,
+      height:40,
+      fontSize: 30,
+      font: "roboto",
+      lockMovementX: true,
+      lockMovementY: true,
+      lockRotation: true,
+      lockUniScaling: true,
+      selectable: true
+    });
+    
+    butt.on('selected', options => {
+      this.gatherResults();
+    });
+
+    Canvas.add(butt);    
+  }
+  
   //TODO: in inherited behaviour...
   private createShuffleButton(x: number, y: number) {
     //Create shuffle button
@@ -125,9 +168,6 @@ export class CompassDirectionsTestComponent implements OnInit {
         return 0.5 - Math.random();
         }
       });
-      
-
-
     });
   }
 
