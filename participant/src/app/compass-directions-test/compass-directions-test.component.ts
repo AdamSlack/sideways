@@ -52,15 +52,15 @@ export class CompassDirectionsTestComponent implements OnInit {
     Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
     Deck = [];
     this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
-    this.fab.addCompassImages(Canvas,Canvas.width/5);
-    this.createDeck();
-    this.createShuffleButton(30,30);
+    this.fab.addCompassImages(Canvas,(Canvas.width-100)/5);
+    this.createDeck(Canvas.width - 100, Canvas.width - 110);
+    this.createShuffleButton(Canvas.width - 100, Canvas.width - 150);
   }
 
-  private createDeck() {
+  private createDeck(xOffset = 0, yOffset  =0 ) {
        //Initialise deck of compass cards
-      var card1 = this.fab.createReactingObj(Canvas,20,20, "card1");
-      var card2 = this.fab.createReactingObj(Canvas,25,25, "card2");
+      var card1 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card1");
+      var card2 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card2");
       
       card1.isPlaced = false; 
       card2.isPlaced = false; 
@@ -79,23 +79,25 @@ export class CompassDirectionsTestComponent implements OnInit {
   //TODO: in inherited behaviour...
   private createShuffleButton(x: number, y: number) {
     //Create shuffle button
-    var button_rect = new fabric.Rect({
+    var butt = new fabric.Text( 'Shuffle', {
       left:x,
       top:y,
       width:40,
       height:40,
+      fontSize: 30,
+      font: "roboto",
       lockMovementX: true,
       lockMovementY: true,
       lockRotation: true,
       lockUniScaling: true,
-      selectable: false
+      selectable: true
     });
 
-    Canvas.add(button_rect);
+    Canvas.add(butt);
     console.log("current deck",Deck);
 
     //Shuffle and place logic
-    button_rect.on('selected', function(options) {
+    butt.on('selected', function(options) {
       console.log("shuffling");
 
       //Shuffle all those in deck that are not in placed state.
@@ -109,10 +111,11 @@ export class CompassDirectionsTestComponent implements OnInit {
         }  else { //give a rnadom sort position
           //Reset card position
       
+        //TODO: pass reset position
         var reset = (obj) => {
           obj.left = 30;
           obj.top = 30;
-          //a.animate('top', 45, { duration: 4, onChange: Canvas.renderAll.bind(Canvas) });    
+          //a.animate('top', 45, { duration: 4, onChange:Canvas.renderAll.bind(Canvas) });    
         }
 
         reset(a);

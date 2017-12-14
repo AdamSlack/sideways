@@ -7,7 +7,7 @@ declare const fabric: any;
 
 
 
-/*
+/*  
   Note: would be singleton service
   TODO: any to a canvas type..
 */
@@ -51,6 +51,22 @@ export class FabricService {
         card.setShadow(null);
         card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });  
       });
+
+
+      //Intesection colissions ....
+      canvas.on({
+        'object:moving': onChange,
+        'object:scaling': onChange,
+        'object:rotating': onChange,
+      });
+
+      function onChange(options) {
+        options.target.setCoords();
+        canvas.forEachObject(function(obj) {
+          if (obj === options.target) return;
+          obj.set('opacity' ,options.target.intersectsWithObject(obj) ? 0.5 : 1);
+        });
+      }
 
       return card;
   }
