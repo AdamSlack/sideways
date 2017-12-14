@@ -52,8 +52,6 @@ export class FabricService {
         card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });  
       });
 
-
-
       return card;
   }
 
@@ -89,8 +87,7 @@ export class FabricService {
         squareSet.push(rect);
         start_x += square_length;
         console.log("created square",rect.id);
-        canvas.add(rect);
-        
+        canvas.add(rect); 
       }
       start_x = 0;
       start_y += square_length;
@@ -99,7 +96,7 @@ export class FabricService {
     return squareSet;
   }
 
-  public addCompassImage(canvas: any) {
+  public addCompassImages(canvas: any, compass_length: number) {
     // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
     //   oImg.width = this.box_length
       
@@ -129,8 +126,8 @@ export class FabricService {
     times (4) (i => {
       fabric.loadSVGFromURL(compass_url, (objects, options) => {
         var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (this.box_length/2) + (this.box_length * (i+1)),
-          top: 0 + (this.box_length/2),
+          left: 0 + (compass_length/2) + (compass_length * (i+1)),
+          top: 0 + (compass_length/2),
           originX: 'center', 
           originY: 'center',
           selectable: false
@@ -138,9 +135,8 @@ export class FabricService {
         console.log(obj.rotate);
         obj.rotate(rotate);
         rotate += increment_rotation;
-        obj.scaleToWidth(this.box_length);
+        obj.scaleToWidth(compass_length);
         canvas.add(obj).renderAll();
-        
       });
     })
 
@@ -148,15 +144,15 @@ export class FabricService {
     times (4) (i => {
       fabric.loadSVGFromURL(compass_url, (objects, options) => {
         var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (this.box_length/2),
-          top: 0 + ((this.box_length/2)  + (this.box_length * (i+1))),
+          left: 0 + (compass_length/2),
+          top: 0 + ((compass_length/2)  + (compass_length * (i+1))),
           originX: 'center', 
           originY: 'center',
           selectable: false
         });
         obj.rotate(rotate);
         rotate += increment_rotation;
-        obj.scaleToWidth(this.box_length);
+        obj.scaleToWidth(compass_length);
         canvas.add(obj).renderAll();
       });
     })

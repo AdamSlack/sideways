@@ -49,11 +49,10 @@ export class CompassDirectionsTestComponent implements OnInit {
     console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
-
     Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
     Deck = [];
     this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
-    
+    this.fab.addCompassImages(Canvas,Canvas.width/5);
     this.createDeck();
     this.createShuffleButton(30,30);
   }
