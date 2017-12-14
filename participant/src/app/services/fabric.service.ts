@@ -30,7 +30,7 @@ export class FabricService {
         top: y, 
         width: 60, 
         height: 60, 
-        fill: '#faa', 
+        fill: '#ffb366', 
         originX: 'left', 
         originY: 'top',
         centeredRotation: true,
@@ -44,7 +44,7 @@ export class FabricService {
       /* Card interaction logic */
       card.on('mousedown', function(options) {
         card.setShadow({ color:"rgba(0,0,0,0.3)",blur:20,offsetX:2,offsetY:2 });            
-        card.animate('angle', '15', { onChange: canvas.renderAll.bind(canvas) });    
+        card.animate('angle', '4', { onChange: canvas.renderAll.bind(canvas) });    
       });
 
       card.on('mouseup', function(options) {
@@ -69,26 +69,34 @@ export class FabricService {
   public createGridBaseSquares(canvas: any, side_length: number, squares: number) {
 
     var square_length = side_length / squares; 
-
+    console.log(square_length);
     var start_x = 0;
     var start_y = 0;
+
+    var squareSet = [];
     var id = 0; //All grid parts are id 0, ..., Squares. This to map nicely to a enum and therefore see specfic test enum for id tranlation.
-    while(start_y != side_length) {
-      while(start_x != side_length) {
-        var card = new fabric.Rect({
+    while(start_y < side_length) {
+      while(start_x < side_length) {
+        var rect = new fabric.Rect({
           left: start_x, 
           top: start_y, 
-          id: 1
+          width: square_length,
+          height: square_length,
+          selectable: false,
+          id: id++,
+          fill: '#99ccff'
         });
-        
+        squareSet.push(rect);
         start_x += square_length;
+        console.log("created square",rect.id);
+        canvas.add(rect);
+        
       }
       start_x = 0;
       start_y += square_length;
     }
 
-
-
+    return squareSet;
   }
 
   public addCompassImage(canvas: any) {

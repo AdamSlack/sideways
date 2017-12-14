@@ -36,7 +36,6 @@ enum compassDir {
   EastWestSouth,
 } 
 
-
 @Component({
   selector: 'app-compass-directions-test',
   templateUrl: './compass-directions-test.component.html',
@@ -53,9 +52,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    this.fab.createGridBaseLines(Canvas, 5);
-    
-    this.fab.addCompassImage(Canvas);
+    this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
     
     this.createDeck();
     this.createShuffleButton(30,30);
@@ -97,7 +94,6 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     Canvas.add(button_rect);
     console.log("current deck",Deck);
-    
 
     //Shuffle and place logic
     button_rect.on('selected', function(options) {
@@ -114,18 +110,17 @@ export class CompassDirectionsTestComponent implements OnInit {
         }  else { //give a rnadom sort position
           //Reset card position
       
-     
-          var reset = (obj) => {
-            obj.left = 30;
-            obj.top = 30;
-            //a.animate('top', 45, { duration: 4, onChange: Canvas.renderAll.bind(Canvas) });    
-          }
+        var reset = (obj) => {
+          obj.left = 30;
+          obj.top = 30;
+          //a.animate('top', 45, { duration: 4, onChange: Canvas.renderAll.bind(Canvas) });    
+        }
 
-          reset(a);
-          reset(b);
+        reset(a);
+        reset(b);
 
-          console.log("current deck",Deck);          
-          return 0.5 - Math.random();
+        console.log("current deck",Deck);          
+        return 0.5 - Math.random();
         }
       });
       
