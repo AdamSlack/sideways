@@ -12,6 +12,31 @@ var Canvas: any;
 //Should be a json defined classed
 var Deck:any[];
 
+//Reads row, column
+enum compassDir {
+  //Row one
+  SouthEastWest= 0,
+  NorthEastWest,
+  SouthWestWest,
+  EastWest,
+  //Row two
+  SouthEastNorthWest,
+  NorthEastNorthWest,
+  SouthWestNorthWest,
+  EastNorthWest,
+  //Row three
+  SouthEastNorth,
+  NorthEastNorth,
+  SouthWestNorth,
+  EastNorth,
+  //Row Four
+  SouthEastSouth,
+  NorthEastSouth,
+  SouthWestSouth,
+  EastWestSouth,
+} 
+
+
 @Component({
   selector: 'app-compass-directions-test',
   templateUrl: './compass-directions-test.component.html',
@@ -28,7 +53,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    this.fab.createGridBase(Canvas, 5);
+    this.fab.createGridBaseLines(Canvas, 5);
     
     this.fab.addCompassImage(Canvas);
     

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { deprecate } from 'util';
 import "fabric"
+import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 declare const fabric: any;
+
+
+
 
 /*
   Note: would be singleton service
@@ -30,7 +34,9 @@ export class FabricService {
         originX: 'left', 
         originY: 'top',
         centeredRotation: true,
-        lockUniScaling: true,        
+        lockUniScaling: true,
+        lockScalingY: true, 
+        lockScalingX: true,       
         id: identifer,
       });
 
@@ -51,12 +57,38 @@ export class FabricService {
       return card;
   }
 
-  public createGridBase(canvas: any, gridSize: number) {
+  public createGridBaseLines(canvas: any, gridSize: number) {
     this.box_length = canvas.width / gridSize;
     for (var i = 0; i < (canvas.width / this.box_length); ++i) {
       canvas.add(new fabric.Line([ i * this.box_length, 0, i * this.box_length, canvas.width], { stroke: '#ccc', selectable: false }));
       canvas.add(new fabric.Line([ 0, i * this.box_length, canvas.height, i * this.box_length], { stroke: '#ccc', selectable: false }))
     }
+  }
+
+
+  public createGridBaseSquares(canvas: any, side_length: number, squares: number) {
+
+    var square_length = side_length / squares; 
+
+    var start_x = 0;
+    var start_y = 0;
+    var id = 0; //All grid parts are id 0, ..., Squares. This to map nicely to a enum and therefore see specfic test enum for id tranlation.
+    while(start_y != side_length) {
+      while(start_x != side_length) {
+        var card = new fabric.Rect({
+          left: start_x, 
+          top: start_y, 
+          id: 1
+        });
+        
+        start_x += square_length;
+      }
+      start_x = 0;
+      start_y += square_length;
+    }
+
+
+
   }
 
   public addCompassImage(canvas: any) {
