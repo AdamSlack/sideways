@@ -45,17 +45,10 @@ export class LocalisationService {
         }
     }
 
-    public requestLocaleSetup(locale : string,  ) : Observable<any> {
+    public requestLocaleSetup(locale : string, localeData : any) : Observable<any> {
         let url = this.ROOT + 'localisation/';
-        if(p_id) {
-            url += p_id;
-        }
-        if (locale && test){
-            console.log('Requesting Test be made: ' + url)
-            let headers = this.createHeaders()
-            return this.http.post(url, '');
-        }
-        console.log('you messed up... ');
+        let headers = this.createHeaders();
+        return this.http.post(url, '');        
     }
 
     
