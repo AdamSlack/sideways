@@ -4,62 +4,62 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 
 export class GeneralDetails {
-    testHeading: string;
-    testInstructions: string;
+    testHeading: string = '';
+    testInstructions: string = '';
 }
 
 export class MatrixDetails {
-    headingsLabel : string;
-    deckLabel : string;
+    headingsLabel : string = '';
+    deckLabel : string = '';
 }
 
 export class RoadSignScenario {
-    roadSignName : string;
-    scenarioName : string;
-    scenarioImage : string;
-    roadSignImage : string
-    signXPos : number;
-    signYPos : number;
+    roadSignName : string = '';
+    scenarioName : string = '';
+    scenarioImage : string = '';
+    roadSignImage : string = '';
+    signXPos : number = 0;
+    signYPos : number = 0;
 }
 
 export class DotCancellationInstructions {
     // Dot Cancellation Instructions
-    general : GeneralDetails;
+    general : GeneralDetails = new GeneralDetails();
 }
 
 export class CompassDirections {
     // Compass Directions Instructions
-    general : GeneralDetails;
-    matrix : MatrixDetails;
+    general : GeneralDetails = new GeneralDetails();
+    matrix : MatrixDetails = new MatrixDetails();
 }
 
 export class CarDirections {
     // Car Directions Instructions
-    general : GeneralDetails;
-    matrix : MatrixDetails;
+    general : GeneralDetails = new GeneralDetails();
+    matrix : MatrixDetails = new MatrixDetails();
 }
 
 export class RoadSigns {
     // Road Signs Instructions
-    general : GeneralDetails;
-    deckLabel : string;
-    scenarios : Array<RoadSignScenario>
+    general : GeneralDetails = new GeneralDetails();
+    deckLabel : string  = '';
+    scenarios : Array<RoadSignScenario> = []
 }
 
 export class TrailMaking {
-    general : GeneralDetails;
-    trailA : Array<string>;
-    trailB : Array<string>;
+    general : GeneralDetails = new GeneralDetails();
+    trailA : Array<string> = [];
+    trailB : Array<string> = [];
 }
 
 
 export class LocalePreset {
-    public name : string;
-    public dotCancellation : DotCancellationInstructions;
-    public compassDirections : CompassDirections;
-    public carDirections : CarDirections;
-    public roadSigns : RoadSigns;
-    public trailMaking : TrailMaking;
+    public name : string  = '';
+    public dotCancellation : DotCancellationInstructions = new DotCancellationInstructions();
+    public compassDirections : CompassDirections = new CompassDirections();
+    public carDirections : CarDirections = new CarDirections();
+    public roadSigns : RoadSigns = new RoadSigns();
+    public trailMaking : TrailMaking = new TrailMaking();
 }
 
 @Injectable()
@@ -69,7 +69,7 @@ export class LocalisationService {
 
     public ROOT : string = 'http://localhost:8080/';
     
-    public localePreset : LocalePreset;
+    public localePreset : LocalePreset = new LocalePreset();
 
     public createHeaders() {
         return {

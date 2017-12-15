@@ -11,6 +11,8 @@ import { InitialisationService } from './services/initialisation.service';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ResultsViewerComponent } from './results-viewer/results-viewer.component';
 import { LocalisationCreatorComponent } from './localisation-creator/localisation-creator.component';
+import { AuthenticationService } from './services/authentication.service';
+import { LocalisationService } from './services/localisation.service';
 
 
 @NgModule({
@@ -25,7 +27,7 @@ import { LocalisationCreatorComponent } from './localisation-creator/localisatio
     BrowserModule,
     HttpClientModule,
     FormsModule  ],
-  providers: [ParticipantService, InitialisationService],
+  providers: [ParticipantService, InitialisationService, LocalisationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
