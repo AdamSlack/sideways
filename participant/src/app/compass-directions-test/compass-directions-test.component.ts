@@ -51,16 +51,18 @@ export class CompassDirectionsTestComponent implements OnInit {
     console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
-    Canvas =  new fabric.Canvas('canvas');//this.fab.generateFabricCanvas('canvas');
+    Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    GridSquares = this.fab.createGridBaseSquares(Canvas, Canvas.width - 100, 5);
-    this.fab.addCompassImages(Canvas,(Canvas.width-100)/5);
+    GridSquares = this.fab.createGridBaseSquares(10,100, Canvas, 200,4);
+    //this.addCompassImages(Canvas,(Canvas.width-100)/4);
+
     this.createDeck(Canvas.width - 100, Canvas.width - 110);
-    this.createShuffleButton(Canvas.width - 100, Canvas.width - 150);
-    this.createDonezoButton(Canvas.width - 100, Canvas.width - 300);
+    
+    Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
+    Canvas.add(this.createDonezoButton(Canvas.width - 100, Canvas.width - 300));
   }
 
-  private createDeck(xOffset = 0, yOffset  =0 ) {
+  private createDeck(xOffset = 0, yOffset  = 0 ) {
        //Initialise deck of compass cards
       var card1 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card1");
       var card2 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card2");
@@ -116,15 +118,15 @@ export class CompassDirectionsTestComponent implements OnInit {
       this.gatherResults();
     });
 
-    Canvas.add(butt);    
+    return butt;
   }
   
   //TODO: in inherited behaviour...
-  private createShuffleButton(x: number, y: number) {
+  private createShuffleButton(xPos: number, yPos: number) {
     //Create shuffle button
     var butt = new fabric.Text( 'Shuffle', {
-      left:x,
-      top:y,
+      left:xPos,
+      top:yPos,
       width:40,
       height:40,
       fontSize: 30,
@@ -136,7 +138,6 @@ export class CompassDirectionsTestComponent implements OnInit {
       selectable: true
     });
 
-    Canvas.add(butt);
     console.log("current deck",Deck);
 
     //Shuffle and place logic
@@ -154,7 +155,7 @@ export class CompassDirectionsTestComponent implements OnInit {
         }  else { //give a rnadom sort position
           //Reset card position
       
-        //TODO: pass reset position
+        //TODO: get origin position from Deck
         var reset = (obj) => {
           obj.left = 30;
           obj.top = 30;
@@ -169,10 +170,75 @@ export class CompassDirectionsTestComponent implements OnInit {
         }
       });
     });
+
+    return butt;
   }
+
+  public addCompassImages(canvas: any, compass_length: number) {
+    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
+    //   oImg.width = this.box_length
+      
+    //   oImg.height = this.box_length;
+    //   canvas.add(oImg);
+    // });
+    var compass_url = '../assets/compass_north.svg';
+
+    var group = [];
+    var rotate = 0;
+    var increment_rotation = 45;
+
+    //Top row
+
+    //Just messing... es6
+    // let times=(n,f)=>{while(n-->0)f();}
+    // times (3, console.log('times repeat'));
+    const times = n => f => {
+      let iter = i => {
+        if (i === n) return
+        f (i)
+        iter (i + 1)
+      }
+      return iter (0)
+    }
+    
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: 0 + (compass_length/2) + (compass_length * (i+1)),
+          top: 0 + (compass_length/2),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
+        });
+        console.log(obj.rotate);
+        obj.rotate(rotate);
+        rotate += increment_rotation;
+        obj.scaleToWidth(compass_length);
+        canvas.add(obj).renderAll();
+      });
+    })
+
+    rotate = 0;
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: 0 + (compass_length/2),
+          top: 0 + ((compass_length/2)  + (compass_length * (i+1))),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
+        });
+        obj.rotate(rotate);
+        rotate += increment_rotation;
+        obj.scaleToWidth(compass_length);
+        canvas.add(obj).renderAll();
+      });
+    })
+
+  }
+
 
   public sendResults() {
     this.rs.insertCompassDirectionResults(1, 123, 456);
   }
-  
 }

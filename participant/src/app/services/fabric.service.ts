@@ -44,6 +44,7 @@ export class FabricService {
         card.animate('angle', '4', { onChange: canvas.renderAll.bind(canvas) });    
       });
 
+
       card.on('mouseup', function(options) {
         card.setShadow(null);
         card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });  
@@ -55,6 +56,7 @@ export class FabricService {
         'object:moving': onChange,
         'object:scaling': onChange,
         'object:rotating': onChange,
+        //Touch:gesture
       });
 
       function onChange(options) {
@@ -77,12 +79,12 @@ export class FabricService {
   }
 
 
-  public createGridBaseSquares(canvas: any, side_length: number, squares: number) {
+  public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number) {
 
     var square_length = side_length / squares; 
     console.log(square_length);
-    var start_x = 0;
-    var start_y = 0;
+    var start_x = xPos;
+    var start_y = yPos;
 
     var squareSet = [];
     var id = 0; //All grid parts are id 0, ..., Squares. This to map nicely to a enum and therefore see specfic test enum for id tranlation.
@@ -109,69 +111,7 @@ export class FabricService {
     return squareSet;
   }
 
-  public addCompassImages(canvas: any, compass_length: number) {
-    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
-    //   oImg.width = this.box_length
-      
-    //   oImg.height = this.box_length;
-    //   canvas.add(oImg);
-    // });
-    var compass_url = '../assets/compass_north.svg';
-
-    var group = [];
-    var rotate = 0;
-    var increment_rotation = 45;
-
-    //Top row
-
-    //Just messing... es6
-    // let times=(n,f)=>{while(n-->0)f();}
-    // times (3, console.log('times repeat'));
-    const times = n => f => {
-      let iter = i => {
-        if (i === n) return
-        f (i)
-        iter (i + 1)
-      }
-      return iter (0)
-    }
-    
-    times (4) (i => {
-      fabric.loadSVGFromURL(compass_url, (objects, options) => {
-        var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (compass_length/2) + (compass_length * (i+1)),
-          top: 0 + (compass_length/2),
-          originX: 'center', 
-          originY: 'center',
-          selectable: false
-        });
-        console.log(obj.rotate);
-        obj.rotate(rotate);
-        rotate += increment_rotation;
-        obj.scaleToWidth(compass_length);
-        canvas.add(obj).renderAll();
-      });
-    })
-
-    rotate = 0;
-    times (4) (i => {
-      fabric.loadSVGFromURL(compass_url, (objects, options) => {
-        var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (compass_length/2),
-          top: 0 + ((compass_length/2)  + (compass_length * (i+1))),
-          originX: 'center', 
-          originY: 'center',
-          selectable: false
-        });
-        obj.rotate(rotate);
-        rotate += increment_rotation;
-        obj.scaleToWidth(compass_length);
-        canvas.add(obj).renderAll();
-      });
-    })
-
-  }
-
+  
   /*
   @deprecate why even even activate snapping though?
   */
