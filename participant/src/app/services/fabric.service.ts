@@ -83,16 +83,16 @@ export class FabricService {
 
     var square_length = side_length / squares; 
     console.log(square_length);
-    var start_x = xPos;
-    var start_y = yPos;
+    var start_x = 0;
+    var start_y = 0;
 
     var squareSet = [];
     var id = 0; //All grid parts are id 0, ..., Squares. This to map nicely to a enum and therefore see specfic test enum for id tranlation.
     while(start_y < side_length) {
       while(start_x < side_length) {
         var rect = new fabric.Rect({
-          left: start_x, 
-          top: start_y, 
+          left: xPos + start_x, 
+          top: yPos + start_y, 
           width: square_length,
           height: square_length,
           selectable: false,

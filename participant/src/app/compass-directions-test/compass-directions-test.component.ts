@@ -53,7 +53,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    GridSquares = this.fab.createGridBaseSquares(10,100, Canvas, 200,4);
+    GridSquares = this.fab.createGridBaseSquares(100,100, Canvas, 200,4);
     //this.addCompassImages(Canvas,(Canvas.width-100)/4);
 
     this.createDeck(Canvas.width - 100, Canvas.width - 110);
