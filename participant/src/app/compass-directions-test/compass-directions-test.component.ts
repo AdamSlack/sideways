@@ -53,8 +53,10 @@ export class CompassDirectionsTestComponent implements OnInit {
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
-    GridSquares = this.fab.createGridBaseSquares(100,100, Canvas, 200,4);
-    //this.addCompassImages(Canvas,(Canvas.width-100)/4);
+
+    var grid_length = 300;
+    GridSquares = this.fab.createGridBaseSquares(100,100, Canvas, grid_length,4);
+    this.addCompassImages(Canvas, 100 - (grid_length/4),  100 - (grid_length/4), grid_length/4);
 
     this.createDeck(Canvas.width - 100, Canvas.width - 110);
     
@@ -62,10 +64,10 @@ export class CompassDirectionsTestComponent implements OnInit {
     Canvas.add(this.createDonezoButton(Canvas.width - 100, Canvas.width - 300));
   }
 
-  private createDeck(xOffset = 0, yOffset  = 0 ) {
+  private createDeck(xOffset = 0, yOffset  = 0) {
        //Initialise deck of compass cards
-      var card1 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card1");
-      var card2 = this.fab.createReactingObj(Canvas,xOffset,yOffset, "card2");
+      var card1 = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, "card1");
+      var card2 = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, "card2");
       
       card1.isPlaced = false; 
       card2.isPlaced = false; 
@@ -174,7 +176,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     return butt;
   }
 
-  public addCompassImages(canvas: any, compass_length: number) {
+  public addCompassImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
     // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
     //   oImg.width = this.box_length
       
@@ -204,8 +206,8 @@ export class CompassDirectionsTestComponent implements OnInit {
     times (4) (i => {
       fabric.loadSVGFromURL(compass_url, (objects, options) => {
         var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (compass_length/2) + (compass_length * (i+1)),
-          top: 0 + (compass_length/2),
+          left: xPos + (compass_length/2) + (compass_length * (i+1)),
+          top: yPos + (compass_length/2),
           originX: 'center', 
           originY: 'center',
           selectable: false
@@ -222,8 +224,8 @@ export class CompassDirectionsTestComponent implements OnInit {
     times (4) (i => {
       fabric.loadSVGFromURL(compass_url, (objects, options) => {
         var obj = fabric.util.groupSVGElements(objects, {
-          left: 0 + (compass_length/2),
-          top: 0 + ((compass_length/2)  + (compass_length * (i+1))),
+          left: xPos + (compass_length/2),
+          top: yPos + ((compass_length/2)  + (compass_length * (i+1))),
           originX: 'center', 
           originY: 'center',
           selectable: false

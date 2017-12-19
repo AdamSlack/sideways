@@ -11,8 +11,6 @@ declare const fabric: any;
 @Injectable()
 export class FabricService {
 
-  box_length: number;
-
   constructor() { }
 
   public generateFabricCanvas(id: string) {
@@ -20,13 +18,13 @@ export class FabricService {
     return canvas;
   }
 
-  public createReactingObj(canvas: any, x: number, y: number, identifer: string) {
+  public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string) {
       // create a rectangle object
       var card = new fabric.Rect({
         left: x, 
         top: y, 
-        width: 60, 
-        height: 60, 
+        width: length, 
+        height: length, 
         fill: '#ffb366', 
         originX: 'left', 
         originY: 'top',
@@ -70,13 +68,13 @@ export class FabricService {
       return card;
   }
 
-  public createGridBaseLines(canvas: any, gridSize: number) {
-    this.box_length = canvas.width / gridSize;
-    for (var i = 0; i < (canvas.width / this.box_length); ++i) {
-      canvas.add(new fabric.Line([ i * this.box_length, 0, i * this.box_length, canvas.width], { stroke: '#ccc', selectable: false }));
-      canvas.add(new fabric.Line([ 0, i * this.box_length, canvas.height, i * this.box_length], { stroke: '#ccc', selectable: false }))
-    }
-  }
+  // public createGridBaseLines(canvas: any, gridSize: number) {
+  //   this.box_length = canvas.width / gridSize;
+  //   for (var i = 0; i < (canvas.width / this.box_length); ++i) {
+  //     canvas.add(new fabric.Line([ i * this.box_length, 0, i * this.box_length, canvas.width], { stroke: '#ccc', selectable: false }));
+  //     canvas.add(new fabric.Line([ 0, i * this.box_length, canvas.height, i * this.box_length], { stroke: '#ccc', selectable: false }))
+  //   }
+  // }
 
 
   public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number) {
@@ -115,19 +113,19 @@ export class FabricService {
   /*
   @deprecate why even even activate snapping though?
   */
-  public activateSnapping(canvas: any) {
-    if (typeof this.box_length === "undefined") {
-      console.log('Have not initilaised box_length');      
-    } else {
-      console.log('locking enabled');
-      canvas.on('object:moving', function(options) { 
-        options.target.set({
-          left: Math.round(options.target.left / this.box_length) * this.box_length,
-          top: Math.round(options.target.top / this.box_length) * this.box_length
-        });
-      });
-    }
-  }
+  // public activateSnapping(canvas: any) {
+  //   if (typeof this.box_length === "undefined") {
+  //     console.log('Have not initilaised box_length');      
+  //   } else {
+  //     console.log('locking enabled');
+  //     canvas.on('object:moving', function(options) { 
+  //       options.target.set({
+  //         left: Math.round(options.target.left / this.box_length) * this.box_length,
+  //         top: Math.round(options.target.top / this.box_length) * this.box_length
+  //       });
+  //     });
+  //   }
+  // }
 
 }
 
