@@ -60,16 +60,23 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     this.createDeck(Canvas.width - 100, Canvas.width - 110);
     
-    Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
+
+    // Commented out cause we don't really need it?
+    //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
     Canvas.add(this.createDonezoButton(Canvas.width - 100, Canvas.width - 300));
   }
 
   
-  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 10) {
+  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16) {
       //Initialise deck of compass cards
-      var a = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
+      var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
         let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, 'card' + idx.toString());
         card.isPlaced = false;
+        card.lockRotation = true;
+        card.lockUniScaling = true;
+        card.selectable = true;
+        card.lockScalingX = true;
+        card.lockScalingY = true
         Canvas.add(card);
         Deck.push(card);
       });
