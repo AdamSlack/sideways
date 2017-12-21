@@ -10,15 +10,28 @@ export class RecordTimingService {
   constructor() { 
   }
   
-  public recordStartTime() {
+  public recordStartTime() : number {
     this.startTime = performance.now(); 
     return this.startTime;     
   }
 
-  public completeTime() {
+  public recordEndTime() : number {
     this.endTime = performance.now();
-    console.log("StartTime:", this.startTime, "EndTime:", this.endTime);
-    return (this.startTime - this.endTime);
+    return this.endTime;
+  }
+
+  public getTimeElapsed(inSeconds : boolean = false) : number {
+    if (!this.startTime) {
+      return 0
+    }
+    if (!this.endTime) {
+      this.recordEndTime()
+    }
+    if (this.endTime < this.startTime) {
+      this.recordEndTime()
+    }
+    let elapsedTime = (this.endTime - this.startTime);
+    return inSeconds ? elapsedTime / 1000 : elapsedTime;
   }
 
   public sendTimeResults(testId: string) {

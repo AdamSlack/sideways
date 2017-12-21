@@ -15,6 +15,7 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
 
 // services
 import { ResultsService } from './services/results.service';
+import { RecordTimingService } from './services/record-timing.service';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { ResultsService } from './services/results.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [ResultsService],
+  providers: [ResultsService, RecordTimingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
