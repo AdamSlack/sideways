@@ -64,23 +64,15 @@ export class CompassDirectionsTestComponent implements OnInit {
     Canvas.add(this.createDonezoButton(Canvas.width - 100, Canvas.width - 300));
   }
 
-  private createDeck(xOffset = 0, yOffset  = 0) {
-       //Initialise deck of compass cards
-      var card1 = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, "card1");
-      var card2 = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, "card2");
-      
-      card1.isPlaced = false; 
-      card2.isPlaced = false; 
-      
-      // "add" card onto canvas
-      //TODO: should add whole card group to canvas
-      Canvas.add(card1);
-      Canvas.add(card2);
-      
-      Deck.push(card1);
-      Deck.push(card2);
-      
-      console.log("Deck: ",Deck);
+  
+  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 10) {
+      //Initialise deck of compass cards
+      var a = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
+        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, 'card' + idx.toString());
+        card.isPlaced = false;
+        Canvas.add(card);
+        Deck.push(card);
+      });
   }
 
   private gatherResults() {
@@ -113,7 +105,9 @@ export class CompassDirectionsTestComponent implements OnInit {
       lockMovementY: true,
       lockRotation: true,
       lockUniScaling: true,
-      selectable: true
+      selectable: true,
+      lockScalingX: true,
+      lockScalingY: true
     });
     
     butt.on('selected', options => {
@@ -137,7 +131,9 @@ export class CompassDirectionsTestComponent implements OnInit {
       lockMovementY: true,
       lockRotation: true,
       lockUniScaling: true,
-      selectable: true
+      selectable: true,
+      lockScalingX: true,
+      lockScalingY: true
     });
 
     console.log("current deck",Deck);
