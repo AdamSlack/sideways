@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/AdamSlack/stroke_drivers_screening_assessment/issues"
   },
-  "homepage": "https://github.com/AdamSlack/stroke_drivers_screening_assessment#readme"
+  "homepage": "https://github.com/AdamSlack/stroke_drivers_screening_assessment#readme",
+  "dependencies": {
+    "fabric-angular": "^1.0.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.6.0"
+  }
 }
