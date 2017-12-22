@@ -45,6 +45,7 @@ enum compassDir {
   templateUrl: './compass-directions-test.component.html',
   styleUrls: ['./compass-directions-test.component.scss']
 })
+
 export class CompassDirectionsTestComponent implements OnInit {
 
   public time : number = 0 ;
@@ -61,6 +62,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   public sendResults() {
     this.rs.insertCompassDirectionResults(1, 123, 456);
+  }
 
   ngOnInit() {
     console.log("requesting a fabric canvas");
@@ -256,8 +258,4 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   }
 
-
-  public sendResults() {
-    this.rs.insertCompassDirectionResults(1, 123, 456);
-  }
 }
