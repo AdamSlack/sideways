@@ -15,10 +15,35 @@ export class LocalisationCreatorComponent implements OnInit {
   public localeSubmissionSubscription : Subscription;
   public localePreset : LocalePreset = new LocalePreset();
   
+  public dot : boolean = false;
+  public car : boolean = false;
+  public compass : boolean = false;
+  public road : boolean = false;
+  public trail : boolean = false;
+  
   constructor(public locale : LocalisationService) { }
 
   public startLocaleCreation() : void {
     this.creationStarted = true;
+  }
+
+  public toggle(sectionName : string) {
+    // ENUM....
+    if (sectionName == 'dot') {
+      this.dot = !this.dot;
+    }
+    if (sectionName == 'compass') {
+      this.compass = !this.compass;      
+    }
+    if (sectionName == 'car') {
+      this.car = !this.car;
+    }
+    if (sectionName == 'road') {
+      this.road = !this.road;
+    }
+    if (sectionName == 'trail') {
+      this.trail = !this.trail;
+    }
   }
 
   public completeLocaleCreation() : void {
