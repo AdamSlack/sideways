@@ -2,15 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
+import { HttpErrorResponse } from '@angular/common/http/src/response';
 
 export class GeneralDetails {
     testHeading: string = '';
     testInstructions: string = '';
+
+    public constructor() {
+        this.testHeading = '';
+        this.testInstructions = '';
+    }
 }
 
 export class MatrixDetails {
     headingsLabel : string = '';
     deckLabel : string = '';
+
+    public constructor() {
+        this.headingsLabel = '';
+        this.deckLabel = '';
+    }
 }
 
 export class RoadSignScenario {
@@ -20,36 +31,54 @@ export class RoadSignScenario {
     roadSignImage : string = '';
     signXPos : number = 0;
     signYPos : number = 0;
+
+    public constructor() {
+        this.roadSignName = '';
+        this.scenarioName = '';
+        this.scenarioImage = '';
+        this.roadSignImage = '';
+        this.signXPos = 0;
+        this.signYPos = 0;
+    }
 }
 
 export class DotCancellationInstructions {
     // Dot Cancellation Instructions
-    general : GeneralDetails = new GeneralDetails();
+    public general : GeneralDetails = new GeneralDetails();
+    
+    public constructor() {
+        this.general = new GeneralDetails();
+    }
 }
 
 export class CompassDirections {
     // Compass Directions Instructions
-    general : GeneralDetails = new GeneralDetails();
-    matrix : MatrixDetails = new MatrixDetails();
+    public general : GeneralDetails = new GeneralDetails();
+    public matrix : MatrixDetails = new MatrixDetails();
+
+    public constructor() {
+        this.general = new GeneralDetails();
+        this.matrix = new MatrixDetails();
+    }
 }
 
 export class CarDirections {
     // Car Directions Instructions
-    general : GeneralDetails = new GeneralDetails();
-    matrix : MatrixDetails = new MatrixDetails();
+    public general : GeneralDetails = new GeneralDetails();
+    public matrix : MatrixDetails = new MatrixDetails();
 }
 
 export class RoadSigns {
     // Road Signs Instructions
-    general : GeneralDetails = new GeneralDetails();
-    deckLabel : string  = '';
-    scenarios : Array<RoadSignScenario> = []
+    public general : GeneralDetails = new GeneralDetails();
+    public deckLabel : string  = '';
+    public scenarios : Array<RoadSignScenario> = []
 }
 
 export class TrailMaking {
-    general : GeneralDetails = new GeneralDetails();
-    trailA : Array<string> = [];
-    trailB : Array<string> = [];
+    public general : GeneralDetails = new GeneralDetails();
+    public trailA : Array<string> = [];
+    public trailB : Array<string> = [];
 }
 
 
@@ -80,7 +109,7 @@ export class LocalisationService {
     public requestLocaleSetup(locale : string, localeData : LocalePreset) : Observable<any> {
         let url = this.ROOT + 'localisation/';
         let headers = this.createHeaders();
-        return this.http.post(url, '');        
+        return this.http.post(url, '');           
     }
 
     

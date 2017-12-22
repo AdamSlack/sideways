@@ -3,6 +3,32 @@
     </div>
     <input class="bar search" type="text" [(ngModel)]=localeName (submit)=initialiseStudy() placeholder="Enter the name of the preset.">
 </div>
-<div class="submit">
+<div class="submit" *ngIf="!creationStarted">
     <input class="button submit" type="button" (click)=startLocaleCreation() value="Begin Creation">
+</div>
+
+<div *ngIf="creationStarted">
+    <div>
+        <div>
+            Dot Cancellation
+        </div>
+        <input class="bar search" type="text" [(ngModel)]=localePreset.dotCancellation.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
+        <input class="bar search" type="text" [(ngModel)]=localePreset.dotCancellation.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
+    </div>
+    <div>
+        Compass Directions
+    </div>
+    <div>
+        Car Directions
+    </div>
+    <div>
+        Road Signs
+    </div>
+    <div>
+        Trail Making
+    </div>
+
+    <div class="submit">
+        <input class="button submit" type="button" (click)=completeLocaleCreation() value="Submit Local Preset">
+    </div>
 </div>
