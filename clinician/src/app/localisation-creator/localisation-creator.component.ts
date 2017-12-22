@@ -20,6 +20,8 @@ export class LocalisationCreatorComponent implements OnInit {
   public compass : boolean = false;
   public road : boolean = false;
   public trail : boolean = false;
+
+  public 
   
   constructor(public locale : LocalisationService) { }
 
@@ -44,6 +46,42 @@ export class LocalisationCreatorComponent implements OnInit {
     if (sectionName == 'trail') {
       this.trail = !this.trail;
     }
+  }
+
+  public scenario : string;
+  public roadSign : string;
+
+  public onSelectScenario(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        let target : any = event.target;
+        this.scenario = target.result;
+      }
+    }
+  }
+  
+  public onSelectRoadSign(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        let target : any = event.target;
+        this.roadSign = target.result;
+      }
+    }
+  }
+
+  public onScenarioClick(event) {
+    var target = event.target || event.srcElement || event.currentTarget;    
+    
+    console.log('Screen - X: ' + event.clientX + ', Y: ' + event.clientY);
+    console.log('Image - X: ' + target.attributes.offsetX + ', Y: ' + target.attributes.offsetY);
   }
 
   public completeLocaleCreation() : void {

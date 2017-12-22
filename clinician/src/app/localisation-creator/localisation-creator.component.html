@@ -63,13 +63,22 @@
         </div>
         <div *ngIf="road">
 
-            <input class="bar search" type="text" [(ngModel)]=localePreset.roadScenarios.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <textarea rows="4" class="bar search" [(ngModel)]=localePreset.roadScenarios.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
+            <input class="bar search" type="text">
+            <textarea rows="4" class="bar search">
             </textarea>
-            <input class="bar search" type="file" [(ngModel)]=localePreset.roadScenarios.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <input class="bar search" type="file" [(ngModel)]=localePreset.roadScenarios.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <input class="bar search" type="file" [(ngModel)]=localePreset.roadScenarios.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <input class="bar search" type="file" [(ngModel)]=localePreset.roadScenarios.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
+            <div>
+                <div>
+                    Upload Road Scenario
+                    <input class="bar search" type="file" (change)="onSelectScenario($event)">
+                </div>
+                <div>
+                    Upload Road Sign
+                    <input class="bar search" type="file" (change)="onSelectRoadSign($event)">
+                </div>
+                <p> Click on the Scenario to specify location of Road Sign </p>
+                <img [src]="scenario" height="250" (click)=onScenarioClick($event)> <img [src]="roadSign" height="250"><br/>
+
+            </div>
 
         </div>
     </div>
@@ -82,8 +91,8 @@
         </div>
         <div *ngIf="trail">
 
-            <input class="bar search" type="text" [(ngModel)]=localePreset.dotCancellation.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <textarea rows="4" class="bar search" [(ngModel)]=localePreset.dotCancellation.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
+            <input class="bar search" type="text">
+            <textarea rows="4" class="bar search">
             </textarea>
         </div>
     </div>
