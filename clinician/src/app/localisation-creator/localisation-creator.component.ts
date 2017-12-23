@@ -33,6 +33,7 @@ export class LocalisationCreatorComponent implements OnInit {
   public roadSignImages     : Array<string>  = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
   public roadSignPositions  : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords, 0, this.scenarioCounts)
   public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
+  public indicatorCoords    : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords(-100,-100), 0, this.scenarioCounts)
 
   constructor(public locale : LocalisationService) { }
 
@@ -108,11 +109,12 @@ export class LocalisationCreatorComponent implements OnInit {
     let target = event.target || event.srcElement,    
         img = target.attributes.src.ownerElement;
 
-    let x = event.clientX - img.offsetLeft,
-        y = event.clientY - img.offsetTop;
+    let x = event.pageX - img.offsetLeft,
+        y = event.pageY - img.offsetTop;
     
     console.log('Image Co-ords - X: ' + x, ', Y: ' + y);
-    this.roadSignPositions[index] = new Coords(x,y);
+    this.indicatorCoords[index] = new Coords(event.pageX, event.pageY);
+    this.roadSignPositions[index] = new Coords(x-5,y-5);
     this.placementFinisihed[index] = true;
     this.scenarioCompleted(index);    
     return [x,y]

@@ -87,6 +87,14 @@ div.tag {
     display: inline;
 }
 
+div.indicator {
+    background-color: #ff0000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
 div.title {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
     margin-top: 10px;
