@@ -68,13 +68,13 @@ export class FabricService {
                
        // top-left  corner
        if(target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0){
-           target.top = Math.max(target.top, target.top-obj.getBoundingRect().top);
-           target.left = Math.max(target.left, target.left-obj.getBoundingRect().left);
+           target.top = Math.max(target.top, target.top-target.getBoundingRect().top);
+           target.left = Math.max(target.left, target.left-target.getBoundingRect().left);
        }
        // bot-right corner
        if(target.getBoundingRect().top+target.getBoundingRect().height  > target.canvas.height || target.getBoundingRect().left+target.getBoundingRect().width  > target.canvas.width){
-           target.top = Math.min(target.top, target.canvas.height-obj.getBoundingRect().height+obj.top-obj.getBoundingRect().top);
-           target.left = Math.min(target.left, target.canvas.width-obj.getBoundingRect().width+obj.left-obj.getBoundingRect().left);
+           target.top = Math.min(target.top, target.canvas.height-target.getBoundingRect().height+target.top-target.getBoundingRect().top);
+           target.left = Math.min(target.left, target.canvas.width-target.getBoundingRect().width+target.left-target.getBoundingRect().left);
        }
 
        //Have effect on each item
