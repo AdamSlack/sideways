@@ -58,11 +58,31 @@ export class FabricService {
       });
 
       function onChange(options) {
-        options.target.setCoords();
-        canvas.forEachObject(function(obj) {
-          if (obj === options.target) return;
-          obj.set('opacity' ,options.target.intersectsWithObject(obj) ? 0.5 : 1);
-        });
+       // if object is too big ignore
+       if(options.target.currentHeight > options.target.canvas.height || options.target.currentWidth > options.target.canvas.width){
+           return;
+       }        
+
+       let target = options.target;
+       target.setCoords();
+               
+       // top-left  corner
+       if(target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0){
+           target.top = Math.max(target.top, target.top-obj.getBoundingRect().top);
+           target.left = Math.max(target.left, target.left-obj.getBoundingRect().left);
+       }
+       // bot-right corner
+       if(target.getBoundingRect().top+target.getBoundingRect().height  > target.canvas.height || target.getBoundingRect().left+target.getBoundingRect().width  > target.canvas.width){
+           target.top = Math.min(target.top, target.canvas.height-obj.getBoundingRect().height+obj.top-obj.getBoundingRect().top);
+           target.left = Math.min(target.left, target.canvas.width-obj.getBoundingRect().width+obj.left-obj.getBoundingRect().left);
+       }
+
+       //Have effect on each item
+       canvas.forEachObject(function(obj) {
+        if (obj === options.target) return;
+        obj.set('opacity' ,options.target.intersectsWithObject(obj) ? 0.5 : 1);
+      });
+
       }
 
       return card;
