@@ -75,12 +75,12 @@ export class CompassDirectionsTestComponent implements OnInit {
     GridSquares = this.fab.createGridBaseSquares(100,100, Canvas, grid_length,4);
     this.addCompassImages(Canvas, 100 - (grid_length/4),  100 - (grid_length/4), grid_length/4);
 
-    this.createDeck(Canvas.width - 100, Canvas.width - 110);
+    this.createDeck(grid_length + 150, grid_length+150);
     
 
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
-    Canvas.add(this.createDonezoButton(Canvas.width - 100, Canvas.width - 300));
+    Canvas.add(this.createDonezoButton(grid_length + 100, grid_length + 75));
   }
 
   
