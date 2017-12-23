@@ -83,7 +83,9 @@ textarea {
     width: 95% !important;
 }
 
-div.tag {}
+div.tag {
+    display: inline;
+}
 
 div.title {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);

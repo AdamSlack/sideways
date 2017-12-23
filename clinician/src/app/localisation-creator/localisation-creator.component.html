@@ -69,7 +69,7 @@
 
             <div *ngFor="let scene of scenarioVisible; let idx = index;">
                 <div class="input">
-                    Scenario {{idx}}
+                    <div class="tag">Scenario {{idx + 1}}</div>
                     <div class="expander" (click)="toggleScenario(idx)">
                         show/hide
                     </div>

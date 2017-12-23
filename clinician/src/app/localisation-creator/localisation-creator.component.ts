@@ -113,6 +113,7 @@ export class LocalisationCreatorComponent implements OnInit {
     
     console.log('Image Co-ords - X: ' + x, ', Y: ' + y);
     this.roadSignPositions[index] = new Coords(x,y);
+    this.placementFinisihed[index] = true;
     this.scenarioCompleted(index);    
     return [x,y]
   }
