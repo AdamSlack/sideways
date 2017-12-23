@@ -1,4 +1,4 @@
-<div class="search">
+<div>
     <div class="heading">
     </div>
     <input class="bar search" type="text" [(ngModel)]=localeName (submit)=initialiseStudy() placeholder="Enter the name of the preset.">
@@ -63,21 +63,34 @@
         </div>
         <div *ngIf="road">
 
-            <input class="bar search" type="text">
-            <textarea rows="4" class="bar search">
+            <input class="bar search" type="text" placeholder="Enter a title for this test">
+            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test.">
             </textarea>
-            <div>
-                <div>
-                    Upload Road Scenario
-                    <input class="bar search" type="file" (change)="onSelectScenario($event)">
-                </div>
-                <div>
-                    Upload Road Sign
-                    <input class="bar search" type="file" (change)="onSelectRoadSign($event)">
-                </div>
-                <p> Click on the Scenario to specify location of Road Sign </p>
-                <img [src]="scenario" height="250" (click)=onScenarioClick($event)> <img [src]="roadSign" height="250"><br/>
 
+            <div *ngFor="let scene of scenarioVisible; let idx = index;">
+                <div class="input">
+                    Scenario {{idx}}
+                    <div class="expander" (click)="toggleScenario(idx)">
+                        show/hide
+                    </div>
+                    <div *ngIf="scenarioComplete[idx]" class="tag">
+                        - Complete
+                    </div>
+                </div>
+                <div *ngIf="scene">
+                    <div>
+                        Upload Road Scenario
+                        <input class="bar search" type="file" (change)="onSelectScenario($event, idx)">
+                    </div>
+                    <div>
+                        Upload Road Sign
+                        <input class="bar search" type="file" (change)="onSelectRoadSign($event, idx)">
+                    </div>
+                    <div class="search" *ngIf="scenarioImages[idx] != '' && roadSignImages[idx] != '';">
+                        <p> Click on the Scenario to specify location of Road Sign </p>
+                        <img [src]="scenarioImages[idx]" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="roadSignImages[idx]" height="250"><br/>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -91,8 +104,8 @@
         </div>
         <div *ngIf="trail">
 
-            <input class="bar search" type="text">
-            <textarea rows="4" class="bar search">
+            <input class="bar search" type="text" placeholder="Enter a title for this Test">
+            <textarea rows="4" class="bar search" placeholder="Enter instructions for this Test.">
             </textarea>
         </div>
     </div>

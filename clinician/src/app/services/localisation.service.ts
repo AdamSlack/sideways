@@ -5,8 +5,8 @@ import { AuthenticationService } from './authentication.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
 export class GeneralDetails {
-    testHeading: string = '';
-    testInstructions: string = '';
+    public testHeading: string = '';
+    public testInstructions: string = '';
 
     public constructor() {
         this.testHeading = '';
@@ -15,30 +15,37 @@ export class GeneralDetails {
 }
 
 export class MatrixDetails {
-    headingsLabel : string = '';
-    deckLabel : string = '';
+    public headingsLabel : string = '';
+    public deckLabel : string = '';
 
     public constructor() {
         this.headingsLabel = '';
         this.deckLabel = '';
     }
 }
+export class Coords {
+    
+    public x : number;
+    public y : number;
 
+    public constructor(x : number = 0, y : number = 0) {
+    this.x = x;
+    this.y = y;
+    }
+}
 export class RoadSignScenario {
-    roadSignName : string = '';
-    scenarioName : string = '';
-    scenarioImage : string = '';
-    roadSignImage : string = '';
-    signXPos : number = 0;
-    signYPos : number = 0;
+    public roadSignName : string = '';
+    public scenarioName : string = '';
+    public scenarioImage : string = '';
+    public roadSignImage : string = '';
+    public signPos : Coords = new Coords();
 
     public constructor() {
         this.roadSignName = '';
         this.scenarioName = '';
         this.scenarioImage = '';
         this.roadSignImage = '';
-        this.signXPos = 0;
-        this.signYPos = 0;
+        this.signPos = new Coords();
     }
 }
 

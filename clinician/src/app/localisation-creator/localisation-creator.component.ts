@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalisationService, LocalePreset } from '../services/localisation.service';
+import { LocalisationService, LocalePreset, Coords } from '../services/localisation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
   templateUrl: './localisation-creator.component.html',
   styleUrls: ['./localisation-creator.component.scss']
 })
+
 export class LocalisationCreatorComponent implements OnInit {
 
   public creationStarted : boolean = false;
@@ -21,12 +22,36 @@ export class LocalisationCreatorComponent implements OnInit {
   public road : boolean = false;
   public trail : boolean = false;
 
-  public 
-  
+
+  // Road Signs , indexed though angular bindings.
+  public scenarioCounts     : number = 16
+  public scenarioUploaded   : Array<boolean> = Array(this.scenarioCounts).fill(false,0,this.scenarioCounts);
+  public roadSignUpladed    : Array<boolean> = Array(this.scenarioCounts).fill(false,0,this.scenarioCounts);
+  public scenarioVisible    : Array<boolean> = Array(this.scenarioCounts).fill(false,0,this.scenarioCounts);
+  public placementFinisihed : Array<boolean> = Array(this.scenarioCounts).fill(false,0,this.scenarioCounts);
+  public scenarioImages     : Array<string>  = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  public roadSignImages     : Array<string>  = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  public roadSignPositions  : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords, 0, this.scenarioCounts)
+  public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
+
   constructor(public locale : LocalisationService) { }
 
   public startLocaleCreation() : void {
     this.creationStarted = true;
+  }
+
+  public scenarioCompleted(index : number)  {
+    let a = this.scenarioUploaded[index],
+        b = this.roadSignUpladed[index],
+        c = this.placementFinisihed[index];
+
+    this.scenarioComplete[index] = a && b && c
+    console.log(a && b && c)
+    return a && b && c;
+  }
+
+  public toggleScenario(index : number) {
+    this.scenarioVisible[index] = !this.scenarioVisible[index];
   }
 
   public toggle(sectionName : string) {
@@ -48,10 +73,7 @@ export class LocalisationCreatorComponent implements OnInit {
     }
   }
 
-  public scenario : string;
-  public roadSign : string;
-
-  public onSelectScenario(event) { // called each time file input changes
+  public onSelectScenario(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
@@ -59,12 +81,14 @@ export class LocalisationCreatorComponent implements OnInit {
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         let target : any = event.target;
-        this.scenario = target.result;
+        this.scenarioImages[index] = target.result;
+        this.scenarioUploaded[index] = true;
+        this.scenarioCompleted(index);
       }
     }
   }
   
-  public onSelectRoadSign(event) { // called each time file input changes
+  public onSelectRoadSign(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
@@ -72,12 +96,15 @@ export class LocalisationCreatorComponent implements OnInit {
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         let target : any = event.target;
-        this.roadSign = target.result;
+        this.roadSignImages[index] = target.result;
+        this.roadSignUpladed[index] = true;
+        this.scenarioCompleted(index);
+        
       }
     }
   }
 
-  public onScenarioClick(event) {
+  public onScenarioClick(event, index) {
     let target = event.target || event.srcElement,    
         img = target.attributes.src.ownerElement;
 
@@ -85,7 +112,8 @@ export class LocalisationCreatorComponent implements OnInit {
         y = event.clientY - img.offsetTop;
     
     console.log('Image Co-ords - X: ' + x, ', Y: ' + y);
-    
+    this.roadSignPositions[index] = new Coords(x,y);
+    this.scenarioCompleted(index);    
     return [x,y]
   }
 
