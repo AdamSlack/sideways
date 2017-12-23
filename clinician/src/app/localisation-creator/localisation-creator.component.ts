@@ -78,10 +78,15 @@ export class LocalisationCreatorComponent implements OnInit {
   }
 
   public onScenarioClick(event) {
-    var target = event.target || event.srcElement || event.currentTarget;    
+    let target = event.target || event.srcElement,    
+        img = target.attributes.src.ownerElement;
+
+    let x = event.clientX - img.offsetLeft,
+        y = event.clientY - img.offsetTop;
     
-    console.log('Screen - X: ' + event.clientX + ', Y: ' + event.clientY);
-    console.log('Image - X: ' + target.attributes.offsetX + ', Y: ' + target.attributes.offsetY);
+    console.log('Image Co-ords - X: ' + x, ', Y: ' + y);
+    
+    return [x,y]
   }
 
   public completeLocaleCreation() : void {
