@@ -95,6 +95,13 @@ div.indicator {
     position: absolute;
 }
 
+div.trail-element {
+    padding: 2.5px;
+    margin: 2.5px;
+    float: left;
+    font-family: 'Roboto', sans-serif;
+}
+
 div.title {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
     margin-top: 10px;

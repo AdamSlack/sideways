@@ -109,6 +109,20 @@
             <input class="bar search" type="text" placeholder="Enter a title for this Test">
             <textarea rows="4" class="bar search" placeholder="Enter instructions for this Test.">
             </textarea>
+            <div>
+                <input class="search" [(ngModel)]="trailAString" (keyup)="splitTrailString(trailAString, true)" type="text" placeholder="Enter a comma seperated Trail A Sequence (e.g. a,b,c,...)">
+                <div>
+                    <div class="trail-element">Length: {{trailAArray.length}}, Sequence:</div>
+                    <div class="trail-element" *ngFor="let el of trailAArray">{{el}}</div>
+                </div>
+            </div>
+            <div>
+                <input class="search" [(ngModel)]="trailBString" (keyup)="splitTrailString(trailBString, false)" type="text" placeholder="Enter a comma seperated Trail B Sequence (e.g. a,b,c,...)">
+                <div>
+                    <div class="trail-element">Length: {{trailBArray.length}}, Sequence:</div>
+                    <div class="trail-element" *ngFor="let el of trailBArray">{{el}}</div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -35,6 +35,11 @@ export class LocalisationCreatorComponent implements OnInit {
   public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
   public indicatorCoords    : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords(-100,-100), 0, this.scenarioCounts)
 
+  public trailAString : string = '';
+  public trailBString : string = '';
+  public trailAArray : Array<string> = [];
+  public trailBArray : Array<string> = [];
+
   constructor(public locale : LocalisationService) { }
 
   public startLocaleCreation() : void {
@@ -100,8 +105,17 @@ export class LocalisationCreatorComponent implements OnInit {
         this.roadSignImages[index] = target.result;
         this.roadSignUpladed[index] = true;
         this.scenarioCompleted(index);
-        
       }
+    }
+  }
+
+  splitTrailString(str : string, trailA : boolean = true) {
+    let arr = str.replace(/ /g, '').split(',').filter((el) => el != '');
+
+    if (trailA) {
+      this.trailAArray = arr;
+    } else {
+      this.trailBArray = arr;
     }
   }
 
@@ -121,7 +135,6 @@ export class LocalisationCreatorComponent implements OnInit {
   }
 
   public completeLocaleCreation() : void {
-    
     
     console.log(this.localePreset.dotCancellation.general.testHeading);
     console.log(this.localePreset.dotCancellation.general.testInstructions);
