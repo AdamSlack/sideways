@@ -122,6 +122,7 @@ export class LocalisationCreatorComponent implements OnInit {
 
   public completeLocaleCreation() : void {
     
+    
     console.log(this.localePreset.dotCancellation.general.testHeading);
     console.log(this.localePreset.dotCancellation.general.testInstructions);
     if (this.localeSubmissionSubscription) {
