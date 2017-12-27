@@ -22,6 +22,12 @@ const TestRoutes = [{
   path:'trail_making', component: TrailMakingTestComponent
 }]
 
+const GenericTestRoute = [{
+  { path: 'test/:test_id', component: HeroDetailComponent },
+  
+}]
+//TODO: default route?
+//path: '', redirectTo: '/', pathMatch: 'full'
 //Create the desired routeing
 const routes: Routes = TestRoutes;
 
