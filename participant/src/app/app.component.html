@@ -1,13 +1,4 @@
-<div>
-  Participant Test Page 001
-</div>
 
-
-<div>
-  Test Instructions
-</div>
-<app-test-instructions></app-test-instructions>
-<br>
 <!-- 
 <app-dot-cancellation-test></app-dot-cancellation-test> <br>
 <app-car-directions-test></app-car-directions-test> <br>
@@ -15,10 +6,17 @@
 <app-road-scenarios-test></app-road-scenarios-test> <br>
 <app-trail-making-test></app-trail-making-test> -->
 
+<h1>{{title}}</h1>
+
 <nav>
-  <a routerLink="/heroes">Heroes</a>
-  <a *ngFor="let hero of heroes" class="col-1-4"
-      routerLink="/test/{{test.id}}">
+
 </nav>
+
+<ul class="tests">
+  <li *ngFor="let test of game_routes">
+
+    <a routerLink="/test/{{test}}"></a>    
+  </li>
+</ul>
 
 <router-outlet></router-outlet>

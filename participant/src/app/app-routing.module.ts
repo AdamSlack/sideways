@@ -10,7 +10,7 @@ import { CompassDirectionsTestComponent } from './components/compass-directions-
 import { RoadScenariosTestComponent } from './components/road-scenarios-test/road-scenarios-test.component';
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 
-const TestRoutes = [{
+export const test_game_routes : Routes = [{
   path:'dot_cancellation', component: DotCancellationTestComponent
 }, {
   path:'car_directions', component: CarDirectionsTestComponent
@@ -29,12 +29,10 @@ const TestRoutes = [{
 //TODO: default route?
 //path: '', redirectTo: '/', pathMatch: 'full'
 //Create the desired routeing
-const routes: Routes = TestRoutes;
+export const all_routes: Routes = test_game_routes;
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],  
+  imports: [ RouterModule.forRoot(all_routes) ],  
   exports: [ RouterModule ],
 })
 export class AppRoutingModule { }
-
-

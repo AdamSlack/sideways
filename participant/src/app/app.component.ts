@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { test_game_routes } from './app-routing.module';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Stroke Driving Test Assessment';
+  game_routes =test_game_routes; 
+  //console.log(game_routes.providers)
+  //console.log();
 }
