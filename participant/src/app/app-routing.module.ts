@@ -11,15 +11,15 @@ import { RoadScenariosTestComponent } from './components/road-scenarios-test/roa
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 
 export const test_game_routes : Routes = [{
-  path:'dot_cancellation', component: DotCancellationTestComponent
+  path:'test/dot_cancellation', component: DotCancellationTestComponent
 }, {
-  path:'car_directions', component: CarDirectionsTestComponent
+  path:'test/car_directions', component: CarDirectionsTestComponent
 }, {
-  path:'compass_directions', component: CompassDirectionsTestComponent
+  path:'test/compass_directions', component: CompassDirectionsTestComponent
 }, {
-  path:'road_scenarios', component: RoadScenariosTestComponent
+  path:'test/road_scenarios', component: RoadScenariosTestComponent
 }, {
-  path:'trail_making', component: TrailMakingTestComponent
+  path:'test/trail_making', component: TrailMakingTestComponent
 }]
 
 // const GenericTestRoute =[{

@@ -9,6 +9,5 @@ import { test_game_routes } from './app-routing.module';
 export class AppComponent {
   title = 'Stroke Driving Test Assessment';
   game_routes =test_game_routes; 
-  //console.log(game_routes.providers)
-  //console.log();
 }
+

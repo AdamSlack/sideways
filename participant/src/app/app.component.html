@@ -14,8 +14,7 @@
 
 <ul class="tests">
   <li *ngFor="let test of game_routes">
-
-    <a routerLink="/test/{{test}}"></a>    
+    <a routerLink="test/{{test.path}}"> {{test.path}}</a>    
   </li>
 </ul>
 
