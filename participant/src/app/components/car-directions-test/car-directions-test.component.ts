@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultsService } from '../services/results.service';
-import { RecordTimingService } from '../services/record-timing.service';
+import { ResultsService } from '../../services/results.service';
+import { RecordTimingService } from '../../services/record-timing.service';
 
 @Component({
   selector: 'app-car-directions-test',

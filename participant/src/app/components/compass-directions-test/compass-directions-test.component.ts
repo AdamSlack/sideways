@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultsService } from '../services/results.service';
-import { RecordTimingService } from '../services/record-timing.service';
+import { ResultsService } from '../../services/results.service';
+import { RecordTimingService } from '../../services/record-timing.service';
 import { Time } from '@angular/common/src/i18n/locale_data_api';
-import { FabricService } from '../services/fabric.service'
+import { FabricService } from '../../services/fabric.service'
 
 import "fabric"
 declare const fabric: any;
