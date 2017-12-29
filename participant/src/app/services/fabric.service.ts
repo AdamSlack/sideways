@@ -14,8 +14,26 @@ export class FabricService {
   constructor() { }
 
   public generateFabricCanvas(id: string) {
-    let canvas = new fabric.Canvas(id);
-    return canvas;
+    var canvas = <HTMLCanvasElement> document.getElementById("canvas");
+  
+    var context = canvas.getContext("2d");
+    
+    //initilise canvas to the size of the parent node, need to be done here as set scaling rather then streching contents
+
+    var r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = r.width;
+    canvas.height = r.height;
+    
+    context.fillStyle = "red";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    
+    
+  
+    //Intialise fabricjs components
+    let canvas_fab = new fabric.Canvas(id);
+    canvas_fab.backgroundColor = '#C4CDE0';
+    canvas_fab.renderAll();
+    return canvas_fab;
   }
 
   public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string) {
@@ -115,7 +133,7 @@ export class FabricService {
           height: square_length,
           selectable: false,
           id: id++,
-          fill: '#99ccff'
+          fill: '#FF69B4'
         });
         squareSet.push(rect);
         start_x += square_length;

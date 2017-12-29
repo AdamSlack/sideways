@@ -71,23 +71,32 @@ export class CompassDirectionsTestComponent implements OnInit {
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
-    var grid_length = 300;
-    GridSquares = this.fab.createGridBaseSquares(100,100, Canvas, grid_length,4);
-    this.addCompassImages(Canvas, 100 - (grid_length/4),  100 - (grid_length/4), grid_length/4);
+    //Need to check width and height and fit in the smallest 
+    var percentage_cover = 0.8;
+    var grid_length =  (Canvas.width < Canvas.height ? Canvas.width : Canvas.height) * percentage_cover; //- 100 to account for offset
+    console.log("Grid Length: ", grid_length);
+    console.log("Grid Length Percent: ", grid_length * 0.5)
 
-    this.createDeck(grid_length + 150, grid_length+150);
+    //TODO: fabric js has some alignment methods..
+    var x_grid_offset = 0;
+    var y_grid_offset = 0;
+
+    var square_length =  grid_length/5
+    this.addCompassImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
+
+    this.createDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 20, square_length * 0.9);
     
-
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
-    Canvas.add(this.createDonezoButton(grid_length + 100, grid_length + 75));
+    Canvas.add(this.createDonezoButton(Canvas.width - 250, Canvas.height - 75));
   }
 
   
-  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16) {
+  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
-        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, 40, 'card' + idx.toString());
+        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card' + idx.toString());
         card.isPlaced = false;
         card.lockRotation = true;
         card.lockUniScaling = true;

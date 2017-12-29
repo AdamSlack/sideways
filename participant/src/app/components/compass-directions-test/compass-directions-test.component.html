@@ -1,13 +1,10 @@
-<div>
-  <nav>
-    <main>
-      Compass Directions
-    </main>
-    <aside>
-      <div class="button">
-        ?
-      </div>
-    </aside>
+<mat-card-content fxLayout="row" >
+    <mat-card fxFlex>
+        Compass Directions
+    </mat-card>
+    <mat-card fxFlex="20">
+        <button  mat-icon-button > ?</button>
+    </mat-card>
     <!-- 
     Test items
     <div (click)="sendResults()">
@@ -22,9 +19,9 @@
     <div>
         {{time}}
     </div> -->
-  </nav>
+</mat-card-content>
 
-  <canvas id="canvas" class="canvas" width="500" height="500">
-  </canvas>
-
-</div>
+<mat-card-content fxFill="row" >
+    <canvas fxFill  id="canvas" >
+    </canvas>
+</mat-card-content>

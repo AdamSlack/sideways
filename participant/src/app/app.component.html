@@ -8,14 +8,10 @@
 
 <h1>{{title}}</h1>
 
-<nav>
-
-</nav>
-
-<ul class="tests">
-  <li *ngFor="let test of game_routes">
-    <a routerLink="test/{{test.path}}"> {{test.path}}</a>    
-  </li>
-</ul>
+<div class="tests" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <div *ngFor="let test of game_routes">
+    <button mat-button routerLink="{{test.path}}"> {{test.path}}</button>    
+  </div>
+</div>
 
 <router-outlet></router-outlet>
