@@ -148,6 +148,132 @@ export class FabricService {
   }
 
   
+    public addIdentifyingImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
+    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
+    //   oImg.width = this.box_length
+      
+    //   oImg.height = this.box_length;
+    //   canvas.add(oImg);
+    // });
+    var compass_url = '../assets/compass_north.svg';
+
+    var group = [];
+    var rotate = 0;
+    var increment_rotation = 45;
+
+    //Top row
+
+    //Just messing... es6
+    // let times=(n,f)=>{while(n-->0)f();}
+    // times (3, console.log('times repeat'));
+    const times = n => f => {
+      let iter = i => {
+        if (i === n) return
+        f (i)
+        iter (i + 1)
+      }
+      return iter (0)
+    }
+    
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: xPos + (compass_length/2) + (compass_length * (i+1)),
+          top: yPos + (compass_length/2),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
+        });
+        console.log(obj.rotate);
+        obj.rotate(rotate);
+        rotate += increment_rotation;
+        obj.scaleToWidth(compass_length);
+        canvas.add(obj).renderAll();
+      });
+    })
+
+    rotate = 0;
+    times (4) (i => {
+      fabric.loadSVGFromURL(compass_url, (objects, options) => {
+        var obj = fabric.util.groupSVGElements(objects, {
+          left: xPos + (compass_length/2),
+          top: yPos + ((compass_length/2)  + (compass_length * (i+1))),
+          originX: 'center', 
+          originY: 'center',
+          selectable: false
+        });
+        obj.rotate(rotate);
+        rotate += increment_rotation;
+        obj.scaleToWidth(compass_length);
+        canvas.add(obj).renderAll();
+      });
+    })
+
+  }
+
+
+  /*
+  Fabric draw arrow function
+  https://stackoverflow.com/questions/31238010/arrows-in-fabricjs
+  
+  */
+  public drawArrow(canvas: any, fromx: number, fromy : number, tox: number, toy: number) {
+    
+      var angle = Math.atan2(toy - fromy, tox - fromx);
+    
+      var headlen = 15;  // arrow head size
+    
+      // bring the line end back some to account for arrow head.
+      tox = tox - (headlen) * Math.cos(angle);
+      toy = toy - (headlen) * Math.sin(angle);
+    
+      // calculate the points.
+      var points = [
+        {
+          x: fromx,  // start point
+          y: fromy
+        }, {
+          x: fromx - (headlen / 4) * Math.cos(angle - Math.PI / 2), 
+          y: fromy - (headlen / 4) * Math.sin(angle - Math.PI / 2)
+        },{
+          x: tox - (headlen / 4) * Math.cos(angle - Math.PI / 2), 
+          y: toy - (headlen / 4) * Math.sin(angle - Math.PI / 2)
+        }, {
+          x: tox - (headlen) * Math.cos(angle - Math.PI / 2),
+          y: toy - (headlen) * Math.sin(angle - Math.PI / 2)
+        },{
+          x: tox + (headlen) * Math.cos(angle),  // tip
+          y: toy + (headlen) * Math.sin(angle)
+        }, {
+          x: tox - (headlen) * Math.cos(angle + Math.PI / 2),
+          y: toy - (headlen) * Math.sin(angle + Math.PI / 2)
+        }, {
+          x: tox - (headlen / 4) * Math.cos(angle + Math.PI / 2),
+          y: toy - (headlen / 4) * Math.sin(angle + Math.PI / 2)
+        }, {
+          x: fromx - (headlen / 4) * Math.cos(angle + Math.PI / 2),
+          y: fromy - (headlen / 4) * Math.sin(angle + Math.PI / 2)
+        },{
+          x: fromx,
+          y: fromy
+        }
+      ];
+    
+      var pline = new fabric.Polyline(points, {
+        fill: 'white',
+        stroke: 'black',
+        opacity: 1,
+        strokeWidth: 2,
+        originX: 'left',
+        originY: 'top',
+        selectable: true
+      });
+    
+      canvas.add(pline);
+    
+      canvas.renderAll();
+    }
+    
   /*
   @deprecate why even even activate snapping though?
   */

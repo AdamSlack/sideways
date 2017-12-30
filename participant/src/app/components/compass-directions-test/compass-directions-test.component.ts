@@ -65,7 +65,7 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("requesting a fabric canvas");
+    //console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     Canvas = this.fab.generateFabricCanvas('canvas');
@@ -82,7 +82,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     var y_grid_offset = 0;
 
     var square_length =  grid_length/5
-    this.addCompassImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
+    this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
     this.createDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 20, square_length * 0.9);
@@ -204,7 +204,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     return butt;
   }
 
-  public addCompassImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
+  public addIdentifyingImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
     // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
     //   oImg.width = this.box_length
       
