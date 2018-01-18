@@ -7,6 +7,7 @@ import { InitialisationService } from '../services/initialisation.service';
   templateUrl: './study-init.component.html',
   styleUrls: ['./study-init.component.scss']
 })
+
 export class StudyInitComponent implements OnInit {
 
   public localeOptions : string[];
