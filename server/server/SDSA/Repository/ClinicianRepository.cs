@@ -32,7 +32,8 @@ namespace SDSA.Repository
             HashSalt Pass = null;
             if (user.UserType == SDSAUser.loginuserType.Clinician)
             {
-                string hash = Db.ExecuteScalar<string>("SELECT hash from clinicians where email = @email", new { email = user.Email });
+
+                string hash = Db.ExecuteScalar<string>("SELECT hash, salt from clinicians where email = @email", new { email = user.Email });
                 string salt = Db.ExecuteScalar<string>("SELECT salt from clinicians where email = @email", new { email = user.Email });
 
                 Pass = new HashSalt { Hash = hash, Salt = salt};
