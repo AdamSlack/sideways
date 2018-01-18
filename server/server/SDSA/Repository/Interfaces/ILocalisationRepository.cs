@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SDSA.Models;
+using SDSA.Models.Localisation;
 
 namespace SDSA.Repository.Interfaces 
 {

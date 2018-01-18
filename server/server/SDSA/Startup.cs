@@ -75,7 +75,7 @@ namespace SDSA
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
-        }            app.UseCors("SiteCorsPolicy");
+        }   
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

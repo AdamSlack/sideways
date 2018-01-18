@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SDSA.Models;
+using SDSA.Models.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
