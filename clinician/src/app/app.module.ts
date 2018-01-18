@@ -15,6 +15,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { LocalisationService } from './services/localisation.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { LocalisationService } from './services/localisation.service';
     HttpClientModule,
     FormsModule  ],
   providers: [ParticipantService, InitialisationService, LocalisationService, AuthenticationService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

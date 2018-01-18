@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecordTimingService } from '../services/record-timing.service';
 
 @Component({
   selector: 'app-trail-making-test',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrailMakingTestComponent implements OnInit {
 
+  private timer : RecordTimingService;
+  
+  
   constructor() { }
 
   ngOnInit() {

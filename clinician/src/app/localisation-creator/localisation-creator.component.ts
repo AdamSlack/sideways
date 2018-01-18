@@ -3,6 +3,7 @@ import { LocalisationService, LocalePreset, Coords } from '../services/localisat
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
+
 @Component({
   selector: 'app-localisation-creator',
   templateUrl: './localisation-creator.component.html',
@@ -162,6 +163,7 @@ export class LocalisationCreatorComponent implements OnInit {
     console.log('Preset Name:' + this.locale.localePreset.name + '!');
     this.locale.localePreset.name = 'TEST';
     console.log('Preset Name:' + this.locale.localePreset.name + '!');    
+
   }
 
 }
