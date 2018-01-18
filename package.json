@@ -1,0 +1,25 @@
+{
+  "name": "stroke_drivers_screening_assessment",
+  "version": "1.0.0",
+  "description": "Software implementation of the Strock Drivers Screening Assessment digitised system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdamSlack/stroke_drivers_screening_assessment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdamSlack/stroke_drivers_screening_assessment/issues"
+  },
+  "homepage": "https://github.com/AdamSlack/stroke_drivers_screening_assessment#readme",
+  "dependencies": {
+    "fabric-angular": "^1.0.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.6.0"
+  }
+}
