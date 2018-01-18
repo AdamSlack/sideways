@@ -28,7 +28,6 @@ export class AuthenticationService {
       'Password' : password,
       'UserType' : 1
     };
-    console.log(body);
     return this.http.post(url,body,{headers : headers}).subscribe((res) => {
       if (res['message']) {
         this.VALIDATED = false;

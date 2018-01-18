@@ -25,7 +25,6 @@ export class HomePageComponent implements OnInit {
   constructor(public authService : AuthenticationService) { }
 
   public login() {
-    console.log(this.password)
     this.authService.requestToken(this.email, this.password);
   }
 
