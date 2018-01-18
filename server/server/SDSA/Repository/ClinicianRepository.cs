@@ -26,13 +26,17 @@ namespace SDSA.Repository
 
         public Clinician GetClinician(int id)
          => Db.ExecuteScalar<Clinician>("SELECT clinician_id as ID from clinicians where clinician_Id = @id", new { Id = id });
+        
         public bool ValidateClinician(SDSAUser user)
         {
-            HashSalt Pass = null;
+            HashSalt Pass = new HashSalt();
             if (user.UserType == SDSAUser.loginuserType.Clinician)
             {
-                Pass = Db.ExecuteScalar<HashSalt>("SELECT Hash , Salt from clinicians where email = @email", new { email = user.Email });
-            }
+                string hash = Db.ExecuteScalar<string>("SELECT hash from clinicians where email = @email", new { email = user.Email });
+                string salt = Db.ExecuteScalar<string>("SELECT salt from clinicians where email = @email", new { email = user.Email });
+                Pass.Hash = hash;
+                Pass.Salt = salt;
+            }   
             else
                 return false;
             if (Pass == null)
