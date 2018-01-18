@@ -17,9 +17,9 @@ create table participants(
 -----
 create table clinicians(
     clinician_id    serial   primary key  not null,
-    email 	    text     required,
-    hash	    text     required,
-    salt 	    text     required,
+    email 	    text     not null,
+    hash	    text     not null,
+    salt 	    text     not null
 
 );
 

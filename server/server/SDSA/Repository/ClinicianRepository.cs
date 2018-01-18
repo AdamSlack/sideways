@@ -29,13 +29,13 @@ namespace SDSA.Repository
         
         public bool ValidateClinician(SDSAUser user)
         {
-            HashSalt Pass = new HashSalt();
+            HashSalt Pass = null;
             if (user.UserType == SDSAUser.loginuserType.Clinician)
             {
                 string hash = Db.ExecuteScalar<string>("SELECT hash from clinicians where email = @email", new { email = user.Email });
                 string salt = Db.ExecuteScalar<string>("SELECT salt from clinicians where email = @email", new { email = user.Email });
-                Pass.Hash = hash;
-                Pass.Salt = salt;
+
+                Pass = new HashSalt { Hash = hash, Salt = salt};
             }   
             else
                 return false;

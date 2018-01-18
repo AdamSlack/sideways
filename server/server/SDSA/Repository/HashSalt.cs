@@ -30,7 +30,7 @@ namespace SDSA.Repository
             rng.GetBytes(salt);
             return Convert.ToBase64String(salt);
         }
-        
+
         /// <summary>
         /// compares password to current has and salt
         /// </summary>
@@ -38,8 +38,7 @@ namespace SDSA.Repository
         /// <returns></returns>
         public bool Compare(string password)
         {
-            Console.WriteLine("Comparing Password.");
-            HashSalt p1 = HashSalt.GenerateHash(password, Hash);
+            HashSalt p1 = HashSalt.GenerateHash(password, Salt);
             return p1.Hash == Hash && p1.Salt == Salt;
         }
 
