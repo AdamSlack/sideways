@@ -30,13 +30,51 @@ create table clinicians(
 ----------------------------------------------------
 
 -----
---  Example: preset_id: 0001, region: en-gb, localisation: { dot_cancellation: {instructions: 'fooo baar'}}
+--  Example: preset_name: 'en_gb'
 -----
 create table localisation_presets(
-    preset_id       serial  primary key  not null,
-    region          text    not null,
-    localisation    jsonb   not null
+    preset_name                 text    not null primary key
 );
+
+create table sdsa_test_types(
+    id          serial not null primary key,
+    name        text   not null
+);
+
+create table sdsa_test_details(
+    preset_name                 text    references localisation_presets(preset_name),
+    sdsa_test_type              int     references sdsa_test_types(id),
+    name                        text    ,
+    instructions                text    ,
+    headings_label              text    ,
+    deck_label                  text    ,
+    primary key (preset_name, sdsa_test_type)
+);
+
+create table trail_making_details(
+    preset_name                 text    primary key references localisation_presets(preset_name),
+    name                        text    ,
+    instructions                text    ,
+    trail_a                     text[]  ,
+    trail_b                     text[]
+);
+
+create table localisation_images(
+    image_id        serial  primary key,
+    preset_name     text    references localisation_presets(preset_name),
+    image           bytea   not null,
+    file_type       text
+);
+
+create table road_sign_scenario(
+    road_sign_id    serial  not null primary key,
+    sign_id         int     references localisation_images(image_id),
+    scenario_id     int     references localisation_images(image_id),
+    xpos            int     ,     
+    ypos            int     
+);
+
+
 -----
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
@@ -44,7 +82,7 @@ create table participant_tests(
     test_id         serial   primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_id       smallint    references localisation_presets(preset_id) not null
+    preset_name     text    references localisation_presets(preset_name) not null
 );
 
 ----------------------------------------------------
@@ -128,4 +166,10 @@ create table algorithm_results(
     algorthim_id    smallint references algorithms(algorithm_id) not null,
     results         jsonb
 );
+
+----
+--  TEST Clinician. Doesn't do anything though.
+----
+insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7SVKdcafJPLNokrc0WTXjYyaAoggRR/7LhcPotdsV3Nv5BsXOtPUbw+bGKpo+qnfzhldcGKSuEtqFJKj6w==', 'hello');
+
 commit;
