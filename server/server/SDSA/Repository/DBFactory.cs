@@ -27,6 +27,8 @@ namespace SDSA.Repository
                  return new SqlConnection(connectionString);
                 case "PostGreSQL1":
                     return new NpgsqlConnection(connectionString);
+                case "test_local_db":
+                    return new NpgsqlConnection(connectionString);
                 default:
                     throw new Exception("No handler for that connection string.");
             }
