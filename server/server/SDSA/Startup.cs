@@ -12,6 +12,8 @@ using SDSA.Service;
 using SDSA.Service.Interfaces;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace SDSA
 {
@@ -28,6 +30,8 @@ namespace SDSA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]));
             // Add framework services.
@@ -50,9 +54,17 @@ namespace SDSA
                     IssuerSigningKey = key,
                 
                 };
-               
-                
             });
+
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowCredentials();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); 
+            CorsPolicy corsPolicy = corsBuilder.Build();
+
+            services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
+
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
 
@@ -63,8 +75,8 @@ namespace SDSA
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
-          
-        }
+        }            app.UseCors("SiteCorsPolicy");
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -110,6 +122,8 @@ namespace SDSA
        // context.HttpContext.Response.StatusCode + $": {statusMessage}");
              } 
             );
+            app.UseCors("SiteCorsPolicy");
+
             app.UseMvc(routes =>
             {
             routes.MapRoute(

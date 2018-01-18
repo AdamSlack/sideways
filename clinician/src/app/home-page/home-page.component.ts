@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home-page',
@@ -14,10 +15,19 @@ export class HomePageComponent implements OnInit {
   public localisationCreatorSelected : boolean = false;
 
   public pageTitle: string = 'SDSA Home Page';
+
+  public email : string = "";
+  public password : string = "";
   //
   //  Should use Routing... TODO later...
   //
 
+  constructor(public authService : AuthenticationService) { }
+
+  public login() {
+    console.log(this.password)
+    this.authService.requestToken(this.email, this.password);
+  }
 
   public resetSelection() {
     // Toggle all options off
@@ -49,7 +59,6 @@ export class HomePageComponent implements OnInit {
     this.pageTitle = 'Localisation Preset'
   }
 
-  constructor() { }
 
   ngOnInit() {
   }
