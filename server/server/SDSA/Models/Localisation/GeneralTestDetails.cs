@@ -7,5 +7,7 @@ namespace SDSA.Models.Localisation {
     public class GeneralTestDetails {
         public string Name;
         public string Instructions;
+        public string DeckLabel;
+        public string HeadingsLabel;
     }
 }

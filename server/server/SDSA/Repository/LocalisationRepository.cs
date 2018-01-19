@@ -55,6 +55,10 @@ namespace SDSA.Repository
             "from localisation_images  " +
             "where preset_id  = @localisationId",
             param: localisationId);
+
+        public void SaveLocalePreset(LocalePreset Preset) {
+            
+        }
     }
 }
 #endregion
