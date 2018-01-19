@@ -11,11 +11,12 @@ namespace SDSA.Repository.Interfaces
         IEnumerable<ImageDescription> GetImageIdAndNameByLocalisationid(int localisationId);
         void SaveImage(LocalisationImage LI);
 
-        void SaveLocalisation(LocalePreset Preset);
-        void SaveDotCancellationTest(string preset_name, DotCancelationDetails DCD);
+        void SaveLocalePreset(LocalePreset Preset);
+        
+        void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD);
         void SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD );
         void SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD );
-        void SaveRoadSignDetails(string preset_name, RoadSignDetails RSD );
+        void SaveRoadSignDetails(string preset_name, RoadSignScenarioDetails RSD );
         void SaveTrailMaking(string preset_name, TrailMakingDetails TMD );
 
         int SelectSDSATestTypeID(string test_name);

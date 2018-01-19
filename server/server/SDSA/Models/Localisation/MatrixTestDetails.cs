@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SDSA.Models.Localisation {
     public class MatrixTestDetails {
-        public string HeadingLabels { get; set; }
+        public string HeadingsLabel { get; set; }
         public string DeckLabel { get; set; }
     }
 }

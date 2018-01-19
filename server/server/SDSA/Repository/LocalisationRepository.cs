@@ -69,22 +69,16 @@ namespace SDSA.Repository
             bool alreadyExists = CountPresetByName(preset_name) >= 1;
 
             if (alreadyExists) {
-                Console.WriteLine('Preset Already exists. Donezo');
+                Console.WriteLine("Preset Already exists. Donezo");
                 return;
             }
 
-            Console.WriteLine('Inserting New Preset for: ' + preset_name);
+            Console.WriteLine("Inserting New Preset for: " + preset_name);
             db.ExecuteScalar<int>(
                 "insert into localisation_preset (preset_name) " +
                 "values (@preset_name)",
                 new {preset_name}
             );
-
-            SaveDotCancellationTest(Preset.Name, Preset.DotCancellation);
-            SaveCompassDirectionDetails(Preset.Name, Preset.CompassDirection);
-            SaveCarDirectionDetails(Preset.Name, Preset.CarDirection);
-            SaveRoadSignDetails(Preset.Name, Preset.RoadSign);
-            SaveTrailMaking(Preset.Name, Preset.TrailMaking);
         }
 
         public int SelectSDSATestTypeID(string test_name) 
@@ -95,11 +89,11 @@ namespace SDSA.Repository
             );
 
         public void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD){
-            Console.WriteLine('Inserting Dot Cancellation Test: ' + preset_name);
+            Console.WriteLine("Inserting Dot Cancellation Test: " + preset_name);
 
             string instructions = DCD.GeneralDetails.Instructions;
             string name = DCD.GeneralDetails.Name;
-            int test_type = SelectSDSATestTypeID('dot_cancellation');
+            int test_type = SelectSDSATestTypeID("dot_cancellation");
             
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
@@ -109,14 +103,14 @@ namespace SDSA.Repository
         }
 
         // This and CarDirections could be done in one. bite me...
-        public SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD) {
-            Console.WriteLine('Inserting Compass Direction Details: ' + preset_name);
+        public void SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD) {
+            Console.WriteLine("Inserting Compass Direction Details: " + preset_name);
 
-            string instructions = CDD.GeneralDetails.instructions;
-            string name = CDD.GeneralDetails.name;
+            string instructions = CDD.GeneralDetails.Instructions;
+            string name = CDD.GeneralDetails.Name;
             string headings_label = CDD.MatrixDetails.HeadingsLabel;
             string deck_label = CDD.MatrixDetails.DeckLabel;
-            int test_type = SelectSDSATestTypeID('compass_directions');
+            int test_type = SelectSDSATestTypeID("compass_directions");
             
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
@@ -126,14 +120,14 @@ namespace SDSA.Repository
         }
 
         // This and CarDirections could be done in one. bitr me...
-        public SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD) {
-          Console.WriteLine('Inserting Car Direction Details: ' + preset_name);
+        public void SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD) {
+          Console.WriteLine("Inserting Car Direction Details: " + preset_name);
 
-            string instructions = CDD.GeneralDetails.instructions;
-            string name = CDD.GeneralDetails.name;
+            string instructions = CDD.GeneralDetails.Instructions;
+            string name = CDD.GeneralDetails.Name;
             string headings_label = CDD.MatrixDetails.HeadingsLabel;
             string deck_label = CDD.MatrixDetails.DeckLabel;
-            int test_type = SelectSDSATestTypeID('car_directions');
+            int test_type = SelectSDSATestTypeID("car_directions");
             
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
@@ -142,12 +136,12 @@ namespace SDSA.Repository
             );
         }
 
-        public SaveRoadSignDetails(string preset_name, RoadSignDetails RSD) {
+        public void SaveRoadSignDetails(string preset_name, RoadSignScenarioDetails RSD) {
 
         }
 
-        public SaveTrailMaking(string preset_name, TrailMakingDetails TMD) {
-            
+        public void SaveTrailMaking(string preset_name, TrailMakingDetails TMD) {
+
         }
     }
 }

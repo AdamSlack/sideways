@@ -9,7 +9,7 @@ namespace SDSA.Models.Localisation {
         public DotCancellationDetails DotCancellation { get; set; }
         public CompassDirectionDetails CompassDirection { get; set; }
         public CarDirectionDetails CarDirection { get; set; }
-        public RoadSignDetails RoadSign { get; set; }
+        public RoadSignScenarioDetails RoadSign { get; set; }
         public TrailMakingDetails TrailMaking { get; set; }
     }
 }
