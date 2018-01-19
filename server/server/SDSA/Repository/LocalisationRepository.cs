@@ -88,6 +88,7 @@ namespace SDSA.Repository
                 new {test_name}
             );
 
+
         public void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD){
             Console.WriteLine("Inserting Dot Cancellation Test: " + preset_name);
 
@@ -129,19 +130,57 @@ namespace SDSA.Repository
             string deck_label = CDD.MatrixDetails.DeckLabel;
             int test_type = SelectSDSATestTypeID("car_directions");
             
-            db.ExecuteScalar<int>(
+            db.ExecuteScalar<int>(            Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + preset_name);
+
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
                 "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
                 new {preset_name, test_type, name, instructions, headings_label, deck_label}
             );
         }
 
-        public void SaveRoadSignDetails(string preset_name, RoadSignScenarioDetails RSD) {
+        public void SaveRoadSignScenarioDetails(string preset_name, RoadSignScenarioDetails RSD) {
+
 
         }
 
         public void SaveTrailMaking(string preset_name, TrailMakingDetails TMD) {
 
+
+        }
+
+        DotCancellationDetails SelectDotCancellationDetails(string preset_name) {
+            Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + preset_name);
+
+
+            return new DotCancellationDetails();
+        }
+
+        CompassDirectionDetails SelectCompassDirectionDetails(string preset_name) {
+            Console.WriteLine("Selecting Compass Directions Locale Preset Details: " + preset_name);
+
+
+            return new CompassDirectionDetails();
+        }
+
+        CarDirectionDetails SelectCarDirectionDetails(string preset_name) {
+            Console.WriteLine("Selecting Car Directions Locale Preset Details: " + preset_name);
+
+
+            return new CarDirectionDetails();
+        }
+
+        RoadSignScenarioDetails SelectRoadSignScenarioDetails(string preset_name) {
+            Console.WriteLine("Selecting Road Sign Scenario Locale Preset Details: " + preset_name);
+
+
+            return new RoadSignScenarioDetails();
+        }
+
+        TrailMakingDetails SelectTrailMakingDetails(string preset_name) {
+            Console.WriteLine("Selecting Trail Making Locale Preset Details: " + preset_name);
+
+
+            return new TrailMakingDetails();
         }
     }
 }
