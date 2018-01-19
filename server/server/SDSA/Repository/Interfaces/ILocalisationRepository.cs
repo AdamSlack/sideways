@@ -12,5 +12,13 @@ namespace SDSA.Repository.Interfaces
         void SaveImage(LocalisationImage LI);
 
         void SaveLocalisation(LocalePreset Preset);
+        void SaveDotCancellationTest(string preset_name, DotCancelationDetails DCD);
+        void SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD );
+        void SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD );
+        void SaveRoadSignDetails(string preset_name, RoadSignDetails RSD );
+        void SaveTrailMaking(string preset_name, TrailMakingDetails TMD );
+
+        int SelectSDSATestTypeID(string test_name);
+        int CountPresetByName(string preset_name);
     }
 }

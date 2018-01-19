@@ -172,4 +172,13 @@ create table algorithm_results(
 ----
 insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7SVKdcafJPLNokrc0WTXjYyaAoggRR/7LhcPotdsV3Nv5BsXOtPUbw+bGKpo+qnfzhldcGKSuEtqFJKj6w==', 'hello');
 
+----
+--  Initial SDSA test types.
+----
+insert into sdsa_test_types (name) values ('dot_cancellation');     -- 1
+insert into sdsa_test_types (name) values ('compass_directions');   -- 2
+insert into sdsa_test_types (name) values ('car_directions');       -- 3
+insert into sdsa_test_types (name) values ('road_sign_scenarios');  -- 4
+insert into sdsa_test_types (name) values ('trail_making');         -- 5
+
 commit;

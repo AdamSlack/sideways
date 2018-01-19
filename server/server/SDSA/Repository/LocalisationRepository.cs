@@ -35,8 +35,8 @@ namespace SDSA.Repository
             "from localisation_images  " +
             "where preset_id = @localisationId and imagename = @ImageName",
             new { localisationId, ImageName }
-
             );
+
         public LocalisationImage GetImage(int imageId)
         => db.ExecuteScalar<LocalisationImage>(
             "select preset_id as presetId," +
@@ -47,6 +47,7 @@ namespace SDSA.Repository
             "from localisation_images  " + 
             "where image_id = @imageId",
             imageId);
+
         public IEnumerable< ImageDescription> GetImageIdAndNameByLocalisationid (int localisationId)
             => db.Query<ImageDescription>(
             "select image_id as ImageId," +
@@ -56,8 +57,97 @@ namespace SDSA.Repository
             "where preset_id  = @localisationId",
             param: localisationId);
 
+        public int CountPresetByName(string preset_name)
+            => db.ExecuteScalar<int>(
+                "select count(*) from sdsa_test_details " +
+                "where preset_name = @preset_name",
+                new {preset_name}
+            );
+
         public void SaveLocalePreset(LocalePreset Preset) {
+            string preset_name = Preset.Name;
+            bool alreadyExists = CountPresetByName(preset_name) >= 1;
+
+            if (alreadyExists) {
+                Console.WriteLine('Preset Already exists. Donezo');
+                return;
+            }
+
+            Console.WriteLine('Inserting New Preset for: ' + preset_name);
+            db.ExecuteScalar<int>(
+                "insert into localisation_preset (preset_name) " +
+                "values (@preset_name)",
+                new {preset_name}
+            );
+
+            SaveDotCancellationTest(Preset.Name, Preset.DotCancellation);
+            SaveCompassDirectionDetails(Preset.Name, Preset.CompassDirection);
+            SaveCarDirectionDetails(Preset.Name, Preset.CarDirection);
+            SaveRoadSignDetails(Preset.Name, Preset.RoadSign);
+            SaveTrailMaking(Preset.Name, Preset.TrailMaking);
+        }
+
+        public int SelectSDSATestTypeID(string test_name) 
+            => db.ExecuteScalar<int>(
+                "select id from sdsa_test_types " +
+                "where name = @test_name ",
+                new {test_name}
+            );
+
+        public void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD){
+            Console.WriteLine('Inserting Dot Cancellation Test: ' + preset_name);
+
+            string instructions = DCD.GeneralDetails.Instructions;
+            string name = DCD.GeneralDetails.Name;
+            int test_type = SelectSDSATestTypeID('dot_cancellation');
             
+            db.ExecuteScalar<int>(
+                "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
+                "values (@preset_name, @test_type, @name, @instructions)",
+                new {preset_name, test_type, name, instructions}
+            );
+        }
+
+        // This and CarDirections could be done in one. bite me...
+        public SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD) {
+            Console.WriteLine('Inserting Compass Direction Details: ' + preset_name);
+
+            string instructions = CDD.GeneralDetails.instructions;
+            string name = CDD.GeneralDetails.name;
+            string headings_label = CDD.MatrixDetails.HeadingsLabel;
+            string deck_label = CDD.MatrixDetails.DeckLabel;
+            int test_type = SelectSDSATestTypeID('compass_directions');
+            
+            db.ExecuteScalar<int>(
+                "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
+                "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
+                new {preset_name, test_type, name, instructions, headings_label, deck_label}
+            );
+        }
+
+        // This and CarDirections could be done in one. bitr me...
+        public SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD) {
+          Console.WriteLine('Inserting Car Direction Details: ' + preset_name);
+
+            string instructions = CDD.GeneralDetails.instructions;
+            string name = CDD.GeneralDetails.name;
+            string headings_label = CDD.MatrixDetails.HeadingsLabel;
+            string deck_label = CDD.MatrixDetails.DeckLabel;
+            int test_type = SelectSDSATestTypeID('car_directions');
+            
+            db.ExecuteScalar<int>(
+                "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
+                "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
+                new {preset_name, test_type, name, instructions, headings_label, deck_label}
+            );
+        }
+
+        public SaveRoadSignDetails(string preset_name, RoadSignDetails RSD) {
+
+        }
+
+        public SaveTrailMaking(string preset_name, TrailMakingDetails TMD) {
+
         }
     }
 }
