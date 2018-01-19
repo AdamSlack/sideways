@@ -16,7 +16,11 @@ create table participants(
 --  Example: clinician_id: 54321
 -----
 create table clinicians(
-    clinician_id    serial   primary key  not null
+    clinician_id    serial   primary key  not null,
+    email 	    text     required,
+    hash	    text     required,
+    salt 	    text     required,
+
 );
 
 

@@ -1,6 +1,8 @@
 #Specfic ignore setup
 config.json   #just in case
 
+.vscode/
+
 #Angular ignore setup
 
 # Logs
