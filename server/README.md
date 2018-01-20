@@ -29,11 +29,11 @@ curl -X POST -H "Content-Type: application/json" -d "{'Email':'clinician@sdsa.co
 
 Sending Data is done though a Post request to:
 
-    ```
-        localhost:5000/Localisation/{Locale Name}/{Test type}
-    ```
+```
+    localhost:5000/Localisation/{Locale Name}/{Test type}
+```
 
-    Where `{Locale name}` is the name of the localisation preset and `{test type}` is the type of test it is (dot cancellation, etc...)
+Where `{Locale name}` is the name of the localisation preset and `{test type}` is the type of test it is (dot cancellation, etc...)
 
 
 Example Curl Request to Post Data:
