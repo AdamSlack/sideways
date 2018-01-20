@@ -48,3 +48,7 @@ Compass Directions:
 curl -X POST -H "Content-Type: application/json" -d "{'Type':'Compass Directions', 'Name':'Compass Directions in French', 'Instructions':'Instructions In French', 'HeadingsLabel':'Headings Label In French', 'DeckLabel':'Deck Label In French'}" "localhost:5000/Localisation/en_gb/2"
 
 ```
+
+Car Directions:
+curl -X POST -H "Content-Type: application/json" -d "{'Type':'Car Directions', 'Name':'Car Directions in French', 'Instructions':'Instructions In French', 'HeadingsLabel':'Headings Label In French', 'DeckLabel':'Deck Label In French'}" "localhost:5000/Localisation/en_gb/3"
+
