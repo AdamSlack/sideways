@@ -52,3 +52,9 @@ curl -X POST -H "Content-Type: application/json" -d "{'Type':'Compass Directions
 Car Directions:
 curl -X POST -H "Content-Type: application/json" -d "{'Type':'Car Directions', 'Name':'Car Directions in French', 'Instructions':'Instructions In French', 'HeadingsLabel':'Headings Label In French', 'DeckLabel':'Deck Label In French'}" "localhost:5000/Localisation/en_gb/3"
 
+
+Trail Making;
+
+```
+curl -X POST -H "Content-Type: application/json" -d "{'Type':'Trail Making', 'Name':'Trail Making in French', 'Instructions':'Instructions In French', 'TrailA':['A','B','C','D','E'], 'TrailB':['A','1','B','2','C','3']}" "localhost:5000/Localisation/en_gb/5"
+```

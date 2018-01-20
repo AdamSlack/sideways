@@ -136,12 +136,12 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("compass_directions");
             
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, 2) > 0;
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
             
             if(TestPresetExists) {
                 Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
                 Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, 2);
+                DeleteLocaleTestPreset(preset_name, test_type);
             }
 
 
@@ -162,12 +162,12 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("car_directions");
             
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, 3) > 0;
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
             
             if(TestPresetExists) {
                 Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
                 Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, 3);
+                DeleteLocaleTestPreset(preset_name, test_type);
             }
 
 
@@ -184,8 +184,28 @@ namespace SDSA.Repository
         }
 
         public void SaveTrailMakingDetails(string preset_name, TestLocaleDetails TMD) {
+            string Instructions = TMD.Instructions;
+            string Name = TMD.Name;
+            string[] TrailA = TMD.TrailA;
+            string[] TrailB = TMD.TrailB;
 
 
+            int test_type = SelectSDSATestTypeID("trail_makeing");
+            
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
+            
+            if(TestPresetExists) {
+                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
+                Console.WriteLine("Replacing Old Details.");
+                DeleteLocaleTestPreset(preset_name, test_type);
+            }
+
+
+            db.ExecuteScalar<int>(
+                "insert into trail_making_details (preset_name, name, instructions, trail_a, trail_b)" +
+                "values (@preset_name, @Name, @Instructions, @TrailA, @TrailB)",
+                new {preset_name, Name, Instructions, TrailA, TrailB}
+            );
         }
 
         public TestLocaleDetails SelectDotCancellationDetails(string preset_name) {
