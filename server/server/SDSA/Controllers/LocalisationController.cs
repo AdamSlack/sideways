@@ -79,9 +79,17 @@ namespace SDSA.Controllers
 
 
         [HttpPost("[controller]/{LocaleName}/{TestType}")]
-        public IActionResult TestDetails(string LocaleName, int TestType) {
+        public IActionResult TestDetails(string LocaleName, int TestType,[FromBody] TestLocaleDetails Details) {
             Console.WriteLine("Posting of Locale Preset Recieved: " + LocaleName + ". Of Type: " + TestType);
-            
+            Console.WriteLine("Details of Recieved Locale Preset are:");
+            Console.WriteLine("Type:" + Details.Type);
+            Console.WriteLine("Name:" + Details.Name);
+            Console.WriteLine("Instructions:" + Details.Instructions);
+            Console.WriteLine("Other details not being logged...");
+
+            _localisationService.SaveTestDetails(LocaleName, TestType, Details);
+
+
             return Ok();
         }
     }

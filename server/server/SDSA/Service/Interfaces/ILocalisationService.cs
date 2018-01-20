@@ -13,5 +13,7 @@ namespace SDSA.Service.Interfaces
         LocalisationImage GetImage(int localisationId, string ImageName);
         IEnumerable<ImageDescription> GetImageIdAndNameByLocalisationid(int localisationId);
         void SaveImage(LocalisationImage LI);
+
+        void SaveTestDetails(string LocaleName, int TestType, TestLocaleDetails Details);
     }
 }

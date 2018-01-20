@@ -59,25 +59,25 @@ namespace SDSA.Repository
 
         public int CountPresetByName(string preset_name)
             => db.ExecuteScalar<int>(
-                "select count(*) from sdsa_test_details " +
+                "select count(*) from localisation_presets " +
                 "where preset_name = @preset_name",
                 new {preset_name}
             );
 
-        public void SaveLocalePreset(LocalePreset Preset) {
-            string preset_name = Preset.Name;
-            bool alreadyExists = CountPresetByName(preset_name) >= 1;
+        public void SaveLocalePreset(string PresetName) {
+            string preset_name = PresetName;
+            bool alreadyExists = CountPresetByName(PresetName) >= 1;
 
             if (alreadyExists) {
                 Console.WriteLine("Preset Already exists. Donezo");
                 return;
             }
 
-            Console.WriteLine("Inserting New Preset for: " + preset_name);
+            Console.WriteLine("Inserting New Preset for: " + PresetName);
             db.ExecuteScalar<int>(
-                "insert into localisation_preset (preset_name) " +
-                "values (@preset_name)",
-                new {preset_name}
+                "insert into localisation_presets (preset_name) " +
+                "values (@PresetName)",
+                new {PresetName}
             );
         }
 
@@ -142,7 +142,7 @@ namespace SDSA.Repository
 
         }
 
-        public void SaveTrailMaking(string preset_name, TestLocaleDetails TMD) {
+        public void SaveTrailMakingDetails(string preset_name, TestLocaleDetails TMD) {
 
 
         }
