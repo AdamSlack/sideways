@@ -99,7 +99,7 @@ namespace SDSA.Repository
         public int CountTrailPreset(string PresetName) 
             => db.ExecuteScalar<int>(
                 "select count(*) from trail_making_details " +
-                "where preset_name = @PresetName " +
+                "where preset_name = @PresetName " ,
                 new {PresetName}
             );
 
@@ -115,7 +115,7 @@ namespace SDSA.Repository
         public void DeleteTrailPreset(string PresetName)
             => db.ExecuteScalar(
                 "delete from trail_making_details " +
-                "where preset_name = @PresetName " +
+                "where preset_name = @PresetName " ,
                 new {PresetName}
             );
 
