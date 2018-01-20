@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SDSA.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
+
+using SDSA.Service.Interfaces;
 using SDSA.Models;
 using SDSA.Models.Localisation;
 using System.IO;
@@ -18,6 +19,8 @@ namespace SDSA.Controllers
         {
             _localisationService = localserv;
         }
+
+
         [HttpGet("[controller]/image/{ImageId}")]
         public IActionResult Image(int ImageId)
         {
@@ -25,6 +28,8 @@ namespace SDSA.Controllers
 
             return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
         }
+
+
         [HttpGet("[controller]/{LocalisationId}/image/{ImageName}")]
         public IActionResult Image(int LocalisationId, string ImageName)
         {
@@ -32,6 +37,8 @@ namespace SDSA.Controllers
 
             return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
         }
+
+
         [HttpPost("[controller]/{LocalisationId}/image/{ImageName}")]
         public IActionResult Image (int LocalisationId,string ImageName , IFormFile Image, string description)
         {
@@ -57,6 +64,8 @@ namespace SDSA.Controllers
             _localisationService.SaveImage(img);
             return Ok();
         }
+
+
         [HttpGet("[controller]/{LocalisationId}/image/list")]
         public IActionResult ImageList (int LocalisationId)
         {
@@ -68,8 +77,9 @@ namespace SDSA.Controllers
             return Json(list);
         }
 
-        [HttpPost("[controller]{LocaleName}/{TestType}")]
-        public IActionResult TestDetails(string LocaleName, string TestType) {
+
+        [HttpPost("[controller]/{LocaleName}/{TestType}")]
+        public IActionResult TestDetails(string LocaleName, int TestType) {
             Console.WriteLine("Posting of Locale Preset Recieved: " + LocaleName + ". Of Type: " + TestType);
             
             return Ok();

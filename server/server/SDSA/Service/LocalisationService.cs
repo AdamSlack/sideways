@@ -8,10 +8,10 @@ using SDSA.Repository.Interfaces;
 using SDSA.Service.Interfaces;
 namespace SDSA.Service
 {
-    public class Localisationservice : ILocalisationService
+    public class LocalisationService : ILocalisationService
     {
         private readonly ILocalisationRepository _localisationRepository;
-        public Localisationservice(ILocalisationRepository localRepo)
+        public LocalisationService(ILocalisationRepository localRepo)
         {
             _localisationRepository = localRepo;
         }

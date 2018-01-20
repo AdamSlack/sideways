@@ -99,7 +99,7 @@ namespace SDSA
             app.UseStatusCodePages(
                 async context =>
              {
-                 context.HttpContext.Response.ContentType =  "text/plain";
+                 context.HttpContext.Response.ContentType =  "application/json";
                  var x = context.HttpContext.Response;
                  string statusMessage;
                  switch (x.StatusCode)
@@ -129,6 +129,11 @@ namespace SDSA
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
+            );
+
+            routes.MapRoute(
+                name: "Localisation",
+                template: "Localisation/{LocaleName}/{test_type}"
             );
 
             routes.MapRoute(
