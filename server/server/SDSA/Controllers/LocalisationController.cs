@@ -78,6 +78,14 @@ namespace SDSA.Controllers
         }
 
 
+        [HttpGet("[controller]/{LocaleName}/{TestType}")]
+        public IActionResult Testdetails(string LocaleName, int TestType) {
+            Console.WriteLine("Requst for Local Prest Details Recieved");
+            Console.WriteLine("Fetching Presets for Locale: " + LocaleName + ". Test retrieving: " + TestType);
+
+            return Ok();
+        }
+
         [HttpPost("[controller]/{LocaleName}/{TestType}")]
         public IActionResult TestDetails(string LocaleName, int TestType,[FromBody] TestLocaleDetails Details) {
             Console.WriteLine("Posting of Locale Preset Recieved: " + LocaleName + ". Of Type: " + TestType);

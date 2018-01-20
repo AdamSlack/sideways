@@ -58,3 +58,31 @@ Trail Making;
 ```
 curl -X POST -H "Content-Type: application/json" -d "{'Type':'Trail Making', 'Name':'Trail Making in French', 'Instructions':'Instructions In French', 'TrailA':['A','B','C','D','E'], 'TrailB':['A','1','B','2','C','3']}" "localhost:5000/Localisation/en_gb/5"
 ```
+
+### Retrieving Data
+
+Not Yet fully implemented, the endpoint for retrieving data is the same as posting, but with as  a GET request
+
+the end point takes the form of;
+
+```
+localhost:5000/Localisation/{PresetName}/{TestType}
+```
+
+Where `{PresetName}` is the Name of the localisation preset being retrieved. and `{TestType}` is the numeric code for the test whos data you want.
+
+Dot Cancellation Test:
+
+Example Curl
+```
+curl -X GET -H "Content-Type: application/json" "localhost:5000/Localisation/en_gb/1"
+```
+
+Example response
+```
+{
+    'PresetName':'en_gb',
+    'Name':'Dot Cancellation In French',
+    'Instructions':'Instructions in French'
+}
+```
