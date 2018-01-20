@@ -22,3 +22,29 @@ Example Curl:
 curl -X POST -H "Content-Type: application/json" -d "{'Email':'clinician@sdsa.com', 'password':'password', 'UserType':1}" "localhost:5000/login"
 
 ```
+
+## Localisation
+
+### Sending Data
+
+Sending Data is done though a Post request to:
+
+    ```
+        localhost:5000/Localisation/{Locale Name}/{Test type}
+    ```
+
+    Where `{Locale name}` is the name of the localisation preset and `{test type}` is the type of test it is (dot cancellation, etc...)
+
+
+Example Curl Request to Post Data:
+
+Dot Cancellation:
+```
+curl -X POST -H "Content-Type: application/json" -d "{'Type':'Dot Cancellation', 'Name':'Dot Cancellation in French', 'Instructions':'Instructions In French'}" "localhost:5000/Localisation/en_gb/1"
+```
+
+Compass Directions:
+```
+curl -X POST -H "Content-Type: application/json" -d "{'Type':'Compass Directions', 'Name':'Compass Directions in French', 'Instructions':'Instructions In French', 'HeadingsLabel':'Headings Label In French', 'DeckLabel':'Deck Label In French'}" "localhost:5000/Localisation/en_gb/2"
+
+```

@@ -136,6 +136,15 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("compass_directions");
             
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, 2) > 0;
+            
+            if(TestPresetExists) {
+                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
+                Console.WriteLine("Replacing Old Details.");
+                DeleteLocaleTestPreset(preset_name, 2);
+            }
+
+
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
                 "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
@@ -153,6 +162,15 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("car_directions");
             
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, 3) > 0;
+            
+            if(TestPresetExists) {
+                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
+                Console.WriteLine("Replacing Old Details.");
+                DeleteLocaleTestPreset(preset_name, 3);
+            }
+
+
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
                 "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
