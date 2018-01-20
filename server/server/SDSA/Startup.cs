@@ -72,9 +72,11 @@ namespace SDSA
             //add repository first to avoid missing dependencies
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<ILocalisationRepository, LocalisationRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
+            services.AddTransient<ILocalisationService, LocalisationService>();
         }   
 
 
