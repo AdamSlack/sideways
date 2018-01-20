@@ -66,7 +66,7 @@ namespace SDSA.Repository
 
         public void SaveLocalePreset(string PresetName) {
             string preset_name = PresetName;
-            bool alreadyExists = CountPresetByName(PresetName) >= 1;
+            bool alreadyExists = CountPresetByName(PresetName) > 0;
 
             if (alreadyExists) {
                 Console.WriteLine("Preset Already exists. Donezo");
@@ -88,6 +88,21 @@ namespace SDSA.Repository
                 new {test_name}
             );
 
+        public int CountLocaleTestPresets(string PresetName, int TestType) 
+            => db.ExecuteScalar<int>(
+                "select count(*) from sdsa_test_details " +
+                "where preset_name = @PresetName " +
+                "and sdsa_test_type = @TestType",
+                new {PresetName, TestType}
+            );
+
+        public void DeleteLocaleTestPreset(string PresetName, int TestType)
+            => db.ExecuteScalar(
+                "delete from sdsa_test_details " +
+                "where preset_name = @PresetName " +
+                "and sdsa_test_type = @TestType",
+                new {PresetName, TestType}
+            );
 
         public void SaveDotCancellationTest(string preset_name, TestLocaleDetails DCD){
             Console.WriteLine("Inserting Dot Cancellation Test: " + preset_name);
@@ -95,7 +110,15 @@ namespace SDSA.Repository
             string instructions = DCD.Instructions;
             string name = DCD.Name;
             int test_type = SelectSDSATestTypeID("dot_cancellation");
+
+            bool TestPresetExists = CountLocaleTestPresets(preset_name, 1) > 0;
             
+            if(TestPresetExists) {
+                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
+                Console.WriteLine("Replacing Old Details.");
+                DeleteLocaleTestPreset(preset_name, 1);
+            }
+
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
                 "values (@preset_name, @test_type, @name, @instructions)",

@@ -27,5 +27,8 @@ namespace SDSA.Repository.Interfaces
 
         int SelectSDSATestTypeID(string test_name);
         int CountPresetByName(string preset_name);
+
+         int CountLocaleTestPresets(string PresetName, int TestType);
+         void DeleteLocaleTestPreset(string PresetName, int TestType);
     }
 }
