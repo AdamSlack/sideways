@@ -13,17 +13,17 @@ namespace SDSA.Repository.Interfaces
 
         void SaveLocalePreset(LocalePreset Preset);
 
-        void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD);
-        void SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD );
-        void SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD );
-        void SaveRoadSignScenarioDetails(string preset_name, RoadSignScenarioDetails RSD );
-        void SaveTrailMaking(string preset_name, TrailMakingDetails TMD );
+        void SaveDotCancellationTest(string preset_name, TestLocaleDetails DCD);
+        void SaveCompassDirectionDetails(string preset_name, TestLocaleDetails CDD );
+        void SaveCarDirectionDetails(string preset_name, TestLocaleDetails CDD );
+        void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD );
+        void SaveTrailMaking(string preset_name, TestLocaleDetails TMD );
 
-        DotCancellationDetails SelectDotCancellationDetails(string preset_name);
-        CompassDirectionDetails SelectCompassDirectionDetails(string preset_name);
-        CarDirectionDetails SelectCarDirectionDetails(string preset_name);
-        RoadSignScenarioDetails SelectRoadSignScenarioDetails(string preset_name);
-        TrailMakingDetails SelectTrailMakingDetails(string preset_name);
+        TestLocaleDetails SelectDotCancellationDetails(string preset_name);
+        TestLocaleDetails SelectCompassDirectionDetails(string preset_name);
+        TestLocaleDetails SelectCarDirectionDetails(string preset_name);
+        TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name);
+        TestLocaleDetails SelectTrailMakingDetails(string preset_name);
 
         int SelectSDSATestTypeID(string test_name);
         int CountPresetByName(string preset_name);

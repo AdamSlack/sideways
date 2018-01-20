@@ -89,11 +89,11 @@ namespace SDSA.Repository
             );
 
 
-        public void SaveDotCancellationTest(string preset_name, DotCancellationDetails DCD){
+        public void SaveDotCancellationTest(string preset_name, TestLocaleDetails DCD){
             Console.WriteLine("Inserting Dot Cancellation Test: " + preset_name);
 
-            string instructions = DCD.GeneralDetails.Instructions;
-            string name = DCD.GeneralDetails.Name;
+            string instructions = DCD.Instructions;
+            string name = DCD.Name;
             int test_type = SelectSDSATestTypeID("dot_cancellation");
             
             db.ExecuteScalar<int>(
@@ -104,13 +104,13 @@ namespace SDSA.Repository
         }
 
         // This and CarDirections could be done in one. bite me...
-        public void SaveCompassDirectionDetails(string preset_name, CompassDirectionDetails CDD) {
+        public void SaveCompassDirectionDetails(string preset_name, TestLocaleDetails CDD) {
             Console.WriteLine("Inserting Compass Direction Details: " + preset_name);
 
-            string instructions = CDD.GeneralDetails.Instructions;
-            string name = CDD.GeneralDetails.Name;
-            string headings_label = CDD.MatrixDetails.HeadingsLabel;
-            string deck_label = CDD.MatrixDetails.DeckLabel;
+            string instructions = CDD.Instructions;
+            string name = CDD.Name;
+            string headings_label = CDD.HeadingsLabel;
+            string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("compass_directions");
             
             db.ExecuteScalar<int>(
@@ -121,66 +121,65 @@ namespace SDSA.Repository
         }
 
         // This and CarDirections could be done in one. bitr me...
-        public void SaveCarDirectionDetails(string preset_name, CarDirectionDetails CDD) {
+        public void SaveCarDirectionDetails(string preset_name, TestLocaleDetails CDD) {
           Console.WriteLine("Inserting Car Direction Details: " + preset_name);
 
-            string instructions = CDD.GeneralDetails.Instructions;
-            string name = CDD.GeneralDetails.Name;
-            string headings_label = CDD.MatrixDetails.HeadingsLabel;
-            string deck_label = CDD.MatrixDetails.DeckLabel;
+            string instructions = CDD.Instructions;
+            string name = CDD.Name;
+            string headings_label = CDD.HeadingsLabel;
+            string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("car_directions");
             
-            db.ExecuteScalar<int>(            Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + preset_name);
-
+            db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
                 "values (@preset_name, @test_type, @name, @instructions, @headings_label, @deck_label)",
                 new {preset_name, test_type, name, instructions, headings_label, deck_label}
             );
         }
 
-        public void SaveRoadSignScenarioDetails(string preset_name, RoadSignScenarioDetails RSD) {
+        public void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD) {
 
 
         }
 
-        public void SaveTrailMaking(string preset_name, TrailMakingDetails TMD) {
+        public void SaveTrailMaking(string preset_name, TestLocaleDetails TMD) {
 
 
         }
 
-        DotCancellationDetails SelectDotCancellationDetails(string preset_name) {
+        public TestLocaleDetails SelectDotCancellationDetails(string preset_name) {
             Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + preset_name);
 
 
-            return new DotCancellationDetails();
+            return new TestLocaleDetails();
         }
 
-        CompassDirectionDetails SelectCompassDirectionDetails(string preset_name) {
+        public TestLocaleDetails SelectCompassDirectionDetails(string preset_name) {
             Console.WriteLine("Selecting Compass Directions Locale Preset Details: " + preset_name);
 
 
-            return new CompassDirectionDetails();
+            return new TestLocaleDetails();
         }
 
-        CarDirectionDetails SelectCarDirectionDetails(string preset_name) {
+        public TestLocaleDetails SelectCarDirectionDetails(string preset_name) {
             Console.WriteLine("Selecting Car Directions Locale Preset Details: " + preset_name);
 
 
-            return new CarDirectionDetails();
+            return new TestLocaleDetails();
         }
 
-        RoadSignScenarioDetails SelectRoadSignScenarioDetails(string preset_name) {
+        public TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name) {
             Console.WriteLine("Selecting Road Sign Scenario Locale Preset Details: " + preset_name);
 
 
-            return new RoadSignScenarioDetails();
+            return new TestLocaleDetails();
         }
 
-        TrailMakingDetails SelectTrailMakingDetails(string preset_name) {
+        public TestLocaleDetails SelectTrailMakingDetails(string preset_name) {
             Console.WriteLine("Selecting Trail Making Locale Preset Details: " + preset_name);
 
 
-            return new TrailMakingDetails();
+            return new TestLocaleDetails();
         }
     }
 }

@@ -67,5 +67,12 @@ namespace SDSA.Controllers
             var list = _localisationService.GetImageIdAndNameByLocalisationid(LocalisationId);
             return Json(list);
         }
+
+        [HttpPost("[controller]{LocaleName}/{TestType}")]
+        public IActionResult TestDetails(string LocaleName, string TestType) {
+            Console.WriteLine("Posting of Locale Preset Recieved: " + LocaleName + ". Of Type: " + TestType);
+            
+            return Ok();
+        }
     }
 }
