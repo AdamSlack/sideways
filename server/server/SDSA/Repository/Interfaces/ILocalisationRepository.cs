@@ -30,5 +30,9 @@ namespace SDSA.Repository.Interfaces
 
          int CountLocaleTestPresets(string PresetName, int TestType);
          void DeleteLocaleTestPreset(string PresetName, int TestType);
+         void DeleteLocaleTestPresetIfExists(string PresetName, int TestType);
+
+         void DeleteTrailPreset(string PresetName);
+         int CountTrailPreset(string PresetName);
     }
 }

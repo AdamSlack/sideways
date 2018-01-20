@@ -96,6 +96,14 @@ namespace SDSA.Repository
                 new {PresetName, TestType}
             );
 
+        public int CountTrailPreset(string PresetName) 
+            => db.ExecuteScalar<int>(
+                "select count(*) from trail_making_details " +
+                "where preset_name = @PresetName " +
+                new {PresetName}
+            );
+
+
         public void DeleteLocaleTestPreset(string PresetName, int TestType)
             => db.ExecuteScalar(
                 "delete from sdsa_test_details " +
@@ -104,6 +112,34 @@ namespace SDSA.Repository
                 new {PresetName, TestType}
             );
 
+        public void DeleteTrailPreset(string PresetName)
+            => db.ExecuteScalar(
+                "delete from trail_making_details " +
+                "where preset_name = @PresetName " +
+                new {PresetName}
+            );
+
+
+        public void DeleteLocaleTestPresetIfExists(string PresetName, int TestType) {
+
+            if(TestType == 5 ) {
+                bool TrailPresetExists = CountTrailPreset(PresetName) > 0;
+                if(TrailPresetExists) {
+                    Console.WriteLine("Trail Making Preset exists for this Locale.");
+                    DeleteTrailPreset(PresetName);
+                }
+                return;
+            }
+            bool TestPresetExists = CountLocaleTestPresets(PresetName, TestType) > 0;
+            
+            if(TestPresetExists) {
+                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
+                Console.WriteLine("Replacing Old Details.");
+                DeleteLocaleTestPreset(PresetName, TestType);
+            }
+
+        }
+
         public void SaveDotCancellationTest(string preset_name, TestLocaleDetails DCD){
             Console.WriteLine("Inserting Dot Cancellation Test: " + preset_name);
 
@@ -111,13 +147,7 @@ namespace SDSA.Repository
             string name = DCD.Name;
             int test_type = SelectSDSATestTypeID("dot_cancellation");
 
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, 1) > 0;
-            
-            if(TestPresetExists) {
-                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
-                Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, 1);
-            }
+            DeleteLocaleTestPresetIfExists(preset_name, test_type);
 
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
@@ -136,14 +166,7 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("compass_directions");
             
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
-            
-            if(TestPresetExists) {
-                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
-                Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, test_type);
-            }
-
+            DeleteLocaleTestPresetIfExists(preset_name, test_type);
 
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
@@ -162,14 +185,7 @@ namespace SDSA.Repository
             string deck_label = CDD.DeckLabel;
             int test_type = SelectSDSATestTypeID("car_directions");
             
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
-            
-            if(TestPresetExists) {
-                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
-                Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, test_type);
-            }
-
+            DeleteLocaleTestPresetIfExists(preset_name, test_type);
 
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label)" +
@@ -190,16 +206,9 @@ namespace SDSA.Repository
             string[] TrailB = TMD.TrailB;
 
 
-            int test_type = SelectSDSATestTypeID("trail_makeing");
+            int test_type = SelectSDSATestTypeID("trail_making");
             
-            bool TestPresetExists = CountLocaleTestPresets(preset_name, test_type) > 0;
-            
-            if(TestPresetExists) {
-                Console.WriteLine("Localisation Preset Details Exist for this Locale and Test.");
-                Console.WriteLine("Replacing Old Details.");
-                DeleteLocaleTestPreset(preset_name, test_type);
-            }
-
+            DeleteLocaleTestPresetIfExists(preset_name, test_type);
 
             db.ExecuteScalar<int>(
                 "insert into trail_making_details (preset_name, name, instructions, trail_a, trail_b)" +
