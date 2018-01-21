@@ -3,8 +3,10 @@ import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { Time } from '@angular/common/src/i18n/locale_data_api';
 import { FabricService } from '../../services/fabric.service'
-
+import { HttpClient } from '@angular/common/http';
 import "fabric"
+import { rootRoute } from '@angular/router/src/router_module';
+
 declare const fabric: any;
 //TODO: place in inherited class the global canvas components. Only ever one canvas on screen
 //TODO: debug mode enables the skeleton view of all objects
@@ -15,6 +17,10 @@ var Canvas: any;
 var Deck:any[];
 
 var GridSquares:any[];
+
+//TODO: tbf this could be served in the angular assets folder without the asset_root but wanted to test for other apps
+var asset_root = "http://locahost:5000"
+var asset_link = "/test/compass_directions";
 
 //Reads row, column
 enum compassDir {
@@ -40,6 +46,8 @@ enum compassDir {
   EastWestSouth,
 } 
 
+var server_root = "http://localhost:5000/"
+
 @Component({
   selector: 'app-compass-directions-test',
   templateUrl: './compass-directions-test.component.html',
@@ -49,7 +57,7 @@ enum compassDir {
 export class CompassDirectionsTestComponent implements OnInit {
 
   public time : number = 0 ;
-  constructor(private rs: ResultsService, private timer : RecordTimingService, private fab: FabricService) { }
+  constructor(private rs: ResultsService, private timer : RecordTimingService, private fab: FabricService, private http: HttpClient) { }
   
   public startTimer() {
     this.timer.recordStartTime()
@@ -85,7 +93,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 20, square_length * 0.9);
+    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 20, square_length * 0.9);
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
@@ -93,7 +101,14 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   
-  private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
+  private createCompassDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
+
+      // Make the HTTP request:
+      this.http.get(asset_root + asset_link + "1-roundabout_scene.png").subscribe(data => {
+        // Read the result field from the JSON response.
+        return data;
+      });
+
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
         let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card' + idx.toString());
@@ -103,10 +118,20 @@ export class CompassDirectionsTestComponent implements OnInit {
         card.selectable = true;
         card.lockScalingX = true;
         card.lockScalingY = true
+
+        //Try to load image
+
+        fabric.Image.fromURL(asset_root + asset_link + "1-roundabout_scene.png", function(oImg) {
+          this.canvas.add(oImg);
+        });
+
+
         Canvas.add(card);
         Deck.push(card);
       });
-  }
+
+  
+    }
 
   private gatherResults() {
     var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
@@ -205,23 +230,13 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
-    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
-    //   oImg.width = this.box_length
-      
-    //   oImg.height = this.box_length;
-    //   canvas.add(oImg);
-    // });
-    var compass_url = '../assets/compass_north.svg';
+    
+    var compass_url = server_root + 'test/compass_directions/compass_north.svg';
 
     var group = [];
     var rotate = 0;
     var increment_rotation = 45;
 
-    //Top row
-
-    //Just messing... es6
-    // let times=(n,f)=>{while(n-->0)f();}
-    // times (3, console.log('times repeat'));
     const times = n => f => {
       let iter = i => {
         if (i === n) return
