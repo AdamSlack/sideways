@@ -21,12 +21,12 @@ namespace SDSA.Models.Localisation
             DeckLabel = DeetsDeckLabel;
         }
 
-        public TestLocaleDetails(string DeetsType, string DeetsName, string DeetsInstructions, string[] DeetsTrailA ,string[] DeetsTrailB) {
+        public TestLocaleDetails(string DeetsType, string DeetsName, string DeetsInstructions, Array DeetsTrailA ,Array DeetsTrailB) {
             Type = DeetsType;
             Name = DeetsName;
             Instructions = DeetsInstructions;
-            TrailA = DeetsTrailA;
-            TrailB = DeetsTrailB;
+            TrailA = (string[]) DeetsTrailA;
+            TrailB = (string[]) DeetsTrailB;
         }
 
         public TestLocaleDetails(string DeetsType, string DeetsName, string DeetsInstructions, string DeetsHeadingsLabel ,string DeetsDeckLabel, RoadSignScenario[] DeetsScenarios) {

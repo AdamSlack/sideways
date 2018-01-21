@@ -137,7 +137,6 @@ namespace SDSA.Repository
                 Console.WriteLine("Replacing Old Details.");
                 DeleteLocaleTestPreset(PresetName, TestType);
             }
-
         }
 
         public void SaveDotCancellationTest(string preset_name, TestLocaleDetails DCD){
@@ -216,40 +215,81 @@ namespace SDSA.Repository
                 new {preset_name, Name, Instructions, TrailA, TrailB}
             );
         }
+        public TestLocaleDetails SelectDotCancellationDetails(string PresetName) {
+            Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + PresetName);
 
-        public TestLocaleDetails SelectDotCancellationDetails(string preset_name) {
-            Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + preset_name);
+            TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
+                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions from sdsa_test_types, (" +
+                "select sdsa_test_type, name, instructions from sdsa_test_details " +
+                "where sdsa_test_type = 1 " + 
+                "and preset_name = @PresetName) as preset " +
+                "where preset.sdsa_test_type = sdsa_test_types.id",
+                new {PresetName}
+            ).FirstOrDefault();
 
-
-            return new TestLocaleDetails();
+            return Deets;
         }
 
-        public TestLocaleDetails SelectCompassDirectionDetails(string preset_name) {
-            Console.WriteLine("Selecting Compass Directions Locale Preset Details: " + preset_name);
+        public TestLocaleDetails SelectCompassDirectionDetails(string PresetName) {
+            Console.WriteLine("Selecting Compass Directions Locale Preset Details: " + PresetName);
 
+            TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
+                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions, " +
+                "preset.headings_label as DeetsHeadingsLabel, preset.deck_label as DeetsDeckLabel " + 
+                "from sdsa_test_types, (select sdsa_test_type, name, instructions, headings_label, deck_label from sdsa_test_details " +
+                "where sdsa_test_type = 2 " + 
+                "and preset_name = @PresetName) as preset " +
+                "where preset.sdsa_test_type = sdsa_test_types.id",
+                new {PresetName}
+            ).FirstOrDefault();
 
-            return new TestLocaleDetails();
+            return Deets;
         }
 
-        public TestLocaleDetails SelectCarDirectionDetails(string preset_name) {
-            Console.WriteLine("Selecting Car Directions Locale Preset Details: " + preset_name);
+        public TestLocaleDetails SelectCarDirectionDetails(string PresetName) {
+            Console.WriteLine("Selecting Car Directions Locale Preset Details: " + PresetName);
 
+            TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
+                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions, " +
+                "preset.headings_label as DeetsHeadingsLabel, preset.deck_label as DeetsDeckLabel " + 
+                "from sdsa_test_types, (select sdsa_test_type, name, instructions, headings_label, deck_label from sdsa_test_details " +
+                "where sdsa_test_type = 3 " + 
+                "and preset_name = @PresetName) as preset " +
+                "where preset.sdsa_test_type = sdsa_test_types.id",
+                new {PresetName}
+            ).FirstOrDefault();
 
-            return new TestLocaleDetails();
+            return Deets;
         }
 
-        public TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name) {
-            Console.WriteLine("Selecting Road Sign Scenario Locale Preset Details: " + preset_name);
+        public TestLocaleDetails SelectRoadSignScenarioDetails(string PresetName) {
+            Console.WriteLine("Selecting Road Sign Scenario Locale Preset Details: " + PresetName);
 
+            TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
+                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions from sdsa_test_types, (" +
+                "select sdsa_test_type, name, instructions from sdsa_test_details " +
+                "where sdsa_test_type = 1 " + 
+                "and preset_name = @PresetName) as preset " +
+                "where preset.sdsa_test_type = sdsa_test_types.id",
+                new {PresetName}
+            ).FirstOrDefault();
 
-            return new TestLocaleDetails();
+            return new TestLocaleDetails("","","");
         }
 
-        public TestLocaleDetails SelectTrailMakingDetails(string preset_name) {
-            Console.WriteLine("Selecting Trail Making Locale Preset Details: " + preset_name);
+        public TestLocaleDetails SelectTrailMakingDetails(string PresetName) {
+            Console.WriteLine("Selecting Trail Making Locale Preset Details: " + PresetName);
 
+            TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
+                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions, " +
+                "preset.trail_a as DeetsTrailA, preset.trail_b as DeetsTrailB " + 
+                "from sdsa_test_types, (select name, instructions, trail_a, trail_b from trail_making_details " +
+                "where preset_name = @PresetName) as preset " +
+                "where sdsa_test_types.id = 5",
+                new {PresetName}
+            ).FirstOrDefault();
 
-            return new TestLocaleDetails();
+            return Deets;
         }
     }
 }
