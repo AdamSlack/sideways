@@ -72,9 +72,11 @@ namespace SDSA
             //add repository first to avoid missing dependencies
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<ILocalisationRepository, LocalisationRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
+            services.AddTransient<ILocalisationService, LocalisationService>();
         }   
 
 
@@ -99,7 +101,7 @@ namespace SDSA
             app.UseStatusCodePages(
                 async context =>
              {
-                 context.HttpContext.Response.ContentType =  "text/plain";
+                 context.HttpContext.Response.ContentType =  "application/json";
                  var x = context.HttpContext.Response;
                  string statusMessage;
                  switch (x.StatusCode)
@@ -129,6 +131,11 @@ namespace SDSA
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
+            );
+
+            routes.MapRoute(
+                name: "Localisation",
+                template: "Localisation/{LocaleName}/{test_type}"
             );
 
             routes.MapRoute(
