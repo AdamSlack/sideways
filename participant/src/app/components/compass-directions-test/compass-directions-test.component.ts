@@ -47,6 +47,11 @@ enum compassDir {
 var server_root = "http://localhost:5000/"
 var asset_link = "/test/compass_directions/";
 
+
+
+
+
+
 @Component({
   selector: 'app-compass-directions-test',
   templateUrl: './compass-directions-test.component.html',
@@ -69,6 +74,34 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   public sendResults() {
     this.rs.insertCompassDirectionResults(1, 123, 456);
+  }
+
+
+  private calculateResults() {
+    // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
+    // card. This includes the demonstration item, so the maximum possible
+    // score is 32 points. It is easiest to score by counting one vehicle for each
+    // row and then one vehicle for each column separately.
+
+    let score = 0;
+    let matches = [];
+    Deck.forEach((card, i) => {
+      if( card.colliding === i) {
+        console.log("correcto mudo: ", card.colliding + i)
+        console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
+
+
+      } else {
+        console.log("failed mundo")
+        matches.push({i : card.colliding});
+      }
+    });
+
+    console.log("dis fellow got dis reuslts: ", matches)
+    //Rip let's log your score and also your cards matches because that is bull    
+
+    //
+
   }
 
   ngOnInit() {
@@ -105,7 +138,7 @@ export class CompassDirectionsTestComponent implements OnInit {
  
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
-        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card' + idx.toString());
+        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card_' + idx.toString());
         card.isPlaced = false;
         card.lockRotation = true;
         card.lockUniScaling = true;
@@ -151,8 +184,6 @@ export class CompassDirectionsTestComponent implements OnInit {
         //Canvas.add(img)
         Deck.push(card);
       });
-
-  
     }
 
   private gatherResults() {
