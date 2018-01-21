@@ -36,6 +36,7 @@ namespace SDSA.Controllers
 
             if (User.UserType == SDSAUser.loginuserType.Clinician && _clinicianService.ValidateClinician(User))
             {
+                Clinician Clin = _clinicianService.GetClinician(User.Email);
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Email , User.Email),
@@ -60,7 +61,8 @@ namespace SDSA.Controllers
                
                 return Ok(new
                 {
-                    token = JWTToken
+                    token = JWTToken,
+                    clinician_id = Clin.ID
                 });
             }
             return StatusCode(401);

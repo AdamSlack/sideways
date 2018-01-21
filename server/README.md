@@ -94,3 +94,17 @@ Example response
     'Instructions':'Instructions in French'
 }
 ```
+
+
+## Creating A Participant.
+
+Creating a new participant involves one step.
+
+A POST request to: `localhost:5000/Participant/Create`
+
+It returns the `participant ID of the newly created participant. `
+
+Example response:
+```
+{"participantId":1}
+```

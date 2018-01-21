@@ -73,10 +73,12 @@ namespace SDSA
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ILocalisationRepository, LocalisationRepository>();
+            services.AddTransient<IParticipantRepository, ParticipantRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
             services.AddTransient<ILocalisationService, LocalisationService>();
+            services.AddTransient<IParticipantService, ParticipantService>();
         }   
 
 

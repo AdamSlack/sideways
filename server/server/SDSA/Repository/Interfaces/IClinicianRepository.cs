@@ -8,6 +8,8 @@ namespace SDSA.Repository.Interfaces
     public interface IClinicianRepository
     {
        Clinician GetClinician(int clinicianId);
+        Clinician GetClinician(string email);
+
        IEnumerable<Clinician> GetAllClinicians();
        bool ValidateClinician(SDSAUser user);
     }
