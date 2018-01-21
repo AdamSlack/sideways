@@ -13,3 +13,10 @@
 <div class="submit">
   <input class="button submit" type="button" (click)=initialiseStudy() value="Initialise">
 </div>
+
+<div>
+  <div *ngIf="participant_test_id">
+    Participant's Test ID: {{participant_test_id}}
+  </div>
+</div>
+

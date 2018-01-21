@@ -27,9 +27,9 @@ namespace SDSA.Controllers
         }
 
         [HttpPost("[controller]/Create/Test")]
-        public IActionResult CreateParticipantTest([FromBody] ParticipantTest PT)
+        public IActionResult CreateParticipantTest( [FromBody] ParticipantTest PT)
         {
-            Console.WriteLine("Request for Participant Creation Recieved.");
+            Console.WriteLine("Request for Participant Creation Recieved. " + PT.ParticipantId + " : " + PT.ClinicianId + " : " + PT.LocalePreset);
             return Json( new { testId = _participantService.CreateParticipantTest(PT) });
         }
         [HttpGet("[controller]/{ParticipantId}/Tests")]

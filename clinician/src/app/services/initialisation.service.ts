@@ -7,7 +7,7 @@ export class InitialisationService {
 
     constructor(private http: HttpClient) {}
 
-    public ROOT : string = 'http://localhost:5000/';
+    public ROOT : string = 'http://localhost:5000';
     
     public createHeaders() : HttpHeaders {
         let headers = new HttpHeaders();
@@ -34,17 +34,29 @@ export class InitialisationService {
         return this.http.get(url);
     }
 
-    public requestStudyInit(p_id : string, locale: string, test: string ) : Observable<any> {
-        let url = this.ROOT + 'tests/' + test + '/localisation/' + locale + '/participant/';
-        if(p_id) {
-            url += p_id;
-        }
-        if (locale && test){
-            console.log('Requesting Test be made: ' + url)
-            let headers = this.createHeaders()
-            return this.http.post(url, '');
-        }
-        console.log('you messed up... ');
+    public requestParticipantInit() : Observable<any> {
+        let url =  this.ROOT + '/Participant/Create';
+
+        let headers = this.createHeaders();
+        let body = JSON.stringify({});
+        return this.http.post(url,body,{headers:headers});
+    }
+    
+    public requestStudyInit(p_id : number, c_id : number, locale_name : string) : Observable<any> {
+        let url =  this.ROOT + '/Participant/Create/Test';
+        let headers = this.createHeaders();
+
+        let body = {
+            'ParticipantId' : p_id,
+            'ClinicianId' : c_id,
+            'LocalePreset' : locale_name
+        };
+
+        console.log(url);
+        console.log(body);
+
+        return this.http.post(url, body, {headers : headers});
+
     }
 
 }

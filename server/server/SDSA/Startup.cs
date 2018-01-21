@@ -60,7 +60,7 @@ namespace SDSA
             corsBuilder.AllowAnyHeader();
             corsBuilder.AllowCredentials();
             corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); 
+            corsBuilder.AllowAnyOrigin();             
             CorsPolicy corsPolicy = corsBuilder.Build();
 
             services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
@@ -133,6 +133,11 @@ namespace SDSA
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
+            );
+
+            routes.MapRoute(
+                name : "Participant",
+                template : "Participant/Create/{action=Test}"
             );
 
             routes.MapRoute(
