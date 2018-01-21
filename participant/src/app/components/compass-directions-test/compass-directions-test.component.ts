@@ -92,7 +92,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 2, square_length * 0.9);
+    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 16, square_length * 0.9);
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
@@ -117,6 +117,7 @@ export class CompassDirectionsTestComponent implements OnInit {
         console.log(image_path)
 
         let img;
+
         //Try to load image
         fabric.Image.fromURL(image_path, function(oImg) {
           img = oImg.scale(length).set({

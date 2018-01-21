@@ -19,10 +19,6 @@ import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
 import { AppRoutingModule } from './/app-routing.module';
 
-//Styling Modules
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { CustomMaterialModule } from './material.module';
-
 
 @NgModule({
   declarations: [
@@ -41,8 +37,6 @@ import { CustomMaterialModule } from './material.module';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    FlexLayoutModule,
-    CustomMaterialModule
   ],
 
   providers: [ResultsService,RecordTimingService, FabricService],
