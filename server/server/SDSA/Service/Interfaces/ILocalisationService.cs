@@ -15,5 +15,6 @@ namespace SDSA.Service.Interfaces
         void SaveImage(LocalisationImage LI);
 
         void SaveTestDetails(string LocaleName, int TestType, TestLocaleDetails Details);
+        TestLocaleDetails FetchTestLocalisationPreset(string LocaleName, int TestType);
     }
 }

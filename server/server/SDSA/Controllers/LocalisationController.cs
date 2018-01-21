@@ -83,7 +83,9 @@ namespace SDSA.Controllers
             Console.WriteLine("Requst for Local Prest Details Recieved");
             Console.WriteLine("Fetching Presets for Locale: " + LocaleName + ". Test retrieving: " + TestType);
 
-            return Ok();
+            TestLocaleDetails deets = _localisationService.FetchTestLocalisationPreset(LocaleName, TestType);
+
+            return Json(deets);
         }
 
         [HttpPost("[controller]/{LocaleName}/{TestType}")]
@@ -96,7 +98,6 @@ namespace SDSA.Controllers
             Console.WriteLine("Other details not being logged...");
 
             _localisationService.SaveTestDetails(LocaleName, TestType, Details);
-
 
             return Ok();
         }

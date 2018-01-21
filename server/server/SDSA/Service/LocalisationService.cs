@@ -29,6 +29,7 @@ namespace SDSA.Service
 
         public void SaveTestDetails(string LocaleName, int TestType, TestLocaleDetails Details) {
             _localisationRepository.SaveLocalePreset(LocaleName);
+
             switch(TestType){
                 case 1:
                     _localisationRepository.SaveDotCancellationTest(LocaleName, Details);
@@ -49,6 +50,37 @@ namespace SDSA.Service
                     Console.WriteLine("You done gone messed up...");
                     break;    
             }
+        }
+
+        public TestLocaleDetails FetchTestLocalisationPreset(string LocaleName, int TestType) {
+            // Gonna have to move Trail Making test... it shouldn't be an edge case :/
+            
+            TestLocaleDetails Deets = new TestLocaleDetails("","","");
+
+            if (_localisationRepository.CountPresetByName(LocaleName) == 0) {
+                return Deets;
+            }
+            switch(TestType){
+                case 1:
+                    Deets = _localisationRepository.SelectDotCancellationDetails(LocaleName);
+                    break;
+                case 2:
+                    Deets = _localisationRepository.SelectCompassDirectionDetails(LocaleName);
+                    break;
+                case 3:
+                    Deets = _localisationRepository.SelectCarDirectionDetails(LocaleName);
+                    break;
+                case 4:
+                    Deets = _localisationRepository.SelectRoadSignScenarioDetails(LocaleName);
+                    break;
+                case 5:
+                    Deets =_localisationRepository.SelectTrailMakingDetails(LocaleName);                
+                    break;
+                default:
+                    Console.WriteLine("You done gone messed up...");
+                    break;    
+            }
+            return Deets;
         }
 
     }
