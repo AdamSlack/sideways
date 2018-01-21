@@ -14,6 +14,10 @@ namespace SDSA.Service
         {
             _participantRepository = participantRepo;
         }
+
+        public int CreateParticipantTest(int PID, int CID, string PresetName) 
+            => _participantRepository.CreateParticipantTest(PID, CID, PresetName);
+        
         public IEnumerable<int> GetParticipantTests(int participantId)
             => _participantRepository.GetParticipantTests(participantId);
 

@@ -79,10 +79,10 @@ create table road_sign_scenario(
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
 create table participant_tests(
-    test_id         serial   primary key  not null,
+    test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_name     text    references localisation_presets(preset_name) not null
+    preset_name     text        references localisation_presets(preset_name) not null
 );
 
 ----------------------------------------------------
