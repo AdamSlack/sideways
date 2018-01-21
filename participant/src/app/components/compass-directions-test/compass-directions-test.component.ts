@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, group } from '@angular/core';
 import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { Time } from '@angular/common/src/i18n/locale_data_api';
@@ -19,8 +19,6 @@ var Deck:any[];
 var GridSquares:any[];
 
 //TODO: tbf this could be served in the angular assets folder without the asset_root but wanted to test for other apps
-var asset_root = "http://locahost:5000"
-var asset_link = "/test/compass_directions";
 
 //Reads row, column
 enum compassDir {
@@ -47,6 +45,7 @@ enum compassDir {
 } 
 
 var server_root = "http://localhost:5000/"
+var asset_link = "/test/compass_directions/";
 
 @Component({
   selector: 'app-compass-directions-test',
@@ -93,7 +92,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 20, square_length * 0.9);
+    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 2, square_length * 0.9);
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
@@ -103,12 +102,7 @@ export class CompassDirectionsTestComponent implements OnInit {
   
   private createCompassDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
 
-      // Make the HTTP request:
-      this.http.get(asset_root + asset_link + "1-roundabout_scene.png").subscribe(data => {
-        // Read the result field from the JSON response.
-        return data;
-      });
-
+ 
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
         let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card' + idx.toString());
@@ -119,14 +113,41 @@ export class CompassDirectionsTestComponent implements OnInit {
         card.lockScalingX = true;
         card.lockScalingY = true
 
-        //Try to load image
+        let image_path = server_root + asset_link + (idx + 1) + "-roundabout_scene.png"
+        console.log(image_path)
 
-        fabric.Image.fromURL(asset_root + asset_link + "1-roundabout_scene.png", function(oImg) {
-          this.canvas.add(oImg);
+        let img;
+        //Try to load image
+        fabric.Image.fromURL(image_path, function(oImg) {
+          img = oImg.scale(length).set({
+            left: xOffset, 
+            top: yOffset,
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true,
+            lockUniScaling: true,
+            lockScalingY: true, 
+            lockScalingX: true,       
+            id: 'scene' +idx.toString(), 
+          })
+        
+          oImg.scaleToWidth(length);
+          oImg.scaleToHeight(length);
+     
+
+          var group = new fabric.Group([ card, img ], {
+            left: xOffset,
+            top: yOffset
+          });
+         
+          Canvas.add(group)
+
         });
 
-
-        Canvas.add(card);
+         // Ok we have the image, can add to group/canvas
+    
+        //Canvas.add(card);
+        //Canvas.add(img)
         Deck.push(card);
       });
 

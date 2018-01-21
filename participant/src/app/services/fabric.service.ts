@@ -43,7 +43,7 @@ export class FabricService {
         top: y, 
         width: length, 
         height: length, 
-        fill: '#ffb366', 
+        //fill: '#ffb366', 
         originX: 'left', 
         originY: 'top',
         centeredRotation: true,
