@@ -103,15 +103,16 @@ export class LocalisationService {
 
     constructor(private http : HttpClient, private auth : AuthenticationService) { }
 
-    public ROOT : string = 'http://localhost:8080/';
+    public ROOT : string = 'http://localhost:5000';
     
     public localePreset : LocalePreset = new LocalePreset();
 
-    public createHeaders() {
-        return {
-            headers: new HttpHeaders().set('Authorization', 'my-auth-token')
-        }
-    }
+    public createHeaders() : HttpHeaders {
+        let headers = new HttpHeaders();
+        headers.set('Content-Type', 'application/json');
+        headers.set('Access-Control-Allow-Origin', '*')
+        return headers;
+      }
 
     public requestLocaleSetup(locale : string, localeData : LocalePreset) : Observable<any> {
         let url = this.ROOT + 'localisation/';
@@ -119,6 +120,96 @@ export class LocalisationService {
         return this.http.post(url, '');           
     }
 
+    public addDotCancellation(localeName : string, name : string, instructions : string) {
+        let url = this.ROOT + '/Localisation/' + localeName + '/1';
+        let headers = this.createHeaders();
+        let body = {
+            Type: 'dot_cancellation',
+            Name: name,
+            Instructions : instructions
+        };
+        return this.http.post(url, body, {headers : headers});
+    }
+
+    public addCompassDirection(
+        localeName : string, 
+        name : string, 
+        instructions : string, 
+        headingsLabel : string, 
+        deckLabel : string) : Observable<any> {
+            return this.addMatrixTest(2, 'compass_directions', localeName, name, instructions, headingsLabel, deckLabel);
+    }
+
+    public addCarDirection(
+        localeName : string, 
+        name : string, 
+        instructions : string, 
+        headingsLabel : string, 
+        deckLabel : string) : Observable<any> {
+            return this.addMatrixTest(3, 'car_directions', localeName, name, instructions, headingsLabel, deckLabel);
+    }
+  
+
+    private addMatrixTest(
+        type : number, 
+        typeName : string, 
+        localeName : string, 
+        name : string, 
+        instructions : string, 
+        headingsLabel : string, 
+        deckLabel : string) : Observable<any> {
+            let url = this.ROOT + '/Localisation/' + localeName + '/' + type.toString();
+            let headers = this.createHeaders();
+            let body = {
+                Type: typeName,
+                Name: name,
+                Instructions : instructions,
+                HeadingsLabel : headingsLabel,
+                DeckLabel : deckLabel
+            };
+            return this.http.post(url, body, {headers : headers});
+    }
+
+
+    private addTrailMaking(
+        type : number,
+        typeName : string,
+        localeName : string,
+        name : string, 
+        instructions : string, 
+        trailA : string[], 
+        trailB : string[]) : Observable<any> {
+            let url = this.ROOT + '/Localisation/' + localeName + '/5';
+            let headers = this.createHeaders();
+            let body = {
+                Type: typeName,
+                Name: name,
+                Instructions : instructions,
+                TrailA : trailA,
+                TrailB : trailB
+            };
+            return this.http.post(url, body, {headers : headers});
+    }
     
-    
+    public selectLocalisationDetails(testType : number, localeName : string) : Observable<any> {
+        let url = this.ROOT + '/Localisation/' + localeName + '/' + testType.toString();
+        let headers = this.createHeaders();
+        return this.http.get(url, {headers : headers});
+    }
+
+    public selectDotCancellationDetails(localeName : string) : Observable<any>{
+        return this.selectLocalisationDetails(1, localeName);
+    }
+    public selectCompassDirectionDetails(localeName : string) : Observable<any>{
+        return this.selectLocalisationDetails(2, localeName);
+    }
+    public selectcarDirectionDetails(localeName : string) : Observable<any>{
+        return this.selectLocalisationDetails(3, localeName);
+    }
+    public selectRoadSignScenarioDetails(localeName : string) : Observable<any>{
+        return this.selectLocalisationDetails(4, localeName);
+    }
+    public selectTrailMakingDetails(localeName : string) : Observable<any>{
+        return this.selectLocalisationDetails(5, localeName);
+    }
 }
