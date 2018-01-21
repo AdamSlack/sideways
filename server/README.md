@@ -102,9 +102,35 @@ Creating a new participant involves one step.
 
 A POST request to: `localhost:5000/Participant/Create`
 
+An Example Curl:
+```
+curl -X POST -H "Content-Type: application/json" -d "{}" "localhost:5000/Participant/Create"
+
+```
 It returns the `participant ID of the newly created participant. `
 
 Example response:
 ```
 {"participantId":1}
+```
+
+## Creating A Participant's Test
+
+Creating a new Test for a participant involves one step.
+
+A POST request to: `localhost:5000/Participant/Create/Test`
+
+In the body you will be required to send the details necessary for test creation in the following format:
+
+```
+{
+    'ParticipantId' : 1,     // sub 1 for whatever you participant's id is
+    'ClinicianId' : 1,       // sub 1 for whatever your clinician id is
+    'LocalePreset' : 'en_gb' //sub en_gb for whatever you locale preset name is
+}
+```
+
+An Example Curl
+```
+curl -X POST -H "Content-Type: application/json" -d "{'ParticipantId':1, 'ClinicianId':1, 'LocalePreset':'en_gb'}" "localhost:5000/Participant/Create/Test"
 ```
