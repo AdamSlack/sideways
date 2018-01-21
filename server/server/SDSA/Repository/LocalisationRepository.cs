@@ -291,6 +291,14 @@ namespace SDSA.Repository
 
             return Deets;
         }
+
+        public IEnumerable<string> GetLocaleNames() {
+            Console.WriteLine("Selecting all LocaleNames");
+            return db.Query<string>(
+                "select preset_name from localisation_presets"
+            );
+        }
+
     }
 }
 #endregion

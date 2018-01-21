@@ -18,7 +18,6 @@ export class StudyInitComponent implements OnInit {
   public initialisationDetails : {c_id : number, p_id : number, t_id : number, testType : string};
 
   public localOptionsSubscription : Subscription;
-  public testOptionSubscription : Subscription;
   public testInitSubscription : Subscription;
   
 
@@ -42,11 +41,7 @@ export class StudyInitComponent implements OnInit {
   ngOnInit() {
   
     this.init.fetchLocalisationOption().subscribe((res) => {
-      this.localeOptions = res.locales;
-    });
-
-    this.init.fetchTestOptions().subscribe((res) => {
-      this.testOptions = res.tests;
+      this.localeOptions = res.localeNames;
     });
   }
 

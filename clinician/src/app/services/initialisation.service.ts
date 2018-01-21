@@ -7,13 +7,14 @@ export class InitialisationService {
 
     constructor(private http: HttpClient) {}
 
-    public ROOT : string = 'http://localhost:8080/';
+    public ROOT : string = 'http://localhost:5000/';
     
-    public createHeaders() {
-        return {
-            headers: new HttpHeaders().set('Authorization', 'my-auth-token')
-        }
-    }
+    public createHeaders() : HttpHeaders {
+        let headers = new HttpHeaders();
+        headers.set('Content-Type', 'application/json; charset=utf-8');
+        headers.set('Access-Control-Allow-Origin', '*')
+        return headers;
+      }
 
     public fetchTestOptions() : Observable<any> {
         let url =  this.ROOT + '/tests';
@@ -25,7 +26,7 @@ export class InitialisationService {
     }
 
     public fetchLocalisationOption() : Observable<any> {
-        let url =  this.ROOT + '/localisation';
+        let url =  this.ROOT + '/Localisation';
 
         console.log('Locale Options Requests')
         

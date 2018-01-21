@@ -83,5 +83,7 @@ namespace SDSA.Service
             return Deets;
         }
 
+        public IEnumerable<string> GetLocaleNames() 
+            => _localisationRepository.GetLocaleNames();
     }
 }

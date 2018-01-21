@@ -9,12 +9,7 @@
       <option *ngFor="let locale of localeOptions" value="{{locale}}">{{locale}}</option>      
     </select>
 </div>
-<div class="selection">
-    <select [(ngModel)]=testChoice>
-        <option value="0" disabled selected hidden>Select Type of Test</option>
-        <option *ngFor="let test of testOptions" value="{{test}}">{{test}}</option>
-      </select>
-  </div>
+
 <div class="submit">
   <input class="button submit" type="button" (click)=initialiseStudy() value="Initialise">
 </div>

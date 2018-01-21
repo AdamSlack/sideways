@@ -8,6 +8,7 @@ export class AuthenticationService {
 
   public AUTH_TOKEN : string = '';
   public VALIDATED : boolean = false;
+  public CLINICIAN_ID : string = '';
 
   constructor(private http: HttpClient) {}
   
@@ -35,6 +36,7 @@ export class AuthenticationService {
       if (res['token']) {
         this.AUTH_TOKEN = res['token'];
         this.VALIDATED = true;
+        this.CLINICIAN_ID = res['clinician_id'];
       }
     });
   }

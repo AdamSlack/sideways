@@ -34,5 +34,7 @@ namespace SDSA.Repository.Interfaces
 
          void DeleteTrailPreset(string PresetName);
          int CountTrailPreset(string PresetName);
+
+         IEnumerable<string> GetLocaleNames();
     }
 }
