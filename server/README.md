@@ -71,6 +71,14 @@ localhost:5000/Localisation/{PresetName}/{TestType}
 
 Where `{PresetName}` is the Name of the localisation preset being retrieved. and `{TestType}` is the numeric code for the test whos data you want.
 
+```
+dot_cancellation : 1,
+compass_directions : 2,
+car_directions : 3,
+road_sign_scenarios : 4,
+trail_making : 5
+```
+
 Dot Cancellation Test:
 
 Example Curl
