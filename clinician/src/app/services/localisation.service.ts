@@ -170,7 +170,6 @@ export class LocalisationService {
             return this.http.post(url, body, {headers : headers});
     }
 
-
     private addTrailMaking(
         type : number,
         typeName : string,

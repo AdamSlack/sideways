@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalisationService, LocalePreset, Coords } from '../services/localisation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { lchmod } from 'fs';
 
 
 @Component({
@@ -23,7 +24,6 @@ export class LocalisationCreatorComponent implements OnInit {
   public road : boolean = false;
   public trail : boolean = false;
 
-
   // Road Signs , indexed though angular bindings.
   public scenarioCounts     : number = 16
   public scenarioUploaded   : Array<boolean> = Array(this.scenarioCounts).fill(false,0,this.scenarioCounts);
@@ -36,6 +36,21 @@ export class LocalisationCreatorComponent implements OnInit {
   public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
   public indicatorCoords    : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords(-100,-100), 0, this.scenarioCounts)
 
+  public dotName : string = '';
+  public dotInstructions : string = '';
+
+  public compDirName : string = '';
+  public compDirIns : string = '';
+  public compDirHeadings : string = '';
+  public compDirDeck : string = '';
+
+  public carDirName : string = '';
+  public carDirIns : string = '';
+  public carDirHeadings : string = '';
+  public carDirDeck : string = '';
+  
+  public tmName : string = '';
+  public tmIns : string = '';
   public trailAString : string = '';
   public trailBString : string = '';
   public trailAArray : Array<string> = [];
@@ -45,6 +60,34 @@ export class LocalisationCreatorComponent implements OnInit {
 
   public startLocaleCreation() : void {
     this.creationStarted = true;
+    this.locale.selectDotCancellationDetails(this.localeName).subscribe((res) => {
+      this.localePreset.dotCancellation.general.testHeading = res['name'];
+      this.localePreset.dotCancellation.general.testInstructions = res['instructions'];
+    });
+    this.locale.selectCompassDirectionDetails(this.localeName).subscribe((res) => {
+      console.log(res);
+      this.localePreset.compassDirections.general.testHeading = res['name'];
+      this.localePreset.compassDirections.general.testInstructions = res['instructions'];
+      this.localePreset.compassDirections.matrix.headingsLabel = res['headingsLabel'];
+      this.localePreset.compassDirections.matrix.deckLabel = res['deckLabel'];
+    });
+    this.locale.selectcarDirectionDetails(this.localeName).subscribe((res) => {
+      console.log(res);
+      this.localePreset.carDirections.general.testHeading = res['name'];
+      this.localePreset.carDirections.general.testInstructions = res['instructions'];
+      this.localePreset.carDirections.matrix.headingsLabel = res['headingsLabel'];
+      this.localePreset.carDirections.matrix.deckLabel = res['deckLabel'];
+    });
+    this.locale.selectTrailMakingDetails(this.localeName).subscribe((res) => {
+      this.localePreset.trailMaking.general.testHeading = res['name'];
+      this.localePreset.trailMaking.trailA = res['trailA'];
+      this.trailAArray = res['trailA'];
+      this.trailAString = res['trailA'].join(', ');
+      this.localePreset.trailMaking.trailB = res['trailB'];
+      this.trailBArray = res['trailB'];
+      this.trailBString = res['trailB'].join(', ');
+    });
+    
   }
 
   public scenarioCompleted(index : number)  {
