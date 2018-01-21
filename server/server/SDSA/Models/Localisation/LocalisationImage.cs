@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SDSA.Models
+namespace SDSA.Models.Localisation
 {
     public class LocalisationImage
     {

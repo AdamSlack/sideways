@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SDSA.Controllers
@@ -26,8 +27,13 @@ namespace SDSA.Controllers
         }
         // GET: /<controller>/
         [Route("/login")]
-        public IActionResult Login(SDSAUser User)
+        public IActionResult Login([FromBody] SDSAUser User)
         {
+            Console.WriteLine("Validating User Login");
+
+            Console.WriteLine("User Email: " + User.Email);
+            
+
             if (User.UserType == SDSAUser.loginuserType.Clinician && _clinicianService.ValidateClinician(User))
             {
                 var claims = new[]
@@ -57,7 +63,7 @@ namespace SDSA.Controllers
                     token = JWTToken
                 });
             }
-            return View();
+            return StatusCode(401);
         }
     }
 }

@@ -19,16 +19,15 @@ namespace SDSA.Controllers
             _participantService = particserv;
             _testService = testService;
         }
-        [HttpPost("[controller]/Create)")]
+        [HttpPost("[controller]/Create")]
         public IActionResult Create(Participant participant)
         {
-
-             return Json( new { participantId = _participantService.SaveParticipant(participant) });
+            Console.WriteLine("Request for Participant Creation Recieved.");
+            return Json( new { participantId = _participantService.SaveParticipant(participant) });
         }
         [HttpGet("[controller]/{ParticipantId}/Tests")]
         public IActionResult Tests (int ParticipantId)
         {
-           
             return Json(_testService.GetParticipantsTests(ParticipantId));
         }
     }
