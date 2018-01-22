@@ -55,7 +55,7 @@ namespace SDSA.Service
         public TestLocaleDetails FetchTestLocalisationPreset(string LocaleName, int TestType) {
             // Gonna have to move Trail Making test... it shouldn't be an edge case :/
             
-            TestLocaleDetails Deets = new TestLocaleDetails("","","");
+            TestLocaleDetails Deets = new TestLocaleDetails();
 
             if (_localisationRepository.CountPresetByName(LocaleName) == 0) {
                 return Deets;
@@ -83,5 +83,7 @@ namespace SDSA.Service
             return Deets;
         }
 
+        public IEnumerable<string> GetLocaleNames() 
+            => _localisationRepository.GetLocaleNames();
     }
 }

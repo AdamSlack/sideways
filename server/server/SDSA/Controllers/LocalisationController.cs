@@ -101,5 +101,11 @@ namespace SDSA.Controllers
 
             return Ok();
         }
+
+        [HttpGet("[controller]")]
+        public IActionResult LocaleOptions() {
+            Console.WriteLine("Request for Locale Names recieved");
+            return Json( new { LocaleNames = _localisationService.GetLocaleNames()});
+        }
     }
 }

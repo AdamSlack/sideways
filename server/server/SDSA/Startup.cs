@@ -60,7 +60,7 @@ namespace SDSA
             corsBuilder.AllowAnyHeader();
             corsBuilder.AllowCredentials();
             corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); 
+            corsBuilder.AllowAnyOrigin();             
             CorsPolicy corsPolicy = corsBuilder.Build();
 
             services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
@@ -73,10 +73,12 @@ namespace SDSA
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ILocalisationRepository, LocalisationRepository>();
+            services.AddTransient<IParticipantRepository, ParticipantRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
             services.AddTransient<ILocalisationService, LocalisationService>();
+            services.AddTransient<IParticipantService, ParticipantService>();
         }   
 
 
@@ -131,6 +133,11 @@ namespace SDSA
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
+            );
+
+            routes.MapRoute(
+                name : "Participant",
+                template : "Participant/Create/{action=Test}"
             );
 
             routes.MapRoute(

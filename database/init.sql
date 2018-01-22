@@ -181,4 +181,14 @@ insert into sdsa_test_types (name) values ('car_directions');       -- 3
 insert into sdsa_test_types (name) values ('road_sign_scenarios');  -- 4
 insert into sdsa_test_types (name) values ('trail_making');         -- 5
 
+----
+--  Initial SDSA localisation preset details
+----
+insert into localisation_presets (preset_name) values ('test');
+
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions) values ('test', 1, 'Dot Cancellation Test', 'Here be instructions for the dot cancellation test.');
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 2, 'Compass Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 3, 'Car Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
+insert into trail_making_details(preset_name, name, instructions, trail_a, trail_b) values ('test', 'Trail Making Test', 'Connect the Dots and shizzle', array['1','2','3','4','5','6'], array['a','1','b','2','c','3']);
+
 commit;

@@ -14,15 +14,16 @@ namespace SDSA.Repository{
         public ParticipantRepository(IConfiguration config){
             db =DBFactory.getConnection(config);
         }
-        public int SaveParticipant(Participant p)=> db.ExecuteScalar<int>(
-            "insert into participant (participant_id) values (DEFAULT) RETURNING participant_id"
+        public int CreateParticipant()=> db.ExecuteScalar<int>(
+            "insert into participants (participant_id) values (DEFAULT) RETURNING participant_id"
         );
 
-        public int CreateParticipantTest(int PID, int CID, string PresetName) => db.ExecuteScalar<int> (
+        public int CreateParticipantTest(ParticipantTest PT) => db.ExecuteScalar<int> (
             "insert into participant_tests (participant_id, clinician_id, preset_name) " + 
             "values (@PID, @CID, @PresetName) returning test_id",
-            new {PID, CID, PresetName}
+            new {PID = PT.ParticipantId, CID = PT.ClinicianId, PresetName = PT.LocalePreset}
         );
+        
         public IEnumerable<int> GetParticipantTests(int participantId) => db.Query<int>(
             "select test_id from participant_tests where participant_id = @participantId",
             new { participantId = participantId }
