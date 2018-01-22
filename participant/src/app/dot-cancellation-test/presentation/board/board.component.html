@@ -5,7 +5,7 @@
 	  
 	  <div class="container">
       <div class="board" *ngFor="let row of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]">
-        <cell *ngFor="let col of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+        <cell [className]="'style1'" *ngFor="let col of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
 		
 	   
         [state]="squares[col+row*25]"
@@ -16,6 +16,7 @@
 		[dotFour]="dotfours[col+row*5]"
 		[dotFive]="dotfives[col+row*5]"
 		
+		[Fontcolor] ='blue'
 		
 				(click)="AddDot(col+row*5)" 
 				>

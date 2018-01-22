@@ -6,6 +6,7 @@ import { Component, Input  } from '@angular/core';
   styleUrls: ['./cell.component.scss']
 })
 export class CellComponent {
+ 
   @Input()
   state: string; 
   
@@ -29,11 +30,15 @@ export class CellComponent {
   dotFour: string;
   
   
+  public myColor= "blue";
+  
+  randomcolor = "red";
+  
   @Input('dotFive')
   dotFive: string;
   
   @Input('Fontcolor') 
-  Fontcolor = 'red';
+  Fontcolor: string;
   
   @Input('hold') 
   hold: string;

@@ -93,7 +93,7 @@ handleMove(position) {
 }
 
 AddDot(position) {
- 
+   
    if (!this.squares[position] )
    {
 	  this.squares[position] = 'X'; 
