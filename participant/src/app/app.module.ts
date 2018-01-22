@@ -32,6 +32,8 @@ import { FabricService } from './services/fabric.service';
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
     LoginScreenComponent,
+    BoardComponent,
+    CellComponent
   ],
   imports: [
     BrowserModule,
