@@ -79,7 +79,12 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.carDirections.matrix.deckLabel = res['deckLabel'];
     });
     this.locale.selectTrailMakingDetails(this.localeName).subscribe((res) => {
+      console.log(res);
+      
       this.localePreset.trailMaking.general.testHeading = res['name'];
+      this.tmName = res['name'];
+      this.tmIns = res['name'];
+      this.localePreset.trailMaking.general.testInstructions = res['instructions'];
       this.localePreset.trailMaking.trailA = res['trailA'];
       this.trailAArray = res['trailA'];
       this.trailAString = res['trailA'].join(', ');
@@ -179,27 +184,44 @@ export class LocalisationCreatorComponent implements OnInit {
   }
 
   public completeLocaleCreation() : void {
-    
-    console.log(this.localePreset.dotCancellation.general.testHeading);
-    console.log(this.localePreset.dotCancellation.general.testInstructions);
-    if (this.localeSubmissionSubscription) {
-      this.localeSubmissionSubscription.unsubscribe()
-    }
-    this.localeSubmissionSubscription = this.locale.requestLocaleSetup(this.localeName, new LocalePreset).subscribe(
-      (res) => {
-        if(!res.err) {
-          this.creationStarted = false;
-        }
-        else {
-          console.log('Form Error')
-          console.log(res.err)
-        }
-      },
-      (err : HttpErrorResponse) => {
-        alert('HTTP Error Response: Error Submitting Form.')
-        this.creationStarted = false;
-      }
-    );
+    console.log('Requesting Locale Preset be added.');
+    this.locale.addDotCancellation(
+      this.localeName,
+      this.localePreset.dotCancellation.general.testHeading,
+      this.localePreset.dotCancellation.general.testInstructions
+    ).subscribe((res) => {
+      console.log('Dot Cancellation Addition Request Processed');
+      console.log(res);
+    });
+    this.locale.addCompassDirection(
+      this.localeName,
+      this.localePreset.compassDirections.general.testHeading,
+      this.localePreset.compassDirections.general.testInstructions,
+      this.localePreset.compassDirections.matrix.headingsLabel,
+      this.localePreset.compassDirections.matrix.deckLabel
+    ).subscribe((res) => {
+      console.log('Compass Direction Addition Request Processed');
+      console.log(res);
+    });
+    this.locale.addCarDirection(
+      this.localeName,
+      this.localePreset.carDirections.general.testHeading,
+      this.localePreset.carDirections.general.testInstructions,
+      this.localePreset.carDirections.matrix.headingsLabel,
+      this.localePreset.carDirections.matrix.deckLabel
+    ).subscribe((res) => {
+      console.log('Car Direction Addition Request Processed');
+      console.log(res);
+    });
+    this.locale.addTrailMaking(
+      this.localeName,
+      this.localePreset.trailMaking.general.testHeading,
+      this.localePreset.trailMaking.general.testInstructions,
+      this.trailAArray,
+      this.trailBArray).subscribe((res) => {
+      console.log('Compass Direction Addition Request Processed');
+      console.log(res);
+    });
   }
 
   ngOnInit() {

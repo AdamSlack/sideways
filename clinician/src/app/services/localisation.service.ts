@@ -170,9 +170,7 @@ export class LocalisationService {
             return this.http.post(url, body, {headers : headers});
     }
 
-    private addTrailMaking(
-        type : number,
-        typeName : string,
+    public addTrailMaking(
         localeName : string,
         name : string, 
         instructions : string, 
@@ -181,7 +179,7 @@ export class LocalisationService {
             let url = this.ROOT + '/Localisation/' + localeName + '/5';
             let headers = this.createHeaders();
             let body = {
-                Type: typeName,
+                Type: 'trail_making',
                 Name: name,
                 Instructions : instructions,
                 TrailA : trailA,
