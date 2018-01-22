@@ -19,7 +19,7 @@ export class StudyInitComponent implements OnInit {
   public testChoice : string;
   public initialisationDetails : {c_id : number, p_id : number, t_id : number, testType : string};
 
-  public participany_test_id : string;
+  public participant_test_id : string;
 
   public localOptionsSubscription : Subscription;
   public testInitSubscription : Subscription;
@@ -43,7 +43,7 @@ export class StudyInitComponent implements OnInit {
 
     if(this.p_id && this.p_id != '' && parseInt(this.p_id) != 0) {
       this.testInitSubscription = this.init.requestStudyInit(parseInt(this.p_id), parseInt(this.auth.CLINICIAN_ID), this.localeChoice).subscribe((res) => {
-        this.participany_test_id = res['testId'];
+        this.participant_test_id = res['testId'];
       });
       return ;
     }
@@ -51,7 +51,7 @@ export class StudyInitComponent implements OnInit {
     this.participantInitSubscription = this.init.requestParticipantInit().subscribe((res) => {
       this.p_id = res['participantId'];
       this.testInitSubscription = this.init.requestStudyInit(parseInt(res['participantId']), parseInt(this.auth.CLINICIAN_ID), this.localeChoice).subscribe((res) => {
-        this.participany_test_id = res['testId'];
+        this.participant_test_id = res['testId'];
       });
     });
   }
