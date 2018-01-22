@@ -9,8 +9,11 @@ export class AssetRetrievalService {
   
     public ROOT : string = 'http://localhost:8080/';
     
-    public createHeaders() {
-      return { headers: new HttpHeaders().set('Authorization', 'my-auth-token') }
+    public createHeaders() : HttpHeaders {
+      let headers = new HttpHeaders();
+      // headers.set('Content-Type', 'application/json');
+      headers.set('Access-Control-Allow-Origin', '*')
+      return headers;
     }
 
     public fetchInstructions(localisation: string, testName: string) {
@@ -19,6 +22,6 @@ export class AssetRetrievalService {
       console.log('Localisation Preset: ' + localisation);
       let headers = this.createHeaders();
 
-      this.http.get(url, headers);
+      this.http.get(url, {headers : headers});
     }
 }

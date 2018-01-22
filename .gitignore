@@ -374,3 +374,4 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+participant/src/app/dot-cancellation-test/presentation/board/board.component.ts
