@@ -13,6 +13,9 @@ import { RoadScenariosTestComponent } from './road-scenarios-test/road-scenarios
 import { TrailMakingTestComponent } from './trail-making-test/trail-making-test.component';
 import { LoginScreenComponent } from './login-screen/login-screen.component';
 
+import { BoardComponent } from './dot-cancellation-test/presentation/board/board.component'
+import { CellComponent } from './dot-cancellation-test/presentation/cell/cell.component'
+
 // services
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
