@@ -11,8 +11,14 @@ export class BoardComponent {
     this.RandomlyPopulateDots();
   }
 
+  
+   public background_color= 'red';
 
   squares = Array(25).fill(null);
+  
+  Styles = Array(525).fill(null);
+  
+  
 
   dotones = Array(525).fill(null);
   dottwos = Array(25).fill(null);
@@ -81,8 +87,11 @@ export class BoardComponent {
   }
 
   AddDot(position) {
-
-    if (!this.squares[position]) {
+	  
+	
+    //this.background_color = '#cd9e98';
+	
+	if (!this.squares[position]) {
       this.squares[position] = 'X';
 
     }

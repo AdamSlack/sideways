@@ -29,6 +29,7 @@ export class CellComponent {
   @Input('dotFour')
   dotFour: string;
   
+  public dotOneXValue= 50%;
   
   public myColor= "blue";
   
