@@ -197,8 +197,8 @@ export class CompassDirectionsTestComponent implements OnInit {
         }
       });
     });
-    
     console.log(squareMatches);
+    console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
   }
 
   private createDonezoButton(x: number, y: number) {
