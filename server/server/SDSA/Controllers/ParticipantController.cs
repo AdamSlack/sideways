@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SDSA.Controllers
 {
-    [Authorize (Roles ="Clinician")]
+    //[Authorize (Roles ="Clinician")]
     public class ParticipantController : Controller
     {
         IParticipantService _participantService;
@@ -19,17 +19,23 @@ namespace SDSA.Controllers
             _participantService = particserv;
             _testService = testService;
         }
-        [HttpPost("[controller]/Create)")]
-        public IActionResult Create(Participant participant)
+        [HttpPost("[controller]/Create/")]
+        public IActionResult CreateParticipant()
         {
+            Console.WriteLine("Request for Participant Creation Recieved.");
+            return Json( new { participantId = _participantService.CreateParticipant() });
+        }
 
-             return Json( new { participantId = _participantService.SaveParticipant(participant) });
+        [HttpPost("[controller]/Create/Test")]
+        public IActionResult CreateParticipantTest( [FromBody] ParticipantTest PT)
+        {
+            Console.WriteLine("Request for Participant Creation Recieved. " + PT.ParticipantId + " : " + PT.ClinicianId + " : " + PT.LocalePreset);
+            return Json( new { testId = _participantService.CreateParticipantTest(PT) });
         }
         [HttpGet("[controller]/{ParticipantId}/Tests")]
         public IActionResult Tests (int ParticipantId)
         {
-           
-            return Json(_testService.GetParticipantsTests(ParticipantId));
+            return Json( new { tests = _testService.GetParticipantsTests(ParticipantId) } );
         }
     }
 }

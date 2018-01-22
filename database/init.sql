@@ -17,9 +17,9 @@ create table participants(
 -----
 create table clinicians(
     clinician_id    serial   primary key  not null,
-    email 	    text     required,
-    hash	    text     required,
-    salt 	    text     required,
+    email 	    text     not null,
+    hash	    text     not null,
+    salt 	    text     not null
 
 );
 
@@ -30,21 +30,59 @@ create table clinicians(
 ----------------------------------------------------
 
 -----
---  Example: preset_id: 0001, region: en-gb, localisation: { dot_cancellation: {instructions: 'fooo baar'}}
+--  Example: preset_name: 'en_gb'
 -----
 create table localisation_presets(
-    preset_id       serial  primary key  not null,
-    region          text    not null,
-    localisation    jsonb   not null
+    preset_name                 text    not null primary key
 );
+
+create table sdsa_test_types(
+    id          serial not null primary key,
+    name        text   not null
+);
+
+create table sdsa_test_details(
+    preset_name                 text    references localisation_presets(preset_name),
+    sdsa_test_type              int     references sdsa_test_types(id),
+    name                        text    ,
+    instructions                text    ,
+    headings_label              text    ,
+    deck_label                  text    ,
+    primary key (preset_name, sdsa_test_type)
+);
+
+create table trail_making_details(
+    preset_name                 text    primary key references localisation_presets(preset_name),
+    name                        text    ,
+    instructions                text    ,
+    trail_a                     text[]  ,
+    trail_b                     text[]
+);
+
+create table localisation_images(
+    image_id        serial  primary key,
+    preset_name     text    references localisation_presets(preset_name),
+    image           bytea   not null,
+    file_type       text
+);
+
+create table road_sign_scenario(
+    road_sign_id    serial  not null primary key,
+    sign_id         int     references localisation_images(image_id),
+    scenario_id     int     references localisation_images(image_id),
+    xpos            int     ,     
+    ypos            int     
+);
+
+
 -----
 --  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
 -----
 create table participant_tests(
-    test_id         serial   primary key  not null,
+    test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_id       smallint    references localisation_presets(preset_id) not null
+    preset_name     text        references localisation_presets(preset_name) not null
 );
 
 ----------------------------------------------------
@@ -128,4 +166,29 @@ create table algorithm_results(
     algorthim_id    smallint references algorithms(algorithm_id) not null,
     results         jsonb
 );
+
+----
+--  TEST Clinician. Doesn't do anything though.
+----
+insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7SVKdcafJPLNokrc0WTXjYyaAoggRR/7LhcPotdsV3Nv5BsXOtPUbw+bGKpo+qnfzhldcGKSuEtqFJKj6w==', 'hello');
+
+----
+--  Initial SDSA test types.
+----
+insert into sdsa_test_types (name) values ('dot_cancellation');     -- 1
+insert into sdsa_test_types (name) values ('compass_directions');   -- 2
+insert into sdsa_test_types (name) values ('car_directions');       -- 3
+insert into sdsa_test_types (name) values ('road_sign_scenarios');  -- 4
+insert into sdsa_test_types (name) values ('trail_making');         -- 5
+
+----
+--  Initial SDSA localisation preset details
+----
+insert into localisation_presets (preset_name) values ('test');
+
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions) values ('test', 1, 'Dot Cancellation Test', 'Here be instructions for the dot cancellation test.');
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 2, 'Compass Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
+insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 3, 'Car Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
+insert into trail_making_details(preset_name, name, instructions, trail_a, trail_b) values ('test', 'Trail Making Test', 'Connect the Dots and shizzle', array['1','2','3','4','5','6'], array['a','1','b','2','c','3']);
+
 commit;

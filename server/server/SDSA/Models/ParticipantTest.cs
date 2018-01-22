@@ -10,5 +10,7 @@ namespace SDSA.Models
         public int TestId { get; set; }
         public int ParticipantId { get; set; }
         public int ClinicianId { get; set; }
+
+        public string LocalePreset { get; set; }
     }
 }

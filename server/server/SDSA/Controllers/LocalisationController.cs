@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SDSA.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
+
+using SDSA.Service.Interfaces;
 using SDSA.Models;
+using SDSA.Models.Localisation;
 using System.IO;
 
 namespace SDSA.Controllers
@@ -17,6 +19,8 @@ namespace SDSA.Controllers
         {
             _localisationService = localserv;
         }
+
+
         [HttpGet("[controller]/image/{ImageId}")]
         public IActionResult Image(int ImageId)
         {
@@ -24,6 +28,8 @@ namespace SDSA.Controllers
 
             return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
         }
+
+
         [HttpGet("[controller]/{LocalisationId}/image/{ImageName}")]
         public IActionResult Image(int LocalisationId, string ImageName)
         {
@@ -31,6 +37,8 @@ namespace SDSA.Controllers
 
             return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
         }
+
+
         [HttpPost("[controller]/{LocalisationId}/image/{ImageName}")]
         public IActionResult Image (int LocalisationId,string ImageName , IFormFile Image, string description)
         {
@@ -56,6 +64,8 @@ namespace SDSA.Controllers
             _localisationService.SaveImage(img);
             return Ok();
         }
+
+
         [HttpGet("[controller]/{LocalisationId}/image/list")]
         public IActionResult ImageList (int LocalisationId)
         {
@@ -65,6 +75,37 @@ namespace SDSA.Controllers
             }
             var list = _localisationService.GetImageIdAndNameByLocalisationid(LocalisationId);
             return Json(list);
+        }
+
+
+        [HttpGet("[controller]/{LocaleName}/{TestType}")]
+        public IActionResult Testdetails(string LocaleName, int TestType) {
+            Console.WriteLine("Requst for Local Prest Details Recieved");
+            Console.WriteLine("Fetching Presets for Locale: " + LocaleName + ". Test retrieving: " + TestType);
+
+            TestLocaleDetails deets = _localisationService.FetchTestLocalisationPreset(LocaleName, TestType);
+
+            return Json(deets);
+        }
+
+        [HttpPost("[controller]/{LocaleName}/{TestType}")]
+        public IActionResult TestDetails(string LocaleName, int TestType,[FromBody] TestLocaleDetails Details) {
+            Console.WriteLine("Posting of Locale Preset Recieved: " + LocaleName + ". Of Type: " + TestType);
+            Console.WriteLine("Details of Recieved Locale Preset are:");
+            Console.WriteLine("Type:" + Details.Type);
+            Console.WriteLine("Name:" + Details.Name);
+            Console.WriteLine("Instructions:" + Details.Instructions);
+            Console.WriteLine("Other details not being logged...");
+
+            _localisationService.SaveTestDetails(LocaleName, TestType, Details);
+
+            return Ok();
+        }
+
+        [HttpGet("[controller]")]
+        public IActionResult LocaleOptions() {
+            Console.WriteLine("Request for Locale Names recieved");
+            return Json( new { LocaleNames = _localisationService.GetLocaleNames()});
         }
     }
 }

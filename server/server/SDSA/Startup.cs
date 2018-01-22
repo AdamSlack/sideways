@@ -12,6 +12,8 @@ using SDSA.Service;
 using SDSA.Service.Interfaces;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace SDSA
 {
@@ -28,6 +30,8 @@ namespace SDSA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]));
             // Add framework services.
@@ -50,9 +54,17 @@ namespace SDSA
                     IssuerSigningKey = key,
                 
                 };
-               
-                
             });
+
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowCredentials();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();             
+            CorsPolicy corsPolicy = corsBuilder.Build();
+
+            services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
+
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
 
@@ -60,11 +72,15 @@ namespace SDSA
             //add repository first to avoid missing dependencies
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<ILocalisationRepository, LocalisationRepository>();
+            services.AddTransient<IParticipantRepository, ParticipantRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
-          
-        }
+            services.AddTransient<ILocalisationService, LocalisationService>();
+            services.AddTransient<IParticipantService, ParticipantService>();
+        }   
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -87,7 +103,7 @@ namespace SDSA
             app.UseStatusCodePages(
                 async context =>
              {
-                 context.HttpContext.Response.ContentType =  "text/plain";
+                 context.HttpContext.Response.ContentType =  "application/json";
                  var x = context.HttpContext.Response;
                  string statusMessage;
                  switch (x.StatusCode)
@@ -110,12 +126,25 @@ namespace SDSA
        // context.HttpContext.Response.StatusCode + $": {statusMessage}");
              } 
             );
+            app.UseCors("SiteCorsPolicy");
+
             app.UseMvc(routes =>
             {
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
             );
+
+            routes.MapRoute(
+                name : "Participant",
+                template : "Participant/Create/{action=Test}"
+            );
+
+            routes.MapRoute(
+                name: "Localisation",
+                template: "Localisation/{LocaleName}/{test_type}"
+            );
+
             routes.MapRoute(
                 name: "default",
                 template: "{controller=Test}/{id?}/{action=Index}"

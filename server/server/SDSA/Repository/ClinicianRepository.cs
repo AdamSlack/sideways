@@ -25,18 +25,23 @@ namespace SDSA.Repository
          => Db.Query<Clinician>("SELECT clinician_id as ID from clinicians");
 
         public Clinician GetClinician(int id)
-         => Db.ExecuteScalar<Clinician>("SELECT clinician_id as ID from clinicians where clinician_Id = @id", new { Id = id });
-        public bool ValidateClinician(SDSAUser user)
-        {
+         => Db.Query<Clinician>("SELECT clinician_id as ID from clinicians where clinician_Id = @id", new { Id = id }).FirstOrDefault();
+        public Clinician GetClinician(string Email)
+         => Db.Query<Clinician>("SELECT clinician_id as ID from clinicians where email = @Email", new { Email }).FirstOrDefault();
+        
+        public bool ValidateClinician(SDSAUser user){
             HashSalt Pass = null;
-            if (user.UserType == SDSAUser.loginuserType.Clinician)
-            {
-                Pass = Db.ExecuteScalar<HashSalt>("SELECT Hash , Salt from clinicians where email = @email", new { email = user.Email });
+            if (user.UserType == SDSAUser.loginuserType.Clinician){
+                Pass = Db.Query<HashSalt>("SELECT hash, salt from clinicians where email = @email", new { email = user.Email }).FirstOrDefault();
+            }   
+            else{
+                return false;
             }
-            else
+
+            if (Pass == null) {
                 return false;
-            if (Pass == null)
-                return false;
+            }
+            
             return Pass.Compare(user.Password);
         }
 

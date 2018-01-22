@@ -6,6 +6,7 @@ namespace SDSA.Repository.Interfaces
     public interface IParticipantRepository
     {
         IEnumerable<int> GetParticipantTests(int participantId);
-        int SaveParticipant(Participant p);
+        int CreateParticipantTest(ParticipantTest PT);
+        int CreateParticipant();
     }
 }

@@ -9,6 +9,8 @@ namespace SDSA.Service.Interfaces
     public interface IParticipantService
     {
         IEnumerable<int> GetParticipantTests(int participantId);
-        int SaveParticipant(Participant p);
+        
+        int CreateParticipantTest(ParticipantTest PT);
+        int CreateParticipant();
     }
 }

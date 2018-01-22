@@ -10,6 +10,7 @@ namespace SDSA.Service.Interfaces
     {
 
         Clinician GetClinician(int clinicianId);
+        Clinician GetClinician(string email);
         IEnumerable<Clinician> GetAllClinicians();
         bool ValidateClinician(SDSAUser user);
 
