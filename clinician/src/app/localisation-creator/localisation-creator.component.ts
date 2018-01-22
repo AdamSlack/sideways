@@ -192,7 +192,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.dotCancellation.general.testInstructions
     ).subscribe((res) => {
       console.log('Dot Cancellation Addition Request Processed');
-      console.log(res);
     });
     this.locale.addCompassDirection(
       this.localeName,
@@ -202,7 +201,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.compassDirections.matrix.deckLabel
     ).subscribe((res) => {
       console.log('Compass Direction Addition Request Processed');
-      console.log(res);
     });
     this.locale.addCarDirection(
       this.localeName,
@@ -212,7 +210,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.carDirections.matrix.deckLabel
     ).subscribe((res) => {
       console.log('Car Direction Addition Request Processed');
-      console.log(res);
     });
     this.locale.addTrailMaking(
       this.localeName,
@@ -221,7 +218,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.trailAArray,
       this.trailBArray).subscribe((res) => {
       console.log('Compass Direction Addition Request Processed');
-      console.log(res);
     });
   }
 
