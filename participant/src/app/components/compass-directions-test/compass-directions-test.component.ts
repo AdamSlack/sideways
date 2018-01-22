@@ -90,7 +90,6 @@ export class CompassDirectionsTestComponent implements OnInit {
         console.log("correcto mudo: ", card.colliding + i)
         console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
 
-
       } else {
         console.log("failed mundo")
         matches.push({i : card.colliding});
@@ -222,6 +221,8 @@ export class CompassDirectionsTestComponent implements OnInit {
     
     butt.on('selected', options => {
       this.gatherResults();
+
+      
     });
 
     return butt;
