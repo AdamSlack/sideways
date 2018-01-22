@@ -1,9 +1,10 @@
 .board
 {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   
+  flex-direction: row;
+  flex-wrap: wrap;  
+  flex-grow:0;
   color: #fff;
 
    --flex: 1;

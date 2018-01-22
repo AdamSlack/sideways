@@ -131,23 +131,49 @@ export class BoardComponent {
 	
 	  for (var i =0; i < this.dotoneX.length; i++)
 	  {
-	      
-		  this.dotoneX[i] = this.GenerateRandomWholeNum();
-          this.dotoneY[i] = this.GenerateRandomWholeNum();
+	      var X = "X";
+		  var Y = "Y";
 		  
-		  this.dotTwoX[i] = this.GenerateRandomWholeNum();
-          this.dotTwoY[i] = this.GenerateRandomWholeNum();
+		  //-5 to -18
 		  
-		  this.dotThreeX[i] = this.GenerateRandomWholeNum();
-		  this.dotThreeX[i] = this.GenerateRandomWholeNum();
-          this.dotThreeY[i] = this.GenerateRandomWholeNum();
+		  //6 to 15
+		
+		  
+		  this.dotoneX[i] = this.getRandomInt(-5,-13);
+          this.dotoneY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  this.dotTwoX[i] = this.GenerateRandomWholeNum(X);
+          this.dotTwoY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  this.dotThreeX[i] = this.GenerateRandomWholeNum(X);
+		  this.dotThreeY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  this.dotFourX[i] = this.GenerateRandomWholeNum(X);
+          this.dotFourY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  this.dotFiveX[i] = this.getRandomInt(6,13);
+		  this.dotFiveY[i] = this.GenerateRandomWholeNum(Y);
 	  }
 	  
   }
   
-  GenerateRandomWholeNum()
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+  
+  GenerateRandomWholeNum(XorY)
   {
-	  var result = (Math.floor(Math.random() * 10));
+	  var Range=0;
+	  if (XorY == "X")
+	  {
+		  Range =6;
+      } 
+	  else 
+	  {
+		  Range =6;
+	  }
+	  
+	  var result = (Math.floor(Math.random() * Range));
 	  
 	  if (Math.random() >= 0.5) 
 	  {
@@ -156,6 +182,8 @@ export class BoardComponent {
       
 	  return result;
   }
+  
+  
   
   
   RandomlyPopulateDots() {
