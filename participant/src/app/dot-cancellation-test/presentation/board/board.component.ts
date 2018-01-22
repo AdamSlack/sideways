@@ -49,7 +49,8 @@ GetResults()
 	int numOfDots = getNumberOfDotsForCell(i);
 	
 	//Store if ticked or not
-	boolean ticked = (squares[i]=="X");
+	boolean ticked = true;
+	//(squares[i]=="X");
 		
 	if( ticked )
 	{
