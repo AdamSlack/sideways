@@ -30,6 +30,7 @@ export class BoardComponent {
     return this.winner ? 'Player ${this.winner} has won!' : `Player ${this.player}'s turn`;
   }
   createDot(position) {
+  }
 
   GetResults() {
     for (var i = 0; i < this.dotones.length; i++) {
