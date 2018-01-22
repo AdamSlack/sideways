@@ -219,7 +219,7 @@ namespace SDSA.Repository
             Console.WriteLine("Selecting Dot Cancellation Locale Preset Details: " + PresetName);
 
             TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
-                "select sdsa_test_types.name as DeetsType, preset.name as DeetsName, preset.instructions as DeetsInstructions from sdsa_test_types, (" +
+                "select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions from sdsa_test_types, (" +
                 "select sdsa_test_type, name, instructions from sdsa_test_details " +
                 "where sdsa_test_type = 1 " + 
                 "and preset_name = @PresetName) as preset " +

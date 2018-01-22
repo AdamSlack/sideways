@@ -61,6 +61,7 @@ export class LocalisationCreatorComponent implements OnInit {
   public startLocaleCreation() : void {
     this.creationStarted = true;
     this.locale.selectDotCancellationDetails(this.localeName).subscribe((res) => {
+      console.log(res)
       this.localePreset.dotCancellation.general.testHeading = res['name'];
       this.localePreset.dotCancellation.general.testInstructions = res['instructions'];
     });
