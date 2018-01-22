@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace SDSA.Models.Localisation
 {
-    public class TestLocaleDetails
+    public class RoadSignScenario
     {
-        int id { get; set; }
-        string presetName { get; set; }
-        int signID { get; set; }
-        int sceneID { get; set; }
-        int xPos { get; set; }
-        int yPos { get; set; }
+        public int id { get; set; }
+        public string presetName { get; set; }
+        public int signID { get; set; }
+        public int sceneID { get; set; }
+        public int xPos { get; set; }
+        public int yPos { get; set; }
     }
 }

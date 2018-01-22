@@ -281,6 +281,7 @@ namespace SDSA.Repository
                 new {PresetName}
             );
             Deets.RoadSignScenarios = RSSs.ToArray();
+            Console.WriteLine("Selected Road Sign Scenarios: " + Deets.RoadSignScenarios.LongCount() + " of them...");
             return Deets;
         }
 
