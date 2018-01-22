@@ -31,53 +31,6 @@ export class BoardComponent {
   }
   createDot(position) {
 
-<<<<<<< HEAD
-GetResults()
-{
-	for (var i = 0; i < this.dotones.length; i++) 
-  {
-	  TruePos = 0;
-	  TrueNeg = 0;
-	  FalsePos = 0;
-	  FalseNeg = 0;
-	  
-	 //get no of dots
-	int numOfDots = getNumberOfDotsForCell(i);
-	
-	//Store if ticked or not
-	boolean ticked = true;
-	//(squares[i]=="X");
-		
-	if( ticked )
-	{
-        if (numOfDots == 4)
-		{
-			//if ticked and 4 then TruePos
-			TruePos+=1;
-		}
-        else
-		{
-			//else if ticked and not 4 then TrueNeg
-			TrueNeg+=1;
-		}							
-	}
-    else if (!ticked)
-	{
-		if (numOfDots==4)
-		{
-			//else if not ticked and 4 then FalsePos
-			FalsePos+=1;		
-		}
-		else
-		{
-			// else if not ticked and not 4 then FalseNeg
-			FalseNeg+=1;
-		}
-	}		
-=======
->>>>>>> a19a9fffe059252cfb7f5e22389efdea8e46b1b0
-  }
-
   GetResults() {
     for (var i = 0; i < this.dotones.length; i++) {
       let TruePos = 0;
