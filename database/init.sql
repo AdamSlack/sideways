@@ -61,13 +61,13 @@ create table trail_making_details(
 
 create table localisation_images(
     image_id        serial  primary key,
-    preset_name     text    references localisation_presets(preset_name),
     image           bytea   not null,
     file_type       text
 );
 
-create table road_sign_scenario(
+create table road_sign_scenarios(
     road_sign_id    serial  not null primary key,
+    preset_name     text    references localisation_presets(preset_name),
     sign_id         int     references localisation_images(image_id),
     scenario_id     int     references localisation_images(image_id),
     xpos            int     ,     

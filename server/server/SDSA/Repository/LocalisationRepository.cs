@@ -265,6 +265,7 @@ namespace SDSA.Repository
         public TestLocaleDetails SelectRoadSignScenarioDetails(string PresetName) {
             Console.WriteLine("Selecting Road Sign Scenario Locale Preset Details: " + PresetName);
 
+            // Selection of Base locale preset details.
             TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
                 "select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions from sdsa_test_types, (" +
                 "select sdsa_test_type, name, instructions from sdsa_test_details " +
@@ -273,6 +274,10 @@ namespace SDSA.Repository
                 "where preset.sdsa_test_type = sdsa_test_types.id",
                 new {PresetName}
             ).FirstOrDefault();
+
+            RoadSignScenario[] RSSs = (RoadSignScenario[]) db.Query<RoadSignScenario[]>(
+                "select "
+            );
 
             return new TestLocaleDetails();
         }
