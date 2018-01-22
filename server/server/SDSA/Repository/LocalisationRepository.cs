@@ -275,11 +275,13 @@ namespace SDSA.Repository
                 new {PresetName}
             ).FirstOrDefault();
 
-            RoadSignScenario[] RSSs = (RoadSignScenario[]) db.Query<RoadSignScenario[]>(
-                "select "
+            IEnumerable<RoadSignScenario> RSSs = db.Query<RoadSignScenario>(
+                "select road_sign_id as id, preset_name as presetName, sign_id as signID, scenario_id as sceneID, xpos as xPos, ypos as yPos " +
+                "from road_sign_scenarios where preset_name = @PresetName",
+                new {PresetName}
             );
-
-            return new TestLocaleDetails();
+            Deets.RoadSignScenarios = RSSs.ToArray();
+            return Deets;
         }
 
         public TestLocaleDetails SelectTrailMakingDetails(string PresetName) {
