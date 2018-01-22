@@ -1,0 +1,30 @@
+<div>
+      <div class="gameStatus" >
+        
+      </div>
+	  
+	  <div class="container">
+      <div class="board" *ngFor="let row of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]">
+        <cell *ngFor="let col of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]"
+		
+	   
+        [state]="squares[col+row*25]"
+		
+        [dotOne]="dotones[col+row*5]"
+		[dotTwo]="dottwos[col+row*5]"
+		[dotThree]="dotthrees[col+row*5]"
+		[dotFour]="dotfours[col+row*5]"
+		[dotFive]="dotfives[col+row*5]"
+		
+		
+				(click)="AddDot(col+row*5)" 
+				>
+				
+				
+			
+        </cell>
+		
+      </div>
+	  </div>
+      <button class="restart" (click)="restartGame()">New Game</button>
+    </div>
