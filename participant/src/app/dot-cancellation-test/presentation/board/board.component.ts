@@ -9,6 +9,7 @@ export class BoardComponent {
 
   constructor() {
     this.RandomlyPopulateDots();
+	this.RandomlyPositionDots();
   }
 
   
@@ -18,7 +19,20 @@ export class BoardComponent {
   
   Styles = Array(525).fill(null);
   
+  dotoneX = Array(525).fill(null);
+  dotoneY = Array(525).fill(null);
   
+  dotTwoX = Array(525).fill(null);
+  dotTwoY = Array(525).fill(null);
+  
+  dotThreeX = Array(525).fill(null);
+  dotThreeY = Array(525).fill(null);
+  
+  dotFourX = Array(525).fill(null);
+  dotFourY = Array(525).fill(null);
+  
+  dotFiveX = Array(525).fill(null);
+  dotFiveY = Array(525).fill(null);
 
   dotones = Array(525).fill(null);
   dottwos = Array(25).fill(null);
@@ -110,6 +124,40 @@ export class BoardComponent {
     return result;
   }
 
+  
+  RandomlyPositionDots()
+  {
+	  
+	
+	  for (var i =0; i < this.dotoneX.length; i++)
+	  {
+	      
+		  this.dotoneX[i] = this.GenerateRandomWholeNum();
+          this.dotoneY[i] = this.GenerateRandomWholeNum();
+		  
+		  this.dotTwoX[i] = this.GenerateRandomWholeNum();
+          this.dotTwoY[i] = this.GenerateRandomWholeNum();
+		  
+		  this.dotThreeX[i] = this.GenerateRandomWholeNum();
+		  this.dotThreeX[i] = this.GenerateRandomWholeNum();
+          this.dotThreeY[i] = this.GenerateRandomWholeNum();
+	  }
+	  
+  }
+  
+  GenerateRandomWholeNum()
+  {
+	  var result = (Math.floor(Math.random() * 10));
+	  
+	  if (Math.random() >= 0.5) 
+	  {
+		  result = result * -1;
+	  }
+      
+	  return result;
+  }
+  
+  
   RandomlyPopulateDots() {
 
     var NoOfDots = [3, 4, 5];
