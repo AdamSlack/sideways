@@ -119,7 +119,6 @@ namespace SDSA.Repository
                 new {PresetName}
             );
 
-
         public void DeleteLocaleTestPresetIfExists(string PresetName, int TestType) {
 
             if(TestType == 5 ) {
@@ -196,6 +195,10 @@ namespace SDSA.Repository
         public void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD) {
 
 
+        }
+
+        public void SaveRoadSignScenario(RoadSignScenario RSS) {
+            
         }
 
         public void SaveTrailMakingDetails(string preset_name, TestLocaleDetails TMD) {

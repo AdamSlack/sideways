@@ -170,18 +170,29 @@ export class LocalisationService {
             console.log(res); // Probs gonna get an empty response...
         });
 
-        let postImage = (image : any, idx : number, type : string) => {
-            let url = this.ROOT + 'Localisation/' + localeName + '/image/' + type + idx.toString();
-            let imageBody = {
+        let imageJson = (image : any, idx : number, type : string) => {
+            return {
                 PresetName : localeName,
-                ImageName : 'scene' + idx.toString(),
+                ImageName : type + idx.toString(),
                 Image : image,
                 FileType : 'png',
             }
-            
         }
-        sceneImages.forEach((image, idx) => postImage(image, idx, 'scene'));
-        signImages.forEach((image, idx) => postImage(image, idx, 'sign'));
+
+        sceneImages.forEach((scene, idx) => {
+            let sign = signImages[idx];
+            let rssBody = {
+                presetName : localeName,
+                xPos : xPos,
+                yPos : yPos,
+                SceneImg : scene,
+                SignImg : sign
+            }
+            this.http.post(url, rssBody, {headers : headers}).subscribe((res) => {
+                console.log('Res...')
+            });
+        });
+
     }
 
     private addMatrixTest(

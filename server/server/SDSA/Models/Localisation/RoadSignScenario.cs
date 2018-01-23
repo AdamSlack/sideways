@@ -9,8 +9,8 @@ namespace SDSA.Models.Localisation
     {
         public int id { get; set; }
         public string presetName { get; set; }
-        public int signID { get; set; }
-        public int sceneID { get; set; }
+        public LocalisationImage SceneImg { get; set; }
+        public LocalisationImage SignImg { get; set; }
         public int xPos { get; set; }
         public int yPos { get; set; }
     }

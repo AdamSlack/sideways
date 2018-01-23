@@ -25,6 +25,8 @@ namespace SDSA.Repository.Interfaces
         TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name);
         TestLocaleDetails SelectTrailMakingDetails(string preset_name);
 
+        void SaveRoadSignScenario(RoadSignScenario RSS);
+
         int SelectSDSATestTypeID(string test_name);
         int CountPresetByName(string preset_name);
 

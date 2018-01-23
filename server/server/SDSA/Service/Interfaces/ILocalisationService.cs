@@ -16,5 +16,6 @@ namespace SDSA.Service.Interfaces
         IEnumerable<string> GetLocaleNames();
         void SaveTestDetails(string LocaleName, int TestType, TestLocaleDetails Details);
         TestLocaleDetails FetchTestLocalisationPreset(string LocaleName, int TestType);
+        void SaveRoadSignScenario(RoadSignScenario RSS);
     }
 }
