@@ -36,6 +36,9 @@ export class LocalisationCreatorComponent implements OnInit {
   public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
   public indicatorCoords    : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords(-100,-100), 0, this.scenarioCounts)
 
+  public scenarioBase64     : Array<string>   = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  public sceneBase64        : Array<string>   = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  
   public dotName : string = '';
   public dotInstructions : string = '';
 
@@ -132,6 +135,7 @@ export class LocalisationCreatorComponent implements OnInit {
   public onSelectScenario(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
+      var byteReader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
@@ -139,15 +143,17 @@ export class LocalisationCreatorComponent implements OnInit {
         let target : any = event.target;
         this.scenarioImages[index] = target.result;
         this.scenarioUploaded[index] = true;
-        this.scenarioCompleted(index);
       }
+
+
     }
   }
   
   public onSelectRoadSign(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
+      var byteReader = new FileReader();
+      
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
@@ -156,6 +162,7 @@ export class LocalisationCreatorComponent implements OnInit {
         this.roadSignUpladed[index] = true;
         this.scenarioCompleted(index);
       }
+
     }
   }
 

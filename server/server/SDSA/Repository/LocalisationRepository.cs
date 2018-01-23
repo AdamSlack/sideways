@@ -270,7 +270,7 @@ namespace SDSA.Repository
                 "select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions from sdsa_test_types, (" +
                 "select sdsa_test_type, name, instructions from sdsa_test_details " +
                 "where sdsa_test_type = 1 " + 
-                "and preset_name = @PresetName) as preset " +
+                "and preset_name = @PresetName) as preset " +    
                 "where preset.sdsa_test_type = sdsa_test_types.id",
                 new {PresetName}
             ).FirstOrDefault();

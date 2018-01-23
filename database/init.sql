@@ -192,10 +192,10 @@ insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, 
 insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions) values ('test', 4, 'Road Sign Scenarios', 'Here be instructions for Road Sign Scenarios.');
 insert into trail_making_details(preset_name, name, instructions, trail_a, trail_b) values ('test', 'Trail Making Test', 'Connect the Dots and shizzle', array['1','2','3','4','5','6'], array['a','1','b','2','c','3']);
 
-insert into road_sign_scenarios (preset_name, xpos, ypos) values ('test', 0,0);
-insert into road_sign_scenarios (preset_name, xpos, ypos) values ('test', 1,1);
-insert into road_sign_scenarios (preset_name, xpos, ypos) values ('test', 2,2);
-insert into road_sign_scenarios (preset_name, xpos, ypos) values ('test', 3,3);
+insert into road_sign_scenarios (preset_name, sign_id, scenario_id, xpos, ypos) values ('test',2, 2, 0, 0);
+insert into road_sign_scenarios (preset_name, sign_id, scenario_id, xpos, ypos) values ('test',2, 2, 1, 1);
+insert into road_sign_scenarios (preset_name, sign_id, scenario_id, xpos, ypos) values ('test',2, 2, 2, 2);
+insert into road_sign_scenarios (preset_name, sign_id, scenario_id, xpos, ypos) values ('test',2, 2, 3, 3);
 
 
 commit;

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { post } from 'selenium-webdriver/http';
 
 export class GeneralDetails {
     public testHeading: string = '';
@@ -148,7 +149,40 @@ export class LocalisationService {
         deckLabel : string) : Observable<any> {
             return this.addMatrixTest(3, 'car_directions', localeName, name, instructions, headingsLabel, deckLabel);
     }
-  
+
+    public addRoadSignScenario(
+        localeName : string,
+        name : string,
+        instructions : string,
+        sceneImages : any[],
+        signImages : any[],
+        xPos : number[],
+        yPos : number[]
+    ) {
+        let url = this.ROOT + '/Localisation/' + localeName + '/5';
+        let headers = this.createHeaders();
+        let detailsBody = {
+            Type : 'road_sign_scenarios',
+            Name : name,
+            Instructions : instructions
+        };
+        this.http.post(url, detailsBody, {headers : headers}).subscribe((res) => {
+            console.log(res); // Probs gonna get an empty response...
+        });
+
+        let postImage = (image : any, idx : number, type : string) => {
+            let url = this.ROOT + 'Localisation/' + localeName + '/image/' + type + idx.toString();
+            let imageBody = {
+                PresetName : localeName,
+                ImageName : 'scene' + idx.toString(),
+                Image : image,
+                FileType : 'png',
+            }
+            
+        }
+        sceneImages.forEach((image, idx) => postImage(image, idx, 'scene'));
+        signImages.forEach((image, idx) => postImage(image, idx, 'sign'));
+    }
 
     private addMatrixTest(
         type : number, 
