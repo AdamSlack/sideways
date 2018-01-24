@@ -101,7 +101,12 @@ export class LocalisationCreatorComponent implements OnInit {
 
     this.locale.selectRoadSignScenarioDetails(this.localeName).subscribe((res) => {
       console.log(res);
-    })
+      this.localePreset.roadSigns.general.testHeading = res['name'];
+      this.localePreset.roadSigns.general.testInstructions = res['instructions'];
+      this.roadSignImages = res['roadSignScenarios'].map((rss) => rss['signImage']);
+      this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
+      this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
+    });
     
   }
 
@@ -123,18 +128,38 @@ export class LocalisationCreatorComponent implements OnInit {
     // ENUM....
     if (sectionName == 'dot') {
       this.dot = !this.dot;
+      this.compass = false;
+      this.road = false;
+      this.trail= false;
+      this.car = false; 
     }
     if (sectionName == 'compass') {
-      this.compass = !this.compass;      
+      this.compass = !this.compass;
+      this.dot = false;
+      this.road = false;
+      this.trail= false;
+      this.car = false;      
     }
     if (sectionName == 'car') {
       this.car = !this.car;
+      this.dot = false;
+      this.road = false;
+      this.trail= false;
+      this.compass = false; 
     }
     if (sectionName == 'road') {
       this.road = !this.road;
+      this.dot = false;
+      this.compass = false;
+      this.trail= false;
+      this.car = false; 
     }
     if (sectionName == 'trail') {
       this.trail = !this.trail;
+      this.dot = false;
+      this.road = false;
+      this.compass= false;
+      this.car = false; 
     }
   }
 

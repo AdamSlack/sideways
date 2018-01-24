@@ -73,10 +73,18 @@ namespace SDSA.Repository
                 return;
             }
 
-            Console.WriteLine("Inserting New Preset for: " + PresetName);
+                // " INSERT INTO localisation_presets " +
+                //     "(preset_name) " +
+                // "SELECT @PresetName " +
+                // "WHERE " +
+                //     "NOT EXISTS ( " +
+                //         "SELECT preset_name FROM example_table WHERE preset_name = @PresetName " +
+                //     ")" +
+
+            Console.WriteLine("Inserting New Preset for: " + PresetName + " if it does not exist.");
             db.ExecuteScalar<int>(
                 "insert into localisation_presets (preset_name) " +
-                "values (@PresetName)",
+                "values (@PresetName) on conflict nothing ",
                 new {PresetName}
             );
         }
