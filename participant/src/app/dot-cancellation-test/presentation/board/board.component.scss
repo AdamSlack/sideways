@@ -1,0 +1,79 @@
+.board
+{
+  display: flex;
+  
+  flex-direction: row;
+  flex-wrap: wrap;  
+  flex-grow:0;
+  color: #fff;
+
+   --flex: 1;
+   --overflow: auto;
+   
+   	justify-content: space-between;
+   
+   --justify-content: flex-start;
+     --margin: 2px;
+  --align-content: flex-start; /* NEW */
+   --align-items: center;
+  --flex-shrink: 0;
+  --justify-content: center;
+  
+  
+  
+}
+
+.gameStatus {
+	margin: 0px;
+   padding: 15px;
+  background-color: #34495e;
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.restart {
+  background-color: #34495e;
+  color: #fff;
+  border: 0px;
+  font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0px;
+  padding: 15px;
+  width: 100%;
+}
+
+.restart:hover {
+  background-color: #c1cdcd;
+  cursor: pointer;
+}
+
+  body{
+    background-color:#C82022;
+    }
+    
+	
+	.container
+	{
+		margin: 40px;
+		border: 2px solid #000;
+	}
+	
+	
+	.style1
+	{
+	 background-color:#cd9e98;
+
+	 border-radius: 8px;
+		--red: #ff4040
+	--green #4ac3be
+	  
+	}
+
+
+	
+	.style2
+	{
+	  background-color:#042326;
+	}
