@@ -187,7 +187,6 @@ export class LocalisationService {
                 yPos : yPos,
                 SceneImg : scene,
                 SignImg : sign,
-                Scene
             }
             this.http.post(url, rssBody, {headers : headers}).subscribe((res) => {
                 console.log('Res...')
