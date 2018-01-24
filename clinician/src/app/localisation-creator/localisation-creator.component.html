@@ -62,8 +62,8 @@
         </div>
         <div *ngIf="road">
 
-            <input class="bar search" type="text" placeholder="Enter a title for this test">
-            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test.">
+            <input class="bar search" type="text" placeholder="Enter a title for this test" [(ngModel)]=localePreset.roadSigns.general.testHeading >
+            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test." [(ngModel)]=localePreset.roadSigns.general.testInstructions >
             </textarea>
 
             <div *ngFor="let scene of scenarioVisible; let idx = index;">

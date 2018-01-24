@@ -24,7 +24,7 @@ namespace SDSA.Repository.Interfaces
         TestLocaleDetails SelectCarDirectionDetails(string preset_name);
         TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name);
         TestLocaleDetails SelectTrailMakingDetails(string preset_name);
-
+        void DeleteRoadSignScenarios(string PresetName);
         void SaveRoadSignScenario(string LocaleName, RoadSignScenario RSS);
 
         int SelectSDSATestTypeID(string test_name);

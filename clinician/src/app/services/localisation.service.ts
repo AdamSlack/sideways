@@ -151,48 +151,38 @@ export class LocalisationService {
     }
 
     public addRoadSignScenario(
-        localeName : string,
-        name : string,
+        localeName   : string,
+        name         : string,
         instructions : string,
-        sceneImages : any[],
-        signImages : any[],
-        xPos : number[],
-        yPos : number[]
-    ) {
-        let url = this.ROOT + '/Localisation/' + localeName + '/5';
+        sceneImages  : string[],
+        signImages   : string[],
+        xPos         : number[],
+        yPos         : number[]
+    ) : Observable<any> {
+        let url = this.ROOT + '/Localisation/' + localeName + '/4';
         let headers = this.createHeaders();
-        let detailsBody = {
+        let body = {
             Type : 'road_sign_scenarios',
             Name : name,
-            Instructions : instructions
+            Instructions : instructions,
+            RoadSignScenarios : []
         };
-        this.http.post(url, detailsBody, {headers : headers}).subscribe((res) => {
-            console.log(res); // Probs gonna get an empty response...
-        });
-
-        let imageJson = (image : any, idx : number, type : string) => {
-            return {
-                PresetName : localeName,
-                ImageName : type + idx.toString(),
-                Image : image,
-                FileType : 'png',
-            }
-        }
-
-        sceneImages.forEach((scene, idx) => {
+        let reader = new FileReader();
+        let roadSignScenarios = sceneImages.map((scene, idx) => {
             let sign = signImages[idx];
-            let rssBody = {
-                presetName : localeName,
-                xPos : xPos,
-                yPos : yPos,
-                SceneImg : scene,
-                SignImg : sign,
-            }
-            this.http.post(url, rssBody, {headers : headers}).subscribe((res) => {
-                console.log('Res...')
-            });
-        });
+            console.log(scene);
 
+            return{
+                presetName : localeName,
+                xPos : xPos[idx],
+                yPos : yPos[idx],
+                SceneImage : scene,
+                SignImage : sign,
+            }
+        });
+        body.RoadSignScenarios = roadSignScenarios;
+        
+        return this.http.post(url, body, {headers : headers});
     }
 
     private addMatrixTest(

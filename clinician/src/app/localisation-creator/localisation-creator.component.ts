@@ -68,6 +68,7 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.dotCancellation.general.testHeading = res['name'];
       this.localePreset.dotCancellation.general.testInstructions = res['instructions'];
     });
+
     this.locale.selectCompassDirectionDetails(this.localeName).subscribe((res) => {
       console.log(res);
       this.localePreset.compassDirections.general.testHeading = res['name'];
@@ -75,6 +76,7 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.compassDirections.matrix.headingsLabel = res['headingsLabel'];
       this.localePreset.compassDirections.matrix.deckLabel = res['deckLabel'];
     });
+
     this.locale.selectcarDirectionDetails(this.localeName).subscribe((res) => {
       console.log(res);
       this.localePreset.carDirections.general.testHeading = res['name'];
@@ -82,9 +84,9 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.carDirections.matrix.headingsLabel = res['headingsLabel'];
       this.localePreset.carDirections.matrix.deckLabel = res['deckLabel'];
     });
+
     this.locale.selectTrailMakingDetails(this.localeName).subscribe((res) => {
       console.log(res);
-      
       this.localePreset.trailMaking.general.testHeading = res['name'];
       this.tmName = res['name'];
       this.tmIns = res['name'];
@@ -96,6 +98,10 @@ export class LocalisationCreatorComponent implements OnInit {
       this.trailBArray = res['trailB'];
       this.trailBString = res['trailB'].join(', ');
     });
+
+    this.locale.selectRoadSignScenarioDetails(this.localeName).subscribe((res) => {
+      console.log(res);
+    })
     
   }
 
@@ -135,7 +141,6 @@ export class LocalisationCreatorComponent implements OnInit {
   public onSelectScenario(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      var byteReader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
@@ -223,9 +228,21 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.trailMaking.general.testHeading,
       this.localePreset.trailMaking.general.testInstructions,
       this.trailAArray,
-      this.trailBArray).subscribe((res) => {
+      this.trailBArray
+    ).subscribe((res) => {
       console.log('Compass Direction Addition Request Processed');
     });
+    this.locale.addRoadSignScenario(
+      this.localeName,
+      this.localePreset.roadSigns.general.testHeading,
+      this.localePreset.roadSigns.general.testInstructions,
+      this.scenarioImages,
+      this.roadSignImages,
+      this.indicatorCoords.map((co) => co.x),
+      this.indicatorCoords.map((co) => co.y)
+    ).subscribe((res) => {
+      console.log('Road Sign Scenario Processed Request Recieved.');
+    })
   }
 
   ngOnInit() {

@@ -192,6 +192,9 @@ namespace SDSA.Repository
             );
         }
 
+
+        public void DeleteRoadSignScenarios(string PresetName) 
+         => db.ExecuteScalar("delete from road_sign_scenarios where preset_name = @PresetName", new {PresetName});
         public void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD) {
             Console.WriteLine("Inserting Road Sign scenario Test: " + preset_name);
 
@@ -200,12 +203,28 @@ namespace SDSA.Repository
             int test_type = SelectSDSATestTypeID("road_sign_scenarios");
 
             DeleteLocaleTestPresetIfExists(preset_name, test_type);
-
+            DeleteRoadSignScenarios(preset_name);
             db.ExecuteScalar<int>(
                 "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
                 "values (@preset_name, @test_type, @name, @instructions)",
                 new {preset_name, test_type, name, instructions}
             );
+            Console.WriteLine("Recieved " + RSD.RoadSignScenarios.Length + " Road Sign Scenarios...");
+            foreach (RoadSignScenario RSS in RSD.RoadSignScenarios){
+                db.ExecuteScalar<int>(
+                    "insert into road_sign_scenarios (preset_name, sign_image, scene_image, sign_file_type, scene_file_type, xpos, ypos) " +
+                    "values (@PresetName,@SignImage,@SceneImage,@SignType,@SceneType,@xPos,@yPos)",
+                    new {
+                        PresetName  =   RSS.presetName,
+                        SignImage   =   RSS.SignImage,
+                        SceneImage  =   RSS.SceneImage,
+                        SignType    =   RSS.SignFileType,
+                        SceneType   =   RSS.SceneFileType,
+                        xPos        =   RSS.xPos,
+                        yPos        =   RSS.yPos
+                    }
+                );
+            }
         }
 
         public void SaveRoadSignScenario(string PresetName, RoadSignScenario RSS) {
@@ -284,7 +303,7 @@ namespace SDSA.Repository
             TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
                 "select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions from sdsa_test_types, (" +
                 "select sdsa_test_type, name, instructions from sdsa_test_details " +
-                "where sdsa_test_type = 1 " + 
+                "where sdsa_test_type = 4 " + 
                 "and preset_name = @PresetName) as preset " +    
                 "where preset.sdsa_test_type = sdsa_test_types.id",
                 new {PresetName}
