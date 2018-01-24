@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { post } from 'selenium-webdriver/http';
 
 export class GeneralDetails {
     public testHeading: string = '';
@@ -148,7 +149,41 @@ export class LocalisationService {
         deckLabel : string) : Observable<any> {
             return this.addMatrixTest(3, 'car_directions', localeName, name, instructions, headingsLabel, deckLabel);
     }
-  
+
+    public addRoadSignScenario(
+        localeName   : string,
+        name         : string,
+        instructions : string,
+        sceneImages  : string[],
+        signImages   : string[],
+        xPos         : number[],
+        yPos         : number[]
+    ) : Observable<any> {
+        let url = this.ROOT + '/Localisation/' + localeName + '/4';
+        let headers = this.createHeaders();
+        let body = {
+            Type : 'road_sign_scenarios',
+            Name : name,
+            Instructions : instructions,
+            RoadSignScenarios : []
+        };
+        let reader = new FileReader();
+        let roadSignScenarios = sceneImages.map((scene, idx) => {
+            let sign = signImages[idx];
+            console.log(scene);
+
+            return{
+                presetName : localeName,
+                xPos : xPos[idx],
+                yPos : yPos[idx],
+                SceneImage : scene,
+                SignImage : sign,
+            }
+        });
+        body.RoadSignScenarios = roadSignScenarios;
+        
+        return this.http.post(url, body, {headers : headers});
+    }
 
     private addMatrixTest(
         type : number, 

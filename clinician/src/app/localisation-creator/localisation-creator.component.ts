@@ -36,6 +36,9 @@ export class LocalisationCreatorComponent implements OnInit {
   public scenarioComplete   : Array<boolean> = Array(this.scenarioCounts).fill(false, 0, this.scenarioCounts);
   public indicatorCoords    : Array<Coords>  = Array(this.scenarioCounts).fill(new Coords(-100,-100), 0, this.scenarioCounts)
 
+  public scenarioBase64     : Array<string>   = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  public sceneBase64        : Array<string>   = Array(this.scenarioCounts).fill('',0,this.scenarioCounts);
+  
   public dotName : string = '';
   public dotInstructions : string = '';
 
@@ -65,6 +68,7 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.dotCancellation.general.testHeading = res['name'];
       this.localePreset.dotCancellation.general.testInstructions = res['instructions'];
     });
+
     this.locale.selectCompassDirectionDetails(this.localeName).subscribe((res) => {
       console.log(res);
       this.localePreset.compassDirections.general.testHeading = res['name'];
@@ -72,6 +76,7 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.compassDirections.matrix.headingsLabel = res['headingsLabel'];
       this.localePreset.compassDirections.matrix.deckLabel = res['deckLabel'];
     });
+
     this.locale.selectcarDirectionDetails(this.localeName).subscribe((res) => {
       console.log(res);
       this.localePreset.carDirections.general.testHeading = res['name'];
@@ -79,9 +84,9 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.carDirections.matrix.headingsLabel = res['headingsLabel'];
       this.localePreset.carDirections.matrix.deckLabel = res['deckLabel'];
     });
+
     this.locale.selectTrailMakingDetails(this.localeName).subscribe((res) => {
       console.log(res);
-      
       this.localePreset.trailMaking.general.testHeading = res['name'];
       this.tmName = res['name'];
       this.tmIns = res['name'];
@@ -93,7 +98,16 @@ export class LocalisationCreatorComponent implements OnInit {
       this.trailBArray = res['trailB'];
       this.trailBString = res['trailB'].join(', ');
     });
-    
+
+    this.locale.selectRoadSignScenarioDetails(this.localeName).subscribe((res) => {
+      console.log(res);
+      this.localePreset.roadSigns.general.testHeading = res['name'];
+      this.localePreset.roadSigns.general.testInstructions = res['instructions'];
+      this.roadSignImages = res['roadSignScenarios'].map((rss) => rss['signImage']);
+      this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
+      this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
+    });
+
   }
 
   public scenarioCompleted(index : number)  {
@@ -114,18 +128,38 @@ export class LocalisationCreatorComponent implements OnInit {
     // ENUM....
     if (sectionName == 'dot') {
       this.dot = !this.dot;
+      this.compass = false;
+      this.road = false;
+      this.trail= false;
+      this.car = false; 
     }
     if (sectionName == 'compass') {
-      this.compass = !this.compass;      
+      this.compass = !this.compass;
+      this.dot = false;
+      this.road = false;
+      this.trail= false;
+      this.car = false;      
     }
     if (sectionName == 'car') {
       this.car = !this.car;
+      this.dot = false;
+      this.road = false;
+      this.trail= false;
+      this.compass = false; 
     }
     if (sectionName == 'road') {
       this.road = !this.road;
+      this.dot = false;
+      this.compass = false;
+      this.trail= false;
+      this.car = false; 
     }
     if (sectionName == 'trail') {
       this.trail = !this.trail;
+      this.dot = false;
+      this.road = false;
+      this.compass= false;
+      this.car = false; 
     }
   }
 
@@ -139,7 +173,6 @@ export class LocalisationCreatorComponent implements OnInit {
         let target : any = event.target;
         this.scenarioImages[index] = target.result;
         this.scenarioUploaded[index] = true;
-        this.scenarioCompleted(index);
       }
     }
   }
@@ -147,7 +180,8 @@ export class LocalisationCreatorComponent implements OnInit {
   public onSelectRoadSign(event, index) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
+      var byteReader = new FileReader();
+      
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
@@ -156,6 +190,7 @@ export class LocalisationCreatorComponent implements OnInit {
         this.roadSignUpladed[index] = true;
         this.scenarioCompleted(index);
       }
+
     }
   }
 
@@ -192,7 +227,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.dotCancellation.general.testInstructions
     ).subscribe((res) => {
       console.log('Dot Cancellation Addition Request Processed');
-      console.log(res);
     });
     this.locale.addCompassDirection(
       this.localeName,
@@ -202,7 +236,6 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.compassDirections.matrix.deckLabel
     ).subscribe((res) => {
       console.log('Compass Direction Addition Request Processed');
-      console.log(res);
     });
     this.locale.addCarDirection(
       this.localeName,
@@ -212,17 +245,27 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.carDirections.matrix.deckLabel
     ).subscribe((res) => {
       console.log('Car Direction Addition Request Processed');
-      console.log(res);
     });
     this.locale.addTrailMaking(
       this.localeName,
       this.localePreset.trailMaking.general.testHeading,
       this.localePreset.trailMaking.general.testInstructions,
       this.trailAArray,
-      this.trailBArray).subscribe((res) => {
+      this.trailBArray
+    ).subscribe((res) => {
       console.log('Compass Direction Addition Request Processed');
-      console.log(res);
     });
+    this.locale.addRoadSignScenario(
+      this.localeName,
+      this.localePreset.roadSigns.general.testHeading,
+      this.localePreset.roadSigns.general.testInstructions,
+      this.scenarioImages,
+      this.roadSignImages,
+      this.indicatorCoords.map((co) => co.x),
+      this.indicatorCoords.map((co) => co.y)
+    ).subscribe((res) => {
+      console.log('Road Sign Scenario Processed Request Recieved.');
+    })
   }
 
   ngOnInit() {

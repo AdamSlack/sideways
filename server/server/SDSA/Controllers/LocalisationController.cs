@@ -26,7 +26,7 @@ namespace SDSA.Controllers
         {
             var image = _localisationService.GetImage(ImageId);
 
-            return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
+            return NoContent(); //(image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
         }
 
 
@@ -35,35 +35,30 @@ namespace SDSA.Controllers
         {
             var image = _localisationService.GetImage(LocalisationId, ImageName);
 
-            return (image == null ? (IActionResult)File(image.Image, image.FileTpye) : (IActionResult)NotFound("Image not found"));
+            return NoContent(); //(image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
         }
 
 
-        [HttpPost("[controller]/{LocalisationId}/image/{ImageName}")]
-        public IActionResult Image (int LocalisationId,string ImageName , IFormFile Image, string description)
-        {
-            if (LocalisationId == 0)
-                return StatusCode(422, "Localisation Id required");
-            else if (string.IsNullOrWhiteSpace(ImageName))
-                return StatusCode(422, "Image name required");
-            else if (Image == null || Image.Length == 0)
-                return StatusCode(422, "Image required");
+        // [HttpPost("[controller]/{LocalisationId}/image/{ImageName}")]
+        // public IActionResult Image (string LocalisationId, string ImageName , [FromBody] LocalisationImage LI)
+        // {
+        //     if (LocalisationId == "")
+        //         return StatusCode(422, "Localisation Id required");
+        //     else if (string.IsNullOrWhiteSpace(ImageName))
+        //         return StatusCode(422, "Image name required");
+        //     else if (LI == null || LI.Image.Length == 0)
+        //         return StatusCode(422, "Image required");
 
-            var img = new LocalisationImage
-            {
-                description = description,
-                ImageName = ImageName,
-                FileTpye = Image.ContentType
-            };
-            using (var stream = new MemoryStream())
-            {
-               
-                Image.CopyTo(stream);
-                img.Image = stream.ToArray();
-            }
-            _localisationService.SaveImage(img);
-            return Ok();
-        }
+
+        //     using (var stream = new MemoryStream())
+        //     {
+        //         Image.CopyTo(stream);
+        //         img.Image = stream.ToArray();
+        //     };
+
+        //     _localisationService.SaveImage(img);
+        //     return Json();
+        // }
 
 
         [HttpGet("[controller]/{LocalisationId}/image/list")]
@@ -100,6 +95,18 @@ namespace SDSA.Controllers
             _localisationService.SaveTestDetails(LocaleName, TestType, Details);
 
             return Ok();
+        }
+
+        [HttpPost("[controller]/{LocaleName}/RoadSignScenario")]
+        public IActionResult RoadSignScenario(string LocaleName, [FromBody] RoadSignScenario RSS) {
+            Console.WriteLine("Recieved Request to save road sign scenario.");
+            _localisationService.SaveRoadSignScenario(LocaleName, RSS);
+            return Ok();
+        }
+        [HttpGet("[controller]/{LocaleName}/RoadSignScenario/{id}")]
+        public IActionResult SelectRoadSignScenario(string LocaleName, int id) {
+            Console.WriteLine("get request for Road Sign Scenario No: " + id + " from preset: " + LocaleName);
+            return Json(_localisationService.SelectRoadSignScenario(id));
         }
 
         [HttpGet("[controller]")]
