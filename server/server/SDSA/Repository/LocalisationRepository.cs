@@ -291,7 +291,8 @@ namespace SDSA.Repository
             ).FirstOrDefault();
 
             IEnumerable<RoadSignScenario> RSSs = db.Query<RoadSignScenario>(
-                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos " +
+                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos, " +
+                "sign_image as SignImage, scene_image as SceneImage " +  
                 "from road_sign_scenarios where preset_name = @PresetName",
                 new {PresetName}
             );
@@ -303,23 +304,10 @@ namespace SDSA.Repository
         public RoadSignScenario SelectRoadSignScenario(int id) {
             Console.WriteLine("Selecting Road Sign Scenario: " + id);
             RoadSignScenario RSS = (RoadSignScenario) db.Query<RoadSignScenario>(
-                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos " + 
+                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos, " +
+                "sign_image as SignImage, scene_image as SceneImage " +  
                 "from road_sign_scenarios where road_sign_id=@id",
                  new {id = id}
-            ).FirstOrDefault();
-            
-            Console.WriteLine("Selecting Image for Road Sign Scenario : " + id);
-            RSS.SignImage = (byte[]) db.Query<byte[]>(
-                "select sign_image as SignImage " +
-                "from road_sign_scenarios where road_sign_id = @id",
-                new {id = id}
-            ).FirstOrDefault();
-
-            Console.WriteLine("Selecting Image for Road Sign Scenario : " + id);
-            RSS.SceneImage = (byte[]) db.Query<byte[]>(
-                "select sign_image as SceneImage " +
-                "from road_sign_scenarios where road_sign_id = @id",
-                new {id = id}
             ).FirstOrDefault();
 
             return RSS;
