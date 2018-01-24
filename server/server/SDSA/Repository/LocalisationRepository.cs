@@ -193,11 +193,23 @@ namespace SDSA.Repository
         }
 
         public void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD) {
+            Console.WriteLine("Inserting Road Sign scenario Test: " + preset_name);
 
+            string instructions = RSD.Instructions;
+            string name = RSD.Name;
+            int test_type = SelectSDSATestTypeID("road_sign_scenarios");
 
+            DeleteLocaleTestPresetIfExists(preset_name, test_type);
+
+            db.ExecuteScalar<int>(
+                "insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions)" +
+                "values (@preset_name, @test_type, @name, @instructions)",
+                new {preset_name, test_type, name, instructions}
+            );
         }
 
-        public void SaveRoadSignScenario(RoadSignScenario RSS) {
+        public void SaveRoadSignScenario(string PresetName, RoadSignScenario RSS) {
+            Console.WriteLine("Inserting Road sign Scenario into the Database: " + PresetName);
             
         }
 
@@ -279,13 +291,38 @@ namespace SDSA.Repository
             ).FirstOrDefault();
 
             IEnumerable<RoadSignScenario> RSSs = db.Query<RoadSignScenario>(
-                "select road_sign_id as id, preset_name as presetName, sign_id as signID, scenario_id as sceneID, xpos as xPos, ypos as yPos " +
+                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos " +
                 "from road_sign_scenarios where preset_name = @PresetName",
                 new {PresetName}
             );
             Deets.RoadSignScenarios = RSSs.ToArray();
             Console.WriteLine("Selected Road Sign Scenarios: " + Deets.RoadSignScenarios.LongCount() + " of them...");
             return Deets;
+        }
+
+        public RoadSignScenario SelectRoadSignScenario(int id) {
+            Console.WriteLine("Selecting Road Sign Scenario: " + id);
+            RoadSignScenario RSS = (RoadSignScenario) db.Query<RoadSignScenario>(
+                "select road_sign_id as id, preset_name as presetName, xpos as xPos, ypos as yPos " + 
+                "from road_sign_scenarios where road_sign_id=@id",
+                 new {id = id}
+            ).FirstOrDefault();
+            
+            Console.WriteLine("Selecting Image for Road Sign Scenario : " + id);
+            RSS.SignImage = (byte[]) db.Query<byte[]>(
+                "select sign_image as SignImage " +
+                "from road_sign_scenarios where road_sign_id = @id",
+                new {id = id}
+            ).FirstOrDefault();
+
+            Console.WriteLine("Selecting Image for Road Sign Scenario : " + id);
+            RSS.SceneImage = (byte[]) db.Query<byte[]>(
+                "select sign_image as SceneImage " +
+                "from road_sign_scenarios where road_sign_id = @id",
+                new {id = id}
+            ).FirstOrDefault();
+
+            return RSS;
         }
 
         public TestLocaleDetails SelectTrailMakingDetails(string PresetName) {

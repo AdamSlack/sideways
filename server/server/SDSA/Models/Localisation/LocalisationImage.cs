@@ -8,7 +8,6 @@ namespace SDSA.Models.Localisation {
         public int      imageId     { get; set; }
         public string   PresetName  { get; set; }
         public string   ImageName   { get; set; }
-        public byte[]   Image       { get; set; }
         public string   FileType    { get; set; }
         public string   description { get; set; }
     }

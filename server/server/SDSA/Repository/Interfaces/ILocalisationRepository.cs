@@ -25,18 +25,19 @@ namespace SDSA.Repository.Interfaces
         TestLocaleDetails SelectRoadSignScenarioDetails(string preset_name);
         TestLocaleDetails SelectTrailMakingDetails(string preset_name);
 
-        void SaveRoadSignScenario(RoadSignScenario RSS);
+        void SaveRoadSignScenario(string LocaleName, RoadSignScenario RSS);
 
         int SelectSDSATestTypeID(string test_name);
         int CountPresetByName(string preset_name);
 
-         int CountLocaleTestPresets(string PresetName, int TestType);
-         void DeleteLocaleTestPreset(string PresetName, int TestType);
-         void DeleteLocaleTestPresetIfExists(string PresetName, int TestType);
+        int CountLocaleTestPresets(string PresetName, int TestType);
+        void DeleteLocaleTestPreset(string PresetName, int TestType);
+        void DeleteLocaleTestPresetIfExists(string PresetName, int TestType);
+        
+        RoadSignScenario SelectRoadSignScenario(int id);
+        void DeleteTrailPreset(string PresetName);
+        int CountTrailPreset(string PresetName);
 
-         void DeleteTrailPreset(string PresetName);
-         int CountTrailPreset(string PresetName);
-
-         IEnumerable<string> GetLocaleNames();
+        IEnumerable<string> GetLocaleNames();
     }
 }

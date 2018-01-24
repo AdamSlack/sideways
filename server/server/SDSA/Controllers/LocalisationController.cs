@@ -26,7 +26,7 @@ namespace SDSA.Controllers
         {
             var image = _localisationService.GetImage(ImageId);
 
-            return (image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
+            return NoContent(); //(image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
         }
 
 
@@ -35,7 +35,7 @@ namespace SDSA.Controllers
         {
             var image = _localisationService.GetImage(LocalisationId, ImageName);
 
-            return (image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
+            return NoContent(); //(image == null ? (IActionResult)File(image.Image, image.FileType) : (IActionResult)NotFound("Image not found"));
         }
 
 
@@ -98,10 +98,15 @@ namespace SDSA.Controllers
         }
 
         [HttpPost("[controller]/{LocaleName}/RoadSignScenario")]
-        public IActionResult RoadSignScenario(string LocalName, [FromBody] RoadSignScenario RSS) {
+        public IActionResult RoadSignScenario(string LocaleName, [FromBody] RoadSignScenario RSS) {
             Console.WriteLine("Recieved Request to save road sign scenario.");
-            _localisationService.SaveRoadSignScenario(RSS);
+            _localisationService.SaveRoadSignScenario(LocaleName, RSS);
             return Ok();
+        }
+        [HttpGet("[controller]/{LocaleName}/RoadSignScenario/{id}")]
+        public IActionResult SelectRoadSignScenario(string LocaleName, int id) {
+            Console.WriteLine("get request for Road Sign Scenario No: " + id + " from preset: " + LocaleName);
+            return Json(_localisationService.SelectRoadSignScenario(id));
         }
 
         [HttpGet("[controller]")]

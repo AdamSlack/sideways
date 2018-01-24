@@ -7,11 +7,11 @@ namespace SDSA.Models.Localisation
 {
     public class RoadSignScenario
     {
-        public int id { get; set; }
-        public string presetName { get; set; }
-        public LocalisationImage SceneImg { get; set; }
-        public LocalisationImage SignImg { get; set; }
-        public int xPos { get; set; }
-        public int yPos { get; set; }
+        public int      id          { get; set; }
+        public string   presetName  { get; set; }
+        public byte[]   SceneImage  { get; set; }
+        public byte[]   SignImage   { get; set; }
+        public int      xPos        { get; set; }
+        public int      yPos        { get; set; }
     }
 }
