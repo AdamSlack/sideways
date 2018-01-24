@@ -107,7 +107,7 @@ export class LocalisationCreatorComponent implements OnInit {
       this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
       this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
     });
-    
+
   }
 
   public scenarioCompleted(index : number)  {
@@ -174,8 +174,6 @@ export class LocalisationCreatorComponent implements OnInit {
         this.scenarioImages[index] = target.result;
         this.scenarioUploaded[index] = true;
       }
-
-
     }
   }
   
