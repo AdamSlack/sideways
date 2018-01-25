@@ -13,3 +13,10 @@
     <input class="button submit" type="button" (click)=connectToSDSA() value="login">
   </div>
 </div>
+
+<div *ngIf="requestingDetails && (!auth.VALIDATED || auth.AUTH_TOKEN == '' || auth.PARTICIPANT_TEST_LOCALE == '') && !(!auth.VALIDATED && auth.AUTH_TOKEN == '' && auth.PARTICIPANT_TEST_LOCALE == '')">
+  <div class="spinner">
+    <div class="dot1"></div>
+    <div class="dot2"></div>
+  </div>
+</div>

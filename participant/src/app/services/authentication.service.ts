@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { RecordTimingService } from './record-timing.service';
+import { Observable } from 'rxjs/Observable';
+import { interval } from 'rxjs/observable/interval';
 
 
 @Injectable()
@@ -16,10 +19,13 @@ export class AuthenticationService {
 
   public AUTH_TOKEN : string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public timer : RecordTimingService) {}
   
   public ROOT : string = 'http://localhost:5000';
-  
+
+  public timerSubscription : Subscription ;
+  public authSubscription : Subscription ;
+
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
     headers.set('Content-Type', contentType);
@@ -35,7 +41,12 @@ export class AuthenticationService {
       'Password' : password,
       'UserType' : 1
     };
-    return this.http.post(url,body,{headers : headers}).subscribe((res) => {
+
+    if(this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+
+    this.authSubscription =  this.http.post(url,body,{headers : headers}).subscribe((res) => {
       if (res['message']) {
         this.VALIDATED = false;
         this.VALIDATION_FAILED = true;
@@ -47,22 +58,44 @@ export class AuthenticationService {
         this.VALIDATION_FAILED = false;        
       }
     });
+    return this.authSubscription;
   }
-  public requestParticipantTestPresetName(participantTestID : string = this.PARTICIPANT_TEST_ID) : Subscription {
+
+  public startTimeoutPeriod() : Observable<number>{
+    let timer = interval(5000);
+    this.timerSubscription = timer.subscribe((time) => {
+      console.log('Time Elapsed: ' + time);
+      if(
+        this.AUTH_TOKEN != '' &&
+        this.PARTICIPANT_TEST_LOCALE != '' &&
+        !this.VALIDATION_FAILED &&
+        this.VALIDATED
+      ) {
+        console.log('Timer All Good.');
+        this.timerSubscription.unsubscribe();
+      }
+      else {
+        if(this.authSubscription) {
+          this.authSubscription.unsubscribe();
+        }
+        this.AUTH_TOKEN = '';
+        this.PARTICIPANT_TEST_ID = '';
+        this.PARTICIPANT_TEST_LOCALE = '';
+        this.VALIDATED = false;
+        this.VALIDATION_FAILED = true;
+        this.timerSubscription.unsubscribe();
+      }
+      
+    });
+    return timer;
+  }
+
+  public requestParticipantTestPresetName(participantTestID : string = this.PARTICIPANT_TEST_ID) : Observable<any> {
     // This URL is not Correct, need to implement something server side... check back later.
     let url : string = this.ROOT + '/Test/participant/' + participantTestID;
     let headers = this.createHeaders();
 
-    return this.http.get(url, {headers : headers}).subscribe((res) => {
-      if(res['presetName']) {
-        this.PARTICIPANT_TEST_LOCALE = res['presetName'];
-        console.log('The selected localisation preset for this participant\'s test is: ' + res['presetName']);
-      }
-      else {
-        this.PARTICIPANT_TEST_LOCALE = '';
-        console.log('No Preset Name Present in HTTP Response...');
-      }
-    })
+    return this.http.get(url, {headers : headers})
   }
 
 }
