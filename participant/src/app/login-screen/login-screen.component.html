@@ -1,5 +1,5 @@
 
-<div *ngIf="!auth.VALIDATED && auth.AUTH_TOKEN == ''">
+<div *ngIf="!auth.VALIDATED && auth.AUTH_TOKEN == '' && auth.PARTICIPANT_TEST_LOCALE == ''">
   <div class="search">
     <input class="bar search" type="text"  [(ngModel)]=clinicianEmail (submit)=connectToSDSA()  placeholder="Enter your email.">
   </div>

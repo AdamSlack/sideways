@@ -50,13 +50,13 @@ export class AuthenticationService {
   }
   public requestParticipantTestPresetName(participantTestID : string = this.PARTICIPANT_TEST_ID) : Subscription {
     // This URL is not Correct, need to implement something server side... check back later.
-    let url : string = this.ROOT + '/participant/' + participantTestID;
+    let url : string = this.ROOT + '/Test/participant/' + participantTestID;
     let headers = this.createHeaders();
 
     return this.http.get(url, {headers : headers}).subscribe((res) => {
-      if(res['PresetName']) {
-        this.PARTICIPANT_TEST_LOCALE = res['PresetName'];
-        console.log('The selected localisation preset for this participant\'s test is: ' + res['PresetName']);
+      if(res['presetName']) {
+        this.PARTICIPANT_TEST_LOCALE = res['presetName'];
+        console.log('The selected localisation preset for this participant\'s test is: ' + res['presetName']);
       }
       else {
         this.PARTICIPANT_TEST_LOCALE = '';

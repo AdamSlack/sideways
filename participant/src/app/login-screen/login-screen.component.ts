@@ -19,7 +19,7 @@ export class LoginScreenComponent implements OnInit {
   public connectToSDSA(){
     this.auth.PARTICIPANT_TEST_ID = this.pt_id;
     this.auth.requestToken(this.clinicianEmail, this.password);
-    //this.auth.requestParticipantTestPresetName(this.pt_id);
+    this.auth.requestParticipantTestPresetName(this.pt_id);
   }
 
   ngOnInit() {
