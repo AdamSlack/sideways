@@ -18,6 +18,7 @@ import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
 import { AppRoutingModule } from './/app-routing.module';
+import { AuthenticationService } from './services/authentication.service';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { AppRoutingModule } from './/app-routing.module';
     AppRoutingModule,
   ],
 
-  providers: [ResultsService,RecordTimingService, FabricService],
+  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
