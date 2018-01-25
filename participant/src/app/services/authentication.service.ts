@@ -18,7 +18,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
   
-  public ROOT : string = 'http://localhost:5000/';
+  public ROOT : string = 'http://localhost:5000';
   
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
@@ -28,7 +28,7 @@ export class AuthenticationService {
   }
 
   public requestToken(email:string, password:string) : Subscription {
-    let url : string = this.ROOT + 'login';
+    let url : string = this.ROOT + '/login';
     let headers = this.createHeaders();
     let body = {
       'Email' : email,
@@ -48,10 +48,11 @@ export class AuthenticationService {
       }
     });
   }
-  public requestParticipantTestPresetName() : Subscription {
+  public requestParticipantTestPresetName(participantTestID : string = this.PARTICIPANT_TEST_ID) : Subscription {
     // This URL is not Correct, need to implement something server side... check back later.
-    let url : string = this.ROOT + '/participant/' + this.PARTICIPANT_TEST_ID;
+    let url : string = this.ROOT + '/participant/' + participantTestID;
     let headers = this.createHeaders();
+
     return this.http.get(url, {headers : headers}).subscribe((res) => {
       if(res['PresetName']) {
         this.PARTICIPANT_TEST_LOCALE = res['PresetName'];

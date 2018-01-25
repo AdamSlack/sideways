@@ -17,6 +17,7 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
+import { AuthenticationService } from './services/authentication.service';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { FabricService } from './services/fabric.service';
     FormsModule
   ],
 
-  providers: [ResultsService,RecordTimingService, FabricService],
+  providers: [ResultsService,RecordTimingService, FabricService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

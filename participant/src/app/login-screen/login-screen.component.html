@@ -1,14 +1,15 @@
 
-
-<div class="search">
-  <input class="bar search" type="text"  [(ngModel)]=c_id (submit)=connectToSDSA()  placeholder="Enter a Clinician ID">
-</div>
-<div class="search">
-  <input class="bar search" type="password"  [(ngModel)]=password  placeholder="Enter your Password">
-</div>
-<div class="search">
-  <input class="bar search" type="text"  [(ngModel)]=p_id  placeholder="Enter a Participant ID">
-</div>
-<div class="submit">
-  <input class="button submit" type="button" (click)=connectToSDSA() value="login">
+<div *ngIf="!auth.VALIDATED && auth.AUTH_TOKEN == ''">
+  <div class="search">
+    <input class="bar search" type="text"  [(ngModel)]=clinicianEmail (submit)=connectToSDSA()  placeholder="Enter your email.">
+  </div>
+  <div class="search">
+    <input class="bar search" type="password"  [(ngModel)]=password  placeholder="Enter your Password">
+  </div>
+  <div class="search">
+    <input class="bar search" type="text"  [(ngModel)]=pt_id  placeholder="Enter a Participant ID">
+  </div>
+  <div class="submit">
+    <input class="button submit" type="button" (click)=connectToSDSA() value="login">
+  </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login-screen',
@@ -9,16 +10,16 @@ export class LoginScreenComponent implements OnInit {
 
 
   // PLACE HOLDERS
-  public p_id : string;
+  public pt_id : string;
   public password : string;
-  public c_id : string;
+  public clinicianEmail : string;
 
-  constructor() { }
+  constructor(public auth : AuthenticationService) { }
 
   public connectToSDSA(){
-    console.log('Participant ID: ' + this.p_id);
-    console.log('Password:' + this.password)
-    console.log('Clinician ID: ' + this.c_id);
+    this.auth.PARTICIPANT_TEST_ID = this.pt_id;
+    this.auth.requestToken(this.clinicianEmail, this.password);
+    //this.auth.requestParticipantTestPresetName(this.pt_id);
   }
 
   ngOnInit() {
