@@ -51,6 +51,9 @@ export class BoardComponent {
   }
   createDot(position) {
   }
+  
+  
+  
 
   GetResults() {
     for (var i = 0; i < this.dotones.length; i++) {
@@ -125,37 +128,201 @@ export class BoardComponent {
   }
 
   
-  RandomlyPositionDots()
+  getXValues()
+  {   
+	    var XValues = Array(5).fill(null);
+	
+		//Populate an Array of all the X Values of the Dots
+		XValues[0] = this.getRandomInt(-5,-13);
+		
+		//for (var i = 1; i<4; i++)
+		//{
+		//	XValues[i] = this.GenerateRandomWholeNum("X");
+   	   // }
+		
+		XValues[1] = this.GenerateRandomWholeNum("X");
+		XValues[2] = this.GenerateRandomWholeNum("X");
+		XValues[3] = this.GenerateRandomWholeNum("X");
+		
+		 
+		XValues[4] = this.getRandomInt(6,13);
+		
+		return (XValues);
+  }
+  
+  getYValues()
   {
 	  
+		var YValues = Array(5).fill(null);
+
+		//Populate an Array of all the Y Values of the Dots
+	  //  for (var i = 0; i<YValues.length; i++)
+		//{
+		//	YValues[i] = this.GenerateRandomWholeNum("Y");
+		//}
+		
+		YValues[0] = this.GenerateRandomWholeNum("Y");
+		YValues[1] = this.GenerateRandomWholeNum("Y");
+		YValues[2] = this.GenerateRandomWholeNum("Y");
+		YValues[3] = this.GenerateRandomWholeNum("Y");
+		YValues[4] = this.GenerateRandomWholeNum("Y");
+		
+		return YValues;
+		
+  }
+  
+  RandomlyPositionDots()
+  {
 	
+     
+	 var X = "X";
+     var Y = "Y";
+	 
+	 var XValues = this.getXValues();
+     var YValues = this.getYValues();
+		
+		console.log(XValues);
+		
+		console.log(YValues);
+		
 	  for (var i =0; i < this.dotoneX.length; i++)
 	  {
-	      var X = "X";
-		  var Y = "Y";
-		  
-		  //-5 to -18
-		  
-		  //6 to 15
+	     	
+		// While dots are touching
+	    console.log("Entering While");
 		
+		while (this.isDotsTouching(XValues, YValues))
+	    
+		{    
+		
+		XValues = this.getXValues();
+		YValues = this.getYValues();
+		
+	     console.log(XValues);
+		console.log("In while");
+		console.log(YValues);
 		  
-		  this.dotoneX[i] = this.getRandomInt(-5,-13);
-          this.dotoneY[i] = this.GenerateRandomWholeNum(Y);
+		 
+		}
+		
+		console.log("Out while");
+		
+		
+		 this.dotoneX[i] = XValues[0];
+         this.dotoneY[i] = YValues[0]
 		  
-		  this.dotTwoX[i] = this.GenerateRandomWholeNum(X);
-          this.dotTwoY[i] = this.GenerateRandomWholeNum(Y);
+		  this.dotTwoX[i] = XValues[1];
+          this.dotTwoY[i] = YValues[1];
 		  
-		  this.dotThreeX[i] = this.GenerateRandomWholeNum(X);
-		  this.dotThreeY[i] = this.GenerateRandomWholeNum(Y);
+		  this.dotThreeX[i] = XValues[2];
+		  this.dotThreeY[i] = YValues[2];
 		  
-		  this.dotFourX[i] = this.GenerateRandomWholeNum(X);
-          this.dotFourY[i] = this.GenerateRandomWholeNum(Y);
+		  this.dotFourX[i] = XValues[3];
+          this.dotFourY[i] = YValues[3]
 		  
-		  this.dotFiveX[i] = this.getRandomInt(6,13);
-		  this.dotFiveY[i] = this.GenerateRandomWholeNum(Y);
+		  this.dotFiveX[i] = XValues[4];
+		  this.dotFiveY[i] = YValues[4];
+		
+		
+		 // this.dotoneX[i] = this.getRandomInt(-5,-13);
+         // this.dotoneY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  // this.dotTwoX[i] = this.GenerateRandomWholeNum(X);
+          // this.dotTwoY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  // this.dotThreeX[i] = this.GenerateRandomWholeNum(X);
+		  // this.dotThreeY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  // this.dotFourX[i] = this.GenerateRandomWholeNum(X);
+          // this.dotFourY[i] = this.GenerateRandomWholeNum(Y);
+		  
+		  // this.dotFiveX[i] = this.getRandomInt(6,13);
+		  // this.dotFiveY[i] = this.GenerateRandomWholeNum(Y);
+		
 	  }
 	  
   }
+  
+  differenceLessThan2(num1, num2)
+  {
+	  
+	  console.log("Num1 is ", num1);
+	  console.log("Num2 is ", num2);
+	  
+	  //if difference < 2 return false else return true
+	  var result = Math.abs(num1 - num2);
+	  
+	  if (Math.sign(result) == -1 )
+	  {
+		  result = result*-1;
+	  }
+	  	  
+	  console.log("CALCCC IS ", result);
+
+	  
+	  
+	  return ( result < 2 );
+	
+  }
+  
+  
+  isDotsTouching(XValues, YValues)
+  {
+	  var result = false;
+	  
+	  //check x with every other x, if same then check y if y same then false
+	  
+	 var XValuesTouching = false;
+	 var YValuesTouching = false;
+	  
+	  console.log("Got here");
+	  
+	    for (var i =0; i< XValues.length; i++ )
+		{
+			for (var j =i+1; j<XValues.length; j++ )
+		    {
+			  if ( this.differenceLessThan2(XValues[i],XValues[j] ))
+			  {
+				  XValuesTouching = true;
+			  }				  
+		    }
+						
+		} 
+      
+	  console.log("Got here 2");
+	  
+	  //If x values touching then check y values touching
+	  if (XValuesTouching)
+	  {
+		   for (var i =0; i< YValues.length; i++ )
+		{
+			for (var j =i+1; j < YValues.length; j++ )
+		    {
+			 if ( this.differenceLessThan2(YValues[i],YValues[j] ))
+			  {
+				  YValuesTouching = true;
+			  }				  
+		    }
+						 
+		} 
+	  }
+	
+	  //Only if y and x values touching 
+	  if (( XValuesTouching== true) && (YValuesTouching==true))
+	  {
+		  result = true;
+	  }
+	  else
+      {
+		  result = false;
+	  }
+	  
+	 
+	  
+	  return result;
+	  
+  }
+  
   
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
