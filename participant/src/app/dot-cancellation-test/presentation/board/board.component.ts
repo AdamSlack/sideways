@@ -191,7 +191,7 @@ export class BoardComponent {
 		// While dots are touching
 	    console.log("Entering While");
 		
-		while (this.isDotsTouching(XValues, YValues))
+		while (this.isDotsTouchingTwo(XValues, YValues))
 	    
 		{    
 		
@@ -243,85 +243,128 @@ export class BoardComponent {
 	  
   }
   
-  differenceLessThan2(num1, num2)
+  differenceLessThan2(x1, y1, x2, y2)
   {
 	  
-	  console.log("Num1 is ", num1);
-	  console.log("Num2 is ", num2);
+	 // console.log("Num1 is ", num1);
+	  //console.log("Num2 is ", num2);
 	  
 	  //if difference < 2 return false else return true
-	  var result = Math.abs(num1 - num2);
+	  // var result = Math.abs(num1 - num2);
 	  
-	  if (Math.sign(result) == -1 )
-	  {
-		  result = result*-1;
-	  }
+	  // if (Math.sign(result) == -1 )
+	  // {
+		  // result = result*-1;
+	  // }
+	  
+	  // if (result<2)
+	  // {
+		// console.log("Num1 is ", num1);
+	  // console.log("Num2 is ", num2);
+	  // console.log("CALCCC IS ", result);
+	  // }
 	  	  
-	  console.log("CALCCC IS ", result);
-
+		  
+		var x_dist = (x2 - x1);
+        var y_dist = (y2 - y1);
+        var distance = Math.sqrt(x_dist * x_dist + y_dist * y_dist);
 	  
+	  //console.log("CALCCC IS ", distance);
 	  
-	  return ( result < 2 );
+	  if ( distance < 2 )
+	  {
+      console.log("CALCC IS:",distance);
+	  console.log("VALUES ARE: ",x1, y1, x2, y2);
+	  
+	  }  
+	  return ( distance < 2 );
 	
   }
   
   
-  isDotsTouching(XValues, YValues)
+   isDotsTouchingTwo(XValues, YValues)
   {
 	  var result = false;
 	  
-	  //check x with every other x, if same then check y if y same then false
-	  
-	 var XValuesTouching = false;
-	 var YValuesTouching = false;
-	  
-	  console.log("Got here");
-	  
-	    for (var i =0; i< XValues.length; i++ )
+	   for (var i =0; i< XValues.length; i++ )
 		{
-			for (var j =i+1; j<XValues.length; j++ )
-		    {
-			  if ( this.differenceLessThan2(XValues[i],XValues[j] ))
-			  {
-				  XValuesTouching = true;
-			  }				  
-		    }
+		
+		for (var j =i; j< XValues.length; j++ )
+		{
+			
+			 if ( this.differenceLessThan2(XValues[i], YValues[i],  XValues[j], YValues[j])  ) 
+			 {
+				 return true;
+			 }
+		}		
+		
+			
 						
 		} 
-      
-	  console.log("Got here 2");
 	  
-	  //If x values touching then check y values touching
-	  if (XValuesTouching)
-	  {
-		   for (var i =0; i< YValues.length; i++ )
-		{
-			for (var j =i+1; j < YValues.length; j++ )
-		    {
-			 if ( this.differenceLessThan2(YValues[i],YValues[j] ))
-			  {
-				  YValuesTouching = true;
-			  }				  
-		    }
-						 
-		} 
-	  }
-	
-	  //Only if y and x values touching 
-	  if (( XValuesTouching== true) && (YValuesTouching==true))
-	  {
-		  result = true;
-	  }
-	  else
-      {
-		  result = false;
-	  }
 	  
-	 
 	  
 	  return result;
 	  
+	  
   }
+  
+  // isDotsTouching(XValues, YValues)
+  // {
+	  // var result = false;
+	  
+	 // check x with every other x, if same then check y if y same then false
+	  
+	 // var XValuesTouching = false;
+	 // var YValuesTouching = false;
+	  
+	  // console.log("Got here");
+	  
+	    // for (var i =0; i< XValues.length; i++ )
+		// {
+			// for (var j =i+1; j<XValues.length; j++ )
+		    // {
+			  // if ( this.differenceLessThan2(XValues[i],XValues[j] ))
+			  // {
+				  // XValuesTouching = true;
+			  // }				  
+		    // }
+						
+		// } 
+      
+	  // console.log("Got here 2");
+	  
+	 // If x values touching then check y values touching
+	  // if (XValuesTouching)
+	  // {
+		   // for (var i =0; i< YValues.length; i++ )
+		// {
+			// for (var j =i+1; j < YValues.length; j++ )
+		    // {
+			 // if ( this.differenceLessThan2(YValues[i],YValues[j] ))
+			  // {
+				  // YValuesTouching = true;
+			  // }				  
+		    // }
+						 
+		// } 
+	  // }
+	
+	 // Only if y and x values touching 
+	  // if (( XValuesTouching== true) && (YValuesTouching==true))
+	  // {
+		  // result = true;
+	  // }
+	  // else
+      // {
+		  // result = false;
+	  // }
+	  
+	 
+	  
+	  // return result;
+	  
+  // }
   
   
   getRandomInt(min, max) {
