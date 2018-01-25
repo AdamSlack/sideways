@@ -63,7 +63,7 @@ export class AuthenticationService {
 
   public startTimeoutPeriod() : Observable<number>{
     let timer = interval(5000);
-    this.timerSubscription = timer.subscribe((time) => {
+    let timerSubscription = timer.subscribe((time) => {
       console.log('Time Elapsed: ' + time);
       if(
         this.AUTH_TOKEN != '' &&
@@ -72,7 +72,7 @@ export class AuthenticationService {
         this.VALIDATED
       ) {
         console.log('Timer All Good.');
-        this.timerSubscription.unsubscribe();
+        timerSubscription.unsubscribe();
       }
       else {
         if(this.authSubscription) {
@@ -83,7 +83,7 @@ export class AuthenticationService {
         this.PARTICIPANT_TEST_LOCALE = '';
         this.VALIDATED = false;
         this.VALIDATION_FAILED = true;
-        this.timerSubscription.unsubscribe();
+        timerSubscription.unsubscribe();
       }
       
     });

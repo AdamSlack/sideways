@@ -18,9 +18,11 @@ export class LoginScreenComponent implements OnInit {
   constructor(public auth : AuthenticationService) { }
 
   public connectToSDSA(){
+    console.log("button pressed...")
     this.requestingDetails = true;
     this.auth.PARTICIPANT_TEST_ID = this.pt_id;
     this.auth.requestToken(this.clinicianEmail, this.password);
+
     this.auth.requestParticipantTestPresetName(this.pt_id).subscribe((res) => {
       if(res['presetName']) {
         this.auth.PARTICIPANT_TEST_LOCALE = res['presetName'];
@@ -31,8 +33,10 @@ export class LoginScreenComponent implements OnInit {
         console.log('No Preset Name Present in HTTP Response...');
       }
     });
+
     let timer = this.auth.startTimeoutPeriod().subscribe((time) => {
       this.requestingDetails = false;
+      timer.unsubscribe();
     });
   }
 

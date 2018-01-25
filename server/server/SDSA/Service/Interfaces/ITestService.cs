@@ -19,7 +19,7 @@ namespace SDSA.Service.Interfaces
         int SavePatricipantTest(ParticipantTest PT);
         IEnumerable<ParticipantTest> GetParticipantsTests(int participantid);
         ParticipantTest GetParticipantsTest(int testId);
-
+        string GetParticipantTestPresetName(int testID);
         string whatislife();
     }
 }
