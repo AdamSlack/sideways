@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SDSA.Repository.Interfaces;
 using SDSA.Service.Interfaces;
 using SDSA.Models;
-
+using SDSA.Models.Enums;
 namespace SDSA.Service
 {
     public class TestService : ITestService
@@ -44,7 +44,26 @@ namespace SDSA.Service
             => _testRepository.GetParticipantsTest(testId);
         public string GetParticipantTestPresetName(int testID)
             => _testRepository.GetParticipantTestPresetName(testID);
-        public string whatislife() => "whatislife";
+        public AlgorithmResult GetAlgorithResult (int testId, AlgoritmEnum algorithmId)
+        {
+            var testResult = new TestResults() {
+                CarDirectionsTest = this.GetCarDirectionsTest(testId),
+                CompassDirectionsTest = this.GetCompassDirectionsTest(testId),
+                DotCancellationTest = this.GetDotCancellationTest(testId),
+                RoadScenariosTest = this.GetRoadScenarioTest(testId),
+                TrailMakingTest = this.GetTrailMakingTest(testId)
+            };
+
+            var algor = AlgorithmFactory.GetInstance(algorithmId);
+            if (algor == null)
+                return new AlgorithmResult
+                {
+                    error = AlgorithmErrorEnum.MissAlgorithm,
+                    Message = $"Could not find algorithm {algorithmId}"
+                };
+           return algor .Calulate(testResult);
+        }
+
         
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SDSA.Models;
+using SDSA.Models.Enums;
 using SDSA.Models.Tests;
 using System.Collections.Generic;
 
@@ -20,6 +21,6 @@ namespace SDSA.Service.Interfaces
         IEnumerable<ParticipantTest> GetParticipantsTests(int participantid);
         ParticipantTest GetParticipantsTest(int testId);
         string GetParticipantTestPresetName(int testID);
-        string whatislife();
+        AlgorithmResult GetAlgorithResult(int testId, AlgoritmEnum algorithmId);
     }
 }
