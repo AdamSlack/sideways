@@ -44,12 +44,10 @@ enum compassDir {
   EastWestSouth,
 } 
 
-var server_root = "http://localhost:5000/"
+
+var server_root = 'http://localhost:5000/';
+
 var asset_link = "/test/compass_directions/";
-
-
-
-
 
 
 @Component({
@@ -150,8 +148,16 @@ export class CompassDirectionsTestComponent implements OnInit {
 
         let img;
 
+        img.crossOrigin = 'anonymous';
+
+
         //Try to load image
         fabric.Image.fromURL(image_path, function(oImg) {
+          oImg.crossOrigin = "Anonymous";
+          
+          oImg.scaleToWidth(length);
+          oImg.scaleToHeight(length);
+
           img = oImg.scale(length).set({
             left: xOffset, 
             top: yOffset,
@@ -162,21 +168,19 @@ export class CompassDirectionsTestComponent implements OnInit {
             lockScalingY: true, 
             lockScalingX: true,       
             id: 'scene' +idx.toString(), 
-          })
-        
-          oImg.scaleToWidth(length);
-          oImg.scaleToHeight(length);
-     
+          },)
 
-          var group = new fabric.Group([ card, img ], {
-            left: xOffset,
-            top: yOffset
-          });
-         
-          Canvas.add(group)
+        },{ crossOrigin: 'Anonymous' });
 
+
+
+        var group = new fabric.Group([ card, img ], {
+          left: xOffset,
+          top: yOffset
         });
-
+       
+        Canvas.add(group)
+        
          // Ok we have the image, can add to group/canvas
     
         //Canvas.add(card);
