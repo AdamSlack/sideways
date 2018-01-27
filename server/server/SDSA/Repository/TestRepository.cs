@@ -140,5 +140,10 @@ namespace SDSA.Repository
                 "Values (@TestId , @TimeTaken, @Mistakes)",
                 TMT);
         #endregion
+
+        public string GetParticipantTestPresetName(int testID)
+            => db.ExecuteScalar<string>(
+                "select preset_name from participant_tests where test_id = @ID", new {ID = testID}
+            );
     }
 }

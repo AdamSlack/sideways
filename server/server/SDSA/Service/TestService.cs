@@ -42,7 +42,8 @@ namespace SDSA.Service
             => _testRepository.GetParticipantsTests(participantid);
         public ParticipantTest GetParticipantsTest(int testId)
             => _testRepository.GetParticipantsTest(testId);
-
+        public string GetParticipantTestPresetName(int testID)
+            => _testRepository.GetParticipantTestPresetName(testID);
         public string whatislife() => "whatislife";
         
     }

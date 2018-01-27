@@ -52,6 +52,12 @@ namespace SDSA.Service
             }
         }
 
+        public void SaveRoadSignScenario(string LocaleName, RoadSignScenario RSS) 
+            => _localisationRepository.SaveRoadSignScenario(LocaleName, RSS);
+
+        public RoadSignScenario SelectRoadSignScenario(int id) 
+            => _localisationRepository.SelectRoadSignScenario(id);
+
         public TestLocaleDetails FetchTestLocalisationPreset(string LocaleName, int TestType) {
             // Gonna have to move Trail Making test... it shouldn't be an edge case :/
             
