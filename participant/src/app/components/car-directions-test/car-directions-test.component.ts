@@ -68,7 +68,7 @@ export class CarDirectionsTestComponent implements OnInit {
     this.rs.insertCarDirectionResults(1, 123, 456);
   }
 
-  
+
   /*
    * Subscribes to a request for localisation preset details.
    * If no preset details have successfully been obtained, it returns back to the login screen.
@@ -90,7 +90,7 @@ export class CarDirectionsTestComponent implements OnInit {
       return;
     }
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
-    this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+    this.localeSubscription = this.locale.selectCarDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
       console.log('Response for Compass Direction game assets recieved from servr.');
       this.testTitle = res['name'] ? res['name'] : 'Car Directions';
       this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';

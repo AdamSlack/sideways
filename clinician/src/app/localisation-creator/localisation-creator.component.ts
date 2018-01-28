@@ -103,6 +103,7 @@ export class LocalisationCreatorComponent implements OnInit {
       console.log(res);
       this.localePreset.roadSigns.general.testHeading = res['name'];
       this.localePreset.roadSigns.general.testInstructions = res['instructions'];
+      // These are being sanitized...
       this.roadSignImages = res['roadSignScenarios'].map((rss) => rss['signImage']);
       this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
       this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
