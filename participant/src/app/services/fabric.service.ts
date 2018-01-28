@@ -56,65 +56,67 @@ export class FabricService {
     card.colliding = "nuttin";
 
     card.type = type;
-    /* Card interaction logic */
-    card.on('mousedown', function (options) {
-      card.setShadow({ color: "rgba(0,0,0,0.3)", blur: 20, offsetX: 2, offsetY: 2 });
-      card.animate('angle', '4', { onChange: canvas.renderAll.bind(canvas) });
-    });
-
-
-    card.on('mouseup', function (options) {
-      card.setShadow(null);
-      card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });
-    });
-
-
-    //Intesection colissions ....
-    canvas.on({
-      'object:moving': onChange,
-      'object:scaling': onChange,
-      'object:rotating': onChange,
-      //Touch:gesture
-    });
-
-    function onChange(options) {
-      // if object is too big ignore
-      if (options.target.currentHeight > options.target.canvas.height || options.target.currentWidth > options.target.canvas.width) {
-        return;
-      }
-
-      let target = options.target;
-      target.setCoords();
-
-      //If the target card has a type of the card then bust a nut and be outie
-      if (target.type == type) {
-        return;
-      }
-
-      // top-left  corner
-      if (target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0) {
-        target.top = Math.max(target.top, target.top - target.getBoundingRect().top);
-        target.left = Math.max(target.left, target.left - target.getBoundingRect().left);
-      }
-      // bot-right corner
-      if (target.getBoundingRect().top + target.getBoundingRect().height > target.canvas.height || target.getBoundingRect().left + target.getBoundingRect().width > target.canvas.width) {
-        target.top = Math.min(target.top, target.canvas.height - target.getBoundingRect().height + target.top - target.getBoundingRect().top);
-        target.left = Math.min(target.left, target.canvas.width - target.getBoundingRect().width + target.left - target.getBoundingRect().left);
-      }
-
-      //Have effect on each item
-      canvas.forEachObject(function (obj) {
-        if (obj === options.target) return;
-        obj.set('opacity', options.target.intersectsWithObject(obj) ? 0.5 : 1);
-      });
-
-
-      
-
-    }
+    
+    this.addInteractionObjLogic(card, canvas, type);
 
     return card;
   }
+
+public addInteractionObjLogic(card: any, canvas: any, type: any) {
+      /* Card interaction logic */
+      card.on('mousedown', function (options) {
+        card.setShadow({ color: "rgba(0,0,0,0.3)", blur: 20, offsetX: 2, offsetY: 2 });
+        card.animate('angle', '4', { onChange: canvas.renderAll.bind(canvas) });
+      });
+  
+  
+      card.on('mouseup', function (options) {
+        card.setShadow(null);
+        card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });
+      });
+  
+  
+      //Intesection colissions ....
+      canvas.on({
+        'object:moving': onChange,
+        'object:scaling': onChange,
+        'object:rotating': onChange,
+        //Touch:gesture
+      });
+  
+      function onChange(options) {
+        // if object is too big ignore
+        if (options.target.currentHeight > options.target.canvas.height || options.target.currentWidth > options.target.canvas.width) {
+          return;
+        }
+  
+        let target = options.target;
+        target.setCoords();
+  
+        //If the target card has a type of the card then bust a nut and be outie
+        if (target.type == type) {
+          return;
+        }
+  
+        // top-left  corner
+        if (target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0) {
+          target.top = Math.max(target.top, target.top - target.getBoundingRect().top);
+          target.left = Math.max(target.left, target.left - target.getBoundingRect().left);
+        }
+        // bot-right corner
+        if (target.getBoundingRect().top + target.getBoundingRect().height > target.canvas.height || target.getBoundingRect().left + target.getBoundingRect().width > target.canvas.width) {
+          target.top = Math.min(target.top, target.canvas.height - target.getBoundingRect().height + target.top - target.getBoundingRect().top);
+          target.left = Math.min(target.left, target.canvas.width - target.getBoundingRect().width + target.left - target.getBoundingRect().left);
+        }
+  
+        //Have effect on each item
+        canvas.forEachObject(function (obj) {
+          if (obj === options.target) return;
+          obj.set('opacity', options.target.intersectsWithObject(obj) ? 0.5 : 1);
+        });
+      }
+  
+}
 
   // public createGridBaseLines(canvas: any, gridSize: number) {
   //   this.box_length = canvas.width / gridSize;
