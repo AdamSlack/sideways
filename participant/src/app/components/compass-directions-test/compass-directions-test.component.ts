@@ -69,15 +69,6 @@ export class CompassDirectionsTestComponent implements OnInit {
               private auth : AuthenticationService,
               private locale : AssetRetrievalService
             ) {
-              if (this.localeSubscription) {
-                this.localeSubscription.unsubscribe();
-              }
-              // this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
-              //   this.testTitle = res['name'] ? res['name'] : 'Compass Directions';
-              //   this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
-              //   this.compassLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Compass';
-              //   this.deckLabel = res['decklabel'] ? res['deckLabel'] : 'Deck of Cards';
-              // });
             
             }
 
@@ -128,11 +119,47 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   }
 
+  /*
+   * Subscribes to a request for localisation preset details.
+   * If no preset details have successfully been obtained, it returns back to the login screen.
+   *
+   */
+  public initLocaleSettings() : void {
+    console.log('Initialising Game Localisation settings.');
+    if (this.localeSubscription) {
+      console.log('An existing subscription for locale assets was found. Unsubscribing.');
+      this.localeSubscription.unsubscribe();
+    }
+    if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
+      alert('No valid localisation details found. returning to login.');
+      this.auth.VALIDATED = false;
+      this.auth.CLINICIAN_ID = '';
+      this.auth.PARTICIPANT_TEST_ID = '';
+      this.auth.AUTH_TOKEN = '';
+      this.auth.PARTICIPANT_TEST_LOCALE = '';
+      return;
+    }
+    console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
+    this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+      console.log('Response for Compass Direction game assets recieved from servr.');
+      this.testTitle = res['name'] ? res['name'] : 'Compass Directions';
+      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
+      this.compassLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Compass';
+      this.deckLabel = res['decklabel'] ? res['deckLabel'] : 'Deck of Cards';
+      console.log('Test title: ' + res['name']);
+      console.log('Test instructions: ' + res['instructions']);
+      console.log('Test compass label: ' + res['headingsLabel']);
+      console.log('Test deck label: ' + res['deckLabel']);
+    });
+  }
+
   ngOnInit() {
     //console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
     
+    this.initLocaleSettings();
+
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
