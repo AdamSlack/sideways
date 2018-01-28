@@ -6,6 +6,9 @@ import { FabricService } from '../../services/fabric.service'
 import { HttpClient } from '@angular/common/http';
 import "fabric"
 import { rootRoute } from '@angular/router/src/router_module';
+import { AuthenticationService } from '../../services/authentication.service';
+import { AssetRetrievalService } from '../../services/asset-retrieval.service';
+import { Subscription } from 'rxjs/Subscription';
 
 declare const fabric: any;
 //TODO: place in inherited class the global canvas components. Only ever one canvas on screen
@@ -59,7 +62,32 @@ var asset_link = "/test/compass_directions/";
 export class CompassDirectionsTestComponent implements OnInit {
 
   public time : number = 0 ;
-  constructor(private rs: ResultsService, private timer : RecordTimingService, private fab: FabricService, private http: HttpClient) { }
+  constructor(private rs: ResultsService,
+              private timer : RecordTimingService,
+              private fab: FabricService,
+              private http: HttpClient,
+              private auth : AuthenticationService,
+              private locale : AssetRetrievalService
+            ) {
+              if (this.localeSubscription) {
+                this.localeSubscription.unsubscribe();
+              }
+              // this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+              //   this.testTitle = res['name'] ? res['name'] : 'Compass Directions';
+              //   this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
+              //   this.compassLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Compass';
+              //   this.deckLabel = res['decklabel'] ? res['deckLabel'] : 'Deck of Cards';
+              // });
+            
+            }
+
+  // Localisation Preset Data
+  public testTitle : string = '';
+  public testInstructions : string = '';
+  public compassLabel : string = '';
+  public deckLabel : string = '';
+
+  public localeSubscription : Subscription;
   
   public startTimer() {
     this.timer.recordStartTime()
@@ -86,7 +114,6 @@ export class CompassDirectionsTestComponent implements OnInit {
     Deck.forEach((card, i) => {
       if( card.colliding === i) {
         console.log("correcto mudo: ", card.colliding + i)
-        console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
 
       } else {
         console.log("failed mundo")
@@ -105,6 +132,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     //console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
     //this.canvas = new fabric.Canvas('canvas', { selection: false });
+    
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
@@ -148,7 +176,9 @@ export class CompassDirectionsTestComponent implements OnInit {
 
         let img;
 
-        img.crossOrigin = 'anonymous';
+
+        // img is literally nothing
+        //img.crossOrigin = 'anonymous';
 
 
         //Try to load image
@@ -168,24 +198,21 @@ export class CompassDirectionsTestComponent implements OnInit {
             lockScalingY: true, 
             lockScalingX: true,       
             id: 'scene' +idx.toString(), 
-          },)
+          },);
+          var group = new fabric.Group([ card, img ], {
+            left: xOffset,
+            top: yOffset
+          });
+         
+          Canvas.add(group)
+      
+           // Ok we have the image, can add to group/canvas
+      
+          //Canvas.add(card);
+          //Canvas.add(img)
+          Deck.push(card);
 
         },{ crossOrigin: 'Anonymous' });
-
-
-
-        var group = new fabric.Group([ card, img ], {
-          left: xOffset,
-          top: yOffset
-        });
-       
-        Canvas.add(group)
-        
-         // Ok we have the image, can add to group/canvas
-    
-        //Canvas.add(card);
-        //Canvas.add(img)
-        Deck.push(card);
       });
     }
 
@@ -202,7 +229,6 @@ export class CompassDirectionsTestComponent implements OnInit {
       });
     });
     console.log(squareMatches);
-    console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
   }
 
   private createDonezoButton(x: number, y: number) {
