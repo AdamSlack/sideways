@@ -184,6 +184,14 @@ insert into sdsa_test_types (name) values ('road_sign_scenarios');  -- 4
 insert into sdsa_test_types (name) values ('trail_making');         -- 5
 
 ----
+--  Test participant and particiant-test data.
+----
+insert into participants (participant_id) values (1) on conflict do nothing;
+insert into participant_tests (test_id, participant_id, clinician_id, preset_name) values (1, 1,1,'test') on conflict do nothing;
+
+
+
+----
 --  Initial SDSA localisation preset details
 ----
 insert into localisation_presets (preset_name) values ('test');
