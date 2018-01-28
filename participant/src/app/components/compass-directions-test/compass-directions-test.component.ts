@@ -122,7 +122,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createCompassDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 16, square_length * 0.9);
+    this.createCompassDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 16, square_length * 0.9);
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
@@ -130,9 +130,8 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   
-  private createCompassDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
+  private createCompassDeck(fab: FabricService, xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
 
- 
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
         let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card_' + idx.toString());
@@ -148,11 +147,11 @@ export class CompassDirectionsTestComponent implements OnInit {
 
         let img;
 
-        //Try to load image
-        fabric.Image.fromURL(image_path, function(oImg) {
+        function image_parser(oImg) {
+
           oImg.crossOrigin = "Anonymous";
 
-          img = oImg.scale(length).set({
+          oImg.scale(length).set({
             left: xOffset, 
             top: yOffset,
             originX: 'left', 
@@ -163,16 +162,19 @@ export class CompassDirectionsTestComponent implements OnInit {
             lockScalingX: true,       
             id: 'scene' +idx.toString(), 
           },);
-          
-          img.scaleToWidth(length);
-          img.scaleToHeight(length);
-          Canvas.add(img)
-          Canvas.add(card);
+
+          oImg.scaleToWidth(length);
+          oImg.scaleToHeight(length);
+                              // Canvas.add(img)
+          // Canvas.add(card);
           // Ok we have the image, can add to group/canvas
-          if(img == undefined) {
+          if(oImg == undefined) {
             console.log("something went wrong createing image from asset...");
+          } else {
+            console.log("Adding canvas group")
           }
-          var group = new fabric.Group([ card, img ], {
+          
+          var group = new fabric.Group([ card, oImg ], {
             left: xOffset,
             top: yOffset,
             scaleY: length,
@@ -181,14 +183,18 @@ export class CompassDirectionsTestComponent implements OnInit {
           group.scaleToWidth(length);
           group.scaleToHeight(length);
 
+          fab.addRotatingStyle(group, Canvas);
+          
           Canvas.add(group);
+        }
 
 
+            //Try to load image2
+        fabric.Image.fromURL(image_path, image_parser,{ crossOrigin: 'Anonymous'})
 
  
-        },{ crossOrigin: 'Anonymous' });
-
- 
+      
+  
       });
     }
 

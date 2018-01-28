@@ -62,7 +62,7 @@ export class FabricService {
     return card;
   }
 
-public addInteractionObjLogic(card: any, canvas: any, type: any) {
+public addRotatingStyle(card: any, canvas: any) {
       /* Card interaction logic */
       card.on('mousedown', function (options) {
         card.setShadow({ color: "rgba(0,0,0,0.3)", blur: 20, offsetX: 2, offsetY: 2 });
@@ -74,8 +74,10 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         card.setShadow(null);
         card.animate('angle', '0', { onChange: canvas.renderAll.bind(canvas) });
       });
-  
-  
+}
+
+public addInteractionObjLogic(card: any, canvas: any, type: any) {
+
       //Intesection colissions ....
       canvas.on({
         'object:moving': onChange,
