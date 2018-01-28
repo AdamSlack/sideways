@@ -4,6 +4,9 @@ import { RecordTimingService } from '../../services/record-timing.service';
 import { FabricService } from '../../services/fabric.service'
 
 import "fabric"
+import { Subscription } from 'rxjs/Subscription';
+import { AuthenticationService } from '../../services/authentication.service';
+import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 declare const fabric: any;
 
 //Canvas for displaying things
@@ -46,13 +49,63 @@ export class CarDirectionsTestComponent implements OnInit {
 
   public time : number = 0 ;
   
-  constructor(private rs: ResultsService, private timer : RecordTimingService, private fab: FabricService) { }
+  constructor(
+    private rs: ResultsService, 
+    private timer : RecordTimingService, 
+    private fab: FabricService,
+    public auth : AuthenticationService,
+    public locale : AssetRetrievalService
+  ) { }
   
+  public localeSubscription : Subscription;
+  public testTitle : string = '';
+  public testInstructions : string = '';
+  public directionsLabel : string = '';
+  public deckLabel : string ='';
+
+
   public sendResults() {
     this.rs.insertCarDirectionResults(1, 123, 456);
   }
+
+  
+  /*
+   * Subscribes to a request for localisation preset details.
+   * If no preset details have successfully been obtained, it returns back to the login screen.
+   *
+   */
+  public initLocaleSettings() : void {
+    console.log('Initialising Game Localisation settings.');
+    if (this.localeSubscription) {
+      console.log('An existing subscription for locale assets was found. Unsubscribing.');
+      this.localeSubscription.unsubscribe();
+    }
+    if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
+      alert('No valid localisation details found. returning to login.');
+      this.auth.VALIDATED = false;
+      this.auth.CLINICIAN_ID = '';
+      this.auth.PARTICIPANT_TEST_ID = '';
+      this.auth.AUTH_TOKEN = '';
+      this.auth.PARTICIPANT_TEST_LOCALE = '';
+      return;
+    }
+    console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
+    this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+      console.log('Response for Compass Direction game assets recieved from servr.');
+      this.testTitle = res['name'] ? res['name'] : 'Car Directions';
+      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
+      this.directionsLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Directions';
+      this.deckLabel = res['decklabel'] ? res['deckLabel'] : 'Deck of Cards';
+      console.log('Test title: ' + res['name']);
+      console.log('Test instructions: ' + res['instructions']);
+      console.log('Test compass label: ' + res['headingsLabel']);
+      console.log('Test deck label: ' + res['deckLabel']);
+    });
+  }
   
   ngOnInit() {
+    this.initLocaleSettings();
+
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
