@@ -8,6 +8,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 import "fabric"
+import { AuthenticationService } from '../../services/authentication.service';
+import { AssetRetrievalService } from '../../services/asset-retrieval.service';
+import { Subscription } from 'rxjs/Subscription';
 declare const fabric: any;
 
 //Canvas for displaying things
@@ -27,12 +30,59 @@ export class RoadScenariosTestComponent implements OnInit {
 
   private assets_url = 'api/heroes';  // URL to web api
   
-  constructor(private rs: ResultsService, private timer : RecordTimingService, private fab: FabricService, private http: HttpClient,
+  constructor(
+    private rs: ResultsService, 
+    private timer : RecordTimingService, 
+    private fab: FabricService, 
+    private http: HttpClient,
+    public auth : AuthenticationService,
+    public locale : AssetRetrievalService
   ) { }
   
   public sendResults() {
     this.rs.insertRoadScenarioResults(1, 123, 456);
   }
+
+  public localeSubscription : Subscription;
+  public testTitle : string = '';
+  public testInstructions : string = '';
+  public roadSigns : any[] = [];
+  public roadScenarios : any[];
+
+
+  /*
+   * Subscribes to a request for localisation preset details.
+   * If no preset details have successfully been obtained, it returns back to the login screen.
+   *
+   */
+  public initLocaleSettings() : void {
+    console.log('Initialising Game Localisation settings.');
+    if (this.localeSubscription) {
+      console.log('An existing subscription for locale assets was found. Unsubscribing.');
+      this.localeSubscription.unsubscribe();
+    }
+    if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
+      alert('No valid localisation details found. returning to login.');
+      this.auth.VALIDATED = false;
+      this.auth.CLINICIAN_ID = '';
+      this.auth.PARTICIPANT_TEST_ID = '';
+      this.auth.AUTH_TOKEN = '';
+      this.auth.PARTICIPANT_TEST_LOCALE = '';
+      return;
+    }
+    console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
+    this.localeSubscription = this.locale.selectCarDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+      console.log('Response for Compass Direction game assets recieved from servr.');
+      this.testTitle = res['name'] ? res['name'] : 'Road Sign Scenarios';
+      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
+      this.roadScenarios = res['road']
+
+      console.log('Test title: ' + res['name']);
+      console.log('Test instructions: ' + res['instructions']);
+
+    });
+  }
+  
 
   ngOnInit() {
     Canvas = this.fab.generateFabricCanvas('canvas');

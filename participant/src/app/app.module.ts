@@ -19,6 +19,7 @@ import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthenticationService } from './services/authentication.service';
+import { AssetRetrievalService } from './services/asset-retrieval.service';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { AuthenticationService } from './services/authentication.service';
     AppRoutingModule,
   ],
 
-  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService],
+  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
