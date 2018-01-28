@@ -85,9 +85,6 @@ export class AuthenticationService {
         this.VALIDATED = false;
         this.VALIDATION_FAILED = true;
         timerSubscription.unsubscribe();
-        console.log("Bado logo attempto for who kows' o reason o ");
-        console.log('%c       ', 'font-size: 100px; background: url(http://i.imgur.com/Up9DEn0.gif) no-repeat;');
-
       }
       
     });
