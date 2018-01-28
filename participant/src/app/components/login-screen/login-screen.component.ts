@@ -8,7 +8,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class LoginScreenComponent implements OnInit {
 
-
   // PLACE HOLDERS
   public pt_id : string;
   public password : string;
