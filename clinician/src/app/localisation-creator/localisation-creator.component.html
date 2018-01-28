@@ -88,7 +88,7 @@
                     <div class="search" *ngIf="scenarioImages[idx] != '' && roadSignImages[idx] != '';">
                         <p> Click on the Scenario to specify location of Road Sign </p>
                         <p> Currecnt Co-Ordinates: (x: {{indicatorCoords[idx].x}}, y: {{indicatorCoords[idx].y}})</p>
-                        <img [src]="scenarioImages[idx]" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="roadSignImages[idx]" height="250"><br/>
+                        <img [src]="sanitizer.bypassSecurityTrustUrl(scenarioImages[idx])" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="sanitizer.bypassSecurityTrustUrl(roadSignImages[idx]" height="250"><br/>
                         <div class="indicator" [style.left]="indicatorCoords[idx].x + 'px'" [style.top]="indicatorCoords[idx].y + 'px'"></div>
                     </div>
                 </div>
