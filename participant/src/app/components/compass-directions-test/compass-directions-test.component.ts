@@ -148,15 +148,9 @@ export class CompassDirectionsTestComponent implements OnInit {
 
         let img;
 
-        img.crossOrigin = 'anonymous';
-
-
         //Try to load image
         fabric.Image.fromURL(image_path, function(oImg) {
           oImg.crossOrigin = "Anonymous";
-          
-          oImg.scaleToWidth(length);
-          oImg.scaleToHeight(length);
 
           img = oImg.scale(length).set({
             left: xOffset, 
@@ -168,24 +162,33 @@ export class CompassDirectionsTestComponent implements OnInit {
             lockScalingY: true, 
             lockScalingX: true,       
             id: 'scene' +idx.toString(), 
-          },)
+          },);
+          
+          img.scaleToWidth(length);
+          img.scaleToHeight(length);
+          Canvas.add(img)
+          Canvas.add(card);
+          // Ok we have the image, can add to group/canvas
+          if(img == undefined) {
+            console.log("something went wrong createing image from asset...");
+          }
+          var group = new fabric.Group([ card, img ], {
+            left: xOffset,
+            top: yOffset,
+            scaleY: length,
+            scaleX: length,
+          });
+          group.scaleToWidth(length);
+          group.scaleToHeight(length);
 
+          Canvas.add(group);
+
+
+
+ 
         },{ crossOrigin: 'Anonymous' });
 
-
-
-        var group = new fabric.Group([ card, img ], {
-          left: xOffset,
-          top: yOffset
-        });
-       
-        Canvas.add(group)
-        
-         // Ok we have the image, can add to group/canvas
-    
-        //Canvas.add(card);
-        //Canvas.add(img)
-        Deck.push(card);
+ 
       });
     }
 
