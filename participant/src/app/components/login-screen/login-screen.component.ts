@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AssertionError } from 'assert';
+import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 
 @Component({
   selector: 'app-login-screen',
@@ -12,9 +14,11 @@ export class LoginScreenComponent implements OnInit {
   public pt_id : string;
   public password : string;
   public clinicianEmail : string;
-  public requestingDetails : boolean = false;
+  public requestingDetails : boolean = false;  
 
-  constructor(public auth : AuthenticationService) { }
+  // test  
+
+  constructor(public auth : AuthenticationService, public locale : AssetRetrievalService) { }
 
   public connectToSDSA(){
     console.log("button pressed...")
@@ -42,6 +46,8 @@ export class LoginScreenComponent implements OnInit {
   public 
 
   ngOnInit() {
+    let asset_link : string = '/test/compass_directions/';
+    //this.locale.fetchCompass();
 
   }
 

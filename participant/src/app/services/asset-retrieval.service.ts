@@ -32,7 +32,7 @@ export class AssetRetrievalService {
     return this.selectLocalisationDetails(2, localeName);
   }
 
-  public selectcarDirectionDetails(localeName : string) : Observable<any>{
+  public selectCarDirectionDetails(localeName : string) : Observable<any>{
     return this.selectLocalisationDetails(3, localeName);
   }
 

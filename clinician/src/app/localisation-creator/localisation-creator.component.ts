@@ -3,6 +3,7 @@ import { LocalisationService, LocalePreset, Coords } from '../services/localisat
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import {  } from 'fs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class LocalisationCreatorComponent implements OnInit {
   public trailAArray : Array<string> = [];
   public trailBArray : Array<string> = [];
 
-  constructor(public locale : LocalisationService) { }
+  constructor(public locale : LocalisationService, public sanitizer : DomSanitizer) { }
 
   public startLocaleCreation() : void {
     this.creationStarted = true;
@@ -103,11 +104,11 @@ export class LocalisationCreatorComponent implements OnInit {
       console.log(res);
       this.localePreset.roadSigns.general.testHeading = res['name'];
       this.localePreset.roadSigns.general.testInstructions = res['instructions'];
+      // These are being sanitized...3
       this.roadSignImages = res['roadSignScenarios'].map((rss) => rss['signImage']);
       this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
       this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
     });
-
   }
 
   public scenarioCompleted(index : number)  {
