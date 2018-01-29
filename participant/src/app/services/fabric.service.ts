@@ -143,7 +143,9 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
             if(distance < target.width/2) {
               obj.set('opacity', 0.5);
               best_match = obj;
-            } 
+            } else {
+              obj.set('opacity', 1); 
+            }
 
           } else {
             obj.set('opacity', 1); 
