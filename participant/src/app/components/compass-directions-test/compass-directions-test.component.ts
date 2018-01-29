@@ -24,28 +24,50 @@ var GridSquares:any[];
 //TODO: tbf this could be served in the angular assets folder without the asset_root but wanted to test for other apps
 
 //Reads row, column
+/**/ 
+//Reads row, column
 enum compassDir {
   //Row one
-  SouthEastWest= 0,
-  NorthEastWest,
-  SouthWestWest,
-  EastWest,
+  SouthEast_West= 0,
+  NorthEast_West,
+  SouthWest_West,
+  East_West,
   //Row two
-  SouthEastNorthWest,
-  NorthEastNorthWest,
-  SouthWestNorthWest,
-  EastNorthWest,
+  SouthEast_NorthWest,
+  NorthEast_NorthWest,
+  SouthWest_NorthWest,
+  East_NorthWest,
   //Row three
-  SouthEastNorth,
-  NorthEastNorth,
-  SouthWestNorth,
-  EastNorth,
+  SouthEast_North,
+  NorthEast_North,
+  SouthWest_North,
+  East_North,
   //Row Four
-  SouthEastSouth,
-  NorthEastSouth,
-  SouthWestSouth,
-  EastWestSouth,
+  SouthEast_South,
+  NorthEast_South,
+  SouthWest_South,
+  East_WestSouth,
 } 
+
+var square_id = [
+  "SEW",
+  "NEW",
+  "SWW",
+  "EW",
+  "SENW",
+  "NENW",
+  "SENW",
+  "ENW",
+  "SEN",
+  "NEN",
+  "SWN",
+  "EN",
+  "SES",
+  "NES",
+  "SWS",
+  "EWS"
+]
+
 
 
 var server_root = 'http://localhost:5000/';
@@ -94,30 +116,72 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
 
-  private calculateResults() {
+  //North is assumed as first one
+  private lookupCarNumToTest(num : number) {
+    if (num == 1) {
+      return "NE";
+    } else if (num == 2) {
+      return "E";
+    } else if (num == 3) {
+      return "SE";
+    } else if (num == 4) {
+      return "S";
+    } else if (num == 5) {
+      return "EW";
+    } else if (num == 6) {
+      return "W";
+    } else if (num == 7) {
+      return "NW";
+    }
+  }
+
+  private calculateResults(squareMatches : number[]) {
     // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
     // card. This includes the demonstration item, so the maximum possible
     // score is 32 points. It is easiest to score by counting one vehicle for each
     // row and then one vehicle for each column separately.
 
     let score = 0;
-    let matches = [];
-    Deck.forEach((card, i) => {
-      if( card.colliding === i) {
-        console.log("correcto mudo: ", card.colliding + i)
+    var matches_dump = []
+    squareMatches.forEach((element, idx) => {
+      //Convert compass postions
 
-      } else {
-        console.log("failed mundo")
-        matches.push({i : card.colliding});
+
+      //Convert server position
+      
+      //0,1,3,4..
+      //2,
+      //Starts from north - 0
+      let rounds_offset = Math.floor(element / 7); 
+      
+      let car_one;
+      if (rounds_offset = 0) {
+        car_one = "N";
+      } else if (rounds_offset == 1){
+        car_one = "NE";
+      } else if (rounds_offset == 2) {
+        car_one = "E";
+      } 
+      
+      let car_two = this.lookupCarNumToTest(element + rounds_offset);
+
+      let card_key = car_one + car_two;
+      console.log("Checking match card, gridsquare",card_key, square_id[idx] );
+      if (card_key  === square_id[idx]) {
+        console.log("winner winner chicken dinner");
+        matches_dump.push({"scene":square_id[idx],"card": card_key})
       }
+      
     });
 
-    console.log("dis fellow got dis reuslts: ", matches)
+    console.log("dis fellow got dis reuslts: ", matches_dump)
     //Rip let's log your score and also your cards matches because that is bull    
 
     //
 
   }
+
+
 
   /*
    * Subscribes to a request for localisation preset details.
@@ -177,7 +241,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createCompassDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 16, square_length * 0.9);
+    this.createCompassDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 28, square_length * 0.9);
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
@@ -185,7 +249,8 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   
-  private createCompassDeck(fab: FabricService, xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
+
+  private createCompassDeck(fab: FabricService, xOffset : number = 0, yOffset : number  = 0, deckSize : number = 28, length : number) {
 
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
@@ -197,8 +262,10 @@ export class CompassDirectionsTestComponent implements OnInit {
         // card.lockScalingX = true;
         // card.lockScalingY = true
 
-        let image_path = server_root + asset_link + (idx + 1) + "-roundabout_scene.png"
+        let image_path = server_root + asset_link + "compass_" +idx + ".png"
         console.log(image_path)
+
+        //The way it works is like a clock on the server 
 
         let img;
 
@@ -216,7 +283,7 @@ export class CompassDirectionsTestComponent implements OnInit {
             lockScalingY: true, 
             lockScalingX: true,
             hasControls: false,
-            id: 'scene' +idx.toString(), 
+            id: idx.toString(), 
           },);
 
           oImg.scaleToWidth(length);
@@ -258,6 +325,8 @@ export class CompassDirectionsTestComponent implements OnInit {
       });
     }
 
+
+
   public gatherResults() {
     var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
     
@@ -275,12 +344,14 @@ export class CompassDirectionsTestComponent implements OnInit {
           
           let distance = get_distance_points(square.top , square.left, card.top, card.left);
 
-          console.log("Checking interaction: ", square.id , card.id)
+          //console.log("Checking interaction: ", square.id , card.id)
           if(distance < card.width/2) {
             var square_hit =  squareMatches[square.d];
             if (typeof square_hit  === 'undefined' && square_hit != -1) {
+              
               //If no iteracting
               squareMatches[square.id] = card.id;
+
             } else {
               //This is already been set... You is dumo therefore no results for you ever
               square_hit = -1;
@@ -291,6 +362,7 @@ export class CompassDirectionsTestComponent implements OnInit {
       });
     });
     console.log(squareMatches);
+    this.calculateResults(squareMatches);
   }
 
 
