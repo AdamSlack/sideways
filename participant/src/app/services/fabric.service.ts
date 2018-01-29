@@ -57,7 +57,7 @@ export class FabricService {
 
     card.type = type;
     
-    this.addInteractionObjLogic(card, canvas, type);
+    //this.addInteractionObjLogic(card, canvas, type);
 
     return card;
   }
@@ -96,7 +96,8 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         target.setCoords();
   
         //If the target card has a type of the card then bust a nut and be outie
-        if (target.type == type) {
+        if (target.type === type) {
+          console.log("Interacting with same type card: ", type)
           return;
         }
   
@@ -115,7 +116,11 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         canvas.forEachObject(function (obj) {
           if (obj === options.target) return;
           obj.set('opacity', options.target.intersectsWithObject(obj) ? 0.5 : 1);
+
+          //TODO: Time then change again
         });
+
+        console.log("Interacting with: ", target.type);
       }
   
 }
@@ -135,7 +140,7 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
     console.log(square_length);
     var start_x = 0;
     var start_y = 0;
-
+    
     var squareSet = [];
     var id = 0; //All grid parts are id 0, ..., Squares. This to map nicely to a enum and therefore see specfic test enum for id tranlation.
     while (start_y < side_length) {
@@ -149,7 +154,10 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           id: id++,
           fill: '#FF69B4'
         });
+        
+        rect.type = "square"
         squareSet.push(rect);
+
         start_x += square_length;
         console.log("created square", rect.id);
         canvas.add(rect);

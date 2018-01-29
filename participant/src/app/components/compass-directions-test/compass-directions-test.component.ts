@@ -74,33 +74,6 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.rs.insertCompassDirectionResults(1, 123, 456);
   }
 
-
-  private calculateResults() {
-    // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
-    // card. This includes the demonstration item, so the maximum possible
-    // score is 32 points. It is easiest to score by counting one vehicle for each
-    // row and then one vehicle for each column separately.
-
-    let score = 0;
-    let matches = [];
-    Deck.forEach((card, i) => {
-      if( card.colliding === i) {
-        console.log("correcto mudo: ", card.colliding + i)
-        console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
-
-      } else {
-        console.log("failed mundo")
-        matches.push({i : card.colliding});
-      }
-    });
-
-    console.log("dis fellow got dis reuslts: ", matches)
-    //Rip let's log your score and also your cards matches because that is bull    
-
-    //
-
-  }
-
   ngOnInit() {
     //console.log("requesting a fabric canvas");
     //this.fab.generateFabricCanvas();
@@ -134,13 +107,13 @@ export class CompassDirectionsTestComponent implements OnInit {
 
       //Initialise deck of compass cards
       var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
-        let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card_' + idx.toString());
-        card.isPlaced = false;
-        card.lockRotation = true;
-        card.lockUniScaling = true;
-        card.selectable = true;
-        card.lockScalingX = true;
-        card.lockScalingY = true
+        // let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card_' + idx.toString());
+        // card.isPlaced = false;
+        // card.lockRotation = true;
+        // card.lockUniScaling = true;
+        // card.selectable = true;
+        // card.lockScalingX = true;
+        // card.lockScalingY = true
 
         let image_path = server_root + asset_link + (idx + 1) + "-roundabout_scene.png"
         console.log(image_path)
@@ -171,10 +144,10 @@ export class CompassDirectionsTestComponent implements OnInit {
           if(oImg == undefined) {
             console.log("something went wrong createing image from asset...");
           } else {
-            console.log("Adding canvas group")
+            console.log("Adding canvas item")
           }
           
-          var group = new fabric.Group([ card, oImg ], {
+          var group = new fabric.Group([ oImg ], {
             left: xOffset,
             top: yOffset,
             scaleY: length,
@@ -182,7 +155,8 @@ export class CompassDirectionsTestComponent implements OnInit {
           });
           group.scaleToWidth(length);
           group.scaleToHeight(length);
-
+          group.type = "card";
+          fab.addInteractionObjLogic(group, Canvas, group.type);
           fab.addRotatingStyle(group, Canvas);
           
           Canvas.add(group);
@@ -199,13 +173,17 @@ export class CompassDirectionsTestComponent implements OnInit {
     console.log(squareMatches.length);
     GridSquares.forEach( square => {
       Deck.forEach( card => {
+
         //card.intersectsWithObject()
         if (card.intersectsWithObject(square)) {
+
+          //If no iteracting
           squareMatches[square.id] = card.id;
         }
+
       });
     });
-    console.log(squareMatches);
+    
     console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
   }
 
