@@ -9,7 +9,8 @@ declare var angular: any;
 export class BoardComponent 
 {
   constructor() {
-	 
+	
+	this.ViewInstructions();
     this.RandomlyPopulateDots();
 	//this.CentreDotsWithinEachCell();
 	this.RandomlyPositionDots();		
@@ -20,14 +21,17 @@ export class BoardComponent
    
    GameTitle = 'Dot Cancellation Test';
    
-  ShowInstructions = true;
+  ShowInstructions = false;
+  
+  DisableInstructions = false;
   
   InstructionVisibiliy = "'visible'";
   
-  InstructionsButtonText = 'View Instructions';
+  InstructionsButtonText = 'Hide Instructions';
   
   public InstructionHeight : number = 0;
    
+  ContainerClass = 'Hidecontainer'; 
    
   NoOfClicksOnEachCell = Array(this.NumberOfTotalDots).fill(null);
 
@@ -80,8 +84,8 @@ export class BoardComponent
 		  
 
 		  //Hide Instructions
-		  
-		  this.InstructionsButtonText = 'Show Instructions';
+		  this.ContainerClass = 'Showcontainer';
+		  this.InstructionsButtonText = 'Show Instructions (Hide Test)';
 		  this.ShowInstructions = false;
 		  this.InstructionHeight = 3;
 		  
@@ -90,8 +94,10 @@ export class BoardComponent
 	  else if (!this.ShowInstructions)
 	  {
 		  //Hide Instructions  
+		 
+		  this.ContainerClass = 'Hidecontainer';
 		  this.InstructionHeight = 100;
-		  this.InstructionsButtonText = 'Hide Instructions';
+		  this.InstructionsButtonText = 'Hide Instructions (Show Test)';
 		  this.ShowInstructions = true;
 		  
 	  }
@@ -525,11 +531,21 @@ export class BoardComponent
 
 
 
+ 
 
   restartGame() {
-   // this.squares = Array(9).fill(null);
-    //this.player = 'X';
-    //this.winner = null;
+  
+    //Disable instructions
+	 this.DisableInstructions = true;
+	 
+	 //Hide instructions
+	 this.ShowInstructions = true;
+	 this.ViewInstructions();
+	 
+	 //Show the board
+	 
+	 //Start timer and log all interactions
+  
 	
 	var results = this.GetResults();
 	
