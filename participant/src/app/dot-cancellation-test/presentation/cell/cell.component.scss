@@ -7,45 +7,11 @@
   font-size: 1.5em; 
   font-family: 'Gochi Hand', sans-serif;
   text-color: black;
-  --flex-grow:0;
-  --align-items:stretch;
-  display: flex;
-  --display:inline-flex;
- 
-  --flex: 0 1 ;
-  
-  /*style*/
-  --margin: 0.2em;
- 
-  flex-wrap: wrap;
-  flex-direction: row;
-  --align-content: flex-start; /* NEW */
-  --flex:1;
-  
-    --border: 1px solid #000;
-  --border-left: 5px solid transparent;
-  --border-right: 5px solid transparent;
-  --border-bottom: 10px solid transparent;
-  
-  --padding: 1.5px;
-   --flex-shrink: 0;
-  --justify-content: center;
-  --align-items: center;
-  --flex:1;
-   --box-sizing: border-box;
- 
-   --display: flex;
-   --flex: 1 1 0;
-
-
-
+  display: flex; 
+     
 }
 
-/*
-.cell>*
---{
---flex: 1 1 10px;
---}*/
+
 
 .state
 {
@@ -57,50 +23,8 @@
 {
 	background-color: #c1cdcd;
 }
-/*
- body{
-    background-color:#C82022;
-	color: black;
-    }
-	
-    .dot {
-position: relative;
---top: -70%;
---right:50%;
-        width: 2px;
-        height: 2px;
-        background: black;
-	
-    }
-	    .dot2 {
-			
---position: relative;
---top: -50%;
---right:40%;
---font-size: 2em; 
- --width: 3px;
-  --height:3px;
-     
-    }
-	
-	
 
-	
-	
-	span {
-  color: black;
-}*/
 
-	    .dot2 {
-			
---position: relative;
---top: -50%;
---right:40%;
---font-size: 2em; 
- --width: 3px;
-  --height:3px;
-     
-    }
 	
 	    .dot1 {
 position: relative;
@@ -108,20 +32,29 @@ position: relative;
 	
     }
 	
+		    .dot2 {
+position: relative;
+        color: green;
 	
-		    .dot3 
+    }
+			    .dot3 
 			{
 			color: black;
 position: relative;
---top: dotOneXValue;
---right:dotOneXValue;
---font-size: 2em; 
-  --width: 3px;
-  --height:3px;
-  --flex: 1 0 auto;
-    
-  --display: flex;
-   --flex-shrink: 0;
-   --flex: 0 1 calc(20% - 8px)
+
 
     }
+
+		    .dot4 {
+position: relative;
+        color: blue;
+	
+    }
+	
+		    .dot5 {
+position: relative;
+        color: black;
+	
+    }
+	
+	

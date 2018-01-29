@@ -1,44 +1,60 @@
 import { Component } from '@angular/core';
+
 declare var angular: any;
 @Component({
   selector: 'board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent {
-
+export class BoardComponent 
+{
   constructor() {
+	 
     this.RandomlyPopulateDots();
-	this.RandomlyPositionDots();
-  }
+	//this.CentreDotsWithinEachCell();
+	//this.RandomlyPositionDots();		
+}
 
+  public NumberOfTotalDots = 625;
+  public background_color= 'red';
+   
+   GameTitle = 'Dot Cancellation Test';
+   
+  ShowInstructions = true;
   
-   public background_color= 'red';
+  InstructionVisibiliy = "'visible'";
+  
+  InstructionsButtonText = 'View Instructions';
+  
+  InstructionHeight = "0";
+   
+   
+  NoOfClicksOnEachCell = Array(this.NumberOfTotalDots).fill(null);
 
-  squares = Array(25).fill(null);
+  squares = Array(this.NumberOfTotalDots).fill(null);
   
-  Styles = Array(525).fill(null);
+  Styles = Array(this.NumberOfTotalDots).fill(null);
   
-  dotoneX = Array(525).fill(null);
-  dotoneY = Array(525).fill(null);
+  dotoneX = Array(this.NumberOfTotalDots).fill(null);
+  dotoneY = Array(this.NumberOfTotalDots).fill(null);
   
-  dotTwoX = Array(525).fill(null);
-  dotTwoY = Array(525).fill(null);
+  dotTwoX = Array(this.NumberOfTotalDots).fill(null);
+  dotTwoY = Array(this.NumberOfTotalDots).fill(null);
   
-  dotThreeX = Array(525).fill(null);
-  dotThreeY = Array(525).fill(null);
+  dotThreeX = Array(this.NumberOfTotalDots).fill(null);
+  dotThreeY = Array(this.NumberOfTotalDots).fill(null);
   
-  dotFourX = Array(525).fill(null);
-  dotFourY = Array(525).fill(null);
+  dotFourX = Array(this.NumberOfTotalDots).fill(null);
+  dotFourY = Array(this.NumberOfTotalDots).fill(null);
   
-  dotFiveX = Array(525).fill(null);
-  dotFiveY = Array(525).fill(null);
+  dotFiveX = Array(this.NumberOfTotalDots).fill(null);
+  dotFiveY = Array(this.NumberOfTotalDots).fill(null);
 
-  dotones = Array(525).fill(null);
-  dottwos = Array(25).fill(null);
-  dotthrees = Array(25).fill(null);
-  dotfours = Array(25).fill(null);
-  dotfives = Array(25).fill(null);
+  dotones = Array(this.NumberOfTotalDots).fill(null);
+  dottwos = Array(this.NumberOfTotalDots).fill(null);
+  dotthrees = Array(this.NumberOfTotalDots).fill(null);
+  dotfours = Array(this.NumberOfTotalDots).fill(null);
+  dotfives = Array(this.NumberOfTotalDots).fill(null);
 
   //hold ='red';
 
@@ -46,22 +62,88 @@ export class BoardComponent {
   player = 'X';
   winner = null;
 
-  get gameStatusMessage() {
-    return this.winner ? 'Player ${this.winner} has won!' : `Player ${this.player}'s turn`;
-  }
-  createDot(position) {
-  }
-  
-  
-  
+  // get gameStatusMessage() {
+    // return this.winner ? 'Player ${this.winner} has won!' : `Player ${this.player}'s turn`;
+  // }
 
+  InitGametext()
+  {
+	  
+  }
+  
+  
+  ViewInstructions()
+  {
+	 	  
+	  if (this.ShowInstructions)
+	  {
+		  
+
+		  //Hide Instructions
+		  
+		  this.InstructionsButtonText = 'Show Instructions';
+		  this.ShowInstructions = false;
+		  this.InstructionHeight = 3;
+		  
+		  
+	  }
+	  else if (!this.ShowInstructions)
+	  {
+		  //Hide Instructions  
+		  this.InstructionHeight = 100;
+		  this.InstructionsButtonText = 'Hide Instructions';
+		  this.ShowInstructions = true;
+		  
+	  }
+  }
+  
+  
+  CentreDotsWithinEachCell(i, NoOfDots)
+  {
+	  
+	     
+       // Xvalues = Array(5).fill(null); 
+	  
+	  
+	  //for each dot if it is populated then centre it relative to the cell
+	 //   for (var i = 0; i < this.dotones.length; i++)
+	if (NoOfDots==5)
+	{
+          this.dotoneX[i] = -15;   
+		  this.dotTwoX[i] = -8; 
+		  this.dotThreeX[i] = 0;
+		  this.dotFourX[i] = 8;
+		  this.dotFiveX[i] = 15;
+    }	
+
+	if (NoOfDots==3)
+	{
+          this.dotoneX[i] = -15;   
+		  this.dotTwoX[i] = -8; 
+		  this.dotThreeX[i] = 0;
+		  this.dotFourX[i] = 8;
+		  this.dotFiveX[i] = 12;
+    }	 	
+
+
+	
+  }
+  
+  
+  //Returns an array with (TruePos, TrueNeg, FalsePos, FalseNeg)
   GetResults() {
-    for (var i = 0; i < this.dotones.length; i++) {
-      let TruePos = 0;
+	  
+	 
+	 var results = Array(4).fill(null); 
+	  
+	//Miss out the first row as that is a practice row
+	 let TruePos = 0;
       let TrueNeg = 0;
       let FalsePos = 0;
       let FalseNeg = 0;
-
+    
+	for (var i = 25; i < this.dotones.length; i++) {
+    
       //get no of dots
       let numOfDots : number = this.getNumberOfDotsForCell(i);
 
@@ -89,19 +171,18 @@ export class BoardComponent {
         }
       }
     }
-
+	
+	
+	results[0] = (TruePos);
+	results[1] = (TrueNeg);
+	results[2] = (FalsePos);
+	results[3] = (FalseNeg);
+	
+	return results;
 
   }
 
-  handleMove(position) {
-    if (!this.winner && !this.squares[position]) {
-      this.squares[position] = this.player;
-      if (this.winnigMove()) {
-        this.winner = this.player;
-      }
-      this.player = this.player === 'X' ? 'O' : 'X';
-    }
-  }
+
 
   AddDot(position) {
 	  
@@ -145,13 +226,18 @@ export class BoardComponent {
 		XValues[3] = this.GenerateRandomWholeNum("X");
 		
 		 
-		XValues[4] = this.getRandomInt(6,13);
+		XValues[4] = this.getRandomInt(6,11);
+		  
+		
 		
 		return (XValues);
   }
   
+ 
+ 
+  
   getYValues()
-  {
+  {  
 	  
 		var YValues = Array(5).fill(null);
 
@@ -181,31 +267,25 @@ export class BoardComponent {
 	 var XValues = this.getXValues();
      var YValues = this.getYValues();
 		
-		console.log(XValues);
-		
-		console.log(YValues);
 		
 	  for (var i =0; i < this.dotoneX.length; i++)
 	  {
 	     	
 		// While dots are touching
-	    console.log("Entering While");
+	 
 		
-		while (this.isDotsTouchingTwo(XValues, YValues))
+		//while (this.isDotsTouchingTwo(XValues, YValues))
 	    
 		{    
 		
 		XValues = this.getXValues();
 		YValues = this.getYValues();
 		
-	     console.log(XValues);
-		console.log("In while");
-		console.log(YValues);
-		  
+	 
 		 
 		}
 		
-		console.log("Out while");
+		
 		
 		
 		 this.dotoneX[i] = XValues[0];
@@ -264,20 +344,21 @@ export class BoardComponent {
 	  // console.log("CALCCC IS ", result);
 	  // }
 	  	  
+	   		
 		  
 		var x_dist = (x2 - x1);
         var y_dist = (y2 - y1);
-        var distance = Math.sqrt(x_dist * x_dist + y_dist * y_dist);
+        var distance = Math.sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 	  
 	  //console.log("CALCCC IS ", distance);
 	  
-	  if ( distance < 2 )
+	  if ( distance < 4 )
 	  {
       console.log("CALCC IS:",distance);
 	  console.log("VALUES ARE: ",x1, y1, x2, y2);
 	  
-	  }  
-	  return ( distance < 2 );
+	  }   
+	  return ( distance < 7 );
 	
   }
   
@@ -289,7 +370,7 @@ export class BoardComponent {
 	   for (var i =0; i< XValues.length; i++ )
 		{
 		
-		for (var j =i; j< XValues.length; j++ )
+		for (var j =i+1; j< XValues.length; j++ )
 		{
 			
 			 if ( this.differenceLessThan2(XValues[i], YValues[i],  XValues[j], YValues[j])  ) 
@@ -376,7 +457,7 @@ export class BoardComponent {
 	  var Range=0;
 	  if (XorY == "X")
 	  {
-		  Range =6;
+		  Range =4;
       } 
 	  else 
 	  {
@@ -405,10 +486,12 @@ export class BoardComponent {
     var dotsToInit = [1, 2, 3, 4, 5];
 
     for (var i = 0; i < this.dotones.length; i++) {
-      //Rand choose either 3,4 or 5 dots 
+     
+	 //Rand choose either 3,4 or 5 dots 
       var rand = NoOfDots[Math.floor(Math.random() * NoOfDots.length)];
 
-
+	  
+      
       //Until the number of dots chosen has been populated
       while (this.getNumberOfDotsForCell(i) != rand) {
 
@@ -432,56 +515,29 @@ export class BoardComponent {
 
 
       }
+	  
+	  //pass in positon, NoOfDots
+	//  this.CentreDotsWithinEachCell(i, rand);
     }
 
   }
 
-  winnigMove() {
-    const conditions = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // colums
-      [0, 4, 8], [2, 4, 6]             // diagonal 
-    ];
-    for (let condition of conditions) {
-      if (this.squares[condition[0]]
-        && this.squares[condition[0]] === this.squares[condition[1]]
-        && this.squares[condition[1]] === this.squares[condition[2]]) {
-        return true;
-      }
-    }
-    return false;
-  }
 
 
-  toggleClock() {
-    // get the clock 
-    var myClock = document.getElementById('clock');
 
-    // get the current value of the clock's display property 
-    var displaySetting = myClock.style.display;
-
-    // also get the clock button, so we can change what it says 
-    var clockButton = document.getElementById('clockButton');
-
-    // now toggle the clock and the button text, depending on current state
-    if (displaySetting == 'block') {
-      // clock is visible. hide it
-      myClock.style.display = 'none';
-      // change button text
-      clockButton.innerHTML = 'Show clock';
-    }
-    else {
-      // clock is hidden. show it 
-      myClock.style.display = 'block';
-      // change button text
-      clockButton.innerHTML = 'Hide clock';
-    }
-  }
 
   restartGame() {
-    this.squares = Array(9).fill(null);
-    this.player = 'X';
-    this.winner = null;
+   // this.squares = Array(9).fill(null);
+    //this.player = 'X';
+    //this.winner = null;
+	
+	var results = this.GetResults();
+	
+	console.log("TruePos  :", results[0] );
+	console.log("TrueNeg  :", results[1] );
+	console.log("FalsePos : ", results[2] );
+	console.log("FalseNeg : ", results[3] );
+	
   }
 
 }
