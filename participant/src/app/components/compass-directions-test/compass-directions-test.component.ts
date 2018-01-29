@@ -188,17 +188,12 @@ export class CompassDirectionsTestComponent implements OnInit {
           Canvas.add(group);
         }
 
-
-            //Try to load image2
         fabric.Image.fromURL(image_path, image_parser,{ crossOrigin: 'Anonymous'})
-
- 
       
-  
       });
     }
 
-  private gatherResults() {
+  public gatherResults() {
     var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
   
     console.log(squareMatches.length);
@@ -231,11 +226,13 @@ export class CompassDirectionsTestComponent implements OnInit {
       lockScalingX: true,
       lockScalingY: true
     });
+
+    var butt_dom = document.getElementById('inline-btn'),
+    btnWidth = 85,
+    btnHeight = 18;
     
     butt.on('selected', options => {
       this.gatherResults();
-
-      
     });
 
     return butt;
