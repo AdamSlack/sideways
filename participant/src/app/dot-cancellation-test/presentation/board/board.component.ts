@@ -96,7 +96,7 @@ export class BoardComponent
 		  //Hide Instructions  
 		 
 		  this.ContainerClass = 'Hidecontainer';
-		  this.InstructionHeight = 100;
+		  this.InstructionHeight = 200;
 		  this.InstructionsButtonText = 'Hide Instructions (Show Test)';
 		  this.ShowInstructions = true;
 		  
@@ -130,9 +130,6 @@ export class BoardComponent
 		  this.dotFourX[i] = 8;
 		  this.dotFiveX[i] = 12;
     }	 	
-
-
-	
   }
   
   
@@ -191,11 +188,9 @@ export class BoardComponent
 
 
   AddDot(position) {
-	  
-	
-    //this.background_color = '#cd9e98';
-	
-	if (!this.squares[position]) {
+	  	
+	//if (!this.squares[position]) 
+	{
       this.squares[position] = 'X';
 
     }
@@ -535,16 +530,18 @@ export class BoardComponent
 
   restartGame() {
   
-    //Disable instructions
+    //Disable instructions button
 	 this.DisableInstructions = true;
 	 
-	 //Hide instructions
+	 //Hide instructions and show the board
 	 this.ShowInstructions = true;
 	 this.ViewInstructions();
 	 
-	 //Show the board
-	 
+	 	 
 	 //Start timer and log all interactions
+  
+  
+  
   
 	
 	var results = this.GetResults();
