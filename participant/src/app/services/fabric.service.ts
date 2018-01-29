@@ -94,28 +94,60 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
   
         let target = options.target;
         target.setCoords();
-  
+        
         //If the target card has a type of the card then bust a nut and be outie
-        if (target.type === type) {
-          console.log("Interacting with same type card: ", type)
-          return;
-        }
+        // if (target.type === type) {
+        //   console.log("Same type interaction: ", target.type, type);
+        //   return;
+        // }
   
         // top-left  corner
         if (target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0) {
           target.top = Math.max(target.top, target.top - target.getBoundingRect().top);
           target.left = Math.max(target.left, target.left - target.getBoundingRect().left);
         }
+
         // bot-right corner
         if (target.getBoundingRect().top + target.getBoundingRect().height > target.canvas.height || target.getBoundingRect().left + target.getBoundingRect().width > target.canvas.width) {
           target.top = Math.min(target.top, target.canvas.height - target.getBoundingRect().height + target.top - target.getBoundingRect().top);
           target.left = Math.min(target.left, target.canvas.width - target.getBoundingRect().width + target.left - target.getBoundingRect().left);
         }
   
+        let best_match = {distance: 1000};
+
+
+        function get_distance_points(x1, y1, x2,y2){
+          var dx = x2-x1;
+          var dy = y2-y1;
+          return Math.sqrt(dx*dx+dy*dy);
+        }
+
         //Have effect on each item
         canvas.forEachObject(function (obj) {
           if (obj === options.target) return;
-          obj.set('opacity', options.target.intersectsWithObject(obj) ? 0.5 : 1);
+
+          if (options.target.intersectsWithObject(obj)) {
+            //Top left corner to top left corner
+            let coliding = obj;
+            coliding.setCoords();
+            // console.log("interacting corner: ", coliding.top, coliding.left);
+            // console.log("From corner: ", coliding.top, target.left);
+
+
+            let distance = get_distance_points(coliding.top , coliding.left, target.top, target.left);
+            console.log("Interacting block distance: ", distance);
+            obj.distance = distance;
+
+            console.log("Needs to be less than: ", target.width/2);
+
+            if(distance < target.width/2) {
+              obj.set('opacity', 0.5);
+              best_match = obj;
+            } 
+
+          } else {
+            obj.set('opacity', 1); 
+          }
 
           //TODO: Time then change again
         });
@@ -124,6 +156,8 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
       }
   
 }
+
+
 
   // public createGridBaseLines(canvas: any, gridSize: number) {
   //   this.box_length = canvas.width / gridSize;
@@ -156,8 +190,8 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         });
         
         rect.type = "square"
-        squareSet.push(rect);
 
+        squareSet.push(rect);
         start_x += square_length;
         console.log("created square", rect.id);
         canvas.add(rect);
