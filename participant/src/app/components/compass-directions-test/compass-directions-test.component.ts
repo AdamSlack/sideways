@@ -132,7 +132,8 @@ export class CompassDirectionsTestComponent implements OnInit {
             centeredRotation: true,
             lockUniScaling: true,
             lockScalingY: true, 
-            lockScalingX: true,       
+            lockScalingX: true,
+            hasControls: false,
             id: 'scene' +idx.toString(), 
           },);
 
@@ -152,6 +153,9 @@ export class CompassDirectionsTestComponent implements OnInit {
             top: yOffset,
             scaleY: length,
             scaleX: length,
+            lockScalingY: true, 
+            lockScalingX: true,
+            hasControls: false
           });
           group.id = idx.toString();
           group.type = "card";
@@ -186,7 +190,6 @@ export class CompassDirectionsTestComponent implements OnInit {
       Deck.forEach( card => {
         //card.intersectsWithObject()
         if (card.intersectsWithObject(square)) {
-          
           
           let distance = get_distance_points(square.top , square.left, card.top, card.left);
 
