@@ -110,6 +110,10 @@ namespace SDSA.Controllers
             return Json(resusts);
         }
 
+        [HttpGet("[controller]/participant/{testID}")]
+        public IActionResult TestPreset(int testID) 
+            => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});   
+
         [HttpGet()]
         public IActionResult whatislife() {
             Console.WriteLine("whatislife");

@@ -1,24 +1,46 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AssetRetrievalService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http : HttpClient, private auth : AuthenticationService) { }
+
+  public ROOT : string = 'http://localhost:5000';
   
-    public ROOT : string = 'http://localhost:8080/';
-    
-    public createHeaders() {
-      return { headers: new HttpHeaders().set('Authorization', 'my-auth-token') }
-    }
+  public createHeaders() : HttpHeaders {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*')
+    return headers;
+  }
 
-    public fetchInstructions(localisation: string, testName: string) {
-      let url = this.ROOT + '/localisation/' + localisation + '/' + testName + '/instructions';
-      console.log('Test Name: ' + testName);
-      console.log('Localisation Preset: ' + localisation);
-      let headers = this.createHeaders();
+  public selectLocalisationDetails(testType : number, localeName : string) : Observable<any> {
+    let url = this.ROOT + '/Localisation/' + localeName + '/' + testType.toString();
+    let headers = this.createHeaders();
+    return this.http.get(url, {headers : headers});
+  }
 
-      this.http.get(url, headers);
-    }
+  public selectDotCancellationDetails(localeName : string) : Observable<any>{
+    return this.selectLocalisationDetails(1, localeName);
+  }
+
+  public selectCompassDirectionDetails(localeName : string) : Observable<any>{
+    return this.selectLocalisationDetails(2, localeName);
+  }
+
+  public selectCarDirectionDetails(localeName : string) : Observable<any>{
+    return this.selectLocalisationDetails(3, localeName);
+  }
+
+  public selectRoadSignScenarioDetails(localeName : string) : Observable<any>{
+    return this.selectLocalisationDetails(4, localeName);
+  }
+
+  public selectTrailMakingDetails(localeName : string) : Observable<any>{
+    return this.selectLocalisationDetails(5, localeName);
+  }
 }

@@ -16,7 +16,6 @@
             </div>
         </div>
         <div *ngIf="dot">
-
             <input class="bar search" type="text" [(ngModel)]=localePreset.dotCancellation.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
             <textarea rows="4" class="bar search" [(ngModel)]=localePreset.dotCancellation.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
         </textarea>
@@ -63,8 +62,8 @@
         </div>
         <div *ngIf="road">
 
-            <input class="bar search" type="text" placeholder="Enter a title for this test">
-            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test.">
+            <input class="bar search" type="text" placeholder="Enter a title for this test" [(ngModel)]=localePreset.roadSigns.general.testHeading >
+            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test." [(ngModel)]=localePreset.roadSigns.general.testInstructions >
             </textarea>
 
             <div *ngFor="let scene of scenarioVisible; let idx = index;">
@@ -88,8 +87,8 @@
                     </div>
                     <div class="search" *ngIf="scenarioImages[idx] != '' && roadSignImages[idx] != '';">
                         <p> Click on the Scenario to specify location of Road Sign </p>
-                        <p> Currecnt Co-Ordinates: (x: {{roadSignPositions[idx].x}}, y: {{roadSignPositions[idx].y}})</p>
-                        <img [src]="scenarioImages[idx]" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="roadSignImages[idx]" height="250"><br/>
+                        <p> Currecnt Co-Ordinates: (x: {{indicatorCoords[idx].x}}, y: {{indicatorCoords[idx].y}})</p>
+                        <img [src]="sanitizer.bypassSecurityTrustUrl(scenarioImages[idx])" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="sanitizer.bypassSecurityTrustUrl(roadSignImages[idx]" height="250"><br/>
                         <div class="indicator" [style.left]="indicatorCoords[idx].x + 'px'" [style.top]="indicatorCoords[idx].y + 'px'"></div>
                     </div>
                 </div>
@@ -106,8 +105,8 @@
         </div>
         <div *ngIf="trail">
 
-            <input class="bar search" type="text" placeholder="Enter a title for this Test">
-            <textarea rows="4" class="bar search" placeholder="Enter instructions for this Test.">
+            <input class="bar search" type="text" placeholder="Enter a title for this Test" [(ngModel)]="localePreset.trailMaking.general.testHeading">
+            <textarea rows="4" class="bar search" placeholder="Enter instructions for this Test." [(ngModel)]="localePreset.trailMaking.general.testInstructions">
             </textarea>
             <div>
                 <input class="search" [(ngModel)]="trailAString" (keyup)="splitTrailString(trailAString, true)" type="text" placeholder="Enter a comma seperated Trail A Sequence (e.g. a,b,c,...)">

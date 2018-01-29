@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+    margin: 10;
+    padding: 10;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ddd;
+    font-family: 'Roboto', sans-serif;    
+ }
+
+
+ canvas {
+    height: 100%;
+    width: 100%;
+    display: block;
+  }

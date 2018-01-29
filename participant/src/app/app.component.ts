@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { test_game_routes } from './app-routing.module';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  constructor(public auth : AuthenticationService) {}
+  title = 'Stroke Driving Test Assessment';
+  game_routes =test_game_routes; 
 }
+

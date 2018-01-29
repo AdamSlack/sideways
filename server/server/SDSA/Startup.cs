@@ -60,10 +60,10 @@ namespace SDSA
             corsBuilder.AllowAnyHeader();
             corsBuilder.AllowCredentials();
             corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); 
+            corsBuilder.AllowAnyOrigin();             
             CorsPolicy corsPolicy = corsBuilder.Build();
 
-            services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
+            services.AddCors(x => x.AddPolicy("AllowAllCORS", corsPolicy));
 
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
@@ -73,10 +73,12 @@ namespace SDSA
             services.AddTransient<IClinicianRepository, ClinicianRepository>();
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ILocalisationRepository, LocalisationRepository>();
+            services.AddTransient<IParticipantRepository, ParticipantRepository>();
 
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IClinicianService, ClinicianService>();
             services.AddTransient<ILocalisationService, LocalisationService>();
+            services.AddTransient<IParticipantService, ParticipantService>();
         }   
 
 
@@ -96,8 +98,10 @@ namespace SDSA
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseAuthentication();
-            
+
+            app.UseCors("AllowAllCORS");
             app.UseStaticFiles();
+            
             app.UseStatusCodePages(
                 async context =>
              {
@@ -124,13 +128,17 @@ namespace SDSA
        // context.HttpContext.Response.StatusCode + $": {statusMessage}");
              } 
             );
-            app.UseCors("SiteCorsPolicy");
 
             app.UseMvc(routes =>
             {
             routes.MapRoute(
                 name: "Test",
                 template:  "Tests/{TestId}/{action}"
+            );
+
+            routes.MapRoute(
+                name : "Participant",
+                template : "Participant/Create/{action=Test}"
             );
 
             routes.MapRoute(

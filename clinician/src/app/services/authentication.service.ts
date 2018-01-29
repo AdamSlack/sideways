@@ -8,6 +8,8 @@ export class AuthenticationService {
 
   public AUTH_TOKEN : string = '';
   public VALIDATED : boolean = false;
+  public CLINICIAN_ID : string = '';
+  public VALIDATION_FAILED : boolean = false;
 
   constructor(private http: HttpClient) {}
   
@@ -15,7 +17,7 @@ export class AuthenticationService {
   
   public createHeaders() : HttpHeaders {
     let headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*')
     return headers;
   }
@@ -31,10 +33,13 @@ export class AuthenticationService {
     return this.http.post(url,body,{headers : headers}).subscribe((res) => {
       if (res['message']) {
         this.VALIDATED = false;
+        this.VALIDATION_FAILED = true;
       }
       if (res['token']) {
         this.AUTH_TOKEN = res['token'];
+        this.CLINICIAN_ID = res['clinician_id'];
         this.VALIDATED = true;
+        this.VALIDATION_FAILED = false;        
       }
     });
   }
