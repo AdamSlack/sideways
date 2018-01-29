@@ -99,7 +99,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
-    Canvas.add(this.createDonezoButton(Canvas.width - 250, Canvas.height - 75));
+
   }
 
   
@@ -212,34 +212,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
   }
 
-  private createDonezoButton(x: number, y: number) {
 
-    var butt = new fabric.Text( 'Donezo', {
-      left:x,
-      top:y,
-      width:40,
-      height:40,
-      fontSize: 30,
-      font: "roboto",
-      lockMovementX: true,
-      lockMovementY: true,
-      lockRotation: true,
-      lockUniScaling: true,
-      selectable: true,
-      lockScalingX: true,
-      lockScalingY: true
-    });
-
-    var butt_dom = document.getElementById('inline-btn'),
-    btnWidth = 85,
-    btnHeight = 18;
-    
-    butt.on('selected', options => {
-      this.gatherResults();
-    });
-
-    return butt;
-  }
   
   //TODO: in inherited behaviour...
   private createShuffleButton(xPos: number, yPos: number) {
