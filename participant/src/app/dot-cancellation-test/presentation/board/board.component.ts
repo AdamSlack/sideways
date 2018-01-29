@@ -26,7 +26,7 @@ export class BoardComponent
   
   InstructionsButtonText = 'View Instructions';
   
-  InstructionHeight = "0";
+  public InstructionHeight : number = 0;
    
    
   NoOfClicksOnEachCell = Array(this.NumberOfTotalDots).fill(null);
