@@ -8,9 +8,9 @@ namespace SDSA.Models.Enums
     public enum AlgorithmErrorEnum
     {
         [Description("Missing test result for algorithm")]
-        MissingDate = 1,
+        MissingData = 1,
         [Description ("No such algorithm")]
-        MissAlgorithm = 2
+        MissingAlgorithm = 2
 
     }
 }

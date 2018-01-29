@@ -14,18 +14,18 @@ namespace SDSA.Service.Algorithms
             var result = new AlgorithmResult() { Message = ""};
             if(testResults.DotCancellationTest == null)
             {
-                result.error = AlgorithmErrorEnum.MissingDate;
+                result.error = AlgorithmErrorEnum.MissingData;
                 result.Message = "Dot cancellation data required. ";
 
             }
             if (testResults.CompassDirectionsTest == null )
             {
-                result.error = AlgorithmErrorEnum.MissingDate;
+                result.error = AlgorithmErrorEnum.MissingData;
                 result.Message += "Compass direction data missing. ";
             }
             if (testResults.RoadScenariosTest == null)
             {
-                result.error = AlgorithmErrorEnum.MissingDate;
+                result.error = AlgorithmErrorEnum.MissingData;
                 result.Message += "Road scenario data missing. ";
             }
             if (result.error != 0)

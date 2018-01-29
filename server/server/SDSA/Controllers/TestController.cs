@@ -127,7 +127,16 @@ namespace SDSA.Controllers
             {
                 return StatusCode(422, "Algorithm Id required");
             }
-            return Json(_testService.GetAlgorithResult(TestId , algorithmId ));
+            var result = _testService.GetAlgorithResult(TestId, algorithmId);
+            if ( result.error == AlgorithmErrorEnum.MissingAlgorithm)
+            {
+                return StatusCode(501, result);
+            }
+            else if (result.error == AlgorithmErrorEnum.MissingData)
+            {
+                return StatusCode(400, result);
+            }
+            return Json(result );
         }
 
     }

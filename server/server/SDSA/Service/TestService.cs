@@ -46,6 +46,11 @@ namespace SDSA.Service
             => _testRepository.GetParticipantTestPresetName(testID);
         public AlgorithmResult GetAlgorithResult (int testId, AlgoritmEnum algorithmId)
         {
+             var TR = _testRepository.GetAlgorithmResult(testId, algorithmId);
+            if (TR != null )
+            {
+                return TR;
+            }
             var testResult = new TestResults() {
                 CarDirectionsTest = this.GetCarDirectionsTest(testId),
                 CompassDirectionsTest = this.GetCompassDirectionsTest(testId),
@@ -58,10 +63,16 @@ namespace SDSA.Service
             if (algor == null)
                 return new AlgorithmResult
                 {
-                    error = AlgorithmErrorEnum.MissAlgorithm,
+                    error = AlgorithmErrorEnum.MissingAlgorithm,
                     Message = $"Could not find algorithm {algorithmId}"
                 };
-           return algor .Calulate(testResult);
+
+           var result = algor .Calulate(testResult);
+            if(result.error != 0)
+            {
+                _testRepository.SaveAlgorithmReult(result);
+            }
+            return result;
         }
 
         
