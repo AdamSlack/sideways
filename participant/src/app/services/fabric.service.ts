@@ -127,18 +127,18 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           if (obj === options.target) return;
 
           if (options.target.intersectsWithObject(obj)) {
+
+            
             //Top left corner to top left corner
             let coliding = obj;
             coliding.setCoords();
             // console.log("interacting corner: ", coliding.top, coliding.left);
             // console.log("From corner: ", coliding.top, target.left);
 
-
             let distance = get_distance_points(coliding.top , coliding.left, target.top, target.left);
-            console.log("Interacting block distance: ", distance);
-            obj.distance = distance;
-
-            console.log("Needs to be less than: ", target.width/2);
+            // obj.distance = distance;
+            // console.log("Interacting block distance: ", distance);
+            // console.log("Needs to be less than: ", target.width/2);
 
             if(distance < target.width/2) {
               obj.set('opacity', 0.5);

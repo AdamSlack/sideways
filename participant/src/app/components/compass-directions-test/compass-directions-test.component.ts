@@ -153,12 +153,17 @@ export class CompassDirectionsTestComponent implements OnInit {
             scaleY: length,
             scaleX: length,
           });
+          group.id = idx.toString();
+          group.type = "card";
           group.scaleToWidth(length);
           group.scaleToHeight(length);
-          group.type = "card";
+
+
           fab.addInteractionObjLogic(group, Canvas, group.type);
           fab.addRotatingStyle(group, Canvas);
           
+          Deck.push(group);
+
           Canvas.add(group);
         }
 
@@ -169,21 +174,38 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   public gatherResults() {
     var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
-  
+    
+    function get_distance_points(x1, y1, x2,y2){
+      var dx = x2-x1;
+      var dy = y2-y1;
+      return Math.sqrt(dx*dx+dy*dy);
+    }
+
     console.log(squareMatches.length);
     GridSquares.forEach( square => {
       Deck.forEach( card => {
-
         //card.intersectsWithObject()
         if (card.intersectsWithObject(square)) {
+          
+          
+          let distance = get_distance_points(square.top , square.left, card.top, card.left);
 
-          //If no iteracting
-          squareMatches[square.id] = card.id;
+          console.log("Checking interaction: ", square.id , card.id)
+          if(distance < card.width/2) {
+            var square_hit =  squareMatches[square.d];
+            if (typeof square_hit  === 'undefined' && square_hit != -1) {
+              //If no iteracting
+              squareMatches[square.id] = card.id;
+            } else {
+              //This is already been set... You is dumo therefore no results for you ever
+              square_hit = -1;
+            }
+          }
         }
 
       });
     });
-    
+    console.log(squareMatches);
     console.log('%c       ', 'font-size: 100px; background: url(https://i.imgur.com/oVG43Je.gif) no-repeat;');
   }
 
