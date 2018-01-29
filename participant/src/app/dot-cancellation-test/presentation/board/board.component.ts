@@ -12,7 +12,7 @@ export class BoardComponent
 	 
     this.RandomlyPopulateDots();
 	//this.CentreDotsWithinEachCell();
-	//this.RandomlyPositionDots();		
+	this.RandomlyPositionDots();		
 }
 
   public NumberOfTotalDots = 625;
