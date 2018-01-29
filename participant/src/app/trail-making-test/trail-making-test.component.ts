@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordTimingService } from '../services/record-timing.service';
+import { AssetRetrievalService } from '../services/asset-retrieval.service';
 
 import 'fabric';
 declare const fabric: any;
@@ -13,7 +14,8 @@ var canvas: any;
 export class TrailMakingTestComponent implements OnInit 
 {
   private timer: RecordTimingService;
-
+  private assetService: AssetRetrievalService;
+  
   title = 'app';
 
   constructor() 
@@ -28,54 +30,44 @@ export class TrailMakingTestComponent implements OnInit
       isDrawingMode: true
     });
 
-    var node01 = this.CircleNode(555, 720, "1");
-    this.CircleNode(357, 526, "2");
-    this.CircleNode(724, 332, "3");
-    this.CircleNode(345, 670, "4");
-    this.CircleNode(25,  90,  "5");
-    this.CircleNode(250, 312, "6");
-    this.CircleNode(205, 720, "7");
-    this.CircleNode(105, 250, "8");
-    this.CircleNode(112, 600, "9");
-    this.CircleNode(143,  11,  "10");
-    this.CircleNode(320, 167, "11");
-    this.CircleNode(740, 57,  "12");
-    this.CircleNode(456, 37,  "13");
-    this.CircleNode(600, 292, "14");
-    this.CircleNode(700, 728, "15");
-    this.CircleNode(30,  400, "16");
-    this.CircleNode(356, 30,  "17");
-    this.CircleNode(670, 522, "18");
-    this.CircleNode(515, 467, "19");
-    this.CircleNode(130, 163, "20");
-    this.CircleNode(700, 150, "21");
-    this.CircleNode(400, 310, "22");
-    this.CircleNode(180, 464, "23");
-    this.CircleNode(488, 637, "24");
-    this.CircleNode(563, 135, "25");
+    //retrieve server response of characters
+    //AssetRetrievalService
+    var test1data : string[] = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"];
+    var test2data;
+    var coordinates = [
+      {x: 555, y: 720}, //1
+      {x: 357, y: 526}, //2
+      {x: 724, y: 332}, //3
+      {x: 345, y: 670}, //4
+      {x: 25,  y: 90 }, //5
+      {x: 250, y: 312}, //6
+      {x: 205, y: 720}, //7
+      {x: 105, y: 250}, //8
+      {x: 112, y: 600}, //9
+      {x: 143, y: 11 }, //10
+      {x: 320, y: 167}, //11
+      {x: 740, y: 57 }, //12
+      {x: 456, y: 37 }, //13
+      {x: 600, y: 292}, //14
+      {x: 700, y: 728}, //15
+      {x: 30,  y: 400}, //16
+      {x: 356, y: 30 }, //17
+      {x: 670, y: 522}, //18
+      {x: 515, y: 467}, //19
+      {x: 130, y: 163}, //20
+      {x: 700, y: 150}, //21
+      {x: 400, y: 310}, //22
+      {x: 180, y: 464}, //23
+      {x: 488, y: 637}, //24
+      {x: 563, y: 135}, //25
+    ]; 
 
-
-    //mouse down event handler
-    canvas.on('mouse:down', function (options) 
+    //creates all the circle nodes
+    var nodes : any = [];
+    for(var i = 0; i < test1data.length; i++)
     {
-      console.log(options.e.clientX, options.e.clientY);
-      console.log("Mouse clicked");
-
-      if (options.target) 
-      {
-        console.log("Object clicked! ", options.target.type);
-      }
-    });
-
-
-
-    /*mouse:up
-    mouse:down
-    mouse:move
-    mouse:dblclick
-    mouse:wheel
-    mouse:over
-    mouse:out*/
+      nodes.push(this.CircleNode(coordinates[i].x, coordinates[i].y, test1data[i]));
+    }
 
     //drawing path done event handler
     canvas.on('path:created', function (options) 
@@ -85,14 +77,16 @@ export class TrailMakingTestComponent implements OnInit
       //Checks if object intersects with the first node (1)
       //bool return
       //simple check, but provides no information on the sequence
-      var intersectedNodes;
+      /*
       var intersectswith1 = options.path.intersectsWithObject(node01);
       if(intersectswith1)
       {
         console.log("Drawing Path intersects with Object 1");
-      }
+      }*/
 
       //options.path.path;
+      //stores numbers of every object that was drawn through (in order)
+      var intersectedNodes : number[] = [];
       //array of all coords of path created
       var pathCoordsArray = options.path.path;
       
@@ -118,12 +112,23 @@ export class TrailMakingTestComponent implements OnInit
         var currentPoint = new fabric.Point(pathCoordsArrayArray[1],pathCoordsArrayArray[2]);
 
         //checks if current point collides with node, and if node collision was not detected previously
-        if (node01.containsPoint(currentPoint) && (intersectedNodes.indexOf(1) == -1))
+        for(var j = 0; j < nodes.length; j++)
         {
-          console.log("Coordinate ", currentPoint, " was found to be inside object ", node01);
-          intersectedNodes.push(1);
+          if (nodes[j].containsPoint(currentPoint) && (intersectedNodes.indexOf(j+1) == -1))
+          {
+            //console.log("Coordinate ", currentPoint, " was found to be inside object ", nodes[j]);
+            //push = push_back so dont worry
+            intersectedNodes.push(j+1);
+          }
         }
-
+      }
+      console.log("Path Crossed through the following nodes: ", intersectedNodes);
+      //check if the path is equal to the correct sequence
+      var intersectedNodesString = intersectedNodes.map(String); //casts array to string elements
+      var equal = test1data.length == intersectedNodesString.length && test1data.every((element, index)=> element === intersectedNodesString[index] );
+      if(equal)
+      {
+        console.log("Path correctly went through all elements in sequence!");
       }
     });
 
@@ -182,4 +187,25 @@ export class TrailMakingTestComponent implements OnInit
   {
     canvas.isDrawingMode = false;
   }
+
+    //mouse down event handler
+    /*
+    canvas.on('mouse:down', function (options) 
+    {
+      console.log(options.e.clientX, options.e.clientY);
+      console.log("Mouse clicked");
+
+      if (options.target) 
+      {
+        console.log("Object clicked! ", options.target.type);
+      }
+    });
+    */
+    /*mouse:up
+    mouse:down
+    mouse:move
+    mouse:dblclick
+    mouse:wheel
+    mouse:over
+    mouse:out*/
 }
