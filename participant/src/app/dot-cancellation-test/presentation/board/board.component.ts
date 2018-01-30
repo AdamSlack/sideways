@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import { NgIf } from '@angular/common';
 
 declare var angular: any;
 @Component({
@@ -10,6 +12,8 @@ export class BoardComponent
 {
   constructor() {
 	
+	
+	
 	this.ViewInstructions();
     this.RandomlyPopulateDots();
 	this.EnsureEightGroupsOfFoursPerRow();
@@ -19,15 +23,23 @@ export class BoardComponent
     //this.HighlightGroupsOf4();	
 }
 
+  seconds: string;
+  countDown;
+  counter = 900; // Starts on 900 Seconds (15 Minutes)
+  tick = 1000;
+
   public NumberOfTotalDots = 625;
   public background_color= 'red';
+  start = parseInt(this.seconds, 10);
+  
+  TimeTaken;
    
    GameTitle = 'Dot Cancellation Test';
    
   ShowInstructions = false;
   
   DisableInstructions = false;
-  
+   
   InstructionVisibiliy = "'visible'";
   
   InstructionsButtonText = 'Hide Instructions';
@@ -77,7 +89,24 @@ export class BoardComponent
   {
 	  
   }
+
+
+  StartCountDownTimer()
+  {
+	   this.countDown = Observable.timer(0, this.tick)
+      .take(this.counter)
+      .map(() => --this.counter)
+	 
+	  // let timer = Observable.timer(1000,1000);
+      // timer.subscribe(t=>this.ticks = t);
+       
+  }  
   
+  
+  checkTime(evt)
+  {
+	  this.TimeTaken ='ssssssssss';
+  }
   
   ViewInstructions()
   {
@@ -522,7 +551,7 @@ export class BoardComponent
 			
 			 min = i - 25;
 			 
-			 console.log("MIN and MAX ARE:",min,","max)
+			 console.log("MIN and MAX ARE:",min,",",max);
 			 
 			 //While not 8 groups of 4
 			 while  ( numOfGroupsOfFourDots != 8 ) 
@@ -725,30 +754,42 @@ export class BoardComponent
 
 
 
- 
+
 
   restartGame() {
   
-    //Disable instructions button
-	 this.DisableInstructions = true;
-	 
-	 //Hide instructions and show the board
-	 this.ShowInstructions = true;
-	 this.ViewInstructions();
-	 
-	 	 
-	 //Start timer and log all interactions
-  
-  
-  
-  
+    //ON START GAME 
 	
+	//Disable instructions button
+	this.DisableInstructions = true;
+	 
+	//Hide instructions and show the board
+	this.ShowInstructions = true;
+	this.ViewInstructions();
+	
+    //Start countdown timer from 15 mins	
+    this.StartCountDownTimer();
+
+    //Log All Interactions	
+	
+    
+ 
+	//ON FINISH GAME
+	
+	//Workout time taken to complete test
+	this.TimeTaken = ( 900 - this.counter );
+	
+	//Stop Timer
+	this.countDown = 0;
+	
+	//Get Results
 	var results = this.GetResults();
-	
 	console.log("TruePos  :", results[0] );
 	console.log("TrueNeg  :", results[1] );
 	console.log("FalsePos : ", results[2] );
 	console.log("FalseNeg : ", results[3] );
+	
+	//Get All Interactions
 	
   }
 
