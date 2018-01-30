@@ -53,53 +53,53 @@ enum compassDir {
 
 //"N NE E SE / S SW W NW"
 const square_keys = [
-  "NS",
-  "NSW",
-  "NW",
-  "NNW",
-  "NES",
-  "NESW",
-  "NEW",
-  "NENW",
-  "ES",
-  "ESW",
-  "EW",
-  "ENW",
-  "SES",
-  "SESW",
-  "SEW",
-  "SENW"
+  "N"+ "_" +"S",
+  "N" + "_" +"SW",
+  "N" +"_" +"W",
+  "N"  + "_" +"NW",
+  "NE" +"_" +"S",
+  "NE" + "_" +"SW",
+  "NE" + "_" +"W",
+  "NE" + "_" +"NW",
+  "E" + "_" +"S",
+  "E" + "_" +"SW",
+  "E" + "_" +"W",
+  "E" + "_" +"NW",
+  "SE" + "_" +"S",
+  "SE" + "_" +"SW",
+  "SE" + "_" +"W",
+  "SE" + "_" +"NW"
 ]
 
 const card_keys = [
-"N" + "NE",
-"N" + "E",
-"N" + "SE",
-"N" + "S",
-"N" + "SW",
-"N" + "W",
-"N" + "NW",
-"NE" + "E",
-"NE" + "SE",
-"NE" + "S",
-"NE" + "SW",
-"NE" + "W",
-"NE" + "NW",
-"E" + "SE",
-"E" + "S",
-"E" + "SW",
-"E" + "W",
-"E" + "NW",
-"SE" + "S",
-"SE" + "SW",
-"SE" + "W",
-"SE" + "NW",
-"S" + "SW",
-"S" + "W",
-"S" + "NW",
-"SW" + "W",
-"SW" + "NW",
-"NW" + "W"]
+"N" + "_" +"NE",
+"N" + "_" +"E",
+"N" + "_" +"SE",
+"N" + "_" +"S",
+"N" + "_" +"SW",
+"N" + "_" +"W",
+"N" + "_" +"NW",
+"NE" +"_" + "E",
+"NE" +"_" + "SE",
+"NE" +"_" + "S",
+"NE" +"_" + "SW",
+"NE" +"_" + "W",
+"NE" +"_" + "NW",
+"E" + "_" +"SE",
+"E" + "_" +"S",
+"E" + "_" +"SW",
+"E" + "_" +"W",
+"E" + "_" +"NW",
+"SE" +"_" + "S",
+"SE" +"_" + "SW",
+"SE" +"_" + "W",
+"SE" +"_" + "NW",
+"S" + "_" +"SW",
+"S" + "_" +"W",
+"S" + "_" +"NW",
+"SW" +"_" + "W",
+"SW" +"_" + "NW",
+"NW" +"_" + "W"]
 
 var server_root = 'http://localhost:5000/';
 
@@ -297,7 +297,7 @@ export class CompassDirectionsTestComponent implements OnInit {
       // row and then one vehicle for each column separately.
   
       let score = 0;
-      var matches_dump = []
+      var results_dump = []
   
       squareMatches.forEach((element, idx) => {
         
@@ -306,18 +306,31 @@ export class CompassDirectionsTestComponent implements OnInit {
           let elemnt_idx :number = element;
           let c_key = card_keys[element];
 
-          console.log("Card key: ", c_key, elemnt_idx);
-          console.log("Sqaure key: ", square_keys[idx], idx);
-          if (c_key  === square_keys[idx]) {
+  
+          let c_key_dir = c_key.split("_");
+          let square_key_dir = square_keys[idx].split("_");
+          console.log("Card key: ", c_key_dir, elemnt_idx);
+          console.log("Sqaure key: ", square_key_dir, idx);
+
+
+          if (c_key_dir.every(r=> square_key_dir.includes(r))) {
             console.log("winner winner chicken dinner");
-            matches_dump.push({"scene":square_keys[idx],"card": c_key})
+            score += 2;
+            results_dump.push({"match_type": "all", "scene":square_keys[idx],"card": c_key})
+          } else if(c_key_dir.some(r=> square_key_dir.includes(r))) {
+            //Maybe you got one right?
+            console.log("winner winner oats dinner");
+            score += 1;
+            results_dump.push({"match_type": "some", "scene":square_keys[idx],"card": c_key})
+          } else {
+            results_dump.push({"match_type": "none", "scene":square_keys[idx],"card": c_key})
           }
         }
         
       });
 
   
-      console.log("dis fellow got dis reuslts: ", matches_dump)
+      console.log("dis fellow got dis reuslts: ", results_dump)
       //Rip let's log your score and also your cards matches because that is bull    
   
       //
