@@ -347,7 +347,6 @@ export class CompassDirectionsTestComponent implements OnInit {
               //&& square_hit != -1
               //If no iteracting
               squareMatches[square.id] =  +card.id;
-
           }
         }
 

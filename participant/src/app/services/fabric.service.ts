@@ -275,7 +275,7 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
   https://stackoverflow.com/questions/31238010/arrows-in-fabricjs
   
   */
-  public drawArrow(canvas: any, fromx: number, fromy: number, tox: number, toy: number) {
+  public drawArrow(canvas: any, girth: number, fromx: number, fromy: number, tox: number, toy: number) {
 
     var angle = Math.atan2(toy - fromy, tox - fromx);
 
@@ -319,12 +319,12 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
 
     var pline = new fabric.Polyline(points, {
       fill: 'white',
-      stroke: 'black',
+      stroke: 'white',
       opacity: 1,
-      strokeWidth: 2,
+      strokeWidth: girth,
       originX: 'left',
       originY: 'top',
-      selectable: true
+      selectable: false
     });
 
     canvas.add(pline);

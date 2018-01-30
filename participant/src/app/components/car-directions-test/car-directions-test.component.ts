@@ -127,7 +127,6 @@ export class CarDirectionsTestComponent implements OnInit {
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
-    Canvas.add(this.createDonezoButton(Canvas.width - 250, Canvas.height - 75));
 
   }
 
@@ -156,28 +155,30 @@ export class CarDirectionsTestComponent implements OnInit {
     //times(3,()=>console.log('wow'))
     
     var c_offset = (arrow_length/4)
-    //left
-    this.fab.drawArrow(canvas, xPos + (arrow_length *1) + c_offset, 0 + c_offset*2, xPos + (arrow_length* 2) - c_offset, 0 + c_offset * 2 )
-    //up
-    this.fab.drawArrow(canvas, xPos + (arrow_length *2) + c_offset * 2,  xPos + (arrow_length ) - c_offset, xPos + (arrow_length *2) + c_offset * 2, 0 + c_offset)
-    //right
-    this.fab.drawArrow(canvas, xPos + (arrow_length *3) + c_offset, 0 + c_offset * 2, xPos + (arrow_length* 4) - c_offset, 0 + c_offset* 2)
-    //Down
-    this.fab.drawArrow(canvas, xPos + (arrow_length *4) + c_offset * 2, 0 + c_offset, xPos + (arrow_length *4) + c_offset * 2, xPos + (arrow_length) - c_offset)
+     
+    //left 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length *1) + c_offset      , 0 + c_offset*2                     , xPos + (arrow_length* 2) - c_offset      , 0 + c_offset * 2 )
+    //up 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length *2) + c_offset * 2  ,  xPos + (arrow_length ) - c_offset , xPos + (arrow_length *2) + c_offset * 2  , 0 + c_offset)
+    //right 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length *3) + c_offset      , 0 + c_offset * 2                   , xPos + (arrow_length* 4) - c_offset      , 0 + c_offset* 2)
+    //Down 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length *4) + c_offset * 2  , 0 + c_offset                       , xPos + (arrow_length *4) + c_offset * 2  , xPos + (arrow_length) - c_offset)
     
-    //up
-    this.fab.drawArrow(canvas, xPos + c_offset * 2, 0 + (arrow_length * 2) - c_offset , xPos + c_offset * 2,  xPos + (arrow_length * 1) + c_offset)
-    //Down
-    this.fab.drawArrow(canvas, xPos + c_offset * 2, 0 + c_offset + (arrow_length *2), xPos  + c_offset * 2, xPos + (arrow_length * 3) - c_offset) 
-    //right
-    this.fab.drawArrow(canvas, xPos + c_offset, 0 + c_offset * 2 + (arrow_length * 3 ), xPos + arrow_length -c_offset  , 0 + (arrow_length* 3) + c_offset* 2)
-    //left
-    this.fab.drawArrow(canvas,xPos + arrow_length -c_offset, 0 + c_offset*2 + (arrow_length *4) , xPos + c_offset , 0 + c_offset * 2 + (arrow_length* 4))
 
-  }
+    //up 
+    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2            , 0 + (arrow_length * 2) - c_offset           , xPos + c_offset * 2            , xPos + (arrow_length * 1) + c_offset)
+    //Down 
+    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2            , 0 + c_offset + (arrow_length *2)            , xPos  + c_offset * 2           , xPos + (arrow_length * 3) - c_offset) 
+    //right 
+    this.fab.drawArrow(canvas, 10, xPos + c_offset                , 0 + c_offset * 2 + (arrow_length * 3 )      , xPos + arrow_length -c_offset  , 0 + (arrow_length* 3) + c_offset* 2)
+    //left 
+    this.fab.drawArrow(canvas, 10, xPos + arrow_length -c_offset  , 0 + c_offset*2 + (arrow_length *4)          , xPos + c_offset                , 0 + c_offset * 2 + (arrow_length* 4))
+ 
+  } 
 
 
-  private gatherResults() {
+  public gatherResults() {
     var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
   
     console.log(squareMatches.length);
@@ -193,31 +194,6 @@ export class CarDirectionsTestComponent implements OnInit {
     console.log(squareMatches);
   }
 
-
-  private createDonezoButton(x: number, y: number) {
-    
-        var butt = new fabric.Text( 'Donezo', {
-          left:x,
-          top:y,
-          width:40,
-          height:40,
-          fontSize: 30,
-          font: "roboto",
-          lockMovementX: true,
-          lockMovementY: true,
-          lockRotation: true,
-          lockUniScaling: true,
-          selectable: true,
-          lockScalingX: true,
-          lockScalingY: true
-        });
-        
-        butt.on('selected', options => {
-          this.gatherResults();
-        });
-    
-        return butt;
-      }
 
   private createDeck(xOffset : number = 0, yOffset : number  = 0, deckSize : number = 16, length : number) {
     //Initialise deck of compass cards

@@ -49,7 +49,6 @@ export class RoadScenariosTestComponent implements OnInit {
   public roadSigns : any[] = [];
   public roadScenarios : any[];
 
-
   /*
    * Subscribes to a request for localisation preset details.
    * If no preset details have successfully been obtained, it returns back to the login screen.
