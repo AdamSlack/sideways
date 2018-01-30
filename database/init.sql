@@ -84,7 +84,8 @@ create table participant_tests(
     test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_name     text        references localisation_presets(preset_name) not null
+    preset_name     text        references localisation_presets(preset_name) not null,
+    test_date       date        not null
 );
 
 ----------------------------------------------------
@@ -100,36 +101,31 @@ create table dot_cancellation(
     time_taken  smallint   not null,
     true_pos    smallint   not null,
     false_pos   smallint   not null,
-    false_neg   smallint   not null,
-    test_date   date       not null
+    false_neg   smallint   not null
 );
 
 create table car_directions(
     test_id     serial     references participant_tests(test_id)  primary key  not null,
     time_taken  smallint   not null,
-    points      smallint   not null,
-    test_date   date       not null
+    points      smallint   not null
 );
 
 create table compass_directions(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    points      smallint   not null,
-    test_date   date       not null
+    points      smallint   not null
 );
 
 create table road_scenarios(
     test_id     serial  references participant_tests(test_id) primary key  not null,
     time_take   smallint   not null,
-    points      smallint   not null,
-    test_date   date       not null
+    points      smallint   not null
 );
 
 create table trail_making(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    mistakes    smallint   not null,
-    test_date   date       not null
+    mistakes    smallint   not null
 );
 
 
