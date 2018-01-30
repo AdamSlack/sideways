@@ -6,7 +6,7 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:8080/';
+  public ROOT : string = 'http://localhost:5000/Test/';
   
   public createHeaders() {
     return {
@@ -45,7 +45,7 @@ export class ResultsService {
   }
 
   public insertCompassDirectionResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/compass_directions';
+    let url =  this.ROOT + p_id + "/" +  "CompassDirectionResult" ;
     let body = {
       'time_taken': time_taken,
       'points': points
