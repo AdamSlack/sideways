@@ -142,8 +142,12 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.time = this.timer.getTimeElapsed(true);
   }
 
-  public sendResults() {
-    this.rs.insertCompassDirectionResults(1, 123, 456);
+  public sendResults(time_taken :number, score :number) {
+    this.rs.insertCompassDirectionResults(this.auth.PARTICIPANT_TEST_ID, time_taken, score);
+  }
+
+  public sendLogs(json_log_dump : {}, id: number){
+    //what d owe send?
   }
 
   /*
@@ -288,7 +292,12 @@ export class CompassDirectionsTestComponent implements OnInit {
       });
     }
 
-   
+    private finishGame(score : number ){
+      this.stopTimer(); //should be called by button really
+      
+      //Now route to move game forward
+      this.sendResults(this.time, score);
+    }
 
     private calculateResults(squareMatches : any[]) {
       // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
@@ -332,8 +341,7 @@ export class CompassDirectionsTestComponent implements OnInit {
   
       console.log("dis fellow got dis reuslts: ", results_dump)
       //Rip let's log your score and also your cards matches because that is bull    
-  
-      //
+      this.finishGame(score);
   
     }
 

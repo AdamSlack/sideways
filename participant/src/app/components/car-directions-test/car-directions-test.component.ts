@@ -65,7 +65,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
 
   public sendResults() {
-    this.rs.insertCarDirectionResults(1, 123, 456);
+    this.rs.insertCarDirectionResults("1", 123, 456);
   }
 
 

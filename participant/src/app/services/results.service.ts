@@ -14,7 +14,7 @@ export class ResultsService {
     }
   }
 
-  public insertDotCancellationResults(p_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
+  public insertDotCancellationResults(p_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
     let url =  this.ROOT + p_id + '/results/dot_cancellation';
     let body = {
       'time_taken': time_taken,
@@ -30,7 +30,7 @@ export class ResultsService {
     this.http.post(url, body, headers).subscribe();
   }
 
-  public insertCarDirectionResults(p_id: number, time_taken: number, points: number) {
+  public insertCarDirectionResults(p_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/car_directions';
     let body = {
       'time_taken': time_taken,
@@ -44,7 +44,7 @@ export class ResultsService {
     this.http.post(url, body, headers).subscribe();
   }
 
-  public insertCompassDirectionResults(p_id: number, time_taken: number, points: number) {
+  public insertCompassDirectionResults(p_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/compass_directions';
     let body = {
       'time_taken': time_taken,
@@ -58,7 +58,7 @@ export class ResultsService {
     this.http.post(url, body, headers).subscribe();
   }
 
-  public insertRoadScenarioResults(p_id: number, time_taken: number, points: number) {
+  public insertRoadScenarioResults(p_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/road_scenarios';
     let body = {
       'time_taken': time_taken,
@@ -72,7 +72,7 @@ export class ResultsService {
     this.http.post(url, body, headers).subscribe();
   }
 
-  public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
+  public insertTrailMaking(p_id: string, time_taken: number, mistakes: number) {
     let url =  this.ROOT + p_id + '/results/road_scenarios';
     
     let body = {
