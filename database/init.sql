@@ -184,9 +184,6 @@ insert into sdsa_test_types (name) values ('trail_making');         -- 5
 ----
 insert into participants (participant_id) values (1) on conflict do nothing;
 insert into localisation_presets (preset_name) values ('test');
-insert into participant_tests (test_id, participant_id, clinician_id, preset_name, test_date) values (1, 1, 1,'test', CURRENT_DATE) on conflict do nothing;
-
-
 
 ----
 --  Initial SDSA localisation preset details
@@ -276,9 +273,13 @@ insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file
 );
 
 
--- -- CREATE USER sdsa_user WITH PASSWORD 'password';
--- -- REVOKE ALL ON SCHEMA public FROM sdsa_user;
--- -- GRANT ALL ON SCHEMA public TO sdsa_user;
--- -- GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public TO sdsa_user;
+-- Need presets first
+insert into participant_tests (test_id, participant_id, clinician_id, preset_name, test_date) values (1, 1, 1,'test', CURRENT_DATE) on conflict do nothing;
+
+
+CREATE USER sdsa_user WITH PASSWORD 'password';
+REVOKE ALL ON SCHEMA public FROM sdsa_user;
+GRANT ALL ON SCHEMA public TO sdsa_user;
+GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public TO sdsa_user;
 
 commit;
