@@ -155,10 +155,8 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         });
 
         console.log("Interacting with: ", target.type);
-      }
-  
+      }  
 }
-
 
 
   // public createGridBaseLines(canvas: any, gridSize: number) {

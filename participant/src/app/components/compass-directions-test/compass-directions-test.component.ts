@@ -162,7 +162,7 @@ export class CompassDirectionsTestComponent implements OnInit {
       this.localeSubscription.unsubscribe();
     }
     if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
-      alert('No valid localisation details found. returning to login.');
+      //alert('No valid localisation details found. returning to login.');
       this.auth.VALIDATED = false;
       this.auth.CLINICIAN_ID = '';
       this.auth.PARTICIPANT_TEST_ID = '';
@@ -201,18 +201,33 @@ export class CompassDirectionsTestComponent implements OnInit {
     console.log("Grid Length Percent: ", grid_length * 0.5)
 
     //TODO: fabric js has some alignment methods..
-    var x_grid_offset = 0;
+    var x_grid_offset = Canvas.width* (1-percentage_cover) /2;
     var y_grid_offset = 0;
 
     var square_length =  grid_length/5
     this.addIdentifyingImages(Canvas, x_grid_offset ,  y_grid_offset , square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
-    this.createCompassDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, 28, square_length * 0.9);
+    let line_padding = 5;
+    //Break line
+    this.createBreakLine(this.fab, 0, grid_length + line_padding );
+
+    let deck_item_sz = square_length * 0.9;
+    this.createCompassDeck(this.fab, (Canvas.width/2) -deck_item_sz/2 ,  (Canvas.height * 0.8) + (line_padding*2), 28, deck_item_sz );
     
     // Commented out cause we don't really need it?
     //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
 
+  }
+
+  private createBreakLine(fab: FabricService, x_start : number = 0, y_start : number = 0) {
+    Canvas.add(new fabric.Line([0, 0, Canvas.width, 0], {
+      left: x_start,
+      top: y_start,
+      stroke: 'red',
+      strokeWidth: 5,
+      selectable: false
+    }));
   }
 
   
