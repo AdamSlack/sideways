@@ -9,6 +9,8 @@ import { rootRoute } from '@angular/router/src/router_module';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
+import { race } from 'q';
+import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
 
 declare const fabric: any;
 //TODO: place in inherited class the global canvas components. Only ever one canvas on screen
@@ -49,7 +51,7 @@ enum compassDir {
   East_WestSouth,
 } 
 
-var square_id = [
+const square_keys = [
   "SEW",
   "NEW",
   "SWW",
@@ -68,7 +70,34 @@ var square_id = [
   "EWS"
 ]
 
-
+const card_keys = [
+"N" + "NE",
+"N" + "E",
+"N" + "SE",
+"N" + "S",
+"N" + "SW",
+"N" + "W",
+"N" + "NW",
+"NE" + "E",
+"NE" + "SE",
+"NE" + "S",
+"NE" + "SW",
+"NE" + "W",
+"NE" + "NW",
+"E" + "SE",
+"E" + "S",
+"E" + "SW",
+"E" + "W",
+"E" + "NW",
+"SE" + "S",
+"SE" + "SW",
+"SE" + "W",
+"SE" + "NW",
+"S" + "SW",
+"S" + "W",
+"S" + "NW",
+"SW" + "W",
+"NW" + "NW"]
 
 var server_root = 'http://localhost:5000/';
 
@@ -114,74 +143,6 @@ export class CompassDirectionsTestComponent implements OnInit {
   public sendResults() {
     this.rs.insertCompassDirectionResults(1, 123, 456);
   }
-
-
-  //North is assumed as first one
-  private lookupCarNumToTest(num : number) {
-    if (num == 1) {
-      return "NE";
-    } else if (num == 2) {
-      return "E";
-    } else if (num == 3) {
-      return "SE";
-    } else if (num == 4) {
-      return "S";
-    } else if (num == 5) {
-      return "EW";
-    } else if (num == 6) {
-      return "W";
-    } else if (num == 7) {
-      return "NW";
-    }
-  }
-
-  private calculateResults(squareMatches : number[]) {
-    // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
-    // card. This includes the demonstration item, so the maximum possible
-    // score is 32 points. It is easiest to score by counting one vehicle for each
-    // row and then one vehicle for each column separately.
-
-    let score = 0;
-    var matches_dump = []
-    squareMatches.forEach((element, idx) => {
-      //Convert compass postions
-
-
-      //Convert server position
-      
-      //0,1,3,4..
-      //2,
-      //Starts from north - 0
-      let rounds_offset = Math.floor(element / 7); 
-      
-      let car_one;
-      if (rounds_offset = 0) {
-        car_one = "N";
-      } else if (rounds_offset == 1){
-        car_one = "NE";
-      } else if (rounds_offset == 2) {
-        car_one = "E";
-      } 
-      
-      let car_two = this.lookupCarNumToTest(element + rounds_offset);
-
-      let card_key = car_one + car_two;
-      console.log("Checking match card, gridsquare",card_key, square_id[idx] );
-      if (card_key  === square_id[idx]) {
-        console.log("winner winner chicken dinner");
-        matches_dump.push({"scene":square_id[idx],"card": card_key})
-      }
-      
-    });
-
-    console.log("dis fellow got dis reuslts: ", matches_dump)
-    //Rip let's log your score and also your cards matches because that is bull    
-
-    //
-
-  }
-
-
 
   /*
    * Subscribes to a request for localisation preset details.
@@ -262,7 +223,7 @@ export class CompassDirectionsTestComponent implements OnInit {
         // card.lockScalingX = true;
         // card.lockScalingY = true
 
-        let image_path = server_root + asset_link + "compass_" +idx + ".png"
+        let image_path = server_root + asset_link + "compass_" +(idx +1) + ".png"
         console.log(image_path)
 
         //The way it works is like a clock on the server 
@@ -325,10 +286,44 @@ export class CompassDirectionsTestComponent implements OnInit {
       });
     }
 
+   
 
+    private calculateResults(squareMatches : any[]) {
+      // 1 point for each vehicle correctly placed i.e. a maximum of 2 points per
+      // card. This includes the demonstration item, so the maximum possible
+      // score is 32 points. It is easiest to score by counting one vehicle for each
+      // row and then one vehicle for each column separately.
+  
+      let score = 0;
+      var matches_dump = []
+  
+      squareMatches.forEach((element, idx) => {
+        
+        if(element !== undefined)  {
+          console.log("Checking : ", element);
+          let elemnt_idx :number = element + 1;
+          let c_key = card_keys[element];
+
+          console.log("Card key: ", c_key, elemnt_idx);
+          console.log("Sqaure key: ", square_keys[idx], idx);
+          if (c_key  === square_keys[idx]) {
+            console.log("winner winner chicken dinner");
+            matches_dump.push({"scene":square_keys[idx],"card": c_key})
+          }
+        }
+        
+      });
+
+  
+      console.log("dis fellow got dis reuslts: ", matches_dump)
+      //Rip let's log your score and also your cards matches because that is bull    
+  
+      //
+  
+    }
 
   public gatherResults() {
-    var squareMatches = [...Array(GridSquares.length||0)].map((v,i)=>i)
+    let squareMatches = new Array(GridSquares.length);
     
     function get_distance_points(x1, y1, x2,y2){
       var dx = x2-x1;
@@ -347,15 +342,10 @@ export class CompassDirectionsTestComponent implements OnInit {
           //console.log("Checking interaction: ", square.id , card.id)
           if(distance < card.width/2) {
             var square_hit =  squareMatches[square.d];
-            if (typeof square_hit  === 'undefined' && square_hit != -1) {
-              
+              //&& square_hit != -1
               //If no iteracting
-              squareMatches[square.id] = card.id;
+              squareMatches[square.id] =  +card.id;
 
-            } else {
-              //This is already been set... You is dumo therefore no results for you ever
-              square_hit = -1;
-            }
           }
         }
 
