@@ -37,7 +37,7 @@ namespace SDSA.Service
         public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
             => _testRepository.SaveCompassDirectionsTest(CDT);
 
-        public void SaveDotCancellationTest(DotCancellationTest DCT)
+        public void SaveDotCancellationTest(DotCancellationTest DCT) 
             => _testRepository.SaveDotCancellationTest(DCT);
 
         public void SaveRoadScenarioTest(RoadScenariosTest RST)
@@ -46,14 +46,13 @@ namespace SDSA.Service
         public void SaveTrailMakingTest(TrailMakingTest TMT)
             => _testRepository.SaveTrailMakingTest(TMT);
 
-        // public int SavePatricipantTest(ParticipantTest PT)
-        //     => _testRepository.SavePatricipantTest(PT);
+        public int SavePatricipantTest(ParticipantTest PT)
+            => _testRepository.SavePatricipantTest(PT);
 
+        public ParticipantTest GetParticipantsTest(int testId)
 
-        // public ParticipantTest GetParticipantsTest(int testId)
+            => _testRepository.GetParticipantsTest(testId);
 
-        //     => _testRepository.GetParticipantsTest(testId);
-        
         public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
             => _testRepository.GetParticipantsTests(participantid);
 

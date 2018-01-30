@@ -18,26 +18,29 @@ namespace SDSA.Repository
         {
             db = DBFactory.getConnection(config);
         }
-        //@deprecated because this is just wrong to be here. Why all of sudden is there participant test creation code inside here like what standard
-        // #region participantTest
-        // public int SavePatricipantTest(ParticipantTest PT)
-        // => db.ExecuteScalar<int>(
-        //     "insert into participant_test (test_id, participant_id , clinician_id) " +
-        //     "Values (DEFAULT,@ParticipentId, @ClinicianId) " +
-        //     "returning test_id",
-        //     PT
-        //     );
+        //@deprecated because this is just wrong to be here. 
+        //Why all of sudden is there participant test creation code inside here like what standard
+        //Also regiosn, regions i hate this. if the code is that unsearchable it requires sectioning with 
+        ///Silly region tags then the semantics are all wrong
+        #region participantTest
+        public int SavePatricipantTest(ParticipantTest PT)
+        => db.ExecuteScalar<int>(
+            "insert into participant_tests (test_id, participant_id , clinician_id, test_date) " +
+            "Values (DEFAULT,@ParticipentId, @ClinicianId, CURRENT_TIME) " +
+            "returning test_id",
+            PT
+            );
 
-        // public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
-        // => db.Query<ParticipantTest>(
-        //     "select test_id as TestId," +
-        //     "participant_id as ParticipantId," +
-        //     "clinician_id as ClinicianId" +
-        //     "from participant_tests " +
-        //     "where participant_id = @participantId",
-        //     new { participantId = participantid }
+        public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
+        => db.Query<ParticipantTest>(
+            "select test_id as TestId," +
+            "participant_id as ParticipantId," +
+            "clinician_id as ClinicianId" +
+            "from participant_tests " +
+            "where participant_id = @participantId",
+            new { participantId = participantid }
 
-        //     );
+            );
         
         //TODO: remvoe this one but apparently needed for some call
         public ParticipantTest GetParticipantsTest(int testId)
@@ -50,7 +53,7 @@ namespace SDSA.Repository
             new { TestId = testId }
 
             );
-        // #endregion
+        #endregion
 
 
         #region DCT
@@ -105,12 +108,17 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
                 new { TestId = TestId }
                 );
-        public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
-            => db.Execute(
+        public void SaveCompassDirectionsTest(CompassDirectionsTest CDT) {
+            Console.WriteLine("Co: " + CDT.TestId);
+            Console.WriteLine("Co: " + CDT.TimeTaken);
+            Console.WriteLine("Co: " + CDT.Points);
+
+            db.Execute(
                 "insert into compass_directions (test_Id , time_taken, points) " +
                 "Values (@TestId , @TimeTaken, @Points)",
                 CDT
                 );
+        }
         #endregion
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)

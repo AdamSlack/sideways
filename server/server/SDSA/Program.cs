@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 namespace SDSA
 {
+
+    //WHAT DOES THIS EVEN DO?? why is it here
     public class Program
     {
      
