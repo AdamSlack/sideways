@@ -11,6 +11,8 @@ import { CarDirectionsTestComponent } from './components/car-directions-test/car
 import { CompassDirectionsTestComponent } from './components/compass-directions-test/compass-directions-test.component';
 import { RoadScenariosTestComponent } from './components/road-scenarios-test/road-scenarios-test.component';
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
+
+import {HomeSelectionComponent } from './components/home-selection/home-selection.component';b
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
 
 // services
@@ -32,6 +34,7 @@ import { AssetRetrievalService } from './services/asset-retrieval.service';
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
     LoginScreenComponent,
+    HomeSelectionComponent,
 
   ],
   imports: [

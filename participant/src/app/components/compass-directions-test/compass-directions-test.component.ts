@@ -4,13 +4,14 @@ import { RecordTimingService } from '../../services/record-timing.service';
 import { Time } from '@angular/common/src/i18n/locale_data_api';
 import { FabricService } from '../../services/fabric.service'
 import { HttpClient } from '@angular/common/http';
-import "fabric"
 import { rootRoute } from '@angular/router/src/router_module';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
 import { race } from 'q';
 import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
+
+import "fabric"
 
 declare const fabric: any;
 //TODO: place in inherited class the global canvas components. Only ever one canvas on screen
