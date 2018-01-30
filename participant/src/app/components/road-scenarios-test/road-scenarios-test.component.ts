@@ -40,7 +40,7 @@ export class RoadScenariosTestComponent implements OnInit {
   ) { }
   
   public sendResults() {
-    this.rs.insertRoadScenarioResults(1, 123, 456);
+    this.rs.insertRoadScenarioResults("1", 123, 456);
   }
 
   public localeSubscription : Subscription;

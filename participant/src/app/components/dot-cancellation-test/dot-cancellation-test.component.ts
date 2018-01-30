@@ -15,7 +15,7 @@ export class DotCancellationTestComponent implements OnInit {
   constructor(private rs: ResultsService) { }
 
   public sendResults() {
-    this.rs.insertDotCancellationResults(1, 123, 1, 2, 3);
+    this.rs.insertDotCancellationResults("1", 123, 1, 2, 3);
   }
   
   ngOnInit() {
