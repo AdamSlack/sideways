@@ -12,8 +12,11 @@ export class BoardComponent
 	
 	this.ViewInstructions();
     this.RandomlyPopulateDots();
+	this.EnsureEightGroupsOfFoursPerRow();
 	//this.CentreDotsWithinEachCell();
-	this.RandomlyPositionDots();		
+	this.RandomlyPositionDots();	
+
+    this.HighlightGroupsOf4();	
 }
 
   public NumberOfTotalDots = 625;
@@ -475,8 +478,201 @@ export class BoardComponent
 	  return result;
   }
   
+  HighlightGroupsOf4()
+  {
+	    for (var i = 0; i < this.dotones.length; i++) 
+	  {
+		   if (this.getNumberOfDotsForCell(i)==4) 
+		   {
+			   this.AddDot(i);
+			   
+		   } 
+	  }
+  }
+  
+  EnsureEightGroupsOfFoursPerRow()
+  {
+	  let  numOfGroupsOfFourDots: number = 0;
+	  
+	  let  randomPosition: number = 0;
+	  
+	  let  EndOfRow: number = 25;
+	  
+	  let  max: number = 0;
+	  
+	  let  min: number = 0;
+	  
+	  for (var i = 0; i < this.dotones.length; i++) 
+	  {
+		 
+		 // If group of dots == 4 then cummulate
+		 if (this.getNumberOfDotsForCell(i)==4) 
+		 {
+			 numOfGroupsOfFourDots += 1;
+	     } 
+		 
+		 console.log("i IS:",i);
+		 console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);
+		 
+		 //If end of row reached
+		 if ( i == EndOfRow )
+		 {
+			 //init min and max for random number selection
+			 max = EndOfRow -1;
+			
+			 min = i - 25;
+			 
+			 //While not 8 groups of 4
+			 while  ( numOfGroupsOfFourDots != 8 ) 
+			 {
+				 if (numOfGroupsOfFourDots < 8)
+				 {
+			     console.log("while ( numOfGroupsOfFourDots != 8 )");
+				 console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);				 
+				 do
+				 {
+				   console.log("while ( this.getNumberOfDotsForCell(randomPosition) == 4 )");	
+				   console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);
+				   
+				   console.log("randomPosition:",randomPosition);
+				   //Choose a random number between 0 - 24, make sure it is not already a group of 4
+				   randomPosition = Math.floor(Math.random() * (max - min + 1)) + min;
+				   
+				 } while ( this.getNumberOfDotsForCell(randomPosition) == 4 )
+				 
+			     //Change that random position to be a group of 4
+			     this.RandomlyPopulateFourDotsInPosition(randomPosition);
+				 numOfGroupsOfFourDots += 1;
+				 console.log("ADDED 1");
+				 console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);
+				 }
+				 else if (numOfGroupsOfFourDots > 8)
+				 {
+			     console.log("while ( numOfGroupsOfFourDots != 8 )");
+				 console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);				 
+				 do
+				 {
+				   console.log("while ( this.getNumberOfDotsForCell(randomPosition) == 4 )");	
+				   console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);
+				   
+				   console.log("randomPosition:",randomPosition);
+				   //Choose a random number between 0 - 24, make sure it is not already a group of 4
+				   randomPosition = Math.floor(Math.random() * (max - min + 1)) + min;
+				   
+				 } while ( this.getNumberOfDotsForCell(randomPosition) != 4 )
+				 
+			     //Change that random position to be a group of 4
+			     this.RandomlyPopulateThreeOrFiveDotsInPosition(randomPosition);
+				 numOfGroupsOfFourDots -= 1;
+				 console.log("MINUS 1");
+				 console.log("numOfGroupsOfFourDots:",numOfGroupsOfFourDots);
+				 }
+				 
+				 
+				 
+				 
+			 }
+			 
+			 //reset 
+			 numOfGroupsOfFourDots = 0;
+			 EndOfRow += 25;
+		 }
+			 
+		 
+	
+		  
+	  }
+  }
   
   
+  RandomlyPopulateFourDotsInPosition(position)
+  {
+	 var NoOfDots = 4;
+
+     var dotsToInit = [1, 2, 3, 4, 5];
+	 
+	 //Clear dots
+	  
+     this.dotones[position] = "";
+     this.dottwos[position] = "";
+     this.dotthrees[position] = "";
+     this.dotfours[position] = "";
+     this.dotfives[position] = "";
+        
+	 
+		 
+      //Until the number of dots chosen has been populated
+      while (this.getNumberOfDotsForCell(position) != NoOfDots) {
+  
+        console.log("In this");
+        //Rand choose either 1,2,3,4 or 5 to populate 
+        var RowNum = dotsToInit[Math.floor(Math.random() * dotsToInit.length)];
+        if (RowNum == 1) {
+          this.dotones[position] = ".";
+        }
+        else if (RowNum == 2) {
+          this.dottwos[position] = ".";
+        }
+        else if (RowNum == 3) {
+          this.dotthrees[position] = ".";
+        }
+        else if (RowNum == 4) {
+          this.dotfours[position] = ".";
+        }
+        else if (RowNum == 5) {
+          this.dotfives[position] = ".";
+        }
+
+
+      }
+	  
+	 
+  }
+  
+  RandomlyPopulateThreeOrFiveDotsInPosition(position)
+  {
+	 var NoOfDots = [3,5];
+
+     var dotsToInit = [1, 2, 3, 4, 5];
+	 
+	 //Clear dots
+	  
+     this.dotones[position] = "";
+     this.dottwos[position] = "";
+     this.dotthrees[position] = "";
+     this.dotfours[position] = "";
+     this.dotfives[position] = "";
+        
+	 //Rand choose either 3 or 5 dots 
+     var rand = NoOfDots[Math.floor(Math.random() * NoOfDots.length)];
+		 
+      //Until the number of dots chosen has been populated
+      while (this.getNumberOfDotsForCell(position) != rand) {
+  
+        console.log("In this");
+        //Rand choose either 1,2,3,4 or 5 to populate 
+        var RowNum = dotsToInit[Math.floor(Math.random() * dotsToInit.length)];
+        if (RowNum == 1) {
+          this.dotones[position] = ".";
+        }
+        else if (RowNum == 2) {
+          this.dottwos[position] = ".";
+        }
+        else if (RowNum == 3) {
+          this.dotthrees[position] = ".";
+        }
+        else if (RowNum == 4) {
+          this.dotfours[position] = ".";
+        }
+        else if (RowNum == 5) {
+          this.dotfives[position] = ".";
+        }
+
+
+      }
+	  
+	 
+  }
   
   RandomlyPopulateDots() {
 
@@ -486,12 +682,13 @@ export class BoardComponent
 
     var dotsToInit = [1, 2, 3, 4, 5];
 
+	
     for (var i = 0; i < this.dotones.length; i++) {
      
 	 //Rand choose either 3,4 or 5 dots 
       var rand = NoOfDots[Math.floor(Math.random() * NoOfDots.length)];
 
-	  
+	 
       
       //Until the number of dots chosen has been populated
       while (this.getNumberOfDotsForCell(i) != rand) {
