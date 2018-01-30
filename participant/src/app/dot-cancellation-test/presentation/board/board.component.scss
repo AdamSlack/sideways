@@ -1,23 +1,25 @@
+
+//Styling for the Dot cancellation Board
 .board
 {
   display: flex; 
   flex-direction: row;
   flex-wrap: wrap;  
-  color: #fff;  
-  justify-content: space-between;   
- 
-  
+  color:#fff;  
+  justify-content: space-between;     
 }
 
+//If disabled is true on a button this styling will apply
 button:disabled,
-button[disabled]{
+button[disabled]
+{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
 
-
-.gameStatus {
+//Styling for Test Title
+.testTitle {
  background-color: #34495e;
   color: #fff;
   border: 0px;
@@ -30,7 +32,8 @@ button[disabled]{
   text-align: center;
 }
 
-.restart {
+//Styling for Restart Test button
+.restartTest {
   background-color: #34495e;
   color: #fff;
   border: 0px;
@@ -42,8 +45,8 @@ button[disabled]{
   width: 100%;
 }
 
-
-.Completed
+//Styling for Results Div
+.results
 {
 	font-family: 'Dosis', Helvetica, sans-serif;
   font-size: 1.4em;
@@ -52,70 +55,52 @@ button[disabled]{
   padding: 5px;
   width: 100%;
   text-align: center;
-		overflow-x: scroll;
-		background-color: #fff;
-        color: #1fa8f2;
-		
+	overflow-x: scroll;
+	background-color: #fff;
+  color: #1fa8f2;		
 }
 
-.Timer
+//Styling for instructions Div
+.instructions
 {
-	
-}
-
-.Instructions
-{
-	
 	font-family: 'Dosis', Helvetica, sans-serif;
   font-size: 1.4em;
   font-weight: bold;
   width: 100%;
   text-align: center;
-		overflow-x: scroll;
-		background-color: #fff;
-        color: #070707;
+	overflow-x: scroll;
+	background-color: #fff;
+  color: #070707;
 }
 
-.restart:hover {
-  background-color: #cd9e98;
+//Styling for Hovering buttons
+.restartTest:hover 
+{
+  background-color: #1fa8f2;
   cursor: pointer;
 }
 
-  body{
-    background-color:#C82022;
-    }
-    
+//Styling for Border of test
+.showContainer
+{
+	margin: 10px;
+	border: 2px solid #000;
+	padding: 5px;	
+}
 	
-	.Showcontainer
-	{
-		margin: 10px;
-		border: 2px solid #000;
-		padding: 5px;
-		
-	}
-	
-	.Hidecontainer
-	{
-		margin: 10px;
-		border: 2px solid #000;
-		padding: 5px;
-			
-		height: 0px;
-		visibility: collapse;	
-	}
-	
-	
-	
-	.style1
-	{
-	 background-color:#cd9e98;
-	 border-radius: 5px;
-	  
-	}
+//Styling to hide the Container
+.hideContainer
+{
+	margin: 0px;
+	border: 2px solid #000;
+	padding: 5px;		
+	height: 0px;
+	visibility: collapse;	
+}
 
-
-	
-	.style2
-	{
-	  background-color:#042326;
-	}
+//The Styling applied when a cell is selected	
+.cellSelected
+{
+ background-color:#cd9e98;
+ border-radius: 5px;	  
+}
