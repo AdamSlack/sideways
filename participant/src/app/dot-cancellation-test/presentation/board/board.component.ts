@@ -252,6 +252,9 @@ export class BoardComponent
       this.squares[position] = 'X';
       this.DictionaryOfCellClicks[position] +=1;
     }
+	else{
+		
+	}
 
   }
 
@@ -783,7 +786,13 @@ export class BoardComponent
 
   TEST()
   {
-	 
+	 this.TimeTaken = this.counter;
+  }
+   
+  
+  getTimeTaken()
+  {
+	  return (900-this.counter);
   }
 
 
@@ -822,10 +831,10 @@ export class BoardComponent
 	this.RestartGameButtonText = 'Start Test'; 
 	  
 	//Workout time taken to complete test
-	this.TimeTaken = ( 900 - this.counter );
+	this.TimeTaken = this.getTimeTaken();
 	
 	//Stop Timer
-	this.countDown = 0;
+	//this.countDown = 0;
 	//reset timer
 	//this.countDown = 900;
 	
