@@ -42,9 +42,33 @@ button[disabled]{
   width: 100%;
 }
 
+
+.Completed
+{
+	font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0px;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+		overflow-x: scroll;
+		background-color: #fff;
+        color: #1fa8f2;
+		
+}
+
 .Instructions
 {
-	overflow-x: scroll;
+	
+	font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.4em;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+		overflow-x: scroll;
+		background-color: #fff;
+        color: #070707;
 }
 
 .restart:hover {

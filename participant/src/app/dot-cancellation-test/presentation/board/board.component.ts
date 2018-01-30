@@ -23,6 +23,19 @@ export class BoardComponent
     //this.HighlightGroupsOf4();	
 }
 
+  FalseNeg;
+  FalsePos;
+  TrueNeg;
+  TruePos;
+  
+  ShowResults = false;
+  
+  isBoardUnlocked = false;
+  
+   
+  public ResultsHeight : number = 0;
+
+
   seconds: string;
   countDown;
   counter = 900; // Starts on 900 Seconds (15 Minutes)
@@ -34,7 +47,13 @@ export class BoardComponent
   
   TimeTaken;
    
-   GameTitle = 'Dot Cancellation Test';
+  RestartGameButtonText = 'Start Test'; 
+   
+  DictionaryOfCellClicks = {}; 
+   
+  StartTest = false; 
+  
+  GameTitle = 'Dot Cancellation Test';
    
   ShowInstructions = false;
   
@@ -135,6 +154,13 @@ export class BoardComponent
 	  }
   }
   
+  HideInstructionsAndTest()
+  {
+	  this.ContainerClass = 'Hidecontainer';
+	  this.InstructionHeight = 0;	
+	  this.ShowInstructions = false;
+  }
+  
   
   CentreDotsWithinEachCell(i, NoOfDots)
   {
@@ -220,11 +246,11 @@ export class BoardComponent
 
 
   AddDot(position) {
-	  	
-	//if (!this.squares[position]) 
+	
+	if ( ((position > 24) && (this.isBoardUnlocked) ) || (position < 25) )
 	{
       this.squares[position] = 'X';
-
+      this.DictionaryOfCellClicks[position] +=1;
     }
 
   }
@@ -716,6 +742,8 @@ export class BoardComponent
 	
     for (var i = 0; i < this.dotones.length; i++) {
      
+	 this.DictionaryOfCellClicks[i] = 0;
+	 
 	 //Rand choose either 3,4 or 5 dots 
       var rand = NoOfDots[Math.floor(Math.random() * NoOfDots.length)];
 
@@ -753,34 +781,53 @@ export class BoardComponent
 
 
 
-
+  TEST()
+  {
+	 
+  }
 
 
   restartGame() {
   
     //ON START GAME 
 	
-	//Disable instructions button
-	this.DisableInstructions = true;
+	//Start Test
+	if (!this.StartTest)
+	{
+     //unlock board
+     this.isBoardUnlocked = true;
 	 
-	//Hide instructions and show the board
-	this.ShowInstructions = true;
-	this.ViewInstructions();
-	
-    //Start countdown timer from 15 mins	
-    this.StartCountDownTimer();
-
-    //Log All Interactions	
-	
-    
- 
+	 this.StartTest = true;	
+	 this.RestartGameButtonText = 'Finish Test'; 
+	   
+	 //Disable instructions button
+	 this.DisableInstructions = true;
+	 
+	 //Hide instructions and show the board
+	 this.ShowInstructions = true;
+	 this.ViewInstructions();
+	 
+     //Start countdown timer from 15 mins	
+     this.StartCountDownTimer();
+     
+	 
+	 
+     //Log All Interactions	
+	}
+	 else if(this.StartTest)
+	 {
 	//ON FINISH GAME
 	
+	this.StartTest = false;	
+	this.RestartGameButtonText = 'Start Test'; 
+	  
 	//Workout time taken to complete test
 	this.TimeTaken = ( 900 - this.counter );
 	
 	//Stop Timer
 	this.countDown = 0;
+	//reset timer
+	//this.countDown = 900;
 	
 	//Get Results
 	var results = this.GetResults();
@@ -789,7 +836,26 @@ export class BoardComponent
 	console.log("FalsePos : ", results[2] );
 	console.log("FalseNeg : ", results[3] );
 	
+	//Show Results	
+	this.ShowResults = true;
+    this.ResultsHeight = 200;
+	
+	this.TruePos  =results[0] ;
+	this.TrueNeg  =results[1] ;
+	this.FalsePos = results[2] ;
+	this.FalseNeg = results[3] ;
+	
+	
+	
+	//Hide Test and Insructuons
+	 this.HideInstructionsAndTest();
+	
+	
 	//Get All Interactions
+	//Dictionary of all the clicks per cell {CellPosition : NoOfClicks}
+	var NoOfClicksPerCell = this.DictionaryOfCellClicks;
+	}
+	
 	
   }
 
