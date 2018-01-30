@@ -16,7 +16,7 @@ export class BoardComponent
 	//this.CentreDotsWithinEachCell();
 	this.RandomlyPositionDots();	
 
-    this.HighlightGroupsOf4();	
+    //this.HighlightGroupsOf4();	
 }
 
   public NumberOfTotalDots = 625;
@@ -320,7 +320,7 @@ export class BoardComponent
 		  // this.dotFourX[i] = this.GenerateRandomWholeNum(X);
           // this.dotFourY[i] = this.GenerateRandomWholeNum(Y);
 		  
-		  // this.dotFiveX[i] = this.getRandomInt(6,13);
+		  // this.dotFiveX[i] = this.getRandomIntgetRandomInt(6,13);
 		  // this.dotFiveY[i] = this.GenerateRandomWholeNum(Y);
 		
 	  }
@@ -496,7 +496,7 @@ export class BoardComponent
 	  
 	  let  randomPosition: number = 0;
 	  
-	  let  EndOfRow: number = 25;
+	  let  EndOfRow: number = 24;
 	  
 	  let  max: number = 0;
 	  
@@ -518,9 +518,11 @@ export class BoardComponent
 		 if ( i == EndOfRow )
 		 {
 			 //init min and max for random number selection
-			 max = EndOfRow -1;
+			 max = EndOfRow ;
 			
 			 min = i - 25;
+			 
+			 console.log("MIN and MAX ARE:",min,","max)
 			 
 			 //While not 8 groups of 4
 			 while  ( numOfGroupsOfFourDots != 8 ) 
@@ -536,7 +538,7 @@ export class BoardComponent
 				   
 				   console.log("randomPosition:",randomPosition);
 				   //Choose a random number between 0 - 24, make sure it is not already a group of 4
-				   randomPosition = Math.floor(Math.random() * (max - min + 1)) + min;
+				   randomPosition = this.getRandomInt(min,max);
 				   
 				 } while ( this.getNumberOfDotsForCell(randomPosition) == 4 )
 				 
@@ -557,7 +559,7 @@ export class BoardComponent
 				   
 				   console.log("randomPosition:",randomPosition);
 				   //Choose a random number between 0 - 24, make sure it is not already a group of 4
-				   randomPosition = Math.floor(Math.random() * (max - min + 1)) + min;
+				   randomPosition = this.getRandomInt(min,max);
 				   
 				 } while ( this.getNumberOfDotsForCell(randomPosition) != 4 )
 				 
