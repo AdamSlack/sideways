@@ -20,8 +20,8 @@ namespace SDSA.Repository{
 
         public int CreateParticipantTest(ParticipantTest PT) => db.ExecuteScalar<int> (
             "insert into participant_tests (participant_id, clinician_id, preset_name,test_date) " + 
-            "values (@PID, @CID, @PresetName, @Date) returning test_id",
-            new {PID = PT.ParticipantId, CID = PT.ClinicianId, PresetName = PT.LocalePreset, Date = DateTime.Now}
+            "values (@PID, @CID, @PresetName, CURRENT_DATE) returning test_id",
+            new {PID = PT.ParticipantId, CID = PT.ClinicianId, PresetName = PT.LocalePreset}
         );
         
         public IEnumerable<int> GetParticipantTests(int participantId) => db.Query<int>(

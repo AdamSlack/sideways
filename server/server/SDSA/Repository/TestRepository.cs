@@ -18,24 +18,28 @@ namespace SDSA.Repository
         {
             db = DBFactory.getConnection(config);
         }
-        #region participantTest
-        public int SavePatricipantTest(ParticipantTest PT)
-        => db.ExecuteScalar<int>(
-            "insert into participant_test (test_id, participant_id , clinician_id) " +
-            "Values (DEFAULT,@ParticipentId, @ClinicianId) " +
-            "returning test_id",
-            PT
-            );
-        public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
-        => db.Query<ParticipantTest>(
-            "select test_id as TestId," +
-            "participant_id as ParticipantId," +
-            "clinician_id as ClinicianId" +
-            "from participant_tests " +
-            "where participant_id = @participantId",
-            new { participantId = participantid }
+        //@deprecated because this is just wrong to be here. Why all of sudden is there participant test creation code inside here like what standard
+        // #region participantTest
+        // public int SavePatricipantTest(ParticipantTest PT)
+        // => db.ExecuteScalar<int>(
+        //     "insert into participant_test (test_id, participant_id , clinician_id) " +
+        //     "Values (DEFAULT,@ParticipentId, @ClinicianId) " +
+        //     "returning test_id",
+        //     PT
+        //     );
 
-            );
+        // public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
+        // => db.Query<ParticipantTest>(
+        //     "select test_id as TestId," +
+        //     "participant_id as ParticipantId," +
+        //     "clinician_id as ClinicianId" +
+        //     "from participant_tests " +
+        //     "where participant_id = @participantId",
+        //     new { participantId = participantid }
+
+        //     );
+        
+        //TODO: remvoe this one but apparently needed for some call
         public ParticipantTest GetParticipantsTest(int testId)
         => db.ExecuteScalar<ParticipantTest>(
             "select test_id as TestId, " +
@@ -46,7 +50,9 @@ namespace SDSA.Repository
             new { TestId = testId }
 
             );
-        #endregion
+        // #endregion
+
+
         #region DCT
         public void SaveDotCancellationTest(DotCancellationTest DCT)
         {
