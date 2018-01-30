@@ -51,23 +51,24 @@ enum compassDir {
   East_WestSouth,
 } 
 
+//"N NE E SE / S SW W NW"
 const square_keys = [
-  "SEW",
-  "NEW",
-  "SWW",
-  "EW",
-  "SENW",
-  "NENW",
-  "SENW",
-  "ENW",
-  "SEN",
-  "NEN",
-  "SWN",
-  "EN",
-  "SES",
+  "NS",
+  "NSW",
+  "NW",
+  "NNW",
   "NES",
-  "SWS",
-  "EWS"
+  "NESW",
+  "NEW",
+  "NENW",
+  "ES",
+  "ESW",
+  "EW",
+  "ENW",
+  "SES",
+  "SESW",
+  "SEW",
+  "SENW"
 ]
 
 const card_keys = [
@@ -97,7 +98,8 @@ const card_keys = [
 "S" + "W",
 "S" + "NW",
 "SW" + "W",
-"NW" + "NW"]
+"SW" + "NW",
+"NW" + "W"]
 
 var server_root = 'http://localhost:5000/';
 
@@ -301,7 +303,7 @@ export class CompassDirectionsTestComponent implements OnInit {
         
         if(element !== undefined)  {
           console.log("Checking : ", element);
-          let elemnt_idx :number = element + 1;
+          let elemnt_idx :number = element;
           let c_key = card_keys[element];
 
           console.log("Card key: ", c_key, elemnt_idx);
