@@ -7,7 +7,7 @@ import { CompassDirectionsTestComponent } from './components/compass-directions-
 import { RoadScenariosTestComponent } from './components/road-scenarios-test/road-scenarios-test.component';
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 import { HomeSelectionComponent } from './components/home-selection/home-selection.component';
-
+import { AssessmentManagerComponent } from './components/assessment-manager/assessment-manager.component'
 
 import { Route } from '@angular/compiler/src/core';
 
@@ -30,6 +30,10 @@ export const trail_making_route : Routes = [
   {  path:'test/trail_making', component: TrailMakingTestComponent}
 ]
 
+export const assessment_manager : Routes = [ 
+  {  path:'test/home', component: AssessmentManagerComponent}
+]
+
 // const GenericTestRoute =[{
 //   { path: 'test/:test_id', component:  },
 // }]
@@ -39,7 +43,7 @@ export const trail_making_route : Routes = [
 //Create the desired routeing
 
 //Lol the cat
-export const all_routes: Routes = test_game_routes.concat(home_route).concat(trail_making_route);
+export const all_routes: Routes = test_game_routes.concat(home_route).concat(trail_making_route).concat(assessment_manager);
 
 @NgModule({
   imports: [ RouterModule.forRoot(all_routes) ],  

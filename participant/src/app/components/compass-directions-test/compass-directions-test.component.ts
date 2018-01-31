@@ -154,7 +154,6 @@ export class CompassDirectionsTestComponent implements OnInit {
   /*
    * Subscribes to a request for localisation preset details.
    * If no preset details have successfully been obtained, it returns back to the login screen.
-   *
    */
   public initLocaleSettings() : void {
     console.log('Initialising Game Localisation settings.');

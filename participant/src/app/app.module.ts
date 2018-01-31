@@ -14,6 +14,7 @@ import { TrailMakingTestComponent } from './components/trail-making-test/trail-m
 
 import { HomeSelectionComponent } from './components/home-selection/home-selection.component';
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
+import { AssessmentManagerComponent } from './components/assessment-manager/assessment-manager.component';
 
 
 
@@ -37,7 +38,7 @@ import { TestDealerService } from './services/test-dealer.service';
     TrailMakingTestComponent,
     LoginScreenComponent,
     HomeSelectionComponent,
-
+    AssessmentManagerComponent,
   ],
   imports: [
     BrowserModule,
