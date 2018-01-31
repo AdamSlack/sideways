@@ -22,7 +22,6 @@ export const home_route : Routes = [
   {  path:'home', component: HomeSelectionComponent}
 ]
 
-
 export const trail_making_route : Routes = [ 
   {  path:'trail_making', component: TrailMakingTestComponent}
 ]
@@ -38,10 +37,8 @@ export const test_game_routes : Routes = [{
 }]
 
 export const assessment_manager : Routes = [ 
-  {  path:'test', component: AssessmentManagerComponent,  children: test_game_routes}
+  {  path:'test', component: AssessmentManagerComponent, children: test_game_routes}
 ]
-
-
 
 // export const re_routing : Routes = [
 //   { path: '', redirectTo: '/login', pathMatch: 'full' }
@@ -53,7 +50,6 @@ login
 .concat(home_route)
 .concat(assessment_manager)
 .concat(trail_making_route)
-.concat(test_game_routes)
 // .concat(re_routing);
 
 @NgModule({

@@ -13,8 +13,10 @@ export class AssessmentManagerComponent implements OnInit {
 
   public dealer : TestDealerService;
   
-  constructor(private _router: Router, private test_dealer : TestDealerService) { 
+  constructor(private _router: Router, public test_dealer : TestDealerService) { 
     this.dealer = test_dealer;
+    console.log("Current route: ", _router.url)
+    console.log("First test: ", this.dealer.current_test);
   }
 
   ngOnInit() {
