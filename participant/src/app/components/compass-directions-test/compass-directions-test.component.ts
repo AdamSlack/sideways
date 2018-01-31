@@ -125,7 +125,6 @@ export class CompassDirectionsTestComponent implements OnInit {
               private locale : AssetRetrievalService,
               private test_dealer : TestDealerService
             ) {
-            
             }
 
   // Localisation Preset Data

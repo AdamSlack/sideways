@@ -17,5 +17,10 @@ those who were found to be unsafe to drive on the road (Nouri & Lincoln
 1993). 
 </div>
 
-<button routerLink="{{test_dealer.current_test.path}}"> Begin Ass</button>
 
+<a routerLink="{{dealer.current_test.path}}"> Begin Assessment: {{test_dealer.current_test.path}}</a>
+
+<router-outlet></router-outlet>
+
+
+<!-- i shouldn't have to reinclude the router -->
