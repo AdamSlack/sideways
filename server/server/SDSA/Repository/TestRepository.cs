@@ -53,8 +53,8 @@ namespace SDSA.Repository
             new { TestId = testId }
 
             );
-        #endregion
 
+        #endregion
 
         #region DCT
         public void SaveDotCancellationTest(DotCancellationTest DCT)
@@ -77,9 +77,9 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
 
                 new { TestId = TestId }
-
                 );
         #endregion
+
         #region CaDT
         public CarDirectionsTest GetCarDirectionsTest(int TestId)
             => db.ExecuteScalar<CarDirectionsTest>(
@@ -91,13 +91,15 @@ namespace SDSA.Repository
                 ,
                 new { TestId = TestId }
                 );
+
         public void SaveCarDirectionTest(CarDirectionsTest CDT)
             => db.Execute(
-                "insert into car_directions (test_Id , time_taken, points)" +
-                "Values (@TestId , @TimeTaken, @Points)",
-                CDT
+                "insert into car_directions (test_Id , time_taken, points, test_date)" +
+                "Values (@TestId , @TimeTaken, @Points, now())",
+                new {TestId = CDT.TestId, TimeTaken = CDT.TimeTaken, Points = CDT.points }
                 );
         #endregion
+
         #region CoDT
         public CompassDirectionsTest GetCompassDirectionsTest(int TestId)
             => db.ExecuteScalar<CompassDirectionsTest>(
@@ -120,6 +122,8 @@ namespace SDSA.Repository
                 );
         }
         #endregion
+
+
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)
             => db.ExecuteScalar<RoadScenariosTest>
@@ -138,6 +142,8 @@ namespace SDSA.Repository
                 RST
                 );
         #endregion RST
+
+
         #region TMT
         public TrailMakingTest GetTrailMakingTest(int TestId)
             => db.ExecuteScalar<TrailMakingTest>(
@@ -148,12 +154,14 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
                  new { TestId = TestId }
                 );
+                
         public void SaveTrailMakingTest(TrailMakingTest TMT)
             => db.Execute(
                 "insert into road_Scenarios (test_Id , time_taken, mistakes) " +
                 "Values (@TestId , @TimeTaken, @Mistakes)",
                 TMT);
         #endregion
+
 
         public string GetParticipantTestPresetName(int testID)
             => db.ExecuteScalar<string>(
