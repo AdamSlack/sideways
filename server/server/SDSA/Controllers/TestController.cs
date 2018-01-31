@@ -87,7 +87,7 @@ namespace SDSA.Controllers
         }
 
         [HttpPost]
-        public IActionResult RoadScenarioResult(int TestId, RoadScenariosTest RST)
+        public IActionResult RoadScenarioResult(int TestId, [FromBody] RoadScenariosTest RST)
         {
             
             RST.TestId = TestId;
@@ -100,9 +100,11 @@ namespace SDSA.Controllers
 
             return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-        [HttpPost]
-        public IActionResult CompassDirectionResult(int TestId, CompassDirectionsTest CDT)
+
+        [HttpPost("[controller]/results/CompassDirections/{TestId}")]
+        public IActionResult CompassDirectionResult(int TestId, [FromBody] CompassDirectionsTest CDT)
         {
+            Console.WriteLine("Results Are : \n Points - " + CDT.Points + "\nTime Taken - " + CDT.TimeTaken);
             
             CDT.TestId = TestId;
             if (ModelState.IsValid)
