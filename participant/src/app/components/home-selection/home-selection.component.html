@@ -2,10 +2,10 @@
 
 
 
-<button routerLink="{{trail_making.path}}"> {{trail_making.path}} </button>
+<div *ngIf=" '/' === router.url"  >
 
-<button routerLink="{{home.path}}"> {{home.path}} </button>
+  <button routerLink="{{trail_making.path}}"> {{trail_making.path}} </button>
 
+  <button routerLink="{{home.path}}"> {{router.url}} </button>
 
-<router-outlet></router-outlet>
-
+</div>

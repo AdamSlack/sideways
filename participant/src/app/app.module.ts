@@ -15,6 +15,8 @@ import { TrailMakingTestComponent } from './components/trail-making-test/trail-m
 import { HomeSelectionComponent } from './components/home-selection/home-selection.component';
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
 
+
+
 // services
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
@@ -22,7 +24,7 @@ import { FabricService } from './services/fabric.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthenticationService } from './services/authentication.service';
 import { AssetRetrievalService } from './services/asset-retrieval.service';
-
+import { TestDealerService } from './services/test-dealer.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,7 @@ import { AssetRetrievalService } from './services/asset-retrieval.service';
     AppRoutingModule,
   ],
 
-  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService],
+  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService,TestDealerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

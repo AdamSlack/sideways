@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { test_game_routes } from '../app-routing.module';
-import { start } from 'repl';
 
+import { home_route } from '../app-routing.module';
+import { test_game_routes } from '../app-routing.module';
 
 @Injectable()
 export class TestDealerService {
 
 
-  start_test = 0;
+  start_test : number = 0;
 
   current_test : Routes;
 
   constructor() {}
   
-  public step_tests() {
-    start_test++;
-  }
+  public get_next_game_tests() {
+    this.start_test += 1;
 
-  public begin_core_test() {
-    //Starting testing
+    test_game_routes[0]
+     
+    
   }
 
 }
