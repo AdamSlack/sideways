@@ -12,7 +12,7 @@ import { CompassDirectionsTestComponent } from './components/compass-directions-
 import { RoadScenariosTestComponent } from './components/road-scenarios-test/road-scenarios-test.component';
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 
-import {HomeSelectionComponent } from './components/home-selection/home-selection.component';b
+import { HomeSelectionComponent } from './components/home-selection/home-selection.component';
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
 
 // services
