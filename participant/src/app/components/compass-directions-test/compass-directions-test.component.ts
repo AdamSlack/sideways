@@ -10,6 +10,7 @@ import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
 import { race } from 'q';
 import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
+import { TestDealerService } from '../../services/test-dealer.service';
 
 import "fabric"
 
@@ -121,7 +122,8 @@ export class CompassDirectionsTestComponent implements OnInit {
               private fab: FabricService,
               private http: HttpClient,
               private auth : AuthenticationService,
-              private locale : AssetRetrievalService
+              private locale : AssetRetrievalService,
+              private test_dealer : TestDealerService
             ) {
             
             }

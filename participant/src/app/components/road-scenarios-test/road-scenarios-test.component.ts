@@ -5,12 +5,13 @@ import { FabricService } from '../../services/fabric.service'
 
 //For requesting data structures
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-
-import "fabric"
+import { TestDealerService } from '../../services/test-dealer.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
+
+
+import "fabric"
 declare const fabric: any;
 
 //Canvas for displaying things

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { FabricService } from '../../services/fabric.service'
+import { TestDealerService } from '../../services/test-dealer.service';
+
 
 import "fabric"
 import { Subscription } from 'rxjs/Subscription';
@@ -54,7 +56,8 @@ export class CarDirectionsTestComponent implements OnInit {
     private timer : RecordTimingService, 
     private fab: FabricService,
     public auth : AuthenticationService,
-    public locale : AssetRetrievalService
+    public locale : AssetRetrievalService,
+    public test_dealer : TestDealerService 
   ) { }
   
   public localeSubscription : Subscription;

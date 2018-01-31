@@ -16,7 +16,7 @@ export class TestDealerService {
     console.log("Base Test:",this.current_test.path);
   }
   
-  public get_next_game_tests() {
+  public next_game_tests() {
     this.start_test += 1;
     this.current_test = test_game_routes[this.start_test];
     console.log("Next test: ",this.current_test.path);
