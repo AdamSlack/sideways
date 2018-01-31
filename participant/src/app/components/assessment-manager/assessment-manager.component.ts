@@ -11,7 +11,7 @@ import { TestDealerService } from '../../services/test-dealer.service';
 })
 export class AssessmentManagerComponent implements OnInit {
 
-  dealer : TestDealerService;
+  public dealer : TestDealerService;
   
   constructor(private _router: Router, private test_dealer : TestDealerService) { 
     this.dealer = test_dealer;

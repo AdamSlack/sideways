@@ -8,42 +8,53 @@ import { RoadScenariosTestComponent } from './components/road-scenarios-test/roa
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 import { HomeSelectionComponent } from './components/home-selection/home-selection.component';
 import { AssessmentManagerComponent } from './components/assessment-manager/assessment-manager.component'
+import { LoginScreenComponent } from './components/login-screen/login-screen.component'
+
 
 import { Route } from '@angular/compiler/src/core';
 
-export const test_game_routes : Routes = [{
-  path:'test/dot_cancellation', component: DotCancellationTestComponent
-}, {
-  path:'test/car_directions', component: CarDirectionsTestComponent
-}, {
-  path:'test/compass_directions', component: CompassDirectionsTestComponent
-}, {
-  path:'test/road_scenarios', component: RoadScenariosTestComponent
-}
+
+export const login : Routes = [ 
+  {  path:'login', component: LoginScreenComponent}
 ]
 
 export const home_route : Routes = [ 
-  {path:'home/', component: HomeSelectionComponent}
+  {  path:'home', component: HomeSelectionComponent}
 ]
+
 
 export const trail_making_route : Routes = [ 
-  {  path:'test/trail_making', component: TrailMakingTestComponent}
+  {  path:'trail_making', component: TrailMakingTestComponent}
 ]
+
+export const test_game_routes : Routes = [{
+  path:'dot_cancellation', component: DotCancellationTestComponent
+}, {
+  path:'car_directions', component: CarDirectionsTestComponent
+}, {
+  path:'compass_directions', component: CompassDirectionsTestComponent
+}, {
+  path:'road_scenarios', component: RoadScenariosTestComponent
+}]
 
 export const assessment_manager : Routes = [ 
-  {  path:'test/home', component: AssessmentManagerComponent}
+  {  path:'test', component: AssessmentManagerComponent,  children: test_game_routes}
 ]
 
-// const GenericTestRoute =[{
-//   { path: 'test/:test_id', component:  },
-// }]
 
-//TODO: default route?
-//path: '', redirectTo: '/', pathMatch: 'full'
-//Create the desired routeing
+
+// export const re_routing : Routes = [
+//   { path: '', redirectTo: '/login', pathMatch: 'full' }
+// ]
 
 //Lol the cat
-export const all_routes: Routes = test_game_routes.concat(home_route).concat(trail_making_route).concat(assessment_manager);
+export const all_routes: Routes = 
+login
+.concat(home_route)
+.concat(assessment_manager)
+.concat(trail_making_route)
+.concat(test_game_routes)
+// .concat(re_routing);
 
 @NgModule({
   imports: [ RouterModule.forRoot(all_routes) ],  

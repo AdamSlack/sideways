@@ -12,7 +12,9 @@ export class TestDealerService {
 
   current_test : Route = test_game_routes[0];
 
-  constructor() {}
+  constructor() {
+    console.log("Base Test:",this.current_test.path);
+  }
   
   public get_next_game_tests() {
     this.start_test += 1;
