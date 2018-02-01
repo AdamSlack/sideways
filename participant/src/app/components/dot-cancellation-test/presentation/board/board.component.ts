@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+'use strict';
+
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { NgIf } from '@angular/common';
+import { AuthenticationService } from '../../../../services/authentication.service';
+import { Subscription } from 'rxjs/Subscription';
+import { AssetRetrievalService } from '../../../../services/asset-retrieval.service';
 
 declare var angular: any;
 @Component({
@@ -8,8 +13,94 @@ declare var angular: any;
 	templateUrl: './board.component.html',
 	styleUrls: ['./board.component.scss']
 })
+
 export class BoardComponent {
-	constructor() {
+
+	
+	//Variables for the results 
+	public falseNegatives : number = 0;
+	public falsePositives : number = 0;
+	public trueNegatives : number = 0;
+	public truePositives : number = 0;
+
+
+	//if true then the results div is shown
+	public showResults : boolean = false;
+	
+	//if true then user can mark cells after the first row
+	public isBoardUnlocked : boolean = false;
+
+	//The height of the results div
+	public resultsHeight: number = 0;
+
+	//The timer object
+	public countDown : any;
+
+	// Seconds the timer Starts on - (900 Seconds/15 Minutes)
+	public counter : number = 900;
+
+	//The unit the timer decrements in (1 second)
+	public tick : number = 1000;
+
+	//Total number of cells on the Board (each cell is a group of dots)
+	public NumberOfCells : number = 625;
+
+	//Stores the final time taken to complete the test
+	public TimeTaken : any;
+
+	//Text of the test button
+	public testButtonText : string = 'Start Test';
+
+	//Holds the clicks per cell
+	public dictionaryOfCellClicks : any = {};
+
+	public startTest : boolean = false;
+
+	//Variables to show and hide instructions
+	public instructionVisibiliy : string = "'visible'";
+	public instructionsButtonText : string = 'Hide Instructions';
+	public instructionHeight: number = 0;
+	public showInstructions : boolean = false;
+	public disableInstructions : boolean = false;
+
+	//Decides the class of the board container
+	public containerClass : string = 'hideContainer';
+
+	//An array to save if the cell has been selected or not  
+	public cellsSelected : Array<any> = Array(this.NumberOfCells).fill(null);
+
+	//An array for each dot 
+	public dotones : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dottwos : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotthrees : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotfours : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotfives : Array<any> = Array(this.NumberOfCells).fill(null);
+
+	//Arrays for the x and y positions of each dot within each cell
+	public dotoneX : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotoneY : Array<any> = Array(this.NumberOfCells).fill(null);
+
+	public dotTwoX : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotTwoY : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotThreeX : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotThreeY : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotFourX : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotFourY : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotFiveX : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotFiveY : Array<any> = Array(this.NumberOfCells).fill(null);
+	
+	// Localisation Preset Data
+	public testTitle : string = '';
+	public testInstructions : string = '';
+	public compassLabel : string = '';
+	public deckLabel : string = '';
+	public localeSubscription : Subscription;
+	  
+
+	constructor(
+		public auth : AuthenticationService,
+		public locale : AssetRetrievalService
+	) {
 
 		//Show the instructions by default when first loading the app	
 		this.ToggleInstructionsandBoard();
@@ -29,96 +120,55 @@ export class BoardComponent {
 		//this.HighlightGroupsOf4();	
 	}
 
-	//Variables for the results 
-	falseNegatives;
-	falsePositives;
-	trueNegatives;
-	truePositives;
 
-	//if true then the results div is shown
-	showResults = false;
-
-	//if true then user can mark cells after the first row
-	isBoardUnlocked = false;
-
-	//The height of the results div
-	public resultsHeight: number = 0;
-
-	//The timer object
-	countDown;
-
-	// Seconds the timer Starts on - (900 Seconds/15 Minutes)
-	counter = 900;
-
-	//The unit the timer decrements in (1 second)
-	tick = 1000;
-
-	//Total number of cells on the Board (each cell is a group of dots)
-	public NumberOfCells = 625;
-
-	//Stores the final time taken to complete the test
-	TimeTaken;
-
-	//Text of the test button
-	testButtonText = 'Start Test';
-
-	//Holds the clicks per cell
-	dictionaryOfCellClicks = {};
-
-	startTest = false;
-
-	testTitle = 'Dot Cancellation Test';
-
-	//Variables to show and hide instructions
-	instructionVisibiliy = "'visible'";
-	instructionsButtonText = 'Hide Instructions';
-	public instructionHeight: number = 0;
-	showInstructions = false;
-	disableInstructions = false;
-
-	//Decides the class of the board container
-	containerClass = 'hideContainer';
-
-	//An array to save if the cell has been selected or not  
-	cellsSelected = Array(this.NumberOfCells).fill(null);
-
-	//An array for each dot 
-	dotones = Array(this.NumberOfCells).fill(null);
-	dottwos = Array(this.NumberOfCells).fill(null);
-	dotthrees = Array(this.NumberOfCells).fill(null);
-	dotfours = Array(this.NumberOfCells).fill(null);
-	dotfives = Array(this.NumberOfCells).fill(null);
-
-	//Arrays for the x and y positions of each dot within each cell
-	dotoneX = Array(this.NumberOfCells).fill(null);
-	dotoneY = Array(this.NumberOfCells).fill(null);
-
-	dotTwoX = Array(this.NumberOfCells).fill(null);
-	dotTwoY = Array(this.NumberOfCells).fill(null);
-
-	dotThreeX = Array(this.NumberOfCells).fill(null);
-	dotThreeY = Array(this.NumberOfCells).fill(null);
-
-	dotFourX = Array(this.NumberOfCells).fill(null);
-	dotFourY = Array(this.NumberOfCells).fill(null);
-
-	dotFiveX = Array(this.NumberOfCells).fill(null);
-	dotFiveY = Array(this.NumberOfCells).fill(null);
+	ngOnInit(){
+		this.initLocaleSettings();
+	}
+  /*
+   * Subscribes to a request for localisation preset details.
+   * If no preset details have successfully been obtained, it returns back to the login screen.
+   *
+   */
+	public initLocaleSettings() : void {
+		console.log('Initialising Game Localisation settings.');
+		if (this.localeSubscription) {
+		console.log('An existing subscription for locale assets was found. Unsubscribing.');
+		this.localeSubscription.unsubscribe();
+		}
+		if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
+		alert('No valid localisation details found. returning to login.');
+		this.auth.VALIDATED = false;
+		this.auth.CLINICIAN_ID = '';
+		this.auth.PARTICIPANT_TEST_ID = '';
+		this.auth.AUTH_TOKEN = '';
+		this.auth.PARTICIPANT_TEST_LOCALE = '';
+		return;
+		}
+		console.log('Requesting asset retrieval service fetches Dot Cancellation locale assets.');
+		this.localeSubscription = this.locale.selectDotCancellationDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+		console.log('Response for Dot Cancellation game assets recieved from servr.');
+		this.testTitle = res['name'] ? res['name'] : 'Dot Cancellation Test';
+		this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
+		console.log('Test title: ' + res['name']);
+		console.log('Test instructions: ' + res['instructions']);
+		});
+	}
+	
 
 	//Reieves the GameTitle, instructiontitle, Instructions, Testbuttontext
-	InitGametext() {
-
+	public InitGametext() : void {
+		console.log("I Do Nothing.");
 	}
 
 	//Starts a countdown from value of counter when called
-	StartCountDownTimer() {
+	public StartCountDownTimer() : void {
 		this.countDown = Observable.timer(0, this.tick)
 			.take(this.counter)
 			.map(() => --this.counter)
 	}
 
 	// toggles between Showing board and hiding instructions
-	ToggleInstructionsandBoard() {
+	public ToggleInstructionsandBoard() : void {
 		if (this.showInstructions) {
 			//Hide Instructions, show board
 			this.containerClass = 'showContainer';
@@ -136,13 +186,13 @@ export class BoardComponent {
 	}
 
 	//Hides both  instructions and the test board
-	HideInstructionsAndTest() {
+	public HideInstructionsAndTest() : void {
 		this.containerClass = 'hideContainer';
 		this.instructionHeight = 0;
 		this.showInstructions = false;
 	}
 
-	CentreDotsWithinEachCell(i, NoOfDots) {
+	public CentreDotsWithinEachCell(i, NoOfDots) : void {
 
 		// Xvalues = Array(5).fill(null); 
 		//for each dot if it is populated then centre it relative to the cell
@@ -165,7 +215,7 @@ export class BoardComponent {
 	}
 
 	//Returns an array of results with (TruePos, TrueNeg, FalsePos, FalseNeg)
-	GetResults() {
+	public GetResults() : Array<any> {
 		var results = Array(4).fill(null);
 
 		//Miss out the first row as that is a practice row
@@ -213,7 +263,7 @@ export class BoardComponent {
 	}
 
 	//Highlights and marks cell selected
-	HighlightCell(position) {
+	public HighlightCell(position) : void {
 		//Check if the user has started the test
 		if (((position > 24) && (this.isBoardUnlocked)) || (position < 25)) {
 			this.cellsSelected[position] = 'X';
@@ -222,8 +272,8 @@ export class BoardComponent {
 	}
 
 	//Calculates and returns the number of dots for cell position passed in
-	GetNumberOfDotsForCell(position) {
-		var result = 0;
+	public GetNumberOfDotsForCell(position) : number {
+		var result : number = 0;
 		if (this.dotones[position] == ".") { result = result + 1; }
 		if (this.dottwos[position] == ".") { result = result + 1; }
 		if (this.dotthrees[position] == ".") { result = result + 1; }
@@ -234,7 +284,7 @@ export class BoardComponent {
 	}
 
 	//Gets random xvalues for a cell
-	GetXValues() {
+	public GetXValues() : Array<any> {
 		var XValues = Array(5).fill(null);
 
 		//Populate an Array of all the X Values of the Dots
@@ -248,7 +298,7 @@ export class BoardComponent {
 	}
 
 	//Gets random yvalues for a cell
-	GetYValues() {
+	public GetYValues() : Array<any> {
 		var YValues = Array(5).fill(null);
 		YValues[0] = this.GenerateRandomWholeNum("Y");
 		YValues[1] = this.GenerateRandomWholeNum("Y");
@@ -260,7 +310,7 @@ export class BoardComponent {
 	}
 
 	//Randomly position dots within each cell
-	RandomlyPositionDots() {
+	public RandomlyPositionDots() : void {
 		var X = "X";
 		var Y = "Y";
 		var XValues = this.GetXValues();
@@ -289,7 +339,7 @@ export class BoardComponent {
 		}
 	}
 
-	differenceLessThan2(x1, y1, x2, y2) {
+	public differenceLessThan2(x1, y1, x2, y2) : boolean {
 
 		// console.log("Num1 is ", num1);
 		//console.log("Num2 is ", num2);
@@ -327,8 +377,7 @@ export class BoardComponent {
 	}
 
 
-	isDotsTouchingTwo(XValues, YValues) {
-		var result = false;
+	public isDotsTouchingTwo(XValues, YValues) : boolean {
 		for (var i = 0; i < XValues.length; i++) {
 			for (var j = i + 1; j < XValues.length; j++) {
 				if (this.differenceLessThan2(XValues[i], YValues[i], XValues[j], YValues[j])) {
@@ -336,7 +385,7 @@ export class BoardComponent {
 				}
 			}
 		}
-		return result;
+		return false;
 	}
 
 	// isDotsTouching(XValues, YValues)
@@ -397,12 +446,12 @@ export class BoardComponent {
 	// }
 
 	//Returns a random int between min and max range
-	GetRandomInt(min, max) {
+	public GetRandomInt(min, max) : number {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
 	//Generates a random x or y position within boundaries of cell
-	GenerateRandomWholeNum(XorY) {
+	public GenerateRandomWholeNum(XorY) : number {
 		var Range = 0;
 		if (XorY == "X") {
 			Range = 4;
@@ -421,7 +470,7 @@ export class BoardComponent {
 	}
 
 	//Iterates over each cell and highlights the groups of 4
-	HighlightGroupsOf4() {
+	public HighlightGroupsOf4() : void {
 		for (var i = 0; i < this.dotones.length; i++) {
 			if (this.GetNumberOfDotsForCell(i) == 4) {
 				this.HighlightCell(i);
@@ -430,7 +479,7 @@ export class BoardComponent {
 	}
 
 	//Iterate over each cell in each row and ensure 8 groups of 4 per row 
-	EnsureEightGroupsOfFoursPerRow() {
+	public EnsureEightGroupsOfFoursPerRow() : void {
 		let numOfGroupsOfFourDots: number = 0;
 
 		let randomPosition: number = 0;
@@ -484,7 +533,7 @@ export class BoardComponent {
 	}
 
 	//Populate 4 dots in position selected
-	RandomlyPopulateFourDotsInPosition(position) {
+	public RandomlyPopulateFourDotsInPosition(position) : void {
 		var NoOfDots = 4;
 
 		var dotsToInit = [1, 2, 3, 4, 5];
@@ -520,7 +569,7 @@ export class BoardComponent {
 	}
 
 	//Populate 3 or 5 dots in position selected
-	RandomlyPopulateThreeOrFiveDotsInPosition(position) {
+	public RandomlyPopulateThreeOrFiveDotsInPosition(position) : void{
 		var NoOfDots = [3, 5];
 		var dotsToInit = [1, 2, 3, 4, 5];
 
@@ -558,7 +607,7 @@ export class BoardComponent {
 	}
 
 	//Populate 3,4 or 5 dots in each position
-	RandomlyPopulateDots() {
+	public RandomlyPopulateDots() : void {
 
 		var NoOfDots = [3, 4, 5];
 		var dotsToInit = [1, 2, 3, 4, 5];
@@ -593,16 +642,16 @@ export class BoardComponent {
 		}
 	}
 
-	TEST() {
+	public TEST() : void {
 		this.TimeTaken = this.counter;
 	}
 
 	//returns the total time taken to do test
-	GetTimeTaken() {
+	public GetTimeTaken() : number {
 		return (900 - this.counter);
 	}
 
-	StartTest() {
+	public StartTest() : void {
 		//unlock board
 		this.isBoardUnlocked = true;
 		this.startTest = true;
@@ -621,7 +670,7 @@ export class BoardComponent {
 		//Log All Interactions	
 	}
 
-	EndTest() {
+	public EndTest() : void {
 		//ON FINISH GAME
 		this.startTest = false;
 
@@ -651,7 +700,7 @@ export class BoardComponent {
 		var NoOfClicksPerCell = this.dictionaryOfCellClicks;
 	}
 
-	RestartTest() {
+	public RestartTest() : void {
 		if (!this.startTest) {
 			this.StartTest();
 		}
