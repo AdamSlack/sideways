@@ -196,25 +196,25 @@ insert into trail_making_details(preset_name, name, instructions, trail_a, trail
 ----
 --  Road Rign Scenario Test: Some test Scenarios. 1-5
 ----
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign1', 'roadSigns/test/Scene1');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign2', 'roadSigns/test/Scene2');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign3', 'roadSigns/test/Scene3');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign4', 'roadSigns/test/Scene4');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign1', 'roadScenarios/test/Scene1');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign2', 'roadScenarios/test/Scene2');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign3', 'roadScenarios/test/Scene3');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign4', 'roadScenarios/test/Scene4');
 
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign5', 'roadSigns/test/Scene5');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign6', 'roadSigns/test/Scene6');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign7', 'roadSigns/test/Scene7');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign8', 'roadSigns/test/Scene8');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign5', 'roadScenarios/test/Scene5');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign6', 'roadScenarios/test/Scene6');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign7', 'roadScenarios/test/Scene7');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign8', 'roadScenarios/test/Scene8');
 
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign9', 'roadSigns/test/Scene9');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign10', 'roadSigns/test/Scene10');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign11', 'roadSigns/test/Scene11');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign12', 'roadSigns/test/Scene12');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign9', 'roadScenarios/test/Scene9');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign10', 'roadScenarios/test/Scene10');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign11', 'roadScenarios/test/Scene11');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign12', 'roadScenarios/test/Scene12');
 
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign13', 'roadSigns/test/Scene13');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign14', 'roadSigns/test/Scene14');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign15', 'roadSigns/test/Scene15');
-insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign16', 'roadSigns/test/Scene16');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign13', 'roadScenarios/test/Scene13');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign14', 'roadScenarios/test/Scene14');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign15', 'roadScenarios/test/Scene15');
+insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file_type, sign_image, scene_image) values ( 'test', 1,1,'png','png', 'roadSigns/test/Sign16', 'roadScenarios/test/Scene16');
 
 ----
 --  Test participant and particiant-test data.

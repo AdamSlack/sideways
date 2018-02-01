@@ -232,7 +232,7 @@ namespace SDSA.Repository
             int idx = 1;
             foreach (RoadSignScenario RSS in RSD.RoadSignScenarios){
                 
-
+                // This needs putting into a try catch as well as a precheck for base 64 string....
                 System.IO.File.WriteAllBytes("wwwroot/" + signPath + "Sign" + idx + ".png", Convert.FromBase64String(RSS.SignImage.Replace("data:image/png;base64,", String.Empty)));
                 System.IO.File.WriteAllBytes("wwwroot/" + scenePath + "Scene" + idx + ".png", Convert.FromBase64String(RSS.SceneImage.Replace("data:image/png;base64,", String.Empty)));
                 
