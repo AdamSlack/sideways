@@ -13,6 +13,10 @@ import { RoadScenariosTestComponent } from './components/road-scenarios-test/roa
 import { TrailMakingTestComponent } from './components/trail-making-test/trail-making-test.component';
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
 
+import { BoardComponent} from './components/dot-cancellation-test/presentation/board/board.component';
+import { CellComponent} from './components/dot-cancellation-test/presentation/cell/cell.component';
+
+
 // services
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
@@ -32,6 +36,8 @@ import { AssetRetrievalService } from './services/asset-retrieval.service';
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
     LoginScreenComponent,
+	CellComponent,
+	BoardComponent,
 
   ],
   imports: [
