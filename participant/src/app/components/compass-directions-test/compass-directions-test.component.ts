@@ -141,7 +141,7 @@ export class CompassDirectionsTestComponent implements OnInit {
     }
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
     this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
-      console.log('Response for Compass Direction game assets recieved from servr.');
+      console.log('Response for Compass Direction game assets recieved from server.');
       this.testTitle = res['name'] ? res['name'] : 'Compass Directions';
       this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
       this.compassLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Compass';
