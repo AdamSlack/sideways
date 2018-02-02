@@ -6,12 +6,13 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:8080/';
+  public ROOT : string = 'http://localhost:5000/';
   
-  public createHeaders() {
-    return {
-      headers: new HttpHeaders().set('Authorization', 'my-auth-token')
-    }
+  public createHeaders() : HttpHeaders {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*')
+    return headers;
   }
 
   public insertDotCancellationResults(p_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
@@ -73,11 +74,12 @@ export class ResultsService {
   }
 
   public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+    console.log("Sending: ", time_taken, mistakes);
+    let url =  this.ROOT + 'Test/' + p_id + '/results/trail_making';
     
     let body = {
-      'time_taken': time_taken,
-      'mistakes': mistakes
+      'TimeTaken': time_taken,
+      'Mistakes': mistakes
     }
 
     console.log('TRAIL MAKING: ')

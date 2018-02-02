@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
+import { ResultsService } from '../../services/results.service';
 
 import 'fabric';
 
@@ -76,13 +77,18 @@ export class TrailMakingTestComponent implements OnInit
   
   title = 'app';
 
-  constructor() 
+  constructor(private rs: ResultsService
+  ) 
   {
   }
 
   ngOnInit() 
   {
 
+  }
+
+  public sendResults() {
+    this.rs.insertTrailMaking(1, 10, 10);
   }
 
   private enableDrawing() 
