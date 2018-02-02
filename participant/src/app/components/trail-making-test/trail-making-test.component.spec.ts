@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrailMakingTestComponent } from './trail-making-test.component';
+import { AssetRetrievalService } from '../services/asset-retrieval.service';
 
 describe('TrailMakingTestComponent', () => {
   let component: TrailMakingTestComponent;

@@ -136,7 +136,7 @@ namespace SDSA.Repository
                 );
         public void SaveTrailMakingTest(TrailMakingTest TMT)
             => db.Execute(
-                "insert into road_Scenarios (test_Id , time_taken, mistakes) " +
+                "insert into trail_making (test_Id , time_taken, mistakes) " +
                 "Values (@TestId , @TimeTaken, @Mistakes)",
                 TMT);
         #endregion
