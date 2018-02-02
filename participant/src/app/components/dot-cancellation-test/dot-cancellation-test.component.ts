@@ -20,7 +20,7 @@ export class DotCancellationTestComponent implements OnInit {
     console.log(this._router.url)
     console.log(this.route)
     // this._router.navigate([ '../'],  { relativeTo: this.route });
-    this._router.navigateByUrl('/test/car_directions');
+    this._router.navigateByUrl('/car_directions');
   }
   
   ngOnInit() {

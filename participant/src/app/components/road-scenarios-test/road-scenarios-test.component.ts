@@ -44,7 +44,7 @@ export class RoadScenariosTestComponent implements OnInit {
   
   public sendResults() {
     this.rs.insertRoadScenarioResults("1", 123, 456);
-    this._router.navigateByUrl('/test/home');
+    this._router.navigateByUrl('/home');
 
   }
 

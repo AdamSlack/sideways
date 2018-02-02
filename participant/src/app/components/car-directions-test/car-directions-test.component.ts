@@ -70,7 +70,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
   public sendResults() {
     //this.rs.insertCarDirectionResults("1", 123, 456);
-    this._router.navigateByUrl('/test/compass_directions');
+    this._router.navigateByUrl('/compass_directions');
 
   }
 
