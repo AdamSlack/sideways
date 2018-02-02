@@ -48,6 +48,10 @@ export class RoadScenariosTestComponent implements OnInit {
 
   }
 
+  public gatherResults() {
+    this.sendResults();
+  }
+
   public localeSubscription : Subscription;
   public testTitle : string = '';
   public testInstructions : string = '';

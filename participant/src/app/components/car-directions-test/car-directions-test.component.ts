@@ -9,6 +9,7 @@ import "fabric"
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
+import { sendRequest } from 'selenium-webdriver/http';
 declare const fabric: any;
 
 //Canvas for displaying things
@@ -198,6 +199,7 @@ export class CarDirectionsTestComponent implements OnInit {
     });
     
     console.log(squareMatches);
+    this.sendResults();
   }
 
 
