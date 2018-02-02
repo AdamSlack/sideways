@@ -6,6 +6,8 @@ import { NgIf } from '@angular/common';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AssetRetrievalService } from '../../../../services/asset-retrieval.service';
+import {ResultsService} from '../../../../services/results.service';
+
 
 declare var angular: any;
 @Component({
@@ -22,7 +24,7 @@ export class BoardComponent {
 	public falsePositives : number = 0;
 	public trueNegatives : number = 0;
 	public truePositives : number = 0;
-
+  
 
 	//if true then the results div is shown
 	public showResults : boolean = false;
@@ -99,7 +101,9 @@ export class BoardComponent {
 
 	constructor(
 		public auth : AuthenticationService,
-		public locale : AssetRetrievalService
+		public locale : AssetRetrievalService,
+		public results : ResultsService,
+
 	) {
 
 		//Show the instructions by default when first loading the app	
@@ -694,6 +698,8 @@ export class BoardComponent {
 		this.trueNegatives = results[1];
 		this.falsePositives = results[2];
 		this.falseNegatives = results[3];
+
+		this.results.insertDotCancellationResults( parseInt(this.auth.PARTICIPANT_TEST_ID),this.TimeTaken, this.truePositives, this.falsePositives, this.falseNegatives);
 
 		//Get All Interactions
 		//Dictionary of all the clicks per cell {CellPosition : NoOfClicks}

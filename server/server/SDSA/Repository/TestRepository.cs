@@ -51,8 +51,8 @@ namespace SDSA.Repository
         public void SaveDotCancellationTest(DotCancellationTest DCT)
         {
             db.Execute(
-                "Insert into dot_cancellation (test_id, time_taken, true_pos, false_pos, false_neg)" +
-                "Values(@TestId , @TimeTaken, @TruePos , @FalsePos, @FalseNeg)",
+                "Insert into dot_cancellation (test_id, time_taken, true_pos, false_pos, false_neg, test_date)" +
+                "Values(@TestId , @TimeTaken, @TruePos , @FalsePos, @FalseNeg, NOW())",
                 DCT
                 );
         }
