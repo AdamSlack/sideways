@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { FabricService } from '../../services/fabric.service'
-import { TestDealerService } from '../../services/test-dealer.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 import "fabric"
@@ -57,7 +57,8 @@ export class CarDirectionsTestComponent implements OnInit {
     private fab: FabricService,
     public auth : AuthenticationService,
     public locale : AssetRetrievalService,
-    public test_dealer : TestDealerService 
+    private _router: Router
+
   ) { }
   
   public localeSubscription : Subscription;
@@ -68,7 +69,9 @@ export class CarDirectionsTestComponent implements OnInit {
 
 
   public sendResults() {
-    this.rs.insertCarDirectionResults("1", 123, 456);
+    //this.rs.insertCarDirectionResults("1", 123, 456);
+    this._router.navigateByUrl('/test/compass_directions');
+
   }
 
 

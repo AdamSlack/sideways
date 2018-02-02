@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { FabricService } from '../../services/fabric.service'
+import { ActivatedRoute, Router } from '@angular/router';
 
 //For requesting data structures
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TestDealerService } from '../../services/test-dealer.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -37,11 +37,15 @@ export class RoadScenariosTestComponent implements OnInit {
     private fab: FabricService, 
     private http: HttpClient,
     public auth : AuthenticationService,
-    public locale : AssetRetrievalService
+    public locale : AssetRetrievalService,
+    private _router: Router
+
   ) { }
   
   public sendResults() {
     this.rs.insertRoadScenarioResults("1", 123, 456);
+    this._router.navigateByUrl('/test/home');
+
   }
 
   public localeSubscription : Subscription;

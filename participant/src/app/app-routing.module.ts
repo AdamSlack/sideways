@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { Route } from '@angular/compiler/src/core';
 
 import { LoginScreenComponent } from './components/login-screen/login-screen.component'
 
@@ -16,22 +18,19 @@ import { HomeSelectionComponent } from './components/home-selection/home-selecti
 
 
 
-import { Route } from '@angular/compiler/src/core';
-
-
-export const login : Routes = [ 
+const login : Routes = [ 
   {  path:'login', component: LoginScreenComponent}
 ]
 
-export const home_route : Routes = [ 
+const home_route : Routes = [ 
   {  path:'home', component: HomeSelectionComponent}
 ]
 
-export const trail_making_route : Routes = [ 
+const trail_making_route : Routes = [ 
   {  path:'trail_making', component: TrailMakingTestComponent}
 ]
 
-export const test_game_routes : Routes = [{
+const test_game_routes : Routes = [{
   path:'dot_cancellation', component: DotCancellationTestComponent
 }, {
   path:'car_directions', component: CarDirectionsTestComponent
@@ -42,23 +41,31 @@ export const test_game_routes : Routes = [{
 }]
 
 export const assessment_manager : Routes = [ 
-  {  path:'test', component: AssessmentManagerComponent, children: test_game_routes}
+  {  path:'test', component: AssessmentManagerComponent} //children: test_game_routes
 ]
 
-export const re_routing : Routes = [
+export const assessmentRouting: ModuleWithProviders = RouterModule.forChild(assessment_manager);
+
+const re_routing : Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ]
 
 //Lol the cat
-export const all_routes: Routes = 
+const appRoutes: Routes = 
 login
 .concat(home_route)
 .concat(assessment_manager)
+.concat(test_game_routes)
 .concat(trail_making_route)
 .concat(re_routing);
 
+export default appRoutes;
+
 @NgModule({
-  imports: [ RouterModule.forRoot(all_routes) ],  
-  exports: [ RouterModule ],
+  imports: [ RouterModule.forRoot(appRoutes) ],  
+  exports: [
+    RouterModule,
+
+  ]
 })
 export class AppRoutingModule { }

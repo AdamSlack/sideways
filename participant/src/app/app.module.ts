@@ -22,14 +22,18 @@ import { AssessmentManagerComponent } from './components/assessment-manager/asse
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+
 import { AuthenticationService } from './services/authentication.service';
 import { AssetRetrievalService } from './services/asset-retrieval.service';
-import { TestDealerService } from './services/test-dealer.service';
+import { RouterModule } from '@angular/router/src/router_module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeSelectionComponent,
+    AssessmentManagerComponent,
     TestInstructionsComponent,
     DotCancellationTestComponent,
     CarDirectionsTestComponent,
@@ -37,17 +41,14 @@ import { TestDealerService } from './services/test-dealer.service';
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
     LoginScreenComponent,
-    HomeSelectionComponent,
-    AssessmentManagerComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
     AppRoutingModule,
+    FormsModule,
   ],
-
-  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService,TestDealerService],
+  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

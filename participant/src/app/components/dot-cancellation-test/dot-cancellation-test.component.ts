@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '../../services/results.service';
 import { RecordTimingService } from '../../services/record-timing.service';
-import { TestDealerService } from '../../services/test-dealer.service';
 
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dot-cancellation-test',
@@ -12,12 +12,15 @@ import { TestDealerService } from '../../services/test-dealer.service';
 export class DotCancellationTestComponent implements OnInit {
 
   private timer : RecordTimingService;
-
-  constructor(private rs: ResultsService, private test_dealer : TestDealerService  ) { }
+  
+  constructor(private rs: ResultsService, private _router: Router, 		private route: ActivatedRoute  ) { }
 
   public sendResults() {
-    this.test_dealer.next_game_tests();
     //this.rs.insertDotCancellationResults("1", 123, 1, 2, 3);
+    console.log(this._router.url)
+    console.log(this.route)
+    // this._router.navigate([ '../'],  { relativeTo: this.route });
+    this._router.navigateByUrl('/test/car_directions');
   }
   
   ngOnInit() {
