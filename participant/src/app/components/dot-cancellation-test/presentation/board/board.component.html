@@ -1,0 +1,68 @@
+
+<div> Dot Cancellation Localisation Assets:</div>
+<div> {{testTitle}} </div>
+<div> {{testInstructions}} </div>
+
+<div>
+
+	<!--Title of the Test will be displayed here -->
+	<div class="testTitle">
+		{{ testTitle }}
+	</div>
+
+    <!--The timer to track time taken to complete test -->
+	<div [style.visibility]="'hidden'" [style.height.px]="0">
+		TIMEEE {{countDown| async}} Time Taken = {{TimeTaken}}
+	</div>
+
+    <!--The Dot Cancellation Test Board -->
+	<div [className]="containerClass">
+		<div class="board" *ngFor="let row of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]">
+			<cell [ngClass]="{'cellSelected': cellsSelected[col+row*25]=='X' }" *ngFor="let col of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]"
+				[state]="cellsSelected[col+row*25]" [dotOne]="dotones[col+row*25]" [dotTwo]="dottwos[col+row*25]" [dotThree]="dotthrees[col+row*25]"
+				[dotFour]="dotfours[col+row*25]" [dotFive]="dotfives[col+row*25]" [dotOneXValue]="dotoneX[col+row*25]" [dotOneYValue]="dotoneY[col+row*25]"
+				[dotTwoXValue]="dotTwoX[col+row*25]" [dotTwoYValue]="dotTwoY[col+row*25]" [dotThreeXValue]="dotThreeX[col+row*25]" [dotThreeYValue]="dotThreeY[col+row*25]"
+				[dotFourXValue]="dotFourX[col+row*25]" [dotFourYValue]="dotFourY[col+row*25]" [dotFiveXValue]="dotFiveX[col+row*25]" [dotFiveYValue]="dotFiveY[col+row*25]"
+				(click)="HighlightCell(col+row*25)">
+			</cell>
+		</div>
+	</div>
+
+	<!--The Instructions Of the Dot Cancellation Test-->
+	<div class="instructions" [style.visibility]="showInstructions ? 'visible' : 'hidden'" [style.height.px]="instructionHeight">
+		<br> INSTRUCTIONS
+		<br>
+		<br> “You will see that there are groups of dots arranged in rows. Some of the groups have 3 dots, some 4 and some 5 dots
+		(indicate examples on the practice row). I want you to cross out every group of 4 dots.” “I want you to complete the first
+		row as a practice.” If the client is unsure what to do, cross out the first set of 4 dots as an example and then ask the
+		client to continue with the practice row. Check the practice row. If the client makes any errors point them out, by saying
+		for example “you have missed a set of 4 dots here” or “you have crossed out a group of 3 dots but the task is to cross
+		out all the groups of 4 dots”. Then say “The task is timed but it is more important to be accurate than fast. Start when
+		you are ready”. Start the stopwatch as soon as the client starts to attempt the task. If the client seems to have forgotten
+		the instructions or requests a repetition, the instructions can be repeated once using the same wording as given at the
+		beginning of the task. After that no further explanation should be given.
+	</div>
+
+   <!--The results of the Dot Cancellation Test -->
+	<div class="results" [style.visibility]="showResults ? 'visible' : 'hidden'" [style.height.px]="resultsHeight">
+		RESULTS
+		<br>
+		<br> Thank you for completing the Dot Cancellation Test
+		<br>
+		<br> Time Taken To Complete the Test: {{TimeTaken}} Seconds
+		<br> FalseNegatives : {{falseNegatives}}
+		<br> FalsePositives : {{falsePositives}}
+		<br> TrueNegatives : {{trueNegatives}}
+		<br> TruePositives : {{truePositives}}
+		<br> Clicks Per Cell (Cell: NoOfClicks)
+		<br> {{DictionaryOfCellClicks}}
+		<br>
+		<br>
+	</div>
+
+    <!--A button to show and hide instructions -->
+	<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
+
+     <!--A button to start test and finish Test -->
+	<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
+</div>

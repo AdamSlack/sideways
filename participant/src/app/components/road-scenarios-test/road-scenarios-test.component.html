@@ -1,12 +1,21 @@
-<div>
-  <div>
-    Road Scenarios
-  </div>
-  <div (click)="sendResults()">
-    PRESS ME
-  </div>
-</div>
+<div> Road Sign Scenario Localisation Assets:</div>
+<div> {{testTitle}} </div>
+<div> {{testInstructions}} </div>
 
   <canvas id="canvas" >
   </canvas>
   <button (click)=gatherResults() class="button" id="end_test" > Test Finish</button>
+
+  <div>
+    Road Signs:
+    <div *ngFor="let sign of roadSigns">
+        <img [src]="sign">
+    </div>
+  </div>
+
+  <div>
+    Road Scenarios:
+    <div *ngFor="let scene of roadScenarios">
+      <img [src]="scene">
+    </div>
+  </div>

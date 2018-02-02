@@ -84,7 +84,7 @@ namespace SDSA.Repository
             Console.WriteLine("Inserting New Preset for: " + PresetName + " if it does not exist.");
             db.ExecuteScalar<int>(
                 "insert into localisation_presets (preset_name) " +
-                "values (@PresetName) on conflict nothing ",
+                "values (@PresetName) on conflict do nothing ",
                 new {PresetName}
             );
         }
@@ -201,8 +201,12 @@ namespace SDSA.Repository
         }
 
 
-        public void DeleteRoadSignScenarios(string PresetName) 
-         => db.ExecuteScalar("delete from road_sign_scenarios where preset_name = @PresetName", new {PresetName});
+        public void DeleteRoadSignScenarios(string PresetName) {
+            Console.WriteLine("Deleting All old Road Sign Scenarios for this preset.");
+            db.ExecuteScalar("delete from road_sign_scenarios where preset_name = @PresetName", new {PresetName});
+
+        }
+
         public void SaveRoadSignScenarioDetails(string preset_name, TestLocaleDetails RSD) {
             Console.WriteLine("Inserting Road Sign scenario Test: " + preset_name);
 
@@ -218,20 +222,35 @@ namespace SDSA.Repository
                 new {preset_name, test_type, name, instructions}
             );
             Console.WriteLine("Recieved " + RSD.RoadSignScenarios.Length + " Road Sign Scenarios...");
+
+            string signPath = "roadSigns/" + preset_name + "/";
+            string scenePath = "roadScenarios/" + preset_name + "/";
+
+            System.IO.Directory.CreateDirectory("wwwroot/" + signPath);
+            System.IO.Directory.CreateDirectory("wwwroot/" + scenePath);
+
+            int idx = 1;
             foreach (RoadSignScenario RSS in RSD.RoadSignScenarios){
+                
+                // This needs putting into a try catch as well as a precheck for base 64 string...
+                System.IO.File.WriteAllBytes("wwwroot/" + signPath + "Sign" + idx + ".png", Convert.FromBase64String(RSS.SignImage.Replace("data:image/png;base64,", String.Empty)));
+                System.IO.File.WriteAllBytes("wwwroot/" + scenePath + "Scene" + idx + ".png", Convert.FromBase64String(RSS.SceneImage.Replace("data:image/png;base64,", String.Empty)));
+                
                 db.ExecuteScalar<int>(
                     "insert into road_sign_scenarios (preset_name, sign_image, scene_image, sign_file_type, scene_file_type, xpos, ypos) " +
                     "values (@PresetName,@SignImage,@SceneImage,@SignType,@SceneType,@xPos,@yPos)",
                     new {
                         PresetName  =   RSS.presetName,
-                        SignImage   =   RSS.SignImage,
-                        SceneImage  =   RSS.SceneImage,
+                        SignImage   =   signPath + "Sign" + idx,
+                        SceneImage  =   scenePath + "Scene" + idx,
                         SignType    =   RSS.SignFileType,
                         SceneType   =   RSS.SceneFileType,
                         xPos        =   RSS.xPos,
                         yPos        =   RSS.yPos
                     }
                 );
+
+                idx++;
             }
         }
 

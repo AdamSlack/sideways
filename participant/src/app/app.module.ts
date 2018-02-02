@@ -18,6 +18,10 @@ import { AssessmentManagerComponent } from './components/assessment-manager/asse
 
 
 
+import { BoardComponent} from './components/dot-cancellation-test/presentation/board/board.component';
+import { CellComponent} from './components/dot-cancellation-test/presentation/cell/cell.component';
+
+
 // services
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
@@ -41,6 +45,9 @@ import { RouterModule } from '@angular/router/src/router_module';
     RoadScenariosTestComponent,
     TrailMakingTestComponent,
     LoginScreenComponent,
+	CellComponent,
+	BoardComponent,
+
   ],
   imports: [
     BrowserModule,

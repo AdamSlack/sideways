@@ -105,8 +105,8 @@ export class LocalisationCreatorComponent implements OnInit {
       this.localePreset.roadSigns.general.testHeading = res['name'];
       this.localePreset.roadSigns.general.testInstructions = res['instructions'];
       // These are being sanitized...3
-      this.roadSignImages = res['roadSignScenarios'].map((rss) => rss['signImage']);
-      this.scenarioImages = res['roadSignScenarios'].map((rss) => rss['sceneImage']);
+      this.roadSignImages = res['roadSignScenarios'].map((rss) => "http://localhost:5000/" + rss['signImage']+".png" );
+      this.scenarioImages = res['roadSignScenarios'].map((rss) => "http://localhost:5000/" + rss['sceneImage']+".png");
       this.indicatorCoords = res['roadSignScenarios'].map((rss) => new Coords(rss['xPos'], rss['yPos']));
     });
   }

@@ -79,11 +79,13 @@ export class RoadScenariosTestComponent implements OnInit {
       return;
     }
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
-    this.localeSubscription = this.locale.selectCarDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
+    this.localeSubscription = this.locale.selectRoadSignScenarioDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
       console.log('Response for Compass Direction game assets recieved from servr.');
       this.testTitle = res['name'] ? res['name'] : 'Road Sign Scenarios';
       this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
-      this.roadScenarios = res['road']
+      this.roadScenarios = res['roadSignScenarios'].map((rss) => 'http://localhost:5000/' + rss['sceneImage'] + '.png');
+      this.roadSigns = res['roadSignScenarios'].map((rss) => 'http://localhost:5000/' + rss['signImage'] + '.png');
+      
 
       console.log('Test title: ' + res['name']);
       console.log('Test instructions: ' + res['instructions']);
@@ -93,6 +95,7 @@ export class RoadScenariosTestComponent implements OnInit {
   
 
   ngOnInit() {
+    this.initLocaleSettings();
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
