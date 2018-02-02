@@ -60,9 +60,9 @@ namespace SDSA.Controllers
         [HttpPost("[controller]/{id}/results/trail_making/")]
         public IActionResult TrailMakingTest(int TestId, [FromBody]  TrailMakingTest TMT)
         {   
-            Console.WriteLine("Received Mistakes: ", TMT.Mistakes);
-            Console.WriteLine("Received TimeTaken: ", TMT.TimeTaken);
-            Console.WriteLine("Received Testid: ", TMT.TestId);
+            Console.WriteLine("Received Mistakes: "+ TMT.Mistakes);
+            Console.WriteLine("Received TimeTaken: "+ TMT.TimeTaken);
+            Console.WriteLine("Received Testid: "+ TMT.TestId);
 
             TMT.TestId = TestId;
             if (ModelState.IsValid)

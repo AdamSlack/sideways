@@ -8,10 +8,11 @@ export class ResultsService {
 
   public ROOT : string = 'http://localhost:5000/';
   
-  public createHeaders() {
-    return {
-      headers: new HttpHeaders().set('Authorization', 'my-auth-token')
-    }
+  public createHeaders() : HttpHeaders {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*')
+    return headers;
   }
 
   public insertDotCancellationResults(p_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
