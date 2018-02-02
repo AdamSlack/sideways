@@ -38,7 +38,7 @@ namespace SDSA.Controllers
         public IActionResult ParticipantTests (int ParticipantId)
         {
             Console.WriteLine("Request for tests of participant: " + ParticipantId);
-            return Json( new { tests = _testService.GetParticipantsTests(ParticipantId) } );
+            return Json( new { tests = _participantService.GetParticipantTests(ParticipantId) } );
         }
 
         [HttpGet("[controller]/clinician/{ClinicianID}")]
