@@ -28,19 +28,27 @@ namespace SDSA.Controllers
             _testService = testServ;
             _logger = logger;
         }
-        [HttpPost]
-        public IActionResult DotCancellationResult (int TestId, DotCancellationTest DCT)
+        [HttpPost("[controller]/{TestId}/DotCancellationResult")]
+        public IActionResult DotCancellationResult (int TestId, [FromBody] DotCancellationTest DCT)
         {
             //requests should already be logged
             //here is an example of how to do extra log messages
             _logger.LogInformation("Some message that is usefull");
             DCT.TestId = TestId;
-            if(ModelState.IsValid)
+            Console.WriteLine("Request DCT recieved");
+            Console.WriteLine("falseneg: " + DCT.falseNeg);
+            Console.WriteLine("False Pos:" +  DCT.falsePos);
+            Console.WriteLine("True Pos:" + DCT.TruePos);
+            Console.WriteLine("Time Taken:"+ DCT.TimeTaken);
+            Console.WriteLine("test ID:"+ DCT.TestId);
+
+
+            if (ModelState.IsValid)
             {
-             _testService.SaveDotCancellationTest(DCT);
-             return Ok();
+                _testService.SaveDotCancellationTest(DCT);
+                return Ok();
             }
-           
+
             return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
         }
         [HttpPost]
