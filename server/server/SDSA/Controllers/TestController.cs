@@ -56,10 +56,14 @@ namespace SDSA.Controllers
 
             return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-        [HttpPost]
-        public IActionResult TrailMakingTest(int TestId, TrailMakingTest TMT)
-        {
-            
+        
+        [HttpPost("[controller]/{id}/results/trail_making/")]
+        public IActionResult TrailMakingTest(int TestId, [FromBody]  TrailMakingTest TMT)
+        {   
+            Console.WriteLine("Received Mistakes: ", TMT.Mistakes);
+            Console.WriteLine("Received TimeTaken: ", TMT.TimeTaken);
+            Console.WriteLine("Received Testid: ", TMT.TestId);
+
             TMT.TestId = TestId;
             if (ModelState.IsValid)
             {
