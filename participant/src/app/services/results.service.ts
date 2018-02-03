@@ -32,6 +32,22 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
+    //[HttpPost("[controller]/{TestId}/DotCancellationInteractionLogs")]
+  public insertDotCancellationInteractionLogs(t_id: number, interaction: string ) {
+    let url =  this.ROOT  +t_id + '/DotCancellationInteractionLogs';
+    let body = {
+      'TestId': t_id,
+      'Interaction': interaction
+    }
+    console.log('DOT CANCELLATION INTERACTION LOGS: ')
+    console.log(body);
+    
+    let headers = this.createHeaders();
+
+    this.http.post(url, body, {headers:headers}).subscribe();
+  }
+
+
   public insertCarDirectionResults(p_id: number, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/car_directions';
     let body = {

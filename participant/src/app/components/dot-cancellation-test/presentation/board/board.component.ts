@@ -52,10 +52,18 @@ export class BoardComponent {
 	//Text of the test button
 	public testButtonText : string = 'Start Test';
 
+    //Holds the clicks per cell
+	public dictionaryOfCellClicks : Array<number> = Array(this.NumberOfCells).fill(null);
+	
 	//Holds the clicks per cell
-	public dictionaryOfCellClicks : any = {};
+	public dictionaryOfTimeOfCellClicks: Array<string> = Array();
 
+	//Holds the clicks per cell
+	public dictionaryOfCellPositions: Array<number> = Array();
+    
 	public startTest : boolean = false;
+
+	public InteractionLogs : string = "";
 
 	//Variables to show and hide instructions
 	public instructionVisibiliy : string = "'visible'";
@@ -270,7 +278,15 @@ export class BoardComponent {
 		//Check if the user has started the test
 		if (((position > 24) && (this.isBoardUnlocked)) || (position < 25)) {
 			this.cellsSelected[position] = 'X';
+
 			this.dictionaryOfCellClicks[position] += 1;
+			let elaspedTime :string = this.GetTimeTaken().toString();
+			
+			//push cell position and the time of click
+			this.dictionaryOfCellPositions.push(position);
+			this.dictionaryOfTimeOfCellClicks.push(this.GetTimeTaken().toString());
+            console.log("CELLL IS CLICKED @::: ",this.GetTimeTaken().toString());
+			
 		}
 	}
 
@@ -618,6 +634,7 @@ export class BoardComponent {
 		for (var i = 0; i < this.dotones.length; i++) {
 
 			this.dictionaryOfCellClicks[i] = 0;
+			
 
 			//Rand choose either 3,4 or 5 dots 
 			var rand = NoOfDots[Math.floor(Math.random() * NoOfDots.length)];
@@ -702,8 +719,67 @@ export class BoardComponent {
 		//Dictionary of all the clicks per cell {CellPosition : NoOfClicks}
 		var NoOfClicksPerCell = this.dictionaryOfCellClicks;
 
-       // this.results.insertDotCancellationResults( this.auth.PARTICIPANT_TEST_ID , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
+		//Time of cell clicks {cellnumber : Timeelasped}
+		var TimeOfCellClicks = this.dictionaryOfTimeOfCellClicks;
 
+		// for (let key in this.dictionaryOfCellClicks) {
+		// 	let value = this.dictionaryOfCellClicks[key];
+		// 	console.log("Cell: ", key.toString()," Clicked " , value.toString() , " times");
+		// }
+		
+		// for (let key in this.dictionaryOfCellPositions) {
+
+		// 	let CellPosition = this.dictionaryOfCellPositions[key];
+        //     let ClickTime = this.dictionaryOfTimeOfCellClicks[key];
+
+		// 	console.log("Cell: ", CellPosition.toString()," Clicked At Time:" , ClickTime );
+		// }
+        console.log("FINALLL");
+		console.log(this.GetInteractionLogs());
+
+		let interactionLogsJson: string = this.GetInteractionLogs();
+	
+		//this.results.insertDotCancellationInteractionLogs( parseInt(this.auth.PARTICIPANT_TEST_ID), this.InteractionLogs );
+        this.results.insertDotCancellationResults( parseInt(this.auth.PARTICIPANT_TEST_ID) , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
+
+	}
+
+	//Get Json string of interaction logs
+	public GetInteractionLogs() : string{
+
+		//Get All Interactions
+		let result: string = "";
+		let tempString :string = "";
+		
+	     for (let key in this.dictionaryOfCellClicks) {
+		 	let value = this.dictionaryOfCellClicks[key];
+			 console.log("Cell: ", key.toString()," Clicked " , value.toString() , " times");
+			 tempString = "{ type : 'NumberOfClicksPerCell'  , CellPosition : " + key.toString() + "," + "NumberOfClicks :" + value.toString() + "}"  ;	 
+			 result += tempString + ",";	 
+		 }
+
+		for (let key in this.dictionaryOfCellPositions) {
+			let CellPosition = this.dictionaryOfCellPositions[key];
+            let ClickTime = this.dictionaryOfTimeOfCellClicks[key];
+			console.log("Cell: ", CellPosition.toString()," Clicked At Time:" , ClickTime );
+			tempString = "{ type : 'TimeOfCellClick'  , CellPosition : " + CellPosition.toString() + "," + "TimeOfClick :" + ClickTime + "}"  ;
+			
+			//if last one leaves out comma
+			if (CellPosition == this.dictionaryOfCellPositions[this.dictionaryOfCellPositions.length-1])
+			{
+			  result += tempString;
+			
+			}
+			else
+			{
+				result += tempString + ",";
+			}
+		}
+		
+		result = "dot_cancellation: [  {" + result + "}  ]";
+	
+        //Example: test_id: 1111, interaction: {dot_cancellation: [{type: 'mouse_down', x: 123, y: 321}, {type: 'mouse_move', x: 124, y: 322}]
+		return result;
 	}
 
 	public RestartTest() : void {

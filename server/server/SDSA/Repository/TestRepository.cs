@@ -57,6 +57,17 @@ namespace SDSA.Repository
                 );
         }
 
+        
+
+            public void SaveDotCancellationInteractionLogs(SDSA.Models.TestInteraction DCTTI)
+        {
+            db.Execute(
+                "Insert into test_interactions (test_id, interaction)" +
+                "Values(@TestId , @Interaction)",
+                DCTTI
+                );
+        }
+
         public DotCancellationTest GetDotCancellationTest(int TestId)
              => db.ExecuteScalar<DotCancellationTest>(
                 "Select Test_Id as TestId ," +

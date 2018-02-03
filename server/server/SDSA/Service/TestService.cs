@@ -32,6 +32,11 @@ namespace SDSA.Service
             => _testRepository.SaveCompassDirectionsTest(CDT);
         public void SaveDotCancellationTest(DotCancellationTest DCT)
             => _testRepository.SaveDotCancellationTest(DCT);
+
+        public void SaveDotCancellationInteractionLogs(SDSA.Models.TestInteraction DCTTI)
+           => _testRepository.SaveDotCancellationInteractionLogs(DCTTI);
+       
+
         public void SaveRoadScenarioTest(RoadScenariosTest RST)
             => _testRepository.SaveRoadScenarioTest(RST);
         public void SaveTrailMakingTest(TrailMakingTest TMT)

@@ -14,6 +14,7 @@ namespace SDSA.Repository.Interfaces
         void SaveCarDirectionTest(CarDirectionsTest CDT);
         void SaveCompassDirectionsTest(CompassDirectionsTest CDT);
         void SaveDotCancellationTest(DotCancellationTest DCT);
+        void SaveDotCancellationInteractionLogs(SDSA.Models.TestInteraction DCTTI);
         void SaveRoadScenarioTest(RoadScenariosTest RST);
         void SaveTrailMakingTest(TrailMakingTest TMT);
         int SavePatricipantTest(ParticipantTest PT);

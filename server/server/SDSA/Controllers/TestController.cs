@@ -43,14 +43,36 @@ namespace SDSA.Controllers
             Console.WriteLine("test ID:"+ DCT.TestId);
 
 
-            if (ModelState.IsValid)
-            {
-                _testService.SaveDotCancellationTest(DCT);
-                return Ok();
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    _testService.SaveDotCancellationTest(DCT);
+            //    return Ok();
+            //}
 
             return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
         }
+
+        [HttpPost("[controller]/{TestId}/DotCancellationInteractionLogs")]
+        public IActionResult DotCancellationInteractionLogs(int TestId, [FromBody] SDSA.Models.TestInteraction DCTTI)
+        {
+            //requests should already be logged
+            //here is an example of how to do extra log messages
+            _logger.LogInformation("Some message that is usefull");
+            DCTTI.TestId = TestId;
+
+            Console.WriteLine("Request DCTTI recieved");
+            Console.WriteLine("INTERACTION: " + DCTTI.Interaction);
+            Console.WriteLine("Test ID:" + DCTTI.TestId);
+
+            //if (ModelState.IsValid)
+            //{
+            //    _testService.SaveDotCancellationInteractionLogs(DCTTI);
+            //    return Ok();
+            //}
+
+            return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
+        }
+
         [HttpPost]
         public IActionResult CarDirectionResult(int TestId, CarDirectionsTest CDT)
         {

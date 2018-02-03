@@ -3,11 +3,7 @@
 
 <div *ngIf="auth.VALIDATED && auth.AUTH_TOKEN != '' && auth.PARTICIPANT_TEST_LOCALE != ''">
 
-  <div>
-    Test Instructions
-  </div>
-  <app-test-instructions></app-test-instructions>
-  <br>
+ 
   
   <div class="tests" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
     <div *ngFor="let test of game_routes">
@@ -17,4 +13,3 @@
   <router-outlet></router-outlet>
   
 </div>
-<app-trail-making-test></app-trail-making-test>
