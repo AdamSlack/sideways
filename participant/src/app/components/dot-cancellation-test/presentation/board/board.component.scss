@@ -11,12 +11,12 @@
     margin-bottom: 0;
     $item-width: calc((100% / #{$cols}) - #{$gutter} + (#{$gutter} / #{$cols}));
     margin-right: $gutter;
-    width: $item-width;
+    width: $item-width ;
     box-sizing: border-box;
 
     // We add the gutter for all items except the first row.
     &:nth-child(n+#{$cols + 1}) {
-      margin-top: $gutter;
+    //  margin-top: $gutter;
     }
 
     // When we reach the cols per line, the last
@@ -33,14 +33,11 @@
 .board
 {
 
- @include flex-grid(25, 10px);
+ @include flex-grid(25, 0px);
 
-  // display: flex; 
-  // flex-direction: row;
-  // flex-wrap: wrap;  
-  // color:#fff;  
   justify-content: space-between; 
   margin-bottom: 1.5%;    
+  
    //align-items: center;
 }
 

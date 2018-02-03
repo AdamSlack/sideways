@@ -11,14 +11,21 @@
   text-color: black;
   display: flex;
   align-items: center;
-  padding:3px;
+
+  justify-content: space-between; 
   //width: calc(100% * (1/25) - 10px - 1px) ;
   //width: 32%;
   //margin-bottom: 40%; 
   //margin:20%;
- // padding:1px;
-  
+  //padding:1px;
+  // position: relative;
      
+}
+
+.spacer
+{
+     padding-left:8px;
+      padding-right:8px;
 }
 
 .cell:hover 
@@ -42,7 +49,8 @@ position: relative;
 			{
 			color: black;
 position: relative;
-
+ //position: absolute;
+ align-self: center;
 
     }
 
