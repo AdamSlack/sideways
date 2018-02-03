@@ -163,12 +163,33 @@ export class BoardComponent {
 	}
 	
 
-	//Reieves the GameTitle, instructiontitle, Instructions, Testbuttontext
-	public InitGametext() : void {
-		console.log("I Do Nothing.");
+	public ResetStats()
+	{
+		//An array for each dot 
+	this.dotones  = Array(this.NumberOfCells).fill(null);
+	this.dottwos  = Array(this.NumberOfCells).fill(null);
+	this.dotthrees  = Array(this.NumberOfCells).fill(null);
+	this.dotfours  = Array(this.NumberOfCells).fill(null);
+	this.dotfives  = Array(this.NumberOfCells).fill(null);
 
-		//this.results.insertDotCancellationResults();
-        //this
+	//Arrays for the x and y positions of each dot within each cell
+	this.dotoneX  = Array(this.NumberOfCells).fill(null);
+	this.dotoneY  = Array(this.NumberOfCells).fill(null);
+
+	this.dotTwoX  = Array(this.NumberOfCells).fill(null);
+	this.dotTwoY  = Array(this.NumberOfCells).fill(null);
+	this.dotThreeX  = Array(this.NumberOfCells).fill(null);
+	this.dotThreeY  = Array(this.NumberOfCells).fill(null);
+	this.dotFourX  = Array(this.NumberOfCells).fill(null);
+	this.dotFourY  = Array(this.NumberOfCells).fill(null);
+	this.dotFiveX  = Array(this.NumberOfCells).fill(null);
+	this.dotFiveY  = Array(this.NumberOfCells).fill(null);
+	}
+
+	public ShowFirstRow() : void
+	{
+
+      
 	}
 
 	//Starts a countdown from value of counter when called
@@ -672,6 +693,21 @@ export class BoardComponent {
 	}
 
 	public StartTest() : void {
+			 
+		    this.ResetStats();
+			//Randomly populate dots on each cell
+			this.RandomlyPopulateDots();
+	
+			//Iterate over each cell in each row and ensure 8 groups of 4 per row 
+			this.EnsureEightGroupsOfFoursPerRow();
+	
+			//this.CentreDotsWithinEachCell();
+	
+			//Randomly position the dots within their cell
+			this.RandomlyPositionDots();
+	
+		
+		
 		//unlock board
 		this.isBoardUnlocked = true;
 		this.startTest = true;

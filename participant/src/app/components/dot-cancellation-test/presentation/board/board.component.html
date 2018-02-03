@@ -33,8 +33,13 @@
 		<br> INSTRUCTIONS
 		<br>
 		<br> {{testInstructions}}
+
+	 <br>
+	 
+
 	</div>
 
+	 
    <!--The results of the Dot Cancellation Test -->
 	<div class="results" [style.visibility]="showResults ? 'visible' : 'hidden'" [style.height.px]="resultsHeight">
 		RESULTS
@@ -52,9 +57,10 @@
 		<br>
 	</div>
 
-    <!--A button to show and hide instructions -->
+    <!--A button to show and hide instructions--> 
 	<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
-
+	 
+	 
      <!--A button to start test and finish Test -->
 	<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
 </div>
