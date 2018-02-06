@@ -37,7 +37,7 @@ export class FabricService {
   }
 
 
-  public image_parser(oImg, canvas : any, deck : any, id : any) {
+  public image_parser(oImg, length : any, canvas : any, deck : any, id : any) {
 
     oImg.crossOrigin = "Anonymous";
 
@@ -49,7 +49,7 @@ export class FabricService {
       lockScalingY: true, 
       lockScalingX: true,
       hasControls: false,
-     // id: idx.toString(), 
+      id: id.toString(), 
     },);
 
     oImg.scaleToWidth(length);
@@ -71,10 +71,9 @@ export class FabricService {
       hasControls: false
     });
 
-    this.addInteractionObjLogic(group, canvas, group.type);
+    // this.addInteractionObjLogic(group, canvas, group.type);
     this.addRotatingStyle(group, canvas);
 
-    
     return group;
   }
 
@@ -155,9 +154,6 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           target.top = Math.min(target.top, target.canvas.height - target.getBoundingRect().height + target.top - target.getBoundingRect().top);
           target.left = Math.min(target.left, target.canvas.width - target.getBoundingRect().width + target.left - target.getBoundingRect().left);
         }
-  
-        let best_match = {distance: 1000};
-
 
         function get_distance_points(x1, y1, x2,y2){
           var dx = x2-x1;
@@ -170,39 +166,34 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           if (obj === options.target) return;
 
           if (options.target.intersectsWithObject(obj)) {
-
-            
             //Top left corner to top left corner
             let coliding = obj;
             coliding.setCoords();
+            
             // console.log("interacting corner: ", coliding.top, coliding.left);
             // console.log("From corner: ", coliding.top, target.left);
-
+            console.log(obj.type);
             let distance = get_distance_points(coliding.top , coliding.left, target.top, target.left);
-            // obj.distance = distance;
-            // console.log("Interacting block distance: ", distance);
-            // console.log("Needs to be less than: ", target.width/2);
+            //obj.distance = distance;
+            console.log("Interacting block distance: ", distance);
+            console.log("Needs to be less than: ", target.width/2);
 
             if(distance < target.width/2) {
               //obj.set('opacity', 0.5);
+              console.log(distance);
               obj.set( {fill: '#d3d3d3'});
-              best_match = obj;2
             } else {
 //              obj.set('opacity', 1); 
               obj.set( {fill: '#ffffff'});
-
             }
-
           } else {
             //obj.set('opacity', 1); 
             obj.set( {fill: '#ffffff'})
-
           }
 
           //TODO: Time then change again
         });
 
-        console.log("Interacting with: ", target.type);
       }  
 }
 

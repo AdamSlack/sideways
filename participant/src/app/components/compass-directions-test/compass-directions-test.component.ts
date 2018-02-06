@@ -249,14 +249,18 @@ export class CompassDirectionsTestComponent implements OnInit {
 
       fabric.Image.fromURL(image_path,
         function (oImg) {
-          var group = fab.image_parser(oImg, Canvas, Deck, idx+1);
+          var group = fab.image_parser(oImg, length, Canvas, Deck, idx+1);
      
-          //  group.id = idx.toString();
+          group.id = idx.toString();
           group.type = "card";
           console.log(xOffset, yOffset);
           group.set({left: xOffset,top: yOffset })
           group.scaleToWidth(length);
           group.scaleToHeight(length);
+
+          fab.addInteractionObjLogic(group, Canvas, group.type);
+          //this.addRotatingStyle(group, canvas);
+      
           Deck.push(group);
 
           Canvas.add(group);
