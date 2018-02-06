@@ -2,12 +2,17 @@
     <body id="instructions" width="768" height="950" style="border:1px solid #000000;">
         trail making test instructions go here
     </body>
-    <button (click)="clickHandler()" type="button" style="text-align:center;">Begin Test</button>
-</div>
-
-<canvas id="test1" width="768" height="1024" style="border:1px solid #000000; display: none;"></canvas>
-<canvas id="test2" width="768" height="1024" style="border:1px solid #000000; display: none;"></canvas>
-
-
-<button (click)="sendResults()">OK</button>
+    <button (click)="clickHandlerInstructions()" type="button" style="text-align:center;">Begin Test</button>
+  </div>
+  
+  <div id="test1div" style="display: none">
+    <canvas id="test1" width="768" height="980" style="border:1px solid #000000;"></canvas>
+    <button (click)="clickHandlerTest1()" type="button" id="test1donebutton" style="text-align:center;">Proceed to Test 2</button>
+  
+  </div>
+  
+  <div id="test2div" style="display: none;">
+    <canvas id="test2" width="768" height="980" style="border:1px solid #000000;"></canvas>
+    <button (click)="sendResults()" type="button" id="test2donebutton" style="text-align:center;">Send Results</button>
+  </div>
 
