@@ -31,10 +31,53 @@ export class FabricService {
 
     //Intialise fabricjs components
     let canvas_fab = new fabric.Canvas(id);
-    canvas_fab.backgroundColor = '#C4CDE0';
+    canvas_fab.backgroundColor = '#ffffff';
     canvas_fab.renderAll();
     return canvas_fab;
   }
+
+
+  public image_parser(oImg, canvas : any, deck : any, id : any) {
+
+    oImg.crossOrigin = "Anonymous";
+
+    oImg.scale(length).set({
+      originX: 'left', 
+      originY: 'top',
+      centeredRotation: true,
+      lockUniScaling: true,
+      lockScalingY: true, 
+      lockScalingX: true,
+      hasControls: false,
+     // id: idx.toString(), 
+    },);
+
+    oImg.scaleToWidth(length);
+    oImg.scaleToHeight(length);
+                        // Canvas.add(img)
+    // Canvas.add(card);
+    // Ok we have the image, can add to group/canvas
+    if(oImg == undefined) {
+      console.log("something went wrong createing image from asset...");
+    } else {
+      console.log("Adding canvas item")
+    }
+
+    var group = new fabric.Group([oImg], {
+      scaleY: length,
+      scaleX: length,
+      lockScalingY: true,
+      lockScalingX: true,
+      hasControls: false
+    });
+
+    this.addInteractionObjLogic(group, canvas, group.type);
+    this.addRotatingStyle(group, canvas);
+
+    
+    return group;
+  }
+
 
   public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string, type: string = "card") {
     // create a rectangle object
@@ -141,14 +184,19 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
             // console.log("Needs to be less than: ", target.width/2);
 
             if(distance < target.width/2) {
-              obj.set('opacity', 0.5);
-              best_match = obj;
+              //obj.set('opacity', 0.5);
+              obj.set( {fill: '#d3d3d3'});
+              best_match = obj;2
             } else {
-              obj.set('opacity', 1); 
+//              obj.set('opacity', 1); 
+              obj.set( {fill: '#ffffff'});
+
             }
 
           } else {
-            obj.set('opacity', 1); 
+            //obj.set('opacity', 1); 
+            obj.set( {fill: '#ffffff'})
+
           }
 
           //TODO: Time then change again
@@ -157,16 +205,6 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         console.log("Interacting with: ", target.type);
       }  
 }
-
-
-  // public createGridBaseLines(canvas: any, gridSize: number) {
-  //   this.box_length = canvas.width / gridSize;
-  //   for (var i = 0; i < (canvas.width / this.box_length); ++i) {
-  //     canvas.add(new fabric.Line([ i * this.box_length, 0, i * this.box_length, canvas.width], { stroke: '#ccc', selectable: false }));
-  //     canvas.add(new fabric.Line([ 0, i * this.box_length, canvas.height, i * this.box_length], { stroke: '#ccc', selectable: false }))
-  //   }
-  // }
-
 
   public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number) {
 
@@ -186,7 +224,9 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           height: square_length,
           selectable: false,
           id: id++,
-          fill: '#FF69B4'
+          fill: '#ffffff',
+          stroke: 'black',
+          strokeWidth: 4
         });
         
         rect.type = "square"
