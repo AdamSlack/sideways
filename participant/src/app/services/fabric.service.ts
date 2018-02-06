@@ -71,7 +71,7 @@ export class FabricService {
       hasControls: false
     });
 
-    // this.addInteractionObjLogic(group, canvas, group.type);
+    this.addInteractionObjLogic(group, canvas, group.type);
     this.addRotatingStyle(group, canvas);
 
     return group;
@@ -347,8 +347,8 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
     ];
 
     var pline = new fabric.Polyline(points, {
-      fill: 'white',
-      stroke: 'white',
+      fill: 'black',
+      stroke: 'black',
       opacity: 1,
       strokeWidth: girth,
       originX: 'left',

@@ -258,7 +258,7 @@ export class CompassDirectionsTestComponent implements OnInit {
           group.scaleToWidth(length);
           group.scaleToHeight(length);
 
-          fab.addInteractionObjLogic(group, Canvas, group.type);
+          //fab.addInteractionObjLogic(group, Canvas, group.type);
           //this.addRotatingStyle(group, canvas);
       
           Deck.push(group);

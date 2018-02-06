@@ -134,22 +134,11 @@ export class CarDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4);
 
-    this.createDeck(Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
+    //this.createDeck(this.fab, Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
 
-    // Commented out cause we don't really need it?
-    //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
 
   }
-
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, arrow_length: number) {
-    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
-    //   oImg.width = this.box_length
-
-    //   oImg.height = this.box_length;
-    //   canvas.add(oImg);
-    // });
-    var compass_url = '../assets/compass_north.svg';
-
     var group = [];
 
     //Top row
@@ -207,7 +196,7 @@ export class CarDirectionsTestComponent implements OnInit {
   }
 
 
-  private createDeck(xOffset: number = 0, yOffset: number = 0, deckSize: number = 16, length: number) {
+  private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, deckSize: number = 16, length: number) {
     //Initialise deck of compass cards
     var cards = Array.from({ length: deckSize }, (value, key) => key).map((idx: number) => {
 
@@ -221,57 +210,26 @@ export class CarDirectionsTestComponent implements OnInit {
 
         dir_tags.forEach(tag_dir_deux => {
 
-          let image_path = server_root + asset_link + car_tag + tag_dir_une + lorry_tag + tag_dir_deux + ".png";
+          let id_tag = car_tag + tag_dir_une + lorry_tag + tag_dir_deux;
+          let image_path = server_root + asset_link + id_tag + ".png";
 
           console.log("Looking up the following path: ", image_path);
 
+          fabric.Image.fromURL(image_path, function (oImg) {
+            var group = fab.image_parser(oImg, length, Canvas, Deck, idx + 1);
 
-          function image_parser(oImg) {
+            group.id = id_tag;
+            group.type = "card";
+            console.log(xOffset, yOffset);
+            group.set({ left: xOffset, top: yOffset })
+            group.scaleToWidth(length);
+            group.scaleToHeight(length);
 
-            oImg.crossOrigin = "Anonymous";
-
-            oImg.scale(length).set({
-              left: xOffset,
-              top: yOffset,
-              originX: 'left',
-              originY: 'top',
-              centeredRotation: true,
-              lockUniScaling: true,
-              lockScalingY: true,
-              lockScalingX: true,
-              hasControls: false,
-              id: idx.toString(),
-            }, );
-
-            oImg.scaleToWidth(length);
-            oImg.scaleToHeight(length);
-            // Canvas.add(img)
-            // Canvas.add(card);
-            // Ok we have the image, can add to group/canvas
-            if (oImg == undefined) {
-              console.log("something went wrong createing image from asset...");
-            } else {
-              console.log("Adding canvas item")
-            }
-            
-            Deck.push(oImg);
-            Canvas.add(oImg);
-          }
-
-          fabric.Image.fromURL(image_path, image_parser,{ crossOrigin: 'Anonymous'})
-
-
+            Deck.push(group);
+            Canvas.add(group);
+          }, { crossOrigin: 'Anonymous' });
+        });
       });
-
-
-
-
-
-
-
-
-      // Canvas.add(card);
-      // Deck.push(card);
     });
   }
 
