@@ -9,6 +9,6 @@ namespace SDSA.Models.Tests
     {
         public int TestId { get; set; }
         public int TimeTaken { get; set; }
-        public  int Mistakes { get; set; }
+        public int Mistakes { get; set; }
     }
 }

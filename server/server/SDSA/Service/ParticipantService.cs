@@ -23,5 +23,9 @@ namespace SDSA.Service
 
         public int CreateParticipant()
             => _participantRepository.CreateParticipant();
+    
+        public IEnumerable<int> GetClinicianParticipants(int ClinicianID)
+            => _participantRepository.GetClinicianParticipants(ClinicianID);
+
     }
 }

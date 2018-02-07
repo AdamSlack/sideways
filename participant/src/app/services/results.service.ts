@@ -6,28 +6,30 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:8080/';
+  public ROOT : string = 'http://localhost:5000/';
   
-  public createHeaders() {
-    return {
-      headers: new HttpHeaders().set('Authorization', 'my-auth-token')
-    }
+  public createHeaders(contentType : string = 'application/json') : HttpHeaders {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', contentType);
+    headers.set('Access-Control-Allow-Origin', '*')
+    return headers;
   }
 
-  public insertDotCancellationResults(p_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url =  this.ROOT + p_id + '/results/dot_cancellation';
+  public insertDotCancellationResults(t_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
+    let url =  this.ROOT + "Test/" +t_id + '/DotCancellationResult';
     let body = {
-      'time_taken': time_taken,
-      'true_pos': true_pos,
-      'false_pos': false_pos,
-      'false_neg': false_neg
+      'TimeTaken': time_taken,
+      'TruePos': true_pos,
+      'falsePos': false_pos,
+      'falseNeg': false_neg,
+      'TestId' : t_id
     }
     console.log('DOT CANCELLATION RESULTS: ')
     console.log(body);
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers:headers}).subscribe();
   }
 
   public insertCarDirectionResults(p_id: number, time_taken: number, points: number) {
@@ -41,7 +43,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers:headers}).subscribe();
   }
 
   public insertCompassDirectionResults(p_id: number, time_taken: number, points: number) {
@@ -55,7 +57,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers:headers}).subscribe();
   }
 
   public insertRoadScenarioResults(p_id: number, time_taken: number, points: number) {
@@ -69,15 +71,16 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers:headers}).subscribe();
   }
 
   public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+    console.log("Sending: ", time_taken, mistakes);
+    let url =  this.ROOT + 'Test/' + p_id + '/results/trail_making';
     
     let body = {
-      'time_taken': time_taken,
-      'mistakes': mistakes
+      'TimeTaken': time_taken,
+      'Mistakes': mistakes
     }
 
     console.log('TRAIL MAKING: ')
@@ -85,7 +88,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers:headers}).subscribe();
   }
    
 }

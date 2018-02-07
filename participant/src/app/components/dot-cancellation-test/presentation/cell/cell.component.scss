@@ -1,0 +1,69 @@
+
+
+.cell {
+  
+  //height: 100%;
+  //height:50px;
+  //width: 100%;
+  //width: 50 px;
+  font-size: 1.5em; 
+  font-family: 'Gochi Hand', sans-serif;
+  text-color: black;
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between; 
+  //width: calc(100% * (1/25) - 10px - 1px) ;
+  //width: 32%;
+  //margin-bottom: 40%; 
+  //margin:20%;
+  //padding:1px;
+  // position: relative;
+     
+}
+
+.spacer
+{
+     padding-left:8px;
+      padding-right:8px;
+}
+
+.cell:hover 
+{
+	background-color: #93a3bc;
+    border-radius: 5px;
+}
+	
+	    .dot1 {
+position: relative;
+        color: red;
+	
+    }
+	
+		    .dot2 {
+position: relative;
+        color: green;
+	
+    }
+			    .dot3 
+			{
+			color: black;
+position: relative;
+ //position: absolute;
+ align-self: center;
+
+    }
+
+		    .dot4 {
+position: relative;
+        color: blue;
+	
+    }
+	
+		    .dot5 {
+position: relative;
+        color: black;
+	
+    }
+	
+	

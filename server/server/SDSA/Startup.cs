@@ -63,7 +63,7 @@ namespace SDSA
             corsBuilder.AllowAnyOrigin();             
             CorsPolicy corsPolicy = corsBuilder.Build();
 
-            services.AddCors(x => x.AddPolicy("SiteCorsPolicy", corsPolicy));
+            services.AddCors(x => x.AddPolicy("AllowAllCORS", corsPolicy));
 
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
@@ -98,8 +98,10 @@ namespace SDSA
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseAuthentication();
-            
+
+            app.UseCors("AllowAllCORS");
             app.UseStaticFiles();
+            
             app.UseStatusCodePages(
                 async context =>
              {
@@ -126,7 +128,6 @@ namespace SDSA
        // context.HttpContext.Response.StatusCode + $": {statusMessage}");
              } 
             );
-            app.UseCors("SiteCorsPolicy");
 
             app.UseMvc(routes =>
             {
