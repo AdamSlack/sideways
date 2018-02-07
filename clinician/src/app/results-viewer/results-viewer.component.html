@@ -15,7 +15,7 @@
 </div>
 
 <div class="selection" *ngIf="participantID">
-  <select [(ngModel)]=testID>
+  <select [(ngModel)]=testID (change)="requestTestResults()">
       <option value="0" disabled selected hidden>Select Participant's Test ID</option>
       <option *ngFor="let id of testIDs" value="{{id}}">{{id}}</option>      
     </select>
@@ -27,30 +27,61 @@
     <div class="title">
       Overall Test Results:
     </div>
+    <div class = "details">
+
+    </div>
   </div>
 
-  <div>
+  <div *ngIf="dotCancellationTest">
     <div class="title">
       Dot Cancellation Results:
     </div>
+    <div class = "details">
+      Time Taken: {{dotCancellationTest.timeTaken}} <br>
+      True Positives: {{dotCancellationTest.truePos}} <br>
+      False Positives : {{dotCancellationTest.falsePos}} <br>
+      False Negatives : {{dotCancellationTest.falseNeg}}
+    </div>
   </div>
 
-  <div>
+  <div *ngIf="carDirectionsTest">
     <div class="title">
       Car Directions Results:
     </div>
+    <div class = "details">
+      Time Taken: {{carDirectionsTest.timeTaken}}<br>
+      Points: {{carDirectionsTest.points}}
+    </div>
   </div>
 
-  <div>
+  <div *ngIf="compassDirectionsTest">
     <div class="title">
       Compass Directions Results:
     </div>
+    <div class = "details">
+        Time Taken: {{compassDirectionsTest.timeTaken}}<br>
+        Points: {{compassDirectionsTest.points}}
+    </div>
   </div>
 
-  <div>
+  <div *ngIf="roadScenariosTest">
     <div class="title">
       Road Sign Scenario Results:
     </div>
+    <div class = "details">
+        Time Taken: {{roadScenariosTest.timeTaken}}<br>
+        Points: {{roadScenariosTest.points}}
+    </div>
   </div>
+
+  <div *ngIf="trailMakingTest">
+      <div class="title">
+        Trail Making Results:
+      </div>
+      <div class = "details">
+          Time Taken: {{trailMakingTest.timeTaken}}<br>
+          Mistakes Made: {{trailMakingTest.mistakes}}
+      </div>
+    </div>
 
 </div>

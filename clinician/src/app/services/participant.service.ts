@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service'; 
 import { Observable } from 'rxjs/Observable';
+import { RoadSignScenario } from './localisation.service';
 
 @Injectable()
 export class ParticipantService {
@@ -28,8 +29,16 @@ export class ParticipantService {
     return this.http.get<any>(url);
   }
 
-  public requestTestResults(t_id : number, testType : number) {
-    let url = this.auth.ROOT + 'Participant/results/' + t_id + '/' +  testType;
+  public requestTestResults(
+    t_id : number
+  ) : Observable<{
+    dotCancellationTest : {testId : number, timeTaken : number, truePos : number, falsePos : number, falseNeg : number},
+    compassDirectionsTest : {testId : number, timeTaken : number, points : number},
+    carDirectionsTest : {testId : number, timeTaken : number, points : number},
+    roadScenariosTest : {testId : number, timeTaken : number, points : number},
+    trailMakingTest : {testId : number, timeTaken : number, mistakes : number}
+  }>{
+    let url = this.auth.ROOT + 'Test/' + t_id + '/results';
     return this.http.get<any>(url);
   }
 

@@ -58,7 +58,7 @@ namespace SDSA.Repository
         }
 
         public DotCancellationTest GetDotCancellationTest(int TestId)
-             => db.ExecuteScalar<DotCancellationTest>(
+             => db.Query<DotCancellationTest>(
                 "Select Test_Id as TestId ," +
                 " time_taken as TimeTaken, " +
                 "true_pos as TruePos," +
@@ -69,11 +69,11 @@ namespace SDSA.Repository
 
                 new { TestId = TestId }
 
-                );
+                ).FirstOrDefault();
         #endregion
         #region CaDT
         public CarDirectionsTest GetCarDirectionsTest(int TestId)
-            => db.ExecuteScalar<CarDirectionsTest>(
+            => db.Query<CarDirectionsTest>(
                 "Select test_id as TestId ," +
                 "time_taken as TimeTaken ," +
                 "points as Points " +
@@ -81,7 +81,7 @@ namespace SDSA.Repository
                 "where test_id = @TestId"
                 ,
                 new { TestId = TestId }
-                );
+                ).FirstOrDefault();
         public void SaveCarDirectionTest(CarDirectionsTest CDT)
             => db.Execute(
                 "insert into car_directions (test_Id , time_taken, points)" +
@@ -91,14 +91,14 @@ namespace SDSA.Repository
         #endregion
         #region CoDT
         public CompassDirectionsTest GetCompassDirectionsTest(int TestId)
-            => db.ExecuteScalar<CompassDirectionsTest>(
+            => db.Query<CompassDirectionsTest>(
                 "Select test_id as TestId," +
-                "time_taken as Time_Taken," +
+                "time_taken as TimeTaken," +
                 "points as Points " +
                 "from compass_directions " +
                 "where test_id = @TestId",
                 new { TestId = TestId }
-                );
+                ).FirstOrDefault();
         public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
             => db.Execute(
                 "insert into compass_directions (test_Id , time_taken, points) " +
@@ -108,15 +108,15 @@ namespace SDSA.Repository
         #endregion
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)
-            => db.ExecuteScalar<RoadScenariosTest>
+            => db.Query<RoadScenariosTest>
             (
                  "Select test_id as TestId," +
-                "time_take as Time_Taken," +
+                "time_taken as TimeTaken," +
                 "points as Points " +
                 "from road_scenarios " +
                 "where test_id = @TestId ",
                 new { TestId = TestId }
-                );
+                ).FirstOrDefault();
         public void SaveRoadScenarioTest(RoadScenariosTest RST)
             => db.Execute(
                 "insert into road_Scenarios (test_Id , time_taken, points) " +
@@ -126,14 +126,14 @@ namespace SDSA.Repository
         #endregion RST
         #region TMT
         public TrailMakingTest GetTrailMakingTest(int TestId)
-            => db.ExecuteScalar<TrailMakingTest>(
+            => db.Query<TrailMakingTest>(
                  "Select test_id as TestId," +
-                "time_taken as Time_Taken," +
+                "time_taken as TimeTaken," +
                 "mistakes as Mistakes " +
                 "from trail_making " +
                 "where test_id = @TestId",
                  new { TestId = TestId }
-                );
+                ).FirstOrDefault();
         public void SaveTrailMakingTest(TrailMakingTest TMT)
             => db.Execute(
                 "insert into trail_making (test_Id , time_taken, mistakes) " +
