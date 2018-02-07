@@ -222,7 +222,36 @@ insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file
 insert into participants (participant_id) values (1) on conflict do nothing;
 insert into participant_tests (test_id, participant_id, clinician_id, preset_name) values (1, 1,1,'test') on conflict do nothing;
 
+----
+--  Dot Cancellation Test Results
+----
+insert into dot_cancellation (test_id, time_taken, true_pos, false_pos, false_neg, test_date)
+    values (1,123,12,34,56,NOW());
 
+----
+--  Compass Direction Test Results
+----
+insert into compass_directions (test_id, time_taken, points, test_date)
+    values (1,123,13,NOW());
+
+----
+--  Car Direction Test Results
+----
+insert into car_directions (test_id, time_taken, points, test_date)
+    values (1,321,31,NOW());
+
+----
+--  Road Sign Scenario test results
+----
+
+insert into road_scenarios (test_id, time_taken, points, test_date)
+    values (1,222,333,NOW());
+
+----
+--  Trail Making
+----
+insert into trail_making (test_id, time_taken, mistakes, test_date)
+    values (1,999,4,NOW());
 
 -- CREATE USER sdsa_user WITH PASSWORD 'password';
 -- REVOKE ALL ON SCHEMA public FROM sdsa_user;

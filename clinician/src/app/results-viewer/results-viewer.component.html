@@ -1,3 +1,56 @@
-<p>
-  results-viewer works!
-</p>
+
+<div class="title">
+  Select A Participant ID:
+</div>
+
+<div class="selection">
+  <select [(ngModel)]=participantID (change)="requestParticipantTests()">
+      <option value="0" disabled selected hidden>Select Participant ID</option>
+      <option *ngFor="let id of participantIDs" value="{{id}}">{{id}}</option>      
+    </select>
+</div>
+
+<div class="title" *ngIf="participantID">
+  Select A Test ID for that Participant:
+</div>
+
+<div class="selection" *ngIf="participantID">
+  <select [(ngModel)]=testID>
+      <option value="0" disabled selected hidden>Select Participant's Test ID</option>
+      <option *ngFor="let id of testIDs" value="{{id}}">{{id}}</option>      
+    </select>
+</div>
+
+<div *ngIf="testID">
+  
+  <div>
+    <div class="title">
+      Overall Test Results:
+    </div>
+  </div>
+
+  <div>
+    <div class="title">
+      Dot Cancellation Results:
+    </div>
+  </div>
+
+  <div>
+    <div class="title">
+      Car Directions Results:
+    </div>
+  </div>
+
+  <div>
+    <div class="title">
+      Compass Directions Results:
+    </div>
+  </div>
+
+  <div>
+    <div class="title">
+      Road Sign Scenario Results:
+    </div>
+  </div>
+
+</div>
