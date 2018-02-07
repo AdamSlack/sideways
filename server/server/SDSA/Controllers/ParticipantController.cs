@@ -32,10 +32,19 @@ namespace SDSA.Controllers
             Console.WriteLine("Request for Participant Creation Recieved. " + PT.ParticipantId + " : " + PT.ClinicianId + " : " + PT.LocalePreset);
             return Json( new { testId = _participantService.CreateParticipantTest(PT) });
         }
+        
+
         [HttpGet("[controller]/{ParticipantId}/Tests")]
-        public IActionResult Tests (int ParticipantId)
+        public IActionResult ParticipantTests (int ParticipantId)
         {
-            return Json( new { tests = _testService.GetParticipantsTests(ParticipantId) } );
+            Console.WriteLine("Request for tests of participant: " + ParticipantId);
+            return Json( new { tests = _participantService.GetParticipantTests(ParticipantId) } );
         }
+
+        [HttpGet("[controller]/clinician/{ClinicianID}")]
+        public IActionResult ClinicianParticipants(int ClinicianID) {
+            return Json( new { participants = _participantService.GetClinicianParticipants(ClinicianID)} );
+        }
+        
     }
 }

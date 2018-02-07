@@ -24,9 +24,16 @@ namespace SDSA.Repository{
             new {PID = PT.ParticipantId, CID = PT.ClinicianId, PresetName = PT.LocalePreset}
         );
         
-        public IEnumerable<int> GetParticipantTests(int participantId) => db.Query<int>(
-            "select test_id from participant_tests where participant_id = @participantId",
-            new { participantId = participantId }
-        );
+        public IEnumerable<int> GetParticipantTests(int ParticipantID){ 
+             return db.Query<int>(
+                "select test_id from participant_tests where participant_id = @PID",
+                 new {PID = ParticipantID});
+        }
+
+        public IEnumerable<int> GetClinicianParticipants(int ClinicianID) {
+            return db.Query<int>(
+                "select distinct participant_id from participant_tests where clinician_id = @ClinicianID"
+                 , new {ClinicianID = ClinicianID});
+        }
     }
 }
