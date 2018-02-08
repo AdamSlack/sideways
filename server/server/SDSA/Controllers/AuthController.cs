@@ -41,7 +41,7 @@ namespace SDSA.Controllers
                 {
                     new Claim(ClaimTypes.Email , User.Email),
                     new Claim(ClaimTypes.Role , "Clinician"),
-                    new Claim("ID" , Clin.ID.ToString())
+               //     new Claim("ID" , Clin.ID.ToString())
                     
                 };
                 var bytes = Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]);

@@ -128,7 +128,7 @@ namespace SDSA.Controllers
         public IActionResult TestPreset(int testID) 
             => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});
 
-        [HttpGet("[controller]/{TestId}/results/<algorithmId>")]
+        [HttpGet("[controller]/{TestId}/results/{algorithmId}")]
         public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId)
         {
             if( TestId == 0)

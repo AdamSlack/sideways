@@ -26,9 +26,8 @@ namespace SDSA.Repository
                 case "(localdb)\\ProjectsV13":
                  return new SqlConnection(connectionString);
                 case "PostGreSQL1":
-                    return new NpgsqlConnection(connectionString);
-                case "adams_local_db":
-                    return new NpgsqlConnection(connectionString);
+                case "adams_local_db":                    
+                case "MAE-09_local":
                 case "deans_local_db":
                     return new NpgsqlConnection(connectionString);
                 default:
