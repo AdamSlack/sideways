@@ -30,14 +30,14 @@ const square_keys = [
   "U" + "_" + "D",
   "U" + "_" + "R",
   "U" + "_" + "L",
-  "R" + "_" + "",
-  "R" + "_" + "",
-  "R" + "_" + "",
-  "R" + "_" + "",
-  "L" + "_" + "S",
-  "L" + "_" + "SW",
-  "L" + "_" + "W",
-  "L" + "_" + "NW"
+  "L" + "_" + "R",
+  "L" + "_" + "R",
+  "L" + "_" + "R",
+  "L" + "_" + "R",
+  "D" + "_" + "L",
+  "D" + "_" + "L",
+  "D" + "_" + "L",
+  "D" + "_" + "L"
 ]
 
 var server_root = 'http://localhost:5000/';
@@ -159,11 +159,11 @@ export class CarDirectionsTestComponent implements OnInit {
     var c_offset = (arrow_length / 4)
 
     //right 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 1) + c_offset,               0 + c_offset * 2,                        xPos + (arrow_length * 2) - c_offset,        0 + c_offset * 2)
+    this.fab.drawArrow(canvas, 2, xPos + arrow_length + c_offset,                     0 + c_offset * 2,                        xPos + arrow_length *2 - c_offset,        0 + c_offset * 2)
     //up 
     this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 2) + c_offset * 2,           xPos + (arrow_length) - c_offset,        xPos + (arrow_length * 2) + c_offset * 2,    0 + c_offset)
     //left 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 4) + c_offset,               0 + c_offset * 2,                        xPos + (arrow_length * 3) - c_offset,        0 + c_offset * 2)
+    this.fab.drawArrow(canvas, 2,  xPos + arrow_length *4 - c_offset,               0 + c_offset * 2,                          xPos + arrow_length * 3+ c_offset,        0 + c_offset * 2)
     //Down 
     this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 4) + c_offset * 2,           0 + c_offset,                            xPos + (arrow_length * 4) + c_offset * 2,    xPos + (arrow_length) - c_offset)
 
