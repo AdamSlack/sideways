@@ -123,8 +123,8 @@ export class CarDirectionsTestComponent implements OnInit {
     //Need to check width and height and fit in the smallest 
     var percentage_cover = 0.8;
     var grid_length = (Canvas.width < Canvas.height ? Canvas.width : Canvas.height) * percentage_cover; //- 100 to account for offset
-    console.log("Grid Length: ", grid_length);
-    console.log("Grid Length Percent: ", grid_length * 0.5)
+    // console.log("Grid Length: ", grid_length);
+    // console.log("Grid Length Percent: ", grid_length * 0.5)
 
     //TODO: fabric js has some alignment methods..
     var x_grid_offset = 0;
@@ -134,9 +134,14 @@ export class CarDirectionsTestComponent implements OnInit {
     this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4);
 
+
+    let line_padding = 5;
+    //Break line
+    this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
+
+    let deck_item_sz = square_length * 0.9;
+    this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
     //this.createDeck(this.fab, Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
-
-
   }
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, arrow_length: number) {
     var group = [];
@@ -170,7 +175,7 @@ export class CarDirectionsTestComponent implements OnInit {
     this.fab.drawArrow(canvas, 10, xPos + c_offset * 2, 0 + (arrow_length * 2) - c_offset, xPos + c_offset * 2, xPos + (arrow_length * 1) + c_offset)
     //Down 
     this.fab.drawArrow(canvas, 10, xPos + c_offset * 2, 0 + c_offset + (arrow_length * 2), xPos + c_offset * 2, xPos + (arrow_length * 3) - c_offset)
-    //right 
+    //right
     this.fab.drawArrow(canvas, 10, xPos + c_offset, 0 + c_offset * 2 + (arrow_length * 3), xPos + arrow_length - c_offset, 0 + (arrow_length * 3) + c_offset * 2)
     //left 
     this.fab.drawArrow(canvas, 10, xPos + arrow_length - c_offset, 0 + c_offset * 2 + (arrow_length * 4), xPos + c_offset, 0 + c_offset * 2 + (arrow_length * 4))
@@ -198,7 +203,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
   private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, deckSize: number = 16, length: number) {
     //Initialise deck of compass cards
-    var cards = Array.from({ length: deckSize }, (value, key) => key).map((idx: number) => {
+    Array.from({ length: deckSize }, (value, key) => key).map((idx: number) => {
 
       //Method on server:
       let car_tag = 'C';
@@ -220,7 +225,6 @@ export class CarDirectionsTestComponent implements OnInit {
 
             group.id = id_tag;
             group.type = "card";
-            console.log(xOffset, yOffset);
             group.set({ left: xOffset, top: yOffset })
             group.scaleToWidth(length);
             group.scaleToHeight(length);
@@ -231,6 +235,7 @@ export class CarDirectionsTestComponent implements OnInit {
         });
       });
     });
+    console.log(Deck.length);
   }
 
 }

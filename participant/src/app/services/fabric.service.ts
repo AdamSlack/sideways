@@ -27,13 +27,21 @@ export class FabricService {
     context.fillStyle = "red";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-
-
     //Intialise fabricjs components
     let canvas_fab = new fabric.Canvas(id);
     canvas_fab.backgroundColor = '#ffffff';
     canvas_fab.renderAll();
     return canvas_fab;
+  }
+
+  public createBreakLine(fab: FabricService, canvas : any, x_start: number = 0, y_start: number = 0) {
+    canvas.add(new fabric.Line([0, 0, canvas.width, 0], {
+      left: x_start,
+      top: y_start,
+      stroke: 'black',
+      strokeWidth: 5,
+      selectable: false
+    }));
   }
 
 
@@ -71,14 +79,14 @@ export class FabricService {
       hasControls: false
     });
 
-    this.addInteractionObjLogic(group, canvas, group.type);
+    this.addInteractionObjLogic(group, canvas, "card" );
     this.addRotatingStyle(group, canvas);
 
     return group;
   }
 
 
-  public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string, type: string = "card") {
+  public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string, type: string) {
     // create a rectangle object
     var card = new fabric.Rect({
       left: x,
@@ -138,10 +146,10 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         target.setCoords();
         
         //If the target card has a type of the card then bust a nut and be outie
-        // if (target.type === type) {
-        //   console.log("Same type interaction: ", target.type, type);
-        //   return;
-        // }
+        if (target.type !== type) {
+          console.log("Same type interaction: ", target.type, type);
+          return;
+        }
   
         // top-left  corner
         if (target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0) {
@@ -172,15 +180,14 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
             
             // console.log("interacting corner: ", coliding.top, coliding.left);
             // console.log("From corner: ", coliding.top, target.left);
-            console.log(obj.type);
             let distance = get_distance_points(coliding.top , coliding.left, target.top, target.left);
             //obj.distance = distance;
-            console.log("Interacting block distance: ", distance);
-            console.log("Needs to be less than: ", target.width/2);
+            // console.log("Interacting block distance: ", distance);
+            // console.log("Needs to be less than: ", target.width/2);
 
             if(distance < target.width/2) {
               //obj.set('opacity', 0.5);
-              console.log(distance);
+              // console.log(distance);
               obj.set( {fill: '#d3d3d3'});
             } else {
 //              obj.set('opacity', 1); 
@@ -236,12 +243,7 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
 
 
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, compass_length: number) {
-    // fabric.Image.loadSVGFromURL('../assets/compass_north.svg', function(oImg) {
-    //   oImg.width = this.box_length
 
-    //   oImg.height = this.box_length;
-    //   canvas.add(oImg);
-    // });
     var compass_url = '../assets/compass_north.svg';
 
     var group = [];

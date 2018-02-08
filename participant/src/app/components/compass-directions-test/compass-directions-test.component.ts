@@ -215,25 +215,13 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     let line_padding = 5;
     //Break line
-    this.createBreakLine(this.fab, 0, grid_length + line_padding);
+    this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
 
     let deck_item_sz = square_length * 0.9;
     this.createCompassDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
 
-    // Commented out cause we don't really need it?
-    //Canvas.add(this.createShuffleButton(Canvas.width - 100, Canvas.width - 150));
-
   }
 
-  private createBreakLine(fab: FabricService, x_start: number = 0, y_start: number = 0) {
-    Canvas.add(new fabric.Line([0, 0, Canvas.width, 0], {
-      left: x_start,
-      top: y_start,
-      stroke: 'black',
-      strokeWidth: 5,
-      selectable: false
-    }));
-  }
 
 
 
