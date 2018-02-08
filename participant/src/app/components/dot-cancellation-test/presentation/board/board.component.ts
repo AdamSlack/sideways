@@ -745,7 +745,7 @@ export class BoardComponent {
 
 		//Show Results	
 		this.showResults = true;
-		this.resultsHeight = 500;
+		this.resultsHeight = 300;
 		this.truePositives = results[0];
 		this.trueNegatives = results[1];
 		this.falsePositives = results[2];

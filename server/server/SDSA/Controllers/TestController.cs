@@ -43,11 +43,11 @@ namespace SDSA.Controllers
             Console.WriteLine("test ID:"+ DCT.TestId);
 
 
-            //if (ModelState.IsValid)
-            //{
-            //    _testService.SaveDotCancellationTest(DCT);
-            //    return Ok();
-            //}
+            if (ModelState.IsValid)
+            {
+                _testService.SaveDotCancellationTest(DCT);
+                return Ok();
+            }
 
             return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
         }

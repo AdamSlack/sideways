@@ -33,7 +33,7 @@
 .board
 {
 
- @include flex-grid(25, 0px);
+ @include flex-grid(25, 6px);
 
   justify-content: space-between; 
   margin-bottom: 1.5%;    

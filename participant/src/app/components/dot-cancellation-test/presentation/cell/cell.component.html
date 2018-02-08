@@ -2,7 +2,11 @@
  
 <div class="cell">
  
-  <div id="p2" [style.right.px]="dotOneXValue" [style.top.px]="dotOneYValue" class="dot3">
+  <!--[ngClass]="{'cellSelected': cellsSelected[col+row*25]=='X' }"-->
+<!--
+[ngClass]="{'hidden': dotTwoXValue!='.', 'dot3': dotTwoXValue=='.' }"-->
+
+  <div id="p2"  [style.right.px]="dotOneXValue" [style.top.px]="dotOneYValue" [ngClass]="{hidden: dotOne!='.', dot3: dotOne=='.'}" >
     {{dotOne}}
   </div>
   <div [style.right.px]="dotTwoXValue" [style.top.px]="dotTwoYValue" class="dot3">
