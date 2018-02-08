@@ -154,7 +154,7 @@ namespace SDSA.Repository
         public AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true)
         {
             var algorResult = db.QueryFirstOrDefault<AlgorithmResult>(
-                "select test_id as testId, algorthim_id as AlgorithmId, r1 as R1 , r2 as R2, passed,resultjson as resultJson \n" +
+                "select test_id as testId, algorthim_id as AlgorithmId, r1 as R1 , r2 as R2, passed,result_json as resultJson \n" +
                 "from algorithm_results"
 
                 );
@@ -170,7 +170,7 @@ namespace SDSA.Repository
         }
         public void SaveAlgorithmReult (AlgorithmResult result)
         {
-            db.Execute("insert into algorithm_results (test_id , algorthim_id, R1, R2, Passed, resultJson) " +
+            db.Execute("insert into algorithm_results (test_id , algorthim_id, r1, r2, passed, result_json) " +
                 "values (@TestId, @AlgorithmId, @R1, @R2, @passed, @resultJson) ",
                 result);
         }
