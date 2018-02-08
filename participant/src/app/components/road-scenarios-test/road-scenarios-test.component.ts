@@ -109,20 +109,24 @@ export class RoadScenariosTestComponent implements OnInit {
     console.log("Grid Length Percent: ", grid_length * 0.5)
 
     //TODO: fabric js has some alignment methods..
-    var x_grid_offset = 0; 
+    var x_grid_offset = Canvas.width * (1 - percentage_cover) / 2;
     var y_grid_offset = 0;
 
     var square_length =  grid_length/5
-    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4, square_length * 0.1);
 
     //TODO: Check the config for the currently chosen assets
     let line_padding = 5;
     //Break line
     this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
 
-    //this.createDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, square_length * 0.9);
 
+    let deck_item_sz = square_length * 0.5;
+    
     this.load_scenarios_into_grid(this.fab);
+
+    this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), deck_item_sz);
+
   }
 
   ngOnInit() {
@@ -136,6 +140,7 @@ export class RoadScenariosTestComponent implements OnInit {
       //Refernece sqaure
       let ref_component = GridSquares[idx];
       console.log("Item refing: ", ref_component);
+      ref_component.stroke = '#FFFFFF';
 
       fabric.Image.fromURL(scenario_path, function (oImg) {
         console.log("Getting scenario: ", scenario_path);
@@ -143,16 +148,18 @@ export class RoadScenariosTestComponent implements OnInit {
           console.log("oh no the path doesn't exist. It should but the directions in use were rando...", scenario_path);
         } else {
           console.log(ref_component.width);
-          var group = fab.image_parser(oImg, ref_component.width, Canvas, scenario_path);
+          var group = fab.image_parser(oImg, ref_component.width, Canvas, scenario_path, false);
 
           let path_broken = scenario_path.split("/");
           let id_name =  path_broken[path_broken.length];
           
           group.id = id_name;
           group.type = "card";
+          group.selectable = false;
           group.set({ left: ref_component.left, top: ref_component.top })
           group.scaleToWidth(ref_component.width);
-          group.scaleToHeight(ref_component.width);
+          group.stroke = 'black';
+          group.strokeWidth = 3;
 
           //Deck.push(group);
           Canvas.add(group);
@@ -167,7 +174,7 @@ export class RoadScenariosTestComponent implements OnInit {
 
     this.roadSigns.forEach(road_path => {
       fabric.Image.fromURL(road_path, function (oImg) {
-        console.log("Getting sign: ", road_path);
+        console.log("Getting sigcreateGridBaseSquaresn: ", road_path);
         if (oImg == null) {
           console.log("oh no the path doesn't exist. It should but the directions in use were rando...", road_path);
         } else {
@@ -177,7 +184,7 @@ export class RoadScenariosTestComponent implements OnInit {
           let id_name =  path_broken[path_broken.length];
           
           group.id = id_name;
-          group.type = "card";
+          group.type = "scenario";
           group.set({ left: xOffset, top: yOffset })
           group.scaleToWidth(length);
           group.scaleToHeight(length);

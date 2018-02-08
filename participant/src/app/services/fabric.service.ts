@@ -60,7 +60,7 @@ export class FabricService {
       id: id.toString(), 
     },);
 
-    oImg.scaleToWidth(img_length);
+    //oImg.scaleToWidth(img_length);
     oImg.scaleToHeight(img_length);
 
     // Ok we have the image, can add to group/canvas
@@ -71,11 +71,13 @@ export class FabricService {
     }
 
     var group = new fabric.Group([oImg], {
+      originX: 'left', 
+      originY: 'top',
       scaleY: img_length,
       scaleX: img_length,
       lockScalingY: true,
       lockScalingX: true,
-      hasControls: false
+      hasControls: false,
     });
 
     this.addInteractionObjLogic(group, canvas, id.toString() );
