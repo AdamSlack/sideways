@@ -45,11 +45,11 @@ export class FabricService {
   }
 
 
-  public image_parser(oImg, length : any, canvas : any, id : any) {
+  public image_parser(oImg, img_length : any, canvas : any, id : any) {
 
     oImg.crossOrigin = "Anonymous";
 
-    oImg.scale(length).set({
+    oImg.scale(img_length).set({
       originX: 'left', 
       originY: 'top',
       centeredRotation: true,
@@ -60,8 +60,8 @@ export class FabricService {
       id: id.toString(), 
     },);
 
-    oImg.scaleToWidth(length);
-    oImg.scaleToHeight(length);
+    oImg.scaleToWidth(img_length);
+    oImg.scaleToHeight(img_length);
                         // Canvas.add(img)
     // Canvas.add(card);
     // Ok we have the image, can add to group/canvas
@@ -72,8 +72,8 @@ export class FabricService {
     }
 
     var group = new fabric.Group([oImg], {
-      scaleY: length,
-      scaleX: length,
+      scaleY: img_length,
+      scaleX: img_length,
       lockScalingY: true,
       lockScalingX: true,
       hasControls: false
@@ -86,13 +86,13 @@ export class FabricService {
   }
 
 
-  public createReactingObj(canvas: any, x: number, y: number, length: number, identifer: string, type: string) {
+  public createReactingObj(canvas: any, x: number, y: number, obj_length: number, identifer: string, type: string) {
     // create a rectangle object
     var card = new fabric.Rect({
       left: x,
       top: y,
-      width: length,
-      height: length,
+      width: obj_length,
+      height: obj_length,
       //fill: '#ffb366', 
       originX: 'left',
       originY: 'top',
