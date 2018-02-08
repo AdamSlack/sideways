@@ -25,7 +25,8 @@ export class AssetRetrievalService {
   }
 
   public selectLocalisationDetails(testType : number, localeName : string) : Observable<any> {
-    let url = this.ROOT + '/Localisation/' + localeName + '/' + testType.toString();
+    let url = this.ROOT + '/' + 'Localisation/' + localeName + '/' + testType.toString();
+    console.log("gathering presets: ", url)
     let headers = this.createHeaders();
     return this.http.get(url, {headers : headers});
   }

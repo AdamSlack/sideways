@@ -281,7 +281,6 @@ export class CarDirectionsTestComponent implements OnInit {
           let id_tag = car_tag + tag_dir_une + lorry_tag + tag_dir_deux;
           let image_path = server_root + asset_link + id_tag + ".png";
 
-
           fabric.Image.fromURL(image_path, function (oImg) {
             if (oImg == null) {
               console.log("oh no the path doesn't exist. It should but the directions in use were rando...", image_path);

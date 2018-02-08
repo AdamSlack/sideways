@@ -166,15 +166,15 @@ export class CompassDirectionsTestComponent implements OnInit {
       console.log('An existing subscription for locale assets was found. Unsubscribing.');
       this.localeSubscription.unsubscribe();
     }
-    if (this.auth.PARTICIPANT_TEST_LOCALE == '') {
-      //alert('No valid localisation details found. returning to login.');
-      this.auth.VALIDATED = false;
-      this.auth.CLINICIAN_ID = '';
-      this.auth.PARTICIPANT_TEST_ID = '';
-      this.auth.AUTH_TOKEN = '';
-      this.auth.PARTICIPANT_TEST_LOCALE = '';
-      return;
-    }
+    // if (this.auth.PARTICIPANT_TEST_LOCALE == '') {
+    //   //alert('No valid localisation details found. returning to login.');
+    //   this.auth.VALIDATED = false;
+    //   this.auth.CLINICIAN_ID = '';
+    //   this.auth.PARTICIPANT_TEST_ID = '';
+    //   this.auth.AUTH_TOKEN = '';
+    //   this.auth.PARTICIPANT_TEST_LOCALE = '';
+    //   return;
+    // }
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
     this.localeSubscription = this.locale.selectCompassDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
       console.log('Response for Compass Direction game assets recieved from server.');

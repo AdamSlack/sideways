@@ -10,7 +10,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
 
-
 import "fabric"
 declare const fabric: any;
 
@@ -29,7 +28,7 @@ export class RoadScenariosTestComponent implements OnInit {
   
   public time : number = 0;
 
-  private assets_url = 'api/heroes';  // URL to web api
+  private assets_url = '';  // URL to web api
   
   constructor(
     private rs: ResultsService, 
@@ -61,7 +60,6 @@ export class RoadScenariosTestComponent implements OnInit {
   /*
    * Subscribes to a request for localisation preset details.
    * If no preset details have successfully been obtained, it returns back to the login screen.
-   *
    */
   public initLocaleSettings() : void {
     console.log('Initialising Game Localisation settings.');
@@ -69,26 +67,29 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log('An existing subscription for locale assets was found. Unsubscribing.');
       this.localeSubscription.unsubscribe();
     }
-    if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
-      alert('No valid localisation details found. returning to login.');
-      this.auth.VALIDATED = false;
-      this.auth.CLINICIAN_ID = '';
-      this.auth.PARTICIPANT_TEST_ID = '';
-      this.auth.AUTH_TOKEN = '';
-      this.auth.PARTICIPANT_TEST_LOCALE = '';
-      return;
-    }
+    // if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
+    //   alert('No valid localisation details found. returning to login.');
+    //   this.auth.VALIDATED = false;
+    //   this.auth.CLINICIAN_ID = '';
+    //   this.auth.PARTICIPANT_TEST_ID = '';
+    //   this.auth.AUTH_TOKEN = '';
+    //   this.auth.PARTICIPANT_TEST_LOCALE = '';
+    //   return;
+    // }
+
+    this.auth.PARTICIPANT_TEST_LOCALE = 'test';
+
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
     this.localeSubscription = this.locale.selectRoadSignScenarioDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
-      console.log('Response for Compass Direction game assets recieved from servr.');
+      console.log('Response for Compass Direction game assets recieved from server.', res);
       this.testTitle = res['name'] ? res['name'] : 'Road Sign Scenarios';
-      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
-      this.roadScenarios = res['roadSignScenarios'].map((rss) => 'http://localhost:5000/' + rss['sceneImage'] + '.png');
-      this.roadSigns = res['roadSignScenarios'].map((rss) => 'http://localhost:5000/' + rss['signImage'] + '.png');
-      
-
       console.log('Test title: ' + res['name']);
+      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
       console.log('Test instructions: ' + res['instructions']);
+      this.roadScenarios = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['sceneImage'] + '.png');
+      console.log("All road scenarios: ",this.roadScenarios);
+      this.roadSigns = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['signImage'] + '.png');
+      console.log("All road signs: ",this.roadSigns);
 
     });
   }
@@ -123,18 +124,7 @@ export class RoadScenariosTestComponent implements OnInit {
   private createDeck(xOffset : number = 0, yOffset : number  = 0, asset_path : string, length : number) {
     //Load image image as a sign making them all the same size
 
-    //Initialise deck of compass cards
-    // var cards = Array.from({length: deckSize}, (value, key) => key).map((idx : number) => {
-    //   let card = this.fab.createReactingObj(Canvas,xOffset,yOffset, length, 'card' + idx.toString());
-    //   card.isPlaced = false;
-    //   card.lockRotation = true;
-    //   card.lockUniScaling = true;
-    //   card.selectable = true;
-    //   card.lockScalingX = true;
-    //   card.lockScalingY = true
-    //   Canvas.add(card);
-    //   Deck.push(card);
-    // });  
+    
   }
 
 
