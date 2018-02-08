@@ -176,7 +176,7 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
           if (options.target.intersectsWithObject(obj)) {
             //Top left corner to top left corner
             let coliding = obj;
-            coliding.setCoords();
+            coliding. setCoords();
             
             // console.log("interacting corner: ", coliding.top, coliding.left);
             // console.log("From corner: ", coliding.top, target.left);

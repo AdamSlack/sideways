@@ -194,33 +194,33 @@ export class CarDirectionsTestComponent implements OnInit {
 
     squareMatches.forEach((element, idx) => {
 
-      // if (element !== undefined) {
-      //   console.log("Checking : ", element);
-      //   let elemnt_idx: number = element;
-      //   let c_key = card_keys[element];
+      if (element !== undefined) {
+        console.log("Checking : ", element);
+        let elemnt_idx: number = element;
+        let sqr_keys = square_keys[idx].split("_");
+        let c_sqr_key = sqr_keys[0];
+        let l_sqr_key = sqr_keys[1];
+
+        let c_key_dir = element[1];
+        let l_key_dir = element[3];
+ 
+        console.log("Card key (car,lorry): ", c_key_dir, l_key_dir, elemnt_idx);
+        console.log("Sqaure key (car, lorry): ", sqr_keys, idx);
 
 
-      //   let c_key_dir = 
-      //   let l_key_dir = 
-
-      //   let square_key_dir = square_keys[idx].split("_");
-      //   console.log("Card key: ", c_key_dir, elemnt_idx);
-      //   console.log("Sqaure key: ", square_key_dir, idx);
-
-
-      //   if (c_key_dir.every(r => square_key_dir.includes(r))) {
-      //     console.log("winner winner chicken dinner");
-      //     score += 2;
-      //     results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
-      //   } else if (c_key_dir.some(r => square_key_dir.includes(r))) {
-      //     //Maybe you got one right?
-      //     console.log("winner winner oats dinner");
-      //     score += 1;
-      //     results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
-      //   } else {
-      //     results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
-      //   }
-      // }
+        if (c_key_dir.every(r => sqr_keys.includes(r))) {
+          console.log("winner winner chicken dinner");
+          score += 2;
+          results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
+        } else if (c_key_dir.some(r => sqr_keys.includes(r))) {
+          //Maybe you got one right?
+          console.log("winner winner oats dinner");
+          score += 1;
+          results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
+        } else {
+          results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
+        }
+      }
 
     });
 
