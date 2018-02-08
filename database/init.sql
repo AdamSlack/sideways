@@ -154,10 +154,10 @@ create table test_interactions(
 -----
 --  Example: algorithm_id: 2222, clinician_id: 54321, algorithm_name: 'SDSA'
 -----
-create table algorithm(
+create table algorithms(
     algorithm_id    serial  primary key not null,
-   -- clinician_id    smallint references clinicians(clinician_id)  not null, 
-    algorithm_name  text   not null,
+    clinician_id    smallint references clinicians(clinician_id)  not null,
+    algorithm_name  text   not null
 );
 
 -----
@@ -165,11 +165,8 @@ create table algorithm(
 -----
 create table algorithm_results(
     test_id         serial primary key not null,
-    algorithm_id    smallint references algorithm(algorithm_id) not null,
-    R1 		    double precision,
-    R2 		    double precision,
-    Passed 	    boolean,
-    resultJson         jsonb
+    algorthim_id    smallint references algorithms(algorithm_id) not null,
+    results         jsonb
 );
 
 ----
@@ -177,10 +174,6 @@ create table algorithm_results(
 ----
 insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7SVKdcafJPLNokrc0WTXjYyaAoggRR/7LhcPotdsV3Nv5BsXOtPUbw+bGKpo+qnfzhldcGKSuEtqFJKj6w==', 'hello');
 
-----
---  Initial algorithm
-----
-insert into algorithm (algorithm_name) values ('SDSA');inser --1
 ----
 --  Initial SDSA test types.
 ----

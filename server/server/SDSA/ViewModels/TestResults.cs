@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SDSA.Models.Tests;
-namespace SDSA.Models
+namespace SDSA.ViewModels
 {
     public class TestResults
     {
