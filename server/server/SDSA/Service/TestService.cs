@@ -69,7 +69,7 @@ namespace SDSA.Service
                 };
 
            var result = algor .Calulate(testResult);
-            if(result.error != 0)
+            if(result.error == 0)
             {
                 _testRepository.SaveAlgorithmReult(result);
             }

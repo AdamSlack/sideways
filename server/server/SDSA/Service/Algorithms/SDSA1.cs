@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SDSA.Models;
 using SDSA.Models.Interfaces;
 using SDSA.Models.Enums;
+using Newtonsoft.Json;
 namespace SDSA.Service.Algorithms
 {
     public class SDSA1 : IAlgorithm
@@ -36,6 +37,7 @@ namespace SDSA.Service.Algorithms
                 
             
             result.passed = result.R1 > result.R2;
+            result.resultJson = JsonConvert.SerializeObject( new { Pass = result.R1 , fail = result.R2, result.passed   } );
             return result;
         }
 

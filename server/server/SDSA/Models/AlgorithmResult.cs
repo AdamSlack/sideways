@@ -15,6 +15,6 @@ namespace SDSA.Models
         public TestResults components { get; set; }
         public AlgorithmErrorEnum error { get; set; }
         public string Message { get; set; }
-        public string resultJosn { get; set; }
+        public string resultJson { get; set; }
     }
 }
