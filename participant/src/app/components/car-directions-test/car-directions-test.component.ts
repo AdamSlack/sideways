@@ -20,28 +20,25 @@ var Deck: any[];
 var GridSquares: any[];
 
 //Reads row, column
-enum CarDirections {
-  //Row one
-  upright = 0,
-  upup,
-  upleft,
-  updown,
-  //Row two
-  downright,
-  downup,
-  downleft,
-  downdown,
-  //Row three
-  rightright,
-  rightup,
-  rightleft,
-  rightdown,
-  //Row Four
-  leftright,
-  leftup,
-  leftleft,
-  leftdown,
-}
+//"R U L D / U D R L"
+const square_keys = [
+  "R" + "_" + "U",
+  "R" + "_" + "D",
+  "R" + "_" + "R",
+  "R" + "_" + "L",
+  "U" + "_" + "U",
+  "U" + "_" + "D",
+  "U" + "_" + "R",
+  "U" + "_" + "L",
+  "R" + "_" + "",
+  "R" + "_" + "",
+  "R" + "_" + "",
+  "R" + "_" + "",
+  "L" + "_" + "S",
+  "L" + "_" + "SW",
+  "L" + "_" + "W",
+  "L" + "_" + "NW"
+]
 
 var server_root = 'http://localhost:5000/';
 
@@ -161,27 +158,79 @@ export class CarDirectionsTestComponent implements OnInit {
 
     var c_offset = (arrow_length / 4)
 
-    //left 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 1) + c_offset, 0 + c_offset * 2, xPos + (arrow_length * 2) - c_offset, 0 + c_offset * 2)
-    //up 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 2) + c_offset * 2, xPos + (arrow_length) - c_offset, xPos + (arrow_length * 2) + c_offset * 2, 0 + c_offset)
     //right 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 3) + c_offset, 0 + c_offset * 2, xPos + (arrow_length * 4) - c_offset, 0 + c_offset * 2)
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 1) + c_offset,               0 + c_offset * 2,                        xPos + (arrow_length * 2) - c_offset,        0 + c_offset * 2)
+    //up 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 2) + c_offset * 2,           xPos + (arrow_length) - c_offset,        xPos + (arrow_length * 2) + c_offset * 2,    0 + c_offset)
+    //left 
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 4) + c_offset,               0 + c_offset * 2,                        xPos + (arrow_length * 3) - c_offset,        0 + c_offset * 2)
     //Down 
-    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 4) + c_offset * 2, 0 + c_offset, xPos + (arrow_length * 4) + c_offset * 2, xPos + (arrow_length) - c_offset)
+    this.fab.drawArrow(canvas, 2, xPos + (arrow_length * 4) + c_offset * 2,           0 + c_offset,                            xPos + (arrow_length * 4) + c_offset * 2,    xPos + (arrow_length) - c_offset)
 
 
     //up 
-    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2, 0 + (arrow_length * 2) - c_offset, xPos + c_offset * 2, xPos + (arrow_length * 1) + c_offset)
+    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2,            0 + (arrow_length * 2) - c_offset, xPos + c_offset * 2,                                    xPos + (arrow_length * 1) + c_offset)
     //Down 
-    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2, 0 + c_offset + (arrow_length * 2), xPos + c_offset * 2, xPos + (arrow_length * 3) - c_offset)
+    this.fab.drawArrow(canvas, 10, xPos + c_offset * 2,            0 + c_offset + (arrow_length * 2),                       xPos + c_offset * 2,              xPos + (arrow_length * 3) - c_offset)
     //right
-    this.fab.drawArrow(canvas, 10, xPos + c_offset, 0 + c_offset * 2 + (arrow_length * 3), xPos + arrow_length - c_offset, 0 + (arrow_length * 3) + c_offset * 2)
+    this.fab.drawArrow(canvas, 10, xPos + c_offset,                0 + c_offset * 2 + (arrow_length * 3),                   xPos + arrow_length - c_offset,   0 + (arrow_length * 3) + c_offset * 2)
     //left 
-    this.fab.drawArrow(canvas, 10, xPos + arrow_length - c_offset, 0 + c_offset * 2 + (arrow_length * 4), xPos + c_offset, 0 + c_offset * 2 + (arrow_length * 4))
+    this.fab.drawArrow(canvas, 10, xPos + arrow_length - c_offset, 0 + c_offset * 2 + (arrow_length * 4),                   xPos + c_offset,                  0 + c_offset * 2 + (arrow_length * 4))
 
   }
 
+  private finishGame() {
+
+  }
+
+  private calculateResults(squareMatches: any[]) {
+    //Check for key pair matches
+    let score = 0;
+    var results_dump = []
+
+//     1 point for each correctly positioned car. 1 point for each correctly
+// positioned lorry. The score includes the practice item, so the maximum
+// possible score is 32. 
+
+    squareMatches.forEach((element, idx) => {
+
+      // if (element !== undefined) {
+      //   console.log("Checking : ", element);
+      //   let elemnt_idx: number = element;
+      //   let c_key = card_keys[element];
+
+
+      //   let c_key_dir = 
+      //   let l_key_dir = 
+
+      //   let square_key_dir = square_keys[idx].split("_");
+      //   console.log("Card key: ", c_key_dir, elemnt_idx);
+      //   console.log("Sqaure key: ", square_key_dir, idx);
+
+
+      //   if (c_key_dir.every(r => square_key_dir.includes(r))) {
+      //     console.log("winner winner chicken dinner");
+      //     score += 2;
+      //     results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
+      //   } else if (c_key_dir.some(r => square_key_dir.includes(r))) {
+      //     //Maybe you got one right?
+      //     console.log("winner winner oats dinner");
+      //     score += 1;
+      //     results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
+      //   } else {
+      //     results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
+      //   }
+      // }
+
+    });
+
+
+    console.log("dis fellow got dis reuslts: ", results_dump)
+
+    //finish or return results_dump
+
+
+  }
 
   public gatherResults() {
     var squareMatches = [...Array(GridSquares.length || 0)].map((v, i) => i)
@@ -208,6 +257,7 @@ export class CarDirectionsTestComponent implements OnInit {
     });
 
     console.log(squareMatches);
+    this.calculateResults(squareMatches);
     //this.sendResults();
   }
 
