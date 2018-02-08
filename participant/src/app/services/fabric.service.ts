@@ -45,7 +45,7 @@ export class FabricService {
   }
 
 
-  public image_parser(oImg, length : any, canvas : any, deck : any, id : any) {
+  public image_parser(oImg, length : any, canvas : any, id : any) {
 
     oImg.crossOrigin = "Anonymous";
 
