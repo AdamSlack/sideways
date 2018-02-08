@@ -8,10 +8,8 @@ using SDSA.Service.Interfaces;
 using SDSA.Models.Tests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using SDSA.ViewModels;
+using SDSA.ViewModels;
 using Microsoft.Extensions.Logging;
-using SDSA.Models.Enums;
-using SDSA.Models;
 
 namespace SDSA.Controllers
 {
@@ -126,30 +124,14 @@ namespace SDSA.Controllers
 
         [HttpGet("[controller]/participant/{testID}")]
         public IActionResult TestPreset(int testID) 
-            => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});
+            => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});   
 
-        [HttpGet("[controller]/{TestId}/results/<algorithmId>")]
-        public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId)
-        {
-            if( TestId == 0)
-            {
-                return StatusCode(422, "TestId required");
-            }
-            else if (algorithmId == 0 )
-            {
-                return StatusCode(422, "Algorithm Id required");
-            }
-            var result = _testService.GetAlgorithResult(TestId, algorithmId);
-            if ( result.error == AlgorithmErrorEnum.MissingAlgorithm)
-            {
-                return StatusCode(501, result);
-            }
-            else if (result.error == AlgorithmErrorEnum.MissingData)
-            {
-                return StatusCode(400, result);
-            }
-            return Json(result );
+        [HttpGet()]
+        public IActionResult whatislife() {
+            Console.WriteLine("whatislife");
+            var results = new { whatislife = "whatislife"};
+            return Json(results);
         }
-
+       
     }
 }
