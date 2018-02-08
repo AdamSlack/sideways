@@ -263,7 +263,7 @@ export class CarDirectionsTestComponent implements OnInit {
     console.log(squareMatches);
     this.calculateResults(squareMatches);
     //this.sendResults();
-  }
+  }fab: any,
 
 
   private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, length: number) {

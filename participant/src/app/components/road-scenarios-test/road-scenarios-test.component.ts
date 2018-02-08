@@ -67,6 +67,7 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log('An existing subscription for locale assets was found. Unsubscribing.');
       this.localeSubscription.unsubscribe();
     }
+
     // if(this.auth.PARTICIPANT_TEST_LOCALE == '') {
     //   alert('No valid localisation details found. returning to login.');
     //   this.auth.VALIDATED = false;
@@ -114,15 +115,49 @@ export class RoadScenariosTestComponent implements OnInit {
     GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4);
 
     //TODO: Check the config for the currently chosen assets
-    //XXX: there is a change way to load assets right? like a asset manager?
-    let asset_folder = '../../assets/road_scenarios';
-    let asset_path  = asset_folder + 'assets/UK';
-    this.createDeck(Canvas.width -250 - square_length,  Canvas.height -150 - square_length, asset_path, square_length * 0.9);
+    let line_padding = 5;
+    //Break line
+    this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
+
+
+
+    this.createDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, square_length * 0.9);
     
   }
 
-  private createDeck(xOffset : number = 0, yOffset : number  = 0, asset_path : string, length : number) {
+  private load_scenarios_into_grid() {
+    this.roadScenarios.forEach( (scenario, idx) => {
+      //GridSquares[idx].set
+    });
+  }
+
+  private createDeck(fab: any, xOffset : number = 0, yOffset : number  = 0,  length : number) {
     //Load image image as a sign making them all the same size
+
+    this.roadSigns.forEach(road_path => {
+      fabric.Image.fromURL(road_path, function (oImg) {
+        if (oImg == null) {
+          console.log("oh no the path doesn't exist. It should but the directions in use were rando...", road_path);
+        } else {
+          var group = fab.image_parser(oImg, length, Canvas, Deck, road_path);
+
+          let path_broken =road_path.split("/");
+          let id_name =  path_broken[path_broken.length];
+          
+          group.id = id_name;
+          group.type = "card";
+          group.set({ left: xOffset, top: yOffset })
+          group.scaleToWidth(length);
+          group.scaleToHeight(length);
+
+          Deck.push(group);
+          Canvas.add(group);
+          console.log("The total deck size: ",Deck.length);
+
+        }
+      }, { crossOrigin: 'Anonymous' });
+    });
+
 
     
   }
