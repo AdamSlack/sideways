@@ -106,14 +106,13 @@ export class RoadScenariosTestComponent implements OnInit {
     var percentage_cover = 0.8;
     var grid_length =  (Canvas.width < Canvas.height ? Canvas.width : Canvas.height) * percentage_cover; //- 100 to account for offset
     console.log("Grid Length: ", grid_length);
-    console.log("Grid Length Percent: ", grid_length * 0.5)
 
     //TODO: fabric js has some alignment methods..
-    var x_grid_offset = Canvas.width * (1 - percentage_cover) / 2;
+    var x_grid_offset =  Canvas.width * (1 - percentage_cover) / 2;
     var y_grid_offset = 0;
 
     var square_length =  grid_length/5
-    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length ,y_grid_offset + square_length, Canvas, square_length * 4,4, square_length * 0.1);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset  ,y_grid_offset, Canvas, square_length * 4,4, square_length * 0.1);
 
     //TODO: Check the config for the currently chosen assets
     let line_padding = 5;
