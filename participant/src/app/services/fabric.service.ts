@@ -211,10 +211,10 @@ public get_distance_points(x1, y1, x2, y2) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-  public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number) {
+  public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number, padding : number) {
 
-    var square_length = side_length / squares;
-    console.log(square_length);
+    var square_length = (side_length ) / squares;
+
     var start_x = 0;
     var start_y = 0;
     
@@ -225,8 +225,8 @@ public get_distance_points(x1, y1, x2, y2) {
         var rect = new fabric.Rect({
           left: xPos + start_x,
           top: yPos + start_y,
-          width: square_length,
-          height: square_length,
+          width: square_length - padding,
+          height: square_length - padding,
           selectable: false,
           id: id++,
           fill: '#ffffff',
@@ -237,12 +237,13 @@ public get_distance_points(x1, y1, x2, y2) {
         rect.type = "square"
 
         squareSet.push(rect);
-        start_x += square_length;
+        start_x += square_length ;
         console.log("created square", rect.id);
         canvas.add(rect);
       }
       start_x = 0;
       start_y += square_length;
+
     }
 
     return squareSet;

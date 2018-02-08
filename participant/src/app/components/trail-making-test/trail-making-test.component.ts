@@ -88,7 +88,7 @@ export class TrailMakingTestComponent implements OnInit
   }
 
   public sendResults() {
-    this.rs.insertTrailMaking(1, 10, 10);
+    this.rs.insertTrailMaking("1", 10, 10);
   }
 
   private enableDrawing() 

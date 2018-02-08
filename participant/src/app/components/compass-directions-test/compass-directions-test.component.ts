@@ -211,7 +211,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     var square_length = grid_length / 5
     this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
-    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4, square_length * 0.1);
 
     let line_padding = 5;
     //Break line
@@ -237,7 +237,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
       fabric.Image.fromURL(image_path,
         function (oImg) {
-          var group = fab.image_parser(oImg, length, Canvas, Deck, idx+1);
+          var group = fab.image_parser(oImg, length, Canvas, idx+1, true);
      
           group.id = idx.toString();
           group.type = "card";

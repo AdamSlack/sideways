@@ -130,7 +130,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
     var square_length = grid_length / 5
     this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
-    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4, square_length * 0.1);
 
 
     let line_padding = 5;
@@ -263,7 +263,7 @@ export class CarDirectionsTestComponent implements OnInit {
     console.log(squareMatches);
     this.calculateResults(squareMatches);
     //this.sendResults();
-  }fab: any,
+  }
 
 
   private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, length: number) {
@@ -286,7 +286,7 @@ export class CarDirectionsTestComponent implements OnInit {
             if (oImg == null) {
               console.log("oh no the path doesn't exist. It should but the directions in use were rando...", image_path);
             } else {
-              var group = fab.image_parser(oImg, length, Canvas, Deck, id_tag);
+              var group = fab.image_parser(oImg, length, Canvas, Deck, id_tag, false);
 
               group.id = id_tag;
               group.type = "card";
