@@ -13,7 +13,7 @@ import { ResultsViewerComponent } from './results-viewer/results-viewer.componen
 import { LocalisationCreatorComponent } from './localisation-creator/localisation-creator.component';
 import { AuthenticationService } from './services/authentication.service';
 import { LocalisationService } from './services/localisation.service';
-
+import { ResultsService } from './services/results.service';
 
 
 @NgModule({
@@ -27,8 +27,15 @@ import { LocalisationService } from './services/localisation.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule  ],
-  providers: [ParticipantService, InitialisationService, LocalisationService, AuthenticationService],
+    FormsModule
+  ],
+  providers: [
+    ParticipantService,
+    InitialisationService,
+    LocalisationService,
+    AuthenticationService,
+    ResultsService
+  ],
 
   bootstrap: [AppComponent]
 })

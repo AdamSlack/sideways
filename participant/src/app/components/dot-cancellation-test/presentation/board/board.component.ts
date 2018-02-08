@@ -6,6 +6,7 @@ import { NgIf } from '@angular/common';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AssetRetrievalService } from '../../../../services/asset-retrieval.service';
+import { ResultsService } from '../../../../services/results.service';
 
 declare var angular: any;
 @Component({
@@ -67,37 +68,36 @@ export class BoardComponent {
 	public containerClass : string = 'hideContainer';
 
 	//An array to save if the cell has been selected or not  
-	public cellsSelected : Array<any> = Array(this.NumberOfCells).fill(null);
+	public cellsSelected : Array<string> = Array(this.NumberOfCells).fill(null);
 
 	//An array for each dot 
-	public dotones : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dottwos : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotthrees : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotfours : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotfives : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotones : Array<string> = Array(this.NumberOfCells).fill(null);
+	public dottwos : Array<string> = Array(this.NumberOfCells).fill(null);
+	public dotthrees : Array<string> = Array(this.NumberOfCells).fill(null);
+	public dotfours : Array<string> = Array(this.NumberOfCells).fill(null);
+	public dotfives : Array<string> = Array(this.NumberOfCells).fill(null);
 
 	//Arrays for the x and y positions of each dot within each cell
-	public dotoneX : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotoneY : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotoneX : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotoneY : Array<number> = Array(this.NumberOfCells).fill(null);
 
-	public dotTwoX : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotTwoY : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotThreeX : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotThreeY : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotFourX : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotFourY : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotFiveX : Array<any> = Array(this.NumberOfCells).fill(null);
-	public dotFiveY : Array<any> = Array(this.NumberOfCells).fill(null);
+	public dotTwoX : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotTwoY : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotThreeX : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotThreeY : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotFourX : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotFourY : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotFiveX : Array<number> = Array(this.NumberOfCells).fill(null);
+	public dotFiveY : Array<number> = Array(this.NumberOfCells).fill(null);
 	
 	// Localisation Preset Data
 	public testTitle : string = '';
 	public testInstructions : string = '';
-	public compassLabel : string = '';
-	public deckLabel : string = '';
 	public localeSubscription : Subscription;
 	  
 
 	constructor(
+		public results : ResultsService,
 		public auth : AuthenticationService,
 		public locale : AssetRetrievalService
 	) {
@@ -158,6 +158,9 @@ export class BoardComponent {
 	//Reieves the GameTitle, instructiontitle, Instructions, Testbuttontext
 	public InitGametext() : void {
 		console.log("I Do Nothing.");
+
+		//this.results.insertDotCancellationResults();
+        //this
 	}
 
 	//Starts a countdown from value of counter when called
@@ -215,7 +218,7 @@ export class BoardComponent {
 	}
 
 	//Returns an array of results with (TruePos, TrueNeg, FalsePos, FalseNeg)
-	public GetResults() : Array<any> {
+	public GetResults() : Array<number> {
 		var results = Array(4).fill(null);
 
 		//Miss out the first row as that is a practice row
@@ -284,7 +287,7 @@ export class BoardComponent {
 	}
 
 	//Gets random xvalues for a cell
-	public GetXValues() : Array<any> {
+	public GetXValues() : Array<number> {
 		var XValues = Array(5).fill(null);
 
 		//Populate an Array of all the X Values of the Dots
@@ -298,7 +301,7 @@ export class BoardComponent {
 	}
 
 	//Gets random yvalues for a cell
-	public GetYValues() : Array<any> {
+	public GetYValues() : Array<number> {
 		var YValues = Array(5).fill(null);
 		YValues[0] = this.GenerateRandomWholeNum("Y");
 		YValues[1] = this.GenerateRandomWholeNum("Y");
@@ -698,6 +701,9 @@ export class BoardComponent {
 		//Get All Interactions
 		//Dictionary of all the clicks per cell {CellPosition : NoOfClicks}
 		var NoOfClicksPerCell = this.dictionaryOfCellClicks;
+
+       // this.results.insertDotCancellationResults( this.auth.PARTICIPANT_TEST_ID , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
+
 	}
 
 	public RestartTest() : void {

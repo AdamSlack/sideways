@@ -84,8 +84,7 @@ create table participant_tests(
     test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_name     text        references localisation_presets(preset_name) not null,
-    test_date       DATE
+    preset_name     text        references localisation_presets(preset_name) not null
 );
 
 ----------------------------------------------------
@@ -101,31 +100,36 @@ create table dot_cancellation(
     time_taken  smallint   not null,
     true_pos    smallint   not null,
     false_pos   smallint   not null,
-    false_neg   smallint   not null
+    false_neg   smallint   not null,
+    test_date   date       not null
 );
 
 create table car_directions(
     test_id     serial     references participant_tests(test_id)  primary key  not null,
     time_taken  smallint   not null,
-    points      smallint   not null
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table compass_directions(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    points      smallint   not null
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table road_scenarios(
     test_id     serial  references participant_tests(test_id) primary key  not null,
-    time_take   smallint   not null,
-    points      smallint   not null
+    time_taken   smallint   not null,
+    points      smallint   not null,
+    test_date   date       not null
 );
 
 create table trail_making(
     test_id     serial references participant_tests(test_id)  primary key  not null ,
     time_taken  smallint   not null,
-    mistakes    smallint   not null
+    mistakes    smallint   not null,
+    test_date   date       not null
 );
 
 
@@ -173,24 +177,21 @@ insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7S
 ----
 --  Initial SDSA test types.
 ----
-insert into sdsa_test_types (name) values ('dot_cancellation');     -- 1 //Do i wanna know what these number mean? i don't do i ...
+insert into sdsa_test_types (name) values ('dot_cancellation');     -- 1
 insert into sdsa_test_types (name) values ('compass_directions');   -- 2
 insert into sdsa_test_types (name) values ('car_directions');       -- 3
 insert into sdsa_test_types (name) values ('road_sign_scenarios');  -- 4
 insert into sdsa_test_types (name) values ('trail_making');         -- 5
-
 ----
 --  Initial SDSA localisation preset details
 ----
+insert into localisation_presets (preset_name) values ('test');
 
 insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions) values ('test', 1, 'Dot Cancellation Test', 'Here be instructions for the dot cancellation test.');
 insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 2, 'Compass Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
 insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions, headings_label, deck_label) values ('test', 3, 'Car Directions Test', 'Here be instructions for the dot cancellation test.', 'Headings label...', 'Deck Label...');
 insert into sdsa_test_details (preset_name, sdsa_test_type, name, instructions) values ('test', 4, 'Road Sign Scenarios', 'Here be instructions for Road Sign Scenarios.');
 insert into trail_making_details(preset_name, name, instructions, trail_a, trail_b) values ('test', 'Trail Making Test', 'Connect the Dots and shizzle', array['1','2','3','4','5','6'], array['a','1','b','2','c','3']);
-
-
-insert into localisation_presets (preset_name) values ('en_gb');
 
 ----
 --  Road Rign Scenario Test: Some test Scenarios. 1-5
@@ -221,15 +222,40 @@ insert into road_sign_scenarios (preset_name,xpos,ypos,sign_file_type,scene_file
 insert into participants (participant_id) values (1) on conflict do nothing;
 insert into participant_tests (test_id, participant_id, clinician_id, preset_name) values (1, 1,1,'test') on conflict do nothing;
 
+----
+--  Dot Cancellation Test Results
+----
+insert into dot_cancellation (test_id, time_taken, true_pos, false_pos, false_neg, test_date)
+    values (1,123,12,34,56,NOW());
 
+----
+--  Compass Direction Test Results
+----
+insert into compass_directions (test_id, time_taken, points, test_date)
+    values (1,123,13,NOW());
 
--- Need presets first
-insert into participant_tests (test_id, participant_id, clinician_id, preset_name, test_date) values (1, 1, 1,'test', CURRENT_DATE) on conflict do nothing;
+----
+--  Car Direction Test Results
+----
+insert into car_directions (test_id, time_taken, points, test_date)
+    values (1,321,31,NOW());
 
+----
+--  Road Sign Scenario test results
+----
 
-CREATE USER sdsa_user WITH PASSWORD 'password';
-REVOKE ALL ON SCHEMA public FROM sdsa_user;
-GRANT ALL ON SCHEMA public TO sdsa_user;
-GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public TO sdsa_user;
+insert into road_scenarios (test_id, time_taken, points, test_date)
+    values (1,222,333,NOW());
+
+----
+--  Trail Making
+----
+insert into trail_making (test_id, time_taken, mistakes, test_date)
+    values (1,999,4,NOW());
+
+-- CREATE USER sdsa_user WITH PASSWORD 'password';
+-- REVOKE ALL ON SCHEMA public FROM sdsa_user;
+--  REVOKE ALL ON SCHEMA public FROM sdsa_user;
+--  REVOKE ALL ON SCHEMA public FROM sdsa_user;
 
 commit;

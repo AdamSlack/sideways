@@ -28,13 +28,7 @@ namespace SDSA.Controllers
             _testService = testServ;
             _logger = logger;
         }
-        
-
-        // EXAMPLE CURL...
-        // Nice and Simple.          Set the headers         check body is correct          Check correct URI is used...
-        // curl -X POST -H "Content-Type: application/json" -d "{points : 1234}" "localhost:5000/Test/results/Cardirections/1"
-
-        [HttpPost("[controller]/results/DotCancellation/{TestId}")]
+        [HttpPost("[controller]/{TestId}/DotCancellationResult")]
         public IActionResult DotCancellationResult (int TestId, [FromBody] DotCancellationTest DCT)
         {
             //requests should already be logged
@@ -42,13 +36,21 @@ namespace SDSA.Controllers
             _logger.LogInformation("Dot Cancellation Results Post Request Recieved.");
             Console.WriteLine("Results are: \n FN - " + DCT.falseNeg + "\n FP - " + DCT.falsePos + "\n TP - " + DCT.TruePos);
             DCT.TestId = TestId;
-            // if(ModelState.IsValid)
-            // {
-            //  _testService.SaveDotCancellationTest(DCT);
-            //  return Ok();
-            // }
-           
-            return Ok();//StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
+            Console.WriteLine("Request DCT recieved");
+            Console.WriteLine("falseneg: " + DCT.falseNeg);
+            Console.WriteLine("False Pos:" +  DCT.falsePos);
+            Console.WriteLine("True Pos:" + DCT.TruePos);
+            Console.WriteLine("Time Taken:"+ DCT.TimeTaken);
+            Console.WriteLine("test ID:"+ DCT.TestId);
+
+
+            if (ModelState.IsValid)
+            {
+                _testService.SaveDotCancellationTest(DCT);
+                return Ok();
+            }
+
+            return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
         }
 
 
@@ -71,11 +73,14 @@ namespace SDSA.Controllers
 
             return Ok();//StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
+        
+        [HttpPost("[controller]/{id}/results/trail_making/")]
+        public IActionResult TrailMakingTest(int TestId, [FromBody]  TrailMakingTest TMT)
+        {   
+            Console.WriteLine("Received Mistakes: "+ TMT.Mistakes);
+            Console.WriteLine("Received TimeTaken: "+ TMT.TimeTaken);
+            Console.WriteLine("Received Testid: "+ TMT.TestId);
 
-        [HttpPost]
-        public IActionResult TrailMakingTest(int TestId, TrailMakingTest TMT)
-        {
-            
             TMT.TestId = TestId;
             if (ModelState.IsValid)
             {

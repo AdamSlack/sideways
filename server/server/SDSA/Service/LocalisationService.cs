@@ -64,6 +64,7 @@ namespace SDSA.Service
             TestLocaleDetails Deets = new TestLocaleDetails();
 
             if (_localisationRepository.CountPresetByName(LocaleName) == 0) {
+                Console.WriteLine("No preset found ");
                 return Deets;
             }
             switch(TestType){

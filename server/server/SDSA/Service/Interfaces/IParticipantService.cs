@@ -12,5 +12,7 @@ namespace SDSA.Service.Interfaces
         
         int CreateParticipantTest(ParticipantTest PT);
         int CreateParticipant();
+
+        IEnumerable<int> GetClinicianParticipants(int ClinicianID);
     }
 }

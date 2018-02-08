@@ -1,0 +1,145 @@
+.search {
+    width: 100%;
+    height:10%;
+}
+
+div.title {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);           
+    margin-top: 15px;
+    margin-left: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    background: #fff;
+    color: #222222;
+    transition: 0.2s;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #445544;
+        transition: 0.2s;
+    }
+    .icon .bar {
+        float: left;
+    }
+}
+
+div.details {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);           
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    width: 90%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    background: #fff;
+    color: #222222;
+    transition: 0.2s;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #445544;
+        transition: 0.2s;
+    }
+    .icon .bar {
+        float: left;
+    }
+}
+
+div {
+    font-family: 'Roboto', sans-serif;    
+    .title {
+        font-size: 1em;
+    }
+    .heading {
+        font-size: 0.75em;
+    }
+}
+
+input.submit {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: 2px solid #227722;
+    background: #fff;
+    color: #eee;
+    background: #227722;
+    transition: 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);       
+    
+    &:hover {
+        outline: none;
+        border: 2px solid #447744;
+        background: #447744;
+        transition: 0.2s;
+    }
+    
+    &:active {
+        outline: none;
+        border: 2px solid #225522;
+        background: #225522;
+        transition: 0.2s;
+    }
+}
+div.selection {
+    width:95%;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    select{
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 2px solid #225522;
+        background: #fff;
+        color: #777;
+        padding:10px;
+        transition: 0.2s;
+        option {
+            padding: 10px;
+            font-size: 1em;
+        }
+        &:focus {
+            outline: none;
+            border-bottom: 2px solid #445544;
+            transition: 0.2s;
+            color: #000;
+            
+        }
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);       
+        
+    }
+    
+}
+
+ input.search {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);           
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #225522;
+    background: #fff;
+    color: #222222;
+    transition: 0.2s;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #445544;
+        transition: 0.2s;
+    }
+    .icon .bar {
+        float: left;
+    }
+}
