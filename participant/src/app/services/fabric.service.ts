@@ -149,10 +149,10 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
         target.setCoords();
         
         //If the target card has a type of the card then bust a nut and be outie
-        if (target.type !== type) {
-          console.log("Same type interaction: ", target.type, type);
-          return;
-        }
+        // if (target.type !== type) {
+        //   console.log("Same type interaction: ", target.type, type);
+        //   return;
+        // }
   
         // top-left  corner
         if (target.getBoundingRect().top < 0 || target.getBoundingRect().left < 0) {
