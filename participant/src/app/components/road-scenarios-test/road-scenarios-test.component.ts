@@ -91,13 +91,14 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log("All road scenarios: ",this.roadScenarios);
       this.roadSigns = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['signImage'] + '.png');
       console.log("All road signs: ",this.roadSigns);
+      
 
+      //TODO: sorry, did not have time to fix and propagate through awits/promises
+      this.initalise_board_components();
     });
   }
-  
 
-  ngOnInit() {
-    this.initLocaleSettings();
+  private initalise_board_components() {
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
@@ -108,7 +109,7 @@ export class RoadScenariosTestComponent implements OnInit {
     console.log("Grid Length Percent: ", grid_length * 0.5)
 
     //TODO: fabric js has some alignment methods..
-    var x_grid_offset = 0;
+    var x_grid_offset = 0; 
     var y_grid_offset = 0;
 
     var square_length =  grid_length/5
@@ -119,23 +120,54 @@ export class RoadScenariosTestComponent implements OnInit {
     //Break line
     this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
 
+    //this.createDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, square_length * 0.9);
 
-
-    this.createDeck(this.fab, Canvas.width -250 - square_length,  Canvas.height -150 - square_length, square_length * 0.9);
-    
+    this.load_scenarios_into_grid(this.fab);
   }
 
-  private load_scenarios_into_grid() {
-    this.roadScenarios.forEach( (scenario, idx) => {
-      //GridSquares[idx].set
+  ngOnInit() {
+    this.initLocaleSettings();    
+  }
+
+  private load_scenarios_into_grid(fab : any) {
+    console.log("All road scenarios loading: ",this.roadScenarios);
+
+    this.roadScenarios.forEach( (scenario_path, idx) => {
+      //Refernece sqaure
+      let ref_component = GridSquares[idx];
+      console.log("Item refing: ", ref_component);
+
+      fabric.Image.fromURL(scenario_path, function (oImg) {
+        console.log("Getting scenario: ", scenario_path);
+        if (oImg == null) {
+          console.log("oh no the path doesn't exist. It should but the directions in use were rando...", scenario_path);
+        } else {
+          console.log(ref_component.width);
+          var group = fab.image_parser(oImg, ref_component.width, Canvas, scenario_path);
+
+          let path_broken = scenario_path.split("/");
+          let id_name =  path_broken[path_broken.length];
+          
+          group.id = id_name;
+          group.type = "card";
+          group.set({ left: ref_component.left, top: ref_component.top })
+          group.scaleToWidth(ref_component.width);
+          group.scaleToHeight(ref_component.width);
+
+          //Deck.push(group);
+          Canvas.add(group);
+        }
+      }, { crossOrigin: 'Anonymous' });
     });
   }
 
   private createDeck(fab: any, xOffset : number = 0, yOffset : number  = 0,  length : number) {
     //Load image image as a sign making them all the same size
+    console.log("All road signs loading: ",this.roadSigns);
 
     this.roadSigns.forEach(road_path => {
       fabric.Image.fromURL(road_path, function (oImg) {
+        console.log("Getting sign: ", road_path);
         if (oImg == null) {
           console.log("oh no the path doesn't exist. It should but the directions in use were rando...", road_path);
         } else {
@@ -152,8 +184,6 @@ export class RoadScenariosTestComponent implements OnInit {
 
           Deck.push(group);
           Canvas.add(group);
-          console.log("The total deck size: ",Deck.length);
-
         }
       }, { crossOrigin: 'Anonymous' });
     });

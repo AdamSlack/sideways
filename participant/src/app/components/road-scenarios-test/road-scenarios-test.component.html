@@ -5,17 +5,3 @@
   <canvas id="canvas" >
   </canvas>
   <button (click)=gatherResults() class="button" id="end_test" > Test Finish</button>
-
-  <div>
-    Road Signs:
-    <div *ngFor="let sign of roadSigns">
-        <img [src]="sign">
-    </div>
-  </div>
-
-  <div>
-    Road Scenarios:
-    <div *ngFor="let scene of roadScenarios">
-      <img [src]="scene">
-    </div>
-  </div>
