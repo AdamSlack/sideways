@@ -19,26 +19,26 @@ var Deck: any[];
 
 var GridSquares: any[];
 
-//Reads row, column
-//"R U L D / U D R L"
+//Reads lorry, car
+//"R F L B / F B R L"
 const square_keys = [
-  "R" + "_" + "U",
-  "R" + "_" + "D",
+  "F" + "_" + "R",
+  "F" + "_" + "F",
+  "F" + "_" + "L",
+  "F" + "_" + "B",
+  "B" + "_" + "R",
+  "B" + "_" + "F",
+  "B" + "_" + "L",
+  "B" + "_" + "B",
   "R" + "_" + "R",
+  "R" + "_" + "F",
   "R" + "_" + "L",
-  "U" + "_" + "U",
-  "U" + "_" + "D",
-  "U" + "_" + "R",
-  "U" + "_" + "L",
+  "R" + "_" + "B",
   "L" + "_" + "R",
-  "L" + "_" + "R",
-  "L" + "_" + "R",
-  "L" + "_" + "R",
-  "D" + "_" + "L",
-  "D" + "_" + "L",
-  "D" + "_" + "L",
-  "D" + "_" + "L"
-]
+  "L" + "_" + "F",
+  "L" + "_" + "L",
+  "L" + "_" + "B"
+];
 
 var server_root = 'http://localhost:5000/';
 
@@ -192,33 +192,36 @@ export class CarDirectionsTestComponent implements OnInit {
 // positioned lorry. The score includes the practice item, so the maximum
 // possible score is 32. 
 
-    squareMatches.forEach((element, idx) => {
+    squareMatches.forEach((card_key, idx) => {
+      console.log("(card_key, idx) ", card_key.length, idx);
 
-      if (element !== undefined) {
-        console.log("Checking : ", element);
-        let elemnt_idx: number = element;
+      if (card_key !== undefined && card_key.length === 4) {
+        console.log("Checking Card: ", card_key);
         let sqr_keys = square_keys[idx].split("_");
-        let c_sqr_key = sqr_keys[0];
-        let l_sqr_key = sqr_keys[1];
+        let c_sqr_key = sqr_keys[1];
+        let l_sqr_key = sqr_keys[0];
 
-        let c_key_dir = element[1];
-        let l_key_dir = element[3];
+        let c_key_dir = (card_key).charAt(1);
+        let l_key_dir = (card_key).charAt(3);
  
-        console.log("Card key (car,lorry): ", c_key_dir, l_key_dir, elemnt_idx);
+        console.log("Card key (car,lorry): ", c_key_dir, l_key_dir);
         console.log("Sqaure key (car, lorry): ", sqr_keys, idx);
 
 
-        if (c_key_dir.every(r => sqr_keys.includes(r))) {
-          console.log("winner winner chicken dinner");
-          score += 2;
-          results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
-        } else if (c_key_dir.some(r => sqr_keys.includes(r))) {
-          //Maybe you got one right?
-          console.log("winner winner oats dinner");
+        if (c_key_dir == c_sqr_key) {
           score += 1;
-          results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
+          results_dump.push({ "match_type": "car", "scene": square_keys[idx], "card": card_key });
         } else {
-          results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
+          results_dump.push({ "match_type": "bad_car", "scene": square_keys[idx], "card": card_key });
+        }
+
+
+        if (l_key_dir == l_sqr_key) {
+          score += 1;
+          results_dump.push({ "match_type": "lorry", "scene": square_keys[idx], "card": card_key });
+        } else {
+          results_dump.push({ "match_type": "bad_lorry", "scene": square_keys[idx], "card": card_key });
+
         }
       }
 
@@ -239,17 +242,17 @@ export class CarDirectionsTestComponent implements OnInit {
     GridSquares.forEach(square => {
       Deck.forEach(card => {
    
-
         if (card.intersectsWithObject(square)) {
 
           let distance = this.fab.get_distance_points(square.top, square.left, card.top, card.left);
 
           //console.log("Checking interaction: ", square.id , card.id)
           if (distance < card.width / 2) {
-            var square_hit = squareMatches[square.d];
+            var square_hit = squareMatches[square.id];
             //&& square_hit != -1
             //If no iteracting
-            squareMatches[square.id] = +card.id;
+          console.log("Square matched interaction: ", square.id , card.id)
+            squareMatches[square.id] = card.id;
           }
         }
         
