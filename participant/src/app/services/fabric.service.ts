@@ -204,6 +204,12 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
       }  
 }
 
+public get_distance_points(x1, y1, x2, y2) {
+  var dx = x2 - x1;
+  var dy = y2 - y1;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
   public createGridBaseSquares(xPos: number, yPos: number, canvas: any, side_length: number, squares: number) {
 
     var square_length = side_length / squares;
@@ -362,23 +368,6 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
 
     canvas.renderAll();
   }
-
-  /*
-  @deprecate why even even activate snapping though?
-  */
-  // public activateSnapping(canvas: any) {
-  //   if (typeof this.box_length === "undefined") {
-  //     console.log('Have not initilaised box_length');      
-  //   } else {
-  //     console.log('locking enabled');
-  //     canvas.on('object:moving', function(options) { 
-  //       options.target.set({
-  //         left: Math.round(options.target.left / this.box_length) * this.box_length,
-  //         top: Math.round(options.target.top / this.box_length) * this.box_length
-  //       });
-  //     });
-  //   }
-  // }
 
 }
 

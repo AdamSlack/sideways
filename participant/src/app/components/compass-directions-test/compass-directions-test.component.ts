@@ -314,19 +314,13 @@ export class CompassDirectionsTestComponent implements OnInit {
   public gatherResults() {
     let squareMatches = new Array(GridSquares.length);
 
-    function get_distance_points(x1, y1, x2, y2) {
-      var dx = x2 - x1;
-      var dy = y2 - y1;
-      return Math.sqrt(dx * dx + dy * dy);
-    }
-
     console.log(squareMatches.length);
     GridSquares.forEach(square => {
       Deck.forEach(card => {
-        //card.intersectsWithObject()
+
         if (card.intersectsWithObject(square)) {
 
-          let distance = get_distance_points(square.top, square.left, card.top, card.left);
+          let distance = this.fab.get_distance_points(square.top, square.left, card.top, card.left);
 
           //console.log("Checking interaction: ", square.id , card.id)
           if (distance < card.width / 2) {

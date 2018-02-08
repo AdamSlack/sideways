@@ -140,7 +140,7 @@ export class CarDirectionsTestComponent implements OnInit {
     this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
 
     let deck_item_sz = square_length * 0.9;
-    this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
+    this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), deck_item_sz);
     //this.createDeck(this.fab, Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
   }
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, arrow_length: number) {
@@ -189,19 +189,30 @@ export class CarDirectionsTestComponent implements OnInit {
     console.log(squareMatches.length);
     GridSquares.forEach(square => {
       Deck.forEach(card => {
-        //card.intersectsWithObject()
+   
+
         if (card.intersectsWithObject(square)) {
-          squareMatches[square.id] = card.id;
+
+          let distance = this.fab.get_distance_points(square.top, square.left, card.top, card.left);
+
+          //console.log("Checking interaction: ", square.id , card.id)
+          if (distance < card.width / 2) {
+            var square_hit = squareMatches[square.d];
+            //&& square_hit != -1
+            //If no iteracting
+            squareMatches[square.id] = +card.id;
+          }
         }
+        
       });
     });
 
     console.log(squareMatches);
-    this.sendResults();
+    //this.sendResults();
   }
 
 
-  private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, deckSize: number = 16, length: number) {
+  private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, length: number) {
     //Initialise deck of compass cards
 
       //Method on server:
@@ -222,7 +233,7 @@ export class CarDirectionsTestComponent implements OnInit {
             if (oImg == null) {
               console.log("oh no the path doesn't exist. It should but the directions in use were rando...", image_path);
             } else {
-              var group = fab.image_parser(oImg, length, Canvas, Deck, idx + 1);
+              var group = fab.image_parser(oImg, length, Canvas, Deck, id_tag);
 
               group.id = id_tag;
               group.type = "card";
