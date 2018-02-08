@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 
@@ -16,6 +16,12 @@ export class AssetRetrievalService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*')
     return headers;
+  }
+
+  public isExisting(url : string) : boolean {
+    let headers = this.createHeaders();
+    this.http.get(url, {headers : headers});
+    return;
   }
 
   public selectLocalisationDetails(testType : number, localeName : string) : Observable<any> {

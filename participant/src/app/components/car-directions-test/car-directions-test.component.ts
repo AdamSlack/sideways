@@ -203,14 +203,13 @@ export class CarDirectionsTestComponent implements OnInit {
 
   private createDeck(fab: any, xOffset: number = 0, yOffset: number = 0, deckSize: number = 16, length: number) {
     //Initialise deck of compass cards
-    Array.from({ length: deckSize }, (value, key) => key).map((idx: number) => {
 
       //Method on server:
       let car_tag = 'C';
       let lorry_tag = 'L';
 
       let dir_tags = ['L', 'R', 'F', 'B'];
-
+    
       dir_tags.forEach(tag_dir_une => {
 
         dir_tags.forEach(tag_dir_deux => {
@@ -218,24 +217,31 @@ export class CarDirectionsTestComponent implements OnInit {
           let id_tag = car_tag + tag_dir_une + lorry_tag + tag_dir_deux;
           let image_path = server_root + asset_link + id_tag + ".png";
 
-          console.log("Looking up the following path: ", image_path);
 
           fabric.Image.fromURL(image_path, function (oImg) {
-            var group = fab.image_parser(oImg, length, Canvas, Deck, idx + 1);
+            if (oImg == null) {
+              console.log("oh no the path doesn't exist. It should but the directions in use were rando...", image_path);
+            } else {
+              var group = fab.image_parser(oImg, length, Canvas, Deck, idx + 1);
 
-            group.id = id_tag;
-            group.type = "card";
-            group.set({ left: xOffset, top: yOffset })
-            group.scaleToWidth(length);
-            group.scaleToHeight(length);
+              group.id = id_tag;
+              group.type = "card";
+              group.set({ left: xOffset, top: yOffset })
+              group.scaleToWidth(length);
+              group.scaleToHeight(length);
 
-            Deck.push(group);
-            Canvas.add(group);
+              Deck.push(group);
+              Canvas.add(group);
+              console.log("The total deck size: ",Deck.length);
+
+            }
           }, { crossOrigin: 'Anonymous' });
+
         });
+
+
       });
-    });
-    console.log(Deck.length);
+
   }
 
 }
