@@ -8,6 +8,7 @@ using System.Data;
 using Dapper;
 using SDSA.Repository.Interfaces;
 using SDSA.Models;
+using SDSA.Models.Enums;
 
 namespace SDSA.Repository
 {
@@ -64,7 +65,7 @@ namespace SDSA.Repository
                 "true_pos as TruePos," +
                 "false_pos as FalsePos," +
                 "false_neg as FalseNeg " +
-                "from dot_cancellation "  +
+                "from dot_cancellation " +
                 "where test_id = @TestId",
 
                 new { TestId = TestId }
@@ -89,6 +90,7 @@ namespace SDSA.Repository
                 CDT
                 );
         #endregion
+        
         #region CoDT
         public CompassDirectionsTest GetCompassDirectionsTest(int TestId)
             => db.Query<CompassDirectionsTest>(
@@ -99,6 +101,7 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
                 new { TestId = TestId }
                 ).FirstOrDefault();
+                
         public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
             => db.Execute(
                 "insert into compass_directions (test_Id , time_taken, points) " +
@@ -106,6 +109,7 @@ namespace SDSA.Repository
                 CDT
                 );
         #endregion
+        
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)
             => db.Query<RoadScenariosTest>
@@ -117,12 +121,14 @@ namespace SDSA.Repository
                 "where test_id = @TestId ",
                 new { TestId = TestId }
                 ).FirstOrDefault();
+                
         public void SaveRoadScenarioTest(RoadScenariosTest RST)
             => db.Execute(
                 "insert into road_Scenarios (test_Id , time_taken, points) " +
                 "Values (@TestId , @TimeTaken, @Points)",
                 RST
                 );
+                
         #endregion RST
         #region TMT
         public TrailMakingTest GetTrailMakingTest(int TestId)
@@ -143,7 +149,30 @@ namespace SDSA.Repository
 
         public string GetParticipantTestPresetName(int testID)
             => db.ExecuteScalar<string>(
-                "select preset_name from participant_tests where test_id = @ID", new {ID = testID}
+                "select preset_name from participant_tests where test_id = @ID", new { ID = testID }
             );
+        public AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true)
+        {
+            var algorResult = db.QueryFirstOrDefault<AlgorithmResult>(
+                "select test_id as testId, algorithm_id as AlgorithmId, R1 , R2, passed, resultJson" +
+                "from algorithm_results"
+
+                );
+            if (algorResult != null && getComponents)
+            {
+                algorResult.components.CarDirectionsTest = this.GetCarDirectionsTest(testId);
+                algorResult.components.CompassDirectionsTest = this.GetCompassDirectionsTest(testId);
+                algorResult.components.DotCancellationTest = this.GetDotCancellationTest(testId);
+                algorResult.components.TrailMakingTest = this.GetTrailMakingTest(testId);
+                algorResult.components.RoadScenariosTest = this.GetRoadScenarioTest(testId);
+            }
+            return algorResult;
+        }
+        public void SaveAlgorithmReult (AlgorithmResult result)
+        {
+            db.Execute("insert into algorithm_results (test_id , algorithm_id R1, R2, Passed, resultJson) " +
+                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, @resultJson) ",
+                result);
+        }
     }
 }
