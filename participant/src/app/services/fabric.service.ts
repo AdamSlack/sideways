@@ -45,7 +45,7 @@ export class FabricService {
   }
 
 
-  public image_parser(oImg, img_length : any, canvas : any, id : any) {
+  public image_parser(oImg, img_length : any, canvas : any, id : any, hasReactingStyle : boolean) {
 
     oImg.crossOrigin = "Anonymous";
 
@@ -62,8 +62,7 @@ export class FabricService {
 
     oImg.scaleToWidth(img_length);
     oImg.scaleToHeight(img_length);
-                        // Canvas.add(img)
-    // Canvas.add(card);
+
     // Ok we have the image, can add to group/canvas
     if(oImg == undefined) {
       console.log("something went wrong createing image from asset...");
@@ -79,9 +78,11 @@ export class FabricService {
       hasControls: false
     });
 
-    this.addInteractionObjLogic(group, canvas, "card" );
-    this.addRotatingStyle(group, canvas);
+    this.addInteractionObjLogic(group, canvas, id.toString() );
 
+    if(hasReactingStyle) {    
+      this.addRotatingStyle(group, canvas);
+    }
     return group;
   }
 
