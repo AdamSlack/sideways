@@ -155,7 +155,7 @@ namespace SDSA.Repository
         {
             Console.WriteLine("Fetching Algorithm Results.");
             var algorResult = db.Query<AlgorithmResult>(
-                "Select test_id as TestID, " +
+                "Select test_id as TestId, " +
                 " algorithm_id as AlgorithmId, " +
                 " r1 as R1, "+
                 " r2 as R2, "+
@@ -181,7 +181,7 @@ namespace SDSA.Repository
         }
         public void SaveAlgorithmReult (AlgorithmResult result)
         {
-            db.Execute("insert into algorithm_results (test_id , algorthim_id, r1, r2, passed, result_json) " +
+            db.Execute("insert into algorithm_results (test_id , algorithm_id, r1, r2, passed, result_json) " +
                 "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) ",
                 result);
         }

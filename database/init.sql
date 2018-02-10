@@ -165,7 +165,7 @@ create table algorithm(
 -----
 create table algorithm_results(
     test_id         serial              primary key not null,
-    algorithm_id    smallint            references algorithm(algorithm_id) not null,
+    aid             smallint            references algorithm(algorithm_id) not null,
     r1 		        double precision,
     r2 		        double precision,
     passed 	        boolean,
