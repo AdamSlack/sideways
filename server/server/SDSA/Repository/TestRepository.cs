@@ -153,11 +153,22 @@ namespace SDSA.Repository
             );
         public AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true)
         {
-            var algorResult = db.QueryFirstOrDefault<AlgorithmResult>(
-                "select test_id as testId, algorthim_id as AlgorithmId, r1 as R1 , r2 as R2, passed,result_json as resultJson \n" +
-                "from algorithm_results"
+            Console.WriteLine("Fetching Algorithm Results.");
+            var algorResult = db.Query<AlgorithmResult>(
+                "Select test_id as TestID, " +
+                " algorithm_id as AlgorithmId, " +
+                " r1 as R1, "+
+                " r2 as R2, "+
+                " passed as passed, " +
+                " result_json as resultJson " +
+                "  from algorithm_results " +
+                "   where algorithm_id = @algorithmId " + 
+                "    and test_id = @testId ",
+                new { algorithmId = algorithmId, testId = testId } 
+                ).FirstOrDefault();
 
-                );
+            Console.WriteLine("Checking if there are even any Algorithm Results.");
+
             if (algorResult != null && getComponents)
             {
                 algorResult.components.CarDirectionsTest = this.GetCarDirectionsTest(testId);

@@ -47,11 +47,14 @@ namespace SDSA.Service
             => _testRepository.GetParticipantTestPresetName(testID);
         public AlgorithmResult GetAlgorithResult (int testId, AlgoritmEnum algorithmId)
         {
-             var TR = _testRepository.GetAlgorithmResult(testId, algorithmId);
+            Console.WriteLine("Why are the no debug logs anywhere???? This is infuriating... ");
+            var TR = _testRepository.GetAlgorithmResult(testId, algorithmId);
+
             if (TR != null )
             {
                 return TR;
             }
+            
             var testResult = new TestResults() {
                 CarDirectionsTest = this.GetCarDirectionsTest(testId),
                 CompassDirectionsTest = this.GetCompassDirectionsTest(testId),

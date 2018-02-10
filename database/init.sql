@@ -157,19 +157,19 @@ create table test_interactions(
 create table algorithm(
     algorithm_id    serial  primary key not null,
    -- clinician_id    smallint references clinicians(clinician_id)  not null, 
-    algorithm_name  text   not null,
+    algorithm_name  text   not null
 );
 
 -----
 --  Example: test_id: 1111, algorithm_id: 2222, results: {recommendation_score: -0.004, probability: 0.005, recommend: 'No'}
 -----
 create table algorithm_results(
-    test_id         serial primary key not null,
-    algorithm_id    smallint references algorithm(algorithm_id) not null,
-    r1 		    double precision,
-    r2 		    double precision,
-    passed 	    boolean,
-    result_json         jsonb
+    test_id         serial              primary key not null,
+    algorithm_id    smallint            references algorithm(algorithm_id) not null,
+    r1 		        double precision,
+    r2 		        double precision,
+    passed 	        boolean,
+    result_json     jsonb
 );
 
 ----
@@ -180,7 +180,7 @@ insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7S
 ----
 --  Initial algorithm
 ----
-insert into algorithm (algorithm_name) values ('SDSA');inser --1
+insert into algorithm (algorithm_name) values ('SDSA');
 ----
 --  Initial SDSA test types.
 ----
@@ -233,32 +233,32 @@ insert into participant_tests (test_id, participant_id, clinician_id, preset_nam
 --  Dot Cancellation Test Results
 ----
 insert into dot_cancellation (test_id, time_taken, true_pos, false_pos, false_neg, test_date)
-    values (1,123,12,34,56,NOW());
+    values (1,123,12,34,56,NOW()) on conflict do nothing;
 
 ----
 --  Compass Direction Test Results
 ----
 insert into compass_directions (test_id, time_taken, points, test_date)
-    values (1,123,13,NOW());
+    values (1,123,13,NOW()) on conflict do nothing;
 
 ----
 --  Car Direction Test Results
 ----
 insert into car_directions (test_id, time_taken, points, test_date)
-    values (1,321,31,NOW());
+    values (1,321,31,NOW()) on conflict do nothing;
 
 ----
 --  Road Sign Scenario test results
 ----
 
 insert into road_scenarios (test_id, time_taken, points, test_date)
-    values (1,222,333,NOW());
+    values (1,222,333,NOW()) on conflict do nothing;
 
 ----
 --  Trail Making
 ----
 insert into trail_making (test_id, time_taken, mistakes, test_date)
-    values (1,999,4,NOW());
+    values (1,999,4,NOW()) on conflict do nothing;
 
 -- CREATE USER sdsa_user WITH PASSWORD 'password';
 -- REVOKE ALL ON SCHEMA public FROM sdsa_user;

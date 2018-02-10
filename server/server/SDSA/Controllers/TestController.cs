@@ -129,25 +129,26 @@ namespace SDSA.Controllers
             => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});
 
         [HttpGet("[controller]/{TestId}/results/{algorithmId}")]
-        public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId)
-        {
-            if( TestId == 0)
-            {
+        public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId) {
+            
+            Console.WriteLine("Algorithm Results Request Recieved.");
+            if( TestId == 0){
                 return StatusCode(422, "TestId required");
             }
-            else if (algorithmId == 0 )
-            {
+            else if (algorithmId == 0 ){
                 return StatusCode(422, "Algorithm Id required");
             }
+            
+            Console.WriteLine("Going to try and fetch Algothithm Results now.");
             var result = _testService.GetAlgorithResult(TestId, algorithmId);
-            if ( result.error == AlgorithmErrorEnum.MissingAlgorithm)
-            {
+
+            if ( result.error == AlgorithmErrorEnum.MissingAlgorithm){
                 return StatusCode(501, result);
             }
-            else if (result.error == AlgorithmErrorEnum.MissingData)
-            {
+            else if (result.error == AlgorithmErrorEnum.MissingData){
                 return StatusCode(400, result);
             }
+
             return Json(result );
         }
 
