@@ -29,9 +29,9 @@ namespace SDSA.Controllers
         [Route("/login")]
         public IActionResult Login([FromBody] SDSAUser User)
         {
-          /*  Console.WriteLine("Validating User Login");
+            Console.WriteLine("Validating User Login");
 
-            Console.WriteLine("User Email: " + User.Email);*/
+            Console.WriteLine("User Email: " + User.Email);
             
 
             if (User.UserType == SDSAUser.loginuserType.Clinician && _clinicianService.ValidateClinician(User))
@@ -40,8 +40,7 @@ namespace SDSA.Controllers
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Email , User.Email),
-                    new Claim(ClaimTypes.Role , "Clinician"),
-               //     new Claim("ID" , Clin.ID.ToString())
+                    new Claim(ClaimTypes.Role , "Clinician")
                     
                 };
                 var bytes = Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]);
@@ -63,7 +62,7 @@ namespace SDSA.Controllers
                 return Ok(new
                 {
                     token = JWTToken,
-                   // clinician_id = Clin.ID use claim instead
+                    clinician_id = Clin.ID
                 });
             }
             return StatusCode(401);
