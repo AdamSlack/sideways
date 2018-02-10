@@ -23,6 +23,8 @@ export class ResultsViewerComponent implements OnInit {
 
   ngOnInit() {
     this.results.requestClinicianParticipant().subscribe((res) => {
+      console.log('Requesting Participants for the clinician.');
+      console.log(res);
       this.participantIDs = res.participants;
     });
   }

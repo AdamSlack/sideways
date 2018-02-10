@@ -15,6 +15,7 @@ export class ParticipantService {
 
   public requestClinicianParticipant() : Observable<{participants : Array<number>}> {
     let url = this.auth.ROOT + 'Participant/clinician/' + this.auth.CLINICIAN_ID;
+    console.log(url);
     let headers = this.auth.createHeaders();
     return this.http.get<any>(url);
   }
