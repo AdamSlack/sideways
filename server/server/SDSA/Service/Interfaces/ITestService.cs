@@ -22,5 +22,6 @@ namespace SDSA.Service.Interfaces
         ParticipantTest GetParticipantsTest(int testId);
         string GetParticipantTestPresetName(int testID);
         AlgorithmResult GetAlgorithResult(int testId, AlgoritmEnum algorithmId);
+        IEnumerable<Algorithm> GetAlgorithms();
     }
 }

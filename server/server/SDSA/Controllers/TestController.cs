@@ -128,6 +128,15 @@ namespace SDSA.Controllers
         public IActionResult TestPreset(int testID) 
             => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});
 
+        [HttpGet("[controller]/algorithms")]
+        public IActionResult Algorithms() {
+            Console.WriteLine("Recieved a request for a list of algorithms");
+            
+            IEnumerable<Algorithm> algorithms =  _testService.GetAlgorithms();
+
+            return Json(new {algorithms = algorithms});
+        }
+
         [HttpGet("[controller]/{TestId}/results/{algorithmId}")]
         public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId) {
             

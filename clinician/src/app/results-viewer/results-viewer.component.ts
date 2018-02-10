@@ -25,13 +25,13 @@ export class ResultsViewerComponent implements OnInit {
     this.results.requestClinicianParticipant().subscribe((res) => {
       console.log('Requesting Participants for the clinician.');
       console.log(res);
-      this.participantIDs = res.participants;
+      this.participantIDs = res.participants.sort((a,b) => a - b);
     });
   }
 
   public requestParticipantTests() : void {
     this.results.requestParticipantTests(this.participantID).subscribe((res) => {
-      this.testIDs = res.tests;
+      this.testIDs = res.tests.sort((a,b) => a - b);
     });
   }
 

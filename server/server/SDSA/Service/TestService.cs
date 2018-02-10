@@ -45,6 +45,11 @@ namespace SDSA.Service
             => _testRepository.GetParticipantsTest(testId);
         public string GetParticipantTestPresetName(int testID)
             => _testRepository.GetParticipantTestPresetName(testID);
+
+
+        public IEnumerable<Algorithm> GetAlgorithms() =>
+            _testRepository.GetAlgorithms();
+            
         public AlgorithmResult GetAlgorithResult (int testId, AlgoritmEnum algorithmId)
         {
             Console.WriteLine("Why are the no debug logs anywhere???? This is infuriating... ");

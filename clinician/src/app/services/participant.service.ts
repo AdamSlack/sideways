@@ -43,4 +43,9 @@ export class ParticipantService {
     return this.http.get<any>(url);
   }
 
+  public requestAlgorithms() : Observable<{algorithmID : number, algorithmName : string}> {
+    let url = this.auth.ROOT + 'Test/algorithms';
+    return this.http.get<any>(url);
+  }
+
 }
