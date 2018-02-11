@@ -70,10 +70,9 @@ export class CarDirectionsTestComponent implements OnInit {
   public deckLabel: string = '';
 
 
-  public sendResults() {
-    //this.rs.insertCarDirectionResults("1", 123, 456);
+  public sendResults(time_taken: number, score: number) {
+    this.rs.insertCarDirectionResults("1", time_taken, score);
     this._router.navigateByUrl('/compass_directions');
-
   }
 
 
@@ -180,8 +179,21 @@ export class CarDirectionsTestComponent implements OnInit {
 
   }
 
-  private finishGame() {
+  public startTimer() {
+    this.timer.recordStartTime()
+  }
 
+  public stopTimer() {
+    this.timer.recordEndTime();
+    this.time = this.timer.getTimeElapsed(true);
+  }
+
+
+  private finishGame(score: number) {
+    this.stopTimer(); //should be called by button really
+
+    //Now route to move game forward
+    this.sendResults(this.time, score);
   }
 
   private calculateResults(squareMatches: any[]) {

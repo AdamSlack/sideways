@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import "fabric"
 import { element } from 'protractor';
+import { sendRequest } from 'selenium-webdriver/http';
 declare const fabric: any;
 
 //Canvas for displaying things
@@ -41,11 +42,28 @@ export class RoadScenariosTestComponent implements OnInit {
     private _router: Router
 
   ) { }
-  
-  public sendResults() {
-    this.rs.insertRoadScenarioResults("1", 123, 456);
+
+  public startTimer() {
+    this.timer.recordStartTime()
+  }
+
+  public stopTimer() {
+    this.timer.recordEndTime();
+    this.time = this.timer.getTimeElapsed(true);
+  }
+
+
+  public sendResults(time_taken: number, score: number) {
+    this.rs.insertRoadScenarioResults("1", time_taken, score);
     this._router.navigateByUrl('/home');
 
+  }
+
+  private finishGame(score: number) {
+    this.stopTimer(); //should be called by button really
+
+    //Now route to move game forward
+    this.sendResults(this.time, score);
   }
 
   
@@ -58,25 +76,22 @@ export class RoadScenariosTestComponent implements OnInit {
     // on the pile. Maximum score 12 points.
     let element;
     for (element in squareMatches) {
-        console.log("elemtn data: ", squareMatches[element]);
-        
+ 
+        results_dump.push({ "match_type": "all", "scene": element, "card": squareMatches[element] })
 
-        // if (c_key_dir.every(r => square_key_dir.includes(r))) {
-        //   console.log("winner winner chicken dinner");
-        //   score += 2;
-        //   results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
-        // } else if (c_key_dir.some(r => square_key_dir.includes(r))) {
-        //   //Maybe you got one right?
-        //   console.log("winner winner oats dinner");
-        //   score += 1;
-        //   results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
-        // } else {
-        //   results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
-        // }
-
+        if (element == squareMatches[element][0]) {
+          console.log("Get's a point")
+          score += score;
+        }
     }
 
+    console.log(score);
+    console.log(results_dump);
+
+    this.finishGame(score);
   }
+
+  
 
   public gatherResults() {
     let squareMatches = {};
@@ -98,6 +113,7 @@ export class RoadScenariosTestComponent implements OnInit {
           }
         }
       });
+      console.log("Grid id",square.id);
       squareMatches[square.id] = square_ids;
     });
     console.log(squareMatches);
@@ -214,7 +230,7 @@ export class RoadScenariosTestComponent implements OnInit {
           oImg.scaleToHeight(ref_component.width);
 
           let path_broken = scenario_path.split("/");
-          let id_name =  path_broken[path_broken.length];
+          let id_name =  path_broken[path_broken.length -1];
           
           oImg.id = id_name;
           oImg.selectable = false;
@@ -225,7 +241,8 @@ export class RoadScenariosTestComponent implements OnInit {
 
           fab.addInteractionObjLogic(oImg, Canvas, "board" );
 
-
+          //Rip let's overwrite grid squares to capture lgoic quicker
+          GridSquares[idx] = oImg;
           //Deck.push(group);
           Canvas.add(oImg);
         }
@@ -243,10 +260,10 @@ export class RoadScenariosTestComponent implements OnInit {
         if (oImg == null) {
           console.log("oh no the path doesn't exist. It should but the directions in use were rando...", road_path);
         } else {
-          var group = fab.image_parser(oImg, length, Canvas, Deck, road_path);
-
+          
           let path_broken =road_path.split("/");
-          let id_name =  path_broken[path_broken.length];
+          let id_name =  path_broken[path_broken.length -1];
+          var group = fab.image_parser(oImg, length, Canvas, id_name, road_path);
           
           group.id = id_name;
           group.type = "scenario";
