@@ -14,6 +14,8 @@ export class ResultsViewerComponent implements OnInit {
   public testIDs : number[] = [];
   public testID : number;
   public participantID : number;
+  public algorithms : Array<{id : number, name : string}>;
+  public algorithmID : number;
 
   public dotCancellationTest : {testId : number, timeTaken : number, truePos : number, falsePos : number, falseNeg : number};
   public compassDirectionsTest : {testId : number, timeTaken : number, points : number};
@@ -21,9 +23,11 @@ export class ResultsViewerComponent implements OnInit {
   public roadScenariosTest : {testId : number, timeTaken : number, points : number};
   public trailMakingTest : {testId : number, timeTaken : number, mistakes : number};
 
+  public algorithmResults : {pass : number, fail : number, passed : string};
+
   ngOnInit() {
     this.results.requestClinicianParticipant().subscribe((res) => {
-      console.log('Requesting Participants for the clinician.');
+      console.log('Response from request for Clinician Participants Recieved:');
       console.log(res);
       this.participantIDs = res.participants.sort((a,b) => a - b);
     });
@@ -31,20 +35,51 @@ export class ResultsViewerComponent implements OnInit {
 
   public requestParticipantTests() : void {
     this.results.requestParticipantTests(this.participantID).subscribe((res) => {
+      console.log('Response from request for Participant Tests Recieved:');
+      console.log(res);
       this.testIDs = res.tests.sort((a,b) => a - b);
     });
   }
 
   public requestTestResults() : void {
     this.results.requestTestResults(this.testID).subscribe((res) => {
+      console.log('Reponse from request for participant test results recieved:');
+      console.log(res);
       this.dotCancellationTest = res.dotCancellationTest;
       this.compassDirectionsTest = res.compassDirectionsTest;
       this.carDirectionsTest = res.carDirectionsTest;
       this.roadScenariosTest = res.roadScenariosTest;
       this.trailMakingTest = res.trailMakingTest;
       console.log(res);
-      console.log(this.trailMakingTest);
-    })
+    });
+  }
+
+  public requestAlgorithms() {
+    this.results.requestAlgorithms().subscribe((res) => {
+      console.log('Response recieved for request for algorithm types:');
+      console.log(res);
+      this.algorithms = res.algorithms.map((algo) => {return {id : algo.algorithmId, name : algo.algorithmName}});
+      console.log('Algorithms:');
+      console.log(this.algorithms);
+    });
+  }
+
+  public requestAlgorithmResults() {
+    this.results.requestAlgorithmScore(this.testID, this.algorithmID).subscribe((res) => {
+      console.log("Response recieved for request for algorithm Results:");
+      console.log(res);
+      console.log('RESULT JSON: ' + res.resultJson);
+      console.log('RES: ' + res.r2);
+      console.log('RES: ' + res.r1);
+      console.log('RES: ' + res.passed);
+let what = res.r2;
+let the = res.r1;
+let hell = res.passed;      
+      this.algorithmResults.fail =  what;
+      this.algorithmResults.pass = the;
+      this.algorithmResults.passed = hell ? 'PASS' : 'FAIL';
+      console.log(this.algorithmResults);
+    });
   }
 
 }

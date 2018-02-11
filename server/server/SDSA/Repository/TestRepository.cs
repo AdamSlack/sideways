@@ -188,7 +188,7 @@ namespace SDSA.Repository
         public void SaveAlgorithmReult (AlgorithmResult result)
         {
             db.Execute("insert into algorithm_results (test_id , algorithm_id, r1, r2, passed, result_json) " +
-                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) ",
+                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) on conflict do nothing",
                 result);
         }
     }

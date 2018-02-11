@@ -15,20 +15,34 @@
 </div>
 
 <div class="selection" *ngIf="participantID">
-  <select [(ngModel)]=testID (change)="requestTestResults()">
+  <select [(ngModel)]=testID (change)="requestTestResults();requestAlgorithms();">
       <option value="0" disabled selected hidden>Select Participant's Test ID</option>
       <option *ngFor="let id of testIDs" value="{{id}}">{{id}}</option>      
     </select>
 </div>
 
+<div class="title" *ngIf="testID">
+  Select an Test Algorithm to Evaluate that test:
+</div>
+
+<div class="selection" *ngIf="testID">
+  <select [(ngModel)]=algorithmID (change)="requestAlgorithmResults()">
+      <option value="0" disabled selected hidden>Select Participant's Test ID</option>
+      <option *ngFor="let algo of algorithms" value="{{algo.id}}">{{algo.name}}</option>      
+    </select>
+</div>
+
+
 <div *ngIf="testID">
   
-  <div>
+  <div *ngIf="algorithmID">
     <div class="title">
       Overall Test Results:
     </div>
-    <div class = "details">
-
+    <div class = "details" *ngIf="algorithmResults.pass && algorithmResults.fail && algorithmResults.passed">
+      Pass Score: {{algorithmResults.pass}} <br>
+      Fail Score: {{algorithmResults.fail}} <br>
+      Result:     {{algorithmResults.passed}}
     </div>
   </div>
 

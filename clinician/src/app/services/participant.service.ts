@@ -43,8 +43,27 @@ export class ParticipantService {
     return this.http.get<any>(url);
   }
 
-  public requestAlgorithms() : Observable<{algorithmID : number, algorithmName : string}> {
-    let url = this.auth.ROOT + 'Test/algorithms';
+  public requestAlgorithms() : Observable<{algorithms : [{algorithmId : number, clinicianId: number, algorithmName : string}]}> {
+    let url = this.auth.ROOT + 'Test/algorithms'
+    return this.http.get<any>(url);
+  }
+
+  public requestAlgorithmScore(
+    tid : number,
+    aid : number
+  ) : Observable<{
+    testId : number,
+    algorithmId : number,
+    r1 : number,
+    r2 : number,
+    passed : boolean,
+    components : boolean,
+    error : number,
+    message : string,
+    resultJson : string    
+  }>{
+    let url = this.auth.ROOT + 'Test/' + tid + '/algorithm/' + aid;
+    console.log(url);
     return this.http.get<any>(url);
   }
 
