@@ -25,7 +25,7 @@ var test1coordinates = [
   {x: 700, y: 30 }, //12
   {x: 532, y: 70 }, //13
   {x: 600, y: 292}, //14
-  {x: 550, y: 900}, //15
+  {x: 480, y: 860}, //15
   {x: 30,  y: 400}, //16
   {x: 356, y: 30 }, //17
   {x: 670, y: 522}, //18
@@ -34,8 +34,8 @@ var test1coordinates = [
   {x: 700, y: 150}, //21
   {x: 400, y: 310}, //22
   {x: 180, y: 464}, //23
-  {x: 322, y: 800}, //24
-  {x: 700, y: 960}, //25
+  {x: 300, y: 800}, //24
+  {x: 700, y: 890}, //25
 ]; 
 var test2coordinates = [
   {x: 705, y: 720}, //1
@@ -62,7 +62,7 @@ var test2coordinates = [
   {x: 400, y: 310}, //22
   {x: 180, y: 464}, //23
   {x: 322, y: 800}, //24
-  {x: 700, y: 960}, //25
+  {x: 700, y: 940}, //25
 ]; 
 
 @Component({
@@ -77,17 +77,15 @@ export class TrailMakingTestComponent implements OnInit
   
   title = 'app';
 
-  constructor(private rs: ResultsService
-  ) 
-  {
-  }
+  constructor(private rs: ResultsService) {}
 
   ngOnInit() 
   {
 
   }
 
-  public sendResults() {
+  public sendResults() 
+  {
     this.rs.insertTrailMaking(1, 10, 10);
   }
 
@@ -102,6 +100,9 @@ export class TrailMakingTestComponent implements OnInit
 
   private beginTest1()
   {
+    //disable done button
+    document.getElementById('test1donebutton').hidden = true;
+
     //using fabric library
     test1Canvas = new fabric.Canvas('test1',{isDrawingMode: true});
 
@@ -196,8 +197,8 @@ export class TrailMakingTestComponent implements OnInit
                 //delete the old path
                 test1Canvas.remove(options.path);
 
-                //add new path
-                test1Canvas.add(newPath);
+                //add new path WIP FEATURE: BUGGY
+                //test1Canvas.add(newPath);
                 
                 //console.log(pathCoordsArray);
                 //test1Canvas.add(pathCoordsArray);
@@ -226,9 +227,8 @@ export class TrailMakingTestComponent implements OnInit
       if(equal)
       {
         console.log("Path correctly went through all elements in sequence!");
-        var firstTest = document.getElementById("test1");
-        firstTest.style.display = "none";
-        this.beginTest2();
+        document.getElementById('test1donebutton').hidden = false;
+        test1Canvas.isDrawingMode = false;
       }
     });
 
@@ -237,12 +237,10 @@ export class TrailMakingTestComponent implements OnInit
 
   private beginTest2()
   {
-    console.log("Starting test 2");
-    //using fabric library
-    test2Canvas = new fabric.Canvas('test2',
-    {
-      isDrawingMode: true
-    });
+    //hide done button
+    document.getElementById('test2donebutton').hidden = false;
+
+    test2Canvas = new fabric.Canvas('test2',{isDrawingMode: true});
 
     //retrieve server response of characters
     //AssetRetrievalService
@@ -315,6 +313,8 @@ export class TrailMakingTestComponent implements OnInit
       {
         console.log("Path correctly went through all elements in sequence!");
         console.log("Test complete");
+        document.getElementById('test2donebutton').hidden = false;
+        test2Canvas.isDrawingMode = false;
       }
     });
 
@@ -356,20 +356,24 @@ export class TrailMakingTestComponent implements OnInit
     canvas.add(group);
     return group;
   }
-  
-  clickHandler()
+
+  clickHandlerInstructions()
   {
-    var firstTest = document.getElementById("test1");
+    var firstTest = document.getElementById("test1div");
     var instructionsDiv = document.getElementById("instructionsdiv");
     firstTest.style.display = "block";
     instructionsDiv.style.display = "none";
 
     this.beginTest1();
-    
-    //firstTest.style.display = "none";
-    //var secondTest = document.getElementById("test2");
-    //secondTest.style.display = "block";
+  }
 
-    //this.beginTest2();
+  clickHandlerTest1()
+  {  
+    var firstTest = document.getElementById("test1div");
+    firstTest.style.display = "none";
+    var secondTest = document.getElementById("test2div");
+    secondTest.style.display = "block";
+
+    this.beginTest2();
   }
 }
