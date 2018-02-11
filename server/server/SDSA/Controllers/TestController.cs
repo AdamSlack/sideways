@@ -71,7 +71,7 @@ namespace SDSA.Controllers
                 return Ok();
             }
 
-            return Ok();//StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
+            return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
         
         [HttpPost("[controller]/{id}/results/trail_making/")]
@@ -91,9 +91,11 @@ namespace SDSA.Controllers
             return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
 
-        [HttpPost]
+        [HttpPost("[controller]/results/RoadScenarios/{TestId}")]
         public IActionResult RoadScenarioResult(int TestId, [FromBody] RoadScenariosTest RST)
         {
+            Console.WriteLine("Results Are : \n Points - " + RST.Points + "\nTime Taken - " + RST.TimeTaken);
+
             
             RST.TestId = TestId;
             if (ModelState.IsValid)
