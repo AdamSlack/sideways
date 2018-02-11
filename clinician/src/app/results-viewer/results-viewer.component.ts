@@ -23,7 +23,7 @@ export class ResultsViewerComponent implements OnInit {
   public roadScenariosTest : {testId : number, timeTaken : number, points : number};
   public trailMakingTest : {testId : number, timeTaken : number, mistakes : number};
 
-  public algorithmResults : {pass : number, fail : number, passed : string};
+  public algorithmResults : {pass : string, fail : string, passed : string};
 
   ngOnInit() {
     this.results.requestClinicianParticipant().subscribe((res) => {
@@ -68,16 +68,12 @@ export class ResultsViewerComponent implements OnInit {
     this.results.requestAlgorithmScore(this.testID, this.algorithmID).subscribe((res) => {
       console.log("Response recieved for request for algorithm Results:");
       console.log(res);
-      console.log('RESULT JSON: ' + res.resultJson);
-      console.log('RES: ' + res.r2);
-      console.log('RES: ' + res.r1);
-      console.log('RES: ' + res.passed);
-let what = res.r2;
-let the = res.r1;
-let hell = res.passed;      
-      this.algorithmResults.fail =  what;
-      this.algorithmResults.pass = the;
-      this.algorithmResults.passed = hell ? 'PASS' : 'FAIL';
+
+      this.algorithmResults = {
+        pass : res.r1.toFixed(2),
+        fail : res.r1.toFixed(2),
+        passed : res.passed ? 'PASS' : 'FAIL'
+      } 
       console.log(this.algorithmResults);
     });
   }

@@ -39,10 +39,10 @@
     <div class="title">
       Overall Test Results:
     </div>
-    <div class = "details" *ngIf="algorithmResults.pass && algorithmResults.fail && algorithmResults.passed">
-      Pass Score: {{algorithmResults.pass}} <br>
-      Fail Score: {{algorithmResults.fail}} <br>
-      Result:     {{algorithmResults.passed}}
+    <div class = "details" *ngIf="algorithmResults">
+      Pass Score: {{algorithmResults['pass']}} <br>
+      Fail Score: {{algorithmResults['fail']}} <br>
+      Result:     {{algorithmResults['passed']}}
     </div>
   </div>
 
