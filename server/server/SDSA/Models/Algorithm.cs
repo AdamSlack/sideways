@@ -7,8 +7,8 @@ namespace SDSA.Models
 {
     public class Algorithm
     {
-        public int AlgorythmId { get; set; }
+        public int AlgorithmId { get; set; }
         public int ClinicianId { get; set; }
-        public string AlgorythmName { get; set; }
+        public string AlgorithmName { get; set; }
     }
 }

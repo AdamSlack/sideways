@@ -151,6 +151,12 @@ namespace SDSA.Repository
             => db.ExecuteScalar<string>(
                 "select preset_name from participant_tests where test_id = @ID", new { ID = testID }
             );
+
+        public IEnumerable<Algorithm> GetAlgorithms() {
+            return db.Query<Algorithm>(
+                "select algorithm_id as AlgorithmId, algorithm_name as AlgorithmName from algorithm"
+            );
+        }
         public AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true)
         {
             Console.WriteLine("Fetching Algorithm Results.");
@@ -182,7 +188,7 @@ namespace SDSA.Repository
         public void SaveAlgorithmReult (AlgorithmResult result)
         {
             db.Execute("insert into algorithm_results (test_id , algorithm_id, r1, r2, passed, result_json) " +
-                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) ",
+                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) on conflict do nothing",
                 result);
         }
     }

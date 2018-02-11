@@ -15,6 +15,7 @@ export class ParticipantService {
 
   public requestClinicianParticipant() : Observable<{participants : Array<number>}> {
     let url = this.auth.ROOT + 'Participant/clinician/' + this.auth.CLINICIAN_ID;
+    console.log(url);
     let headers = this.auth.createHeaders();
     return this.http.get<any>(url);
   }
@@ -39,6 +40,30 @@ export class ParticipantService {
     trailMakingTest : {testId : number, timeTaken : number, mistakes : number}
   }>{
     let url = this.auth.ROOT + 'Test/' + t_id + '/results';
+    return this.http.get<any>(url);
+  }
+
+  public requestAlgorithms() : Observable<{algorithms : [{algorithmId : number, clinicianId: number, algorithmName : string}]}> {
+    let url = this.auth.ROOT + 'Test/algorithms'
+    return this.http.get<any>(url);
+  }
+
+  public requestAlgorithmScore(
+    tid : number,
+    aid : number
+  ) : Observable<{
+    testId : number,
+    algorithmId : number,
+    r1 : number,
+    r2 : number,
+    passed : boolean,
+    components : boolean,
+    error : number,
+    message : string,
+    resultJson : string    
+  }>{
+    let url = this.auth.ROOT + 'Test/' + tid + '/algorithm/' + aid;
+    console.log(url);
     return this.http.get<any>(url);
   }
 

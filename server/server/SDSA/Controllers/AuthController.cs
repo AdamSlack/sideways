@@ -63,7 +63,7 @@ namespace SDSA.Controllers
                 return Ok(new
                 {
                     token = JWTToken,
-                   // clinician_id = Clin.ID use claim instead
+                    clinician_id = Clin.ID //use claim instead
                 });
             }
             return StatusCode(401);
