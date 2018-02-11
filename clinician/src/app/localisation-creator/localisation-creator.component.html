@@ -1,132 +1,166 @@
 <div>
-    <div class="heading">
-    </div>
-    <input class="bar search" type="text" [(ngModel)]=localeName (submit)=initialiseStudy() placeholder="Enter the name of the preset.">
+  <div class="heading">
+  </div>
+  <input class="bar search" type="text" [(ngModel)]=localeName (submit)=initialiseStudy() placeholder="Enter the name of the preset.">
 </div>
-<div class="submit" *ngIf="!creationStarted">
-    <input class="button submit" type="button" (click)=startLocaleCreation() value="Begin Creation">
+<div class="" *ngIf="!creationStarted">
+  <input class="button submit" type="button" (click)=startLocaleCreation() value="Begin Creation">
 </div>
 
 <div *ngIf="creationStarted">
-    <div>
-        <div class="title">
-            Dot Cancellation
-            <div class="expander" (click)="toggle('dot')">
-                show/hide
-            </div>
-        </div>
-        <div *ngIf="dot">
-            <input class="bar search" type="text" [(ngModel)]=localePreset.dotCancellation.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <textarea rows="4" class="bar search" [(ngModel)]=localePreset.dotCancellation.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
-        </textarea>
-        </div>
+  <div>
+    <div class="title">
+      Dot Cancellation
+      <div class="expander" (click)="toggle('dot')">
+        <div class="hidey">Show/Hide</div>
+      </div>
     </div>
-    <div>
-        <div class="title">
-            Car Directions
-            <div class="expander" (click)="toggle('car')">
-                show/hide
-            </div>
-        </div>
-        <div *ngIf="car">
-
-            <input class="bar search" type="text" [(ngModel)]=localePreset.carDirections.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <textarea rows="4" class="bar search" [(ngModel)]=localePreset.carDirections.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
-            </textarea>
-            <input class="bar search" type="text" [(ngModel)]=localePreset.carDirections.matrix.headingsLabel (submit)=initialiseStudy() placeholder="Enter the label for matrix headings.">
-            <input class="bar search" type="text" [(ngModel)]=localePreset.carDirections.matrix.deckLabel (submit)=initialiseStudy() placeholder="Enter the label for the deck.">
-
-        </div>
+    <div *ngIf="dot">
+      <div class="details">Test Title:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.dotCancellation.general.testHeading (submit)=initialiseStudy()
+        placeholder="Enter the Title for the Test.">
+      <div class="details ">Test Instructions:</div>
+      <textarea rows="4" class="bar search details" [(ngModel)]=localePreset.dotCancellation.general.testInstructions (submit)=initialiseStudy()
+        placeholder="Enter the Instructions for the Test.">
+      </textarea>
     </div>
-    <div>
-        <div class="title">
-            Compass Directions
-            <div class="expander" (click)="toggle('compass')">
-                show/hide
-            </div>
-        </div>
-        <div *ngIf="compass">
-            <input class="bar search" type="text" [(ngModel)]=localePreset.compassDirections.general.testHeading (submit)=initialiseStudy() placeholder="Enter the Title for the Test.">
-            <textarea rows="4" class="bar search" [(ngModel)]=localePreset.compassDirections.general.testInstructions (submit)=initialiseStudy() placeholder="Enter the Instructions for the Test.">
-            </textarea>
-            <input class="bar search" type="text" [(ngModel)]=localePreset.compassDirections.matrix.headingsLabel (submit)=initialiseStudy() placeholder="Enter the label for matrix headings.">
-            <input class="bar search" type="text" [(ngModel)]=localePreset.compassDirections.matrix.deckLabel (submit)=initialiseStudy() placeholder="Enter the label for the deck.">
-        </div>
+  </div>
+  <div>
+    <div class="title">
+      Car Directions
+      <div class="expander" (click)="toggle('car')">
+        <div class="hidey">Show/Hide</div>
+      </div>
     </div>
-    <div>
-        <div class="title">
-            Road Signs
-            <div class="expander" (click)="toggle('road')">
-                show/hide
-            </div>
-        </div>
-        <div *ngIf="road">
+    <div *ngIf="car">
 
-            <input class="bar search" type="text" placeholder="Enter a title for this test" [(ngModel)]=localePreset.roadSigns.general.testHeading >
-            <textarea rows="4" class="bar search" placeholder="Enter instructions for this test." [(ngModel)]=localePreset.roadSigns.general.testInstructions >
-            </textarea>
+      <div class="details">Test Title:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.carDirections.general.testHeading (submit)=initialiseStudy()
+        placeholder="Enter the Title for the Test.">
+      <div class="details">Test Instructions:</div>
+      <textarea rows="4" class="bar search details" [(ngModel)]=localePreset.carDirections.general.testInstructions (submit)=initialiseStudy()
+        placeholder="Enter the Instructions for the Test.">
+      </textarea>
+      <div class="details">Test Headings Label:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.carDirections.matrix.headingsLabel (submit)=initialiseStudy()
+        placeholder="Enter the label for matrix headings.">
+      <div class="details">Test Deck Label:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.carDirections.matrix.deckLabel (submit)=initialiseStudy()
+        placeholder="Enter the label for the deck.">
 
-            <div *ngFor="let scene of scenarioVisible; let idx = index;">
-                <div class="input">
-                    <div class="tag">Scenario {{idx + 1}}</div>
-                    <div class="expander" (click)="toggleScenario(idx)">
-                        show/hide
-                    </div>
-                    <div *ngIf="scenarioComplete[idx]" class="tag">
-                        - Complete
-                    </div>
-                </div>
-                <div *ngIf="scene">
-                    <div class="bar search">
-                        Upload Scenario
-                        <input type="file" (change)="onSelectScenario($event, idx)">
-                    </div>
-                    <div class="bar search">
-                        Upload Road Sign
-                        <input type="file" (change)="onSelectRoadSign($event, idx)">
-                    </div>
-                    <div class="search" *ngIf="scenarioImages[idx] != '' && roadSignImages[idx] != '';">
-                        <p> Click on the Scenario to specify location of Road Sign </p>
-                        <p> Currecnt Co-Ordinates: (x: {{indicatorCoords[idx].x}}, y: {{indicatorCoords[idx].y}})</p>
-                        <img [src]="scenarioImages[idx]" height="250" (click)="onScenarioClick($event, idx)"> <img [src]="roadSignImages[idx]" height="250"><br/>
-                        <div class="indicator" [style.left]="indicatorCoords[idx].x + 'px'" [style.top]="indicatorCoords[idx].y + 'px'"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
-    <div>
-        <div class="title">
-            Trail Making
-            <div class="expander" (click)="toggle('trail')">
-                show/hide
-            </div>
-        </div>
-        <div *ngIf="trail">
-
-            <input class="bar search" type="text" placeholder="Enter a title for this Test" [(ngModel)]="localePreset.trailMaking.general.testHeading">
-            <textarea rows="4" class="bar search" placeholder="Enter instructions for this Test." [(ngModel)]="localePreset.trailMaking.general.testInstructions">
-            </textarea>
-            <div>
-                <input class="search" [(ngModel)]="trailAString" (keyup)="splitTrailString(trailAString, true)" type="text" placeholder="Enter a comma seperated Trail A Sequence (e.g. a,b,c,...)">
-                <div>
-                    <div class="trail-element">Length: {{trailAArray.length}}, Sequence:</div>
-                    <div class="trail-element" *ngFor="let el of trailAArray">{{el}}</div>
-                </div>
-            </div>
-            <div>
-                <input class="search" [(ngModel)]="trailBString" (keyup)="splitTrailString(trailBString, false)" type="text" placeholder="Enter a comma seperated Trail B Sequence (e.g. a,b,c,...)">
-                <div>
-                    <div class="trail-element">Length: {{trailBArray.length}}, Sequence:</div>
-                    <div class="trail-element" *ngFor="let el of trailBArray">{{el}}</div>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div>
+    <div class="title">
+      Compass Directions
+      <div class="expander" (click)="toggle('compass')">
+        <div class="hidey">Show/Hide</div>
+      </div>
     </div>
+    <div *ngIf="compass">
+      <div class="details">Test Title:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.compassDirections.general.testHeading (submit)=initialiseStudy()
+        placeholder="Enter the Title for the Test.">
 
-    <div class="submit">
-        <input class="button submit" type="button" (click)=completeLocaleCreation() value="Submit Local Preset">
+      <div class="details">Test Instructions:</div>
+      <textarea rows="4" class="bar search details" [(ngModel)]=localePreset.compassDirections.general.testInstructions (submit)=initialiseStudy()
+        placeholder="Enter the Instructions for the Test.">
+      </textarea>
+
+      <div class="details">Test Headings Label:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.compassDirections.matrix.headingsLabel (submit)=initialiseStudy()
+        placeholder="Enter the label for matrix headings.">
+
+      <div class="details">Test Deck Label:</div>
+      <input class="bar search details" type="text" [(ngModel)]=localePreset.compassDirections.matrix.deckLabel (submit)=initialiseStudy()
+        placeholder="Enter the label for the deck.">
     </div>
+  </div>
+  <div>
+    <div class="title">
+      Road Signs
+      <div class="expander" (click)="toggle('road')">
+        <div class="hidey">Show/Hide</div>
+      </div>
+    </div>
+    <div *ngIf="road">
+      <div class="details">Test Title:</div>
+
+      <input class="bar search" type="text" placeholder="Enter a title for this test" [(ngModel)]=localePreset.roadSigns.general.testHeading>
+      <div class="details">Test Title:</div>
+      <textarea rows="4" class="bar search" placeholder="Enter instructions for this test." [(ngModel)]=localePreset.roadSigns.general.testInstructions>
+      </textarea>
+
+      <div *ngFor="let scene of scenarioVisible; let idx = index;">
+        <div class="input details">
+          <div class="tag">Scenario {{idx + 1}}</div>
+          <div class="expander" (click)="toggleScenario(idx)">
+            <div class="hidey">Show/Hide</div>
+          </div>
+          <div *ngIf="scenarioComplete[idx]" class="tag">
+            - Complete
+          </div>
+        </div>
+        <div *ngIf="scene">
+          <div class="bar search">
+            Upload Scenario
+            <input type="file" (change)="onSelectScenario($event, idx)">
+          </div>
+          <div class="search" *ngIf="scenarioImages[idx] != '' ">
+            <img [src]="scenarioImages[idx]" height="250">
+          </div>
+          <div class="bar search">
+            Upload Road Sign
+            <input type="file" (change)="onSelectRoadSign($event, idx)">
+          </div>
+
+          <div class="search" *ngIf="roadSignImages[idx] != ''">
+            <img [src]="roadSignImages[idx]" height="250">
+            <br/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div>
+    <div class="title">
+      Trail Making
+      <div class="expander" (click)="toggle('trail')">
+        <div class="hidey">Show/Hide</div>
+      </div>
+    </div>
+    <div *ngIf="trail">
+
+      <div class="details">Test Title:</div>
+      <input class="bar search details" type="text" placeholder="Enter a title for this Test" [(ngModel)]="localePreset.trailMaking.general.testHeading">
+      <div class="details">Test Instructions:</div>
+      <textarea rows="4" class="bar search details" placeholder="Enter instructions for this Test." [(ngModel)]="localePreset.trailMaking.general.testInstructions">
+      </textarea>
+      <div>
+        <div class="details">Enter Trail A (Comma Seperated):</div>
+        <input class="search details" [(ngModel)]="trailAString" (keyup)="splitTrailString(trailAString, true)" type="text" placeholder="Enter a comma seperated Trail A Sequence (e.g. a,b,c,...)">
+        <div class="details">Parsed Trail A (Comma Seperated):</div>                
+        <div class="details">
+          <div class="trail-element">Length: {{trailAArray.length}}, Sequence:</div>
+          <div class="trail-element" *ngFor="let el of trailAArray">{{el}}</div>
+        </div>
+      </div>
+<br><br>
+      <div>
+        <div class="details">Enter Trail B (Comma Seperated):</div>
+        <input class="search details" [(ngModel)]="trailBString" (keyup)="splitTrailString(trailBString, false)" type="text" placeholder="Enter a comma seperated Trail B Sequence (e.g. a,b,c,...)">
+        
+        <div class="details">Parsed Trail B (Comma Seperated):</div>        
+        <div class="details">
+          <div class="trail-element">Length: {{trailBArray.length}}, Sequence:</div>
+          <div class="trail-element" *ngFor="let el of trailBArray">{{el}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <input class="button submit" type="button" (click)=completeLocaleCreation() value="Submit Local Preset">
+  </div>
 </div>
-
