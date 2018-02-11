@@ -147,9 +147,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   public sendResults(time_taken: number, score: number) {
     this.rs.insertCompassDirectionResults(this.auth.PARTICIPANT_TEST_ID, time_taken, score);
-
     this._router.navigateByUrl('/road_scenarios');
-
   }
 
   public sendLogs(json_log_dump: {}, id: number) {
@@ -221,9 +219,6 @@ export class CompassDirectionsTestComponent implements OnInit {
     this.createCompassDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
 
   }
-
-
-
 
   private createCompassDeck(fab: FabricService, xOffset: number = 0, yOffset: number = 0, deckSize: number = 28, length: number) {
 

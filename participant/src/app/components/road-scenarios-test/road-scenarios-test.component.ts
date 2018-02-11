@@ -11,6 +11,7 @@ import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import "fabric"
+import { element } from 'protractor';
 declare const fabric: any;
 
 //Canvas for displaying things
@@ -47,8 +48,60 @@ export class RoadScenariosTestComponent implements OnInit {
 
   }
 
+  
+  private calculateResults(squareMatches: any) {
+    let score = 0;
+    var results_dump = []
+    
+    // One point for each sign correctly matched. The example is not included in
+    // the score. If the client puts several cards in a pile, score only the top card
+    // on the pile. Maximum score 12 points.
+    let element;
+    for (element in squareMatches) {
+        console.log("elemtn data: ", squareMatches[element]);
+        
+
+        // if (c_key_dir.every(r => square_key_dir.includes(r))) {
+        //   console.log("winner winner chicken dinner");
+        //   score += 2;
+        //   results_dump.push({ "match_type": "all", "scene": square_keys[idx], "card": c_key })
+        // } else if (c_key_dir.some(r => square_key_dir.includes(r))) {
+        //   //Maybe you got one right?
+        //   console.log("winner winner oats dinner");
+        //   score += 1;
+        //   results_dump.push({ "match_type": "some", "scene": square_keys[idx], "card": c_key })
+        // } else {
+        //   results_dump.push({ "match_type": "none", "scene": square_keys[idx], "card": c_key })
+        // }
+
+    }
+
+  }
+
   public gatherResults() {
-    this.sendResults();
+    let squareMatches = {};
+
+    GridSquares.forEach(square => {
+      let square_ids = []
+      Deck.forEach(card => {
+
+        if (card.intersectsWithObject(square)) {
+
+          let distance = this.fab.get_distance_points(square.top, square.left, card.top, card.left);
+
+          //console.log("Checking interaction: ", square.id , card.id)
+          if (distance < card.width / 2) {
+            var square_hit = squareMatches[square.d];
+            //&& square_hit != -1
+            //If no iteracting
+            square_ids.push(card.id);
+          }
+        }
+      });
+      squareMatches[square.id] = square_ids;
+    });
+    console.log(squareMatches);
+    this.calculateResults(squareMatches);
   }
 
   public localeSubscription : Subscription;
@@ -91,8 +144,7 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log("All road scenarios: ",this.roadScenarios);
       this.roadSigns = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['signImage'] + '.png');
       console.log("All road signs: ",this.roadSigns);
-      
-
+    
       //TODO: sorry, did not have time to fix and propagate through awits/promises
       this.initalise_board_components();
     });
@@ -119,13 +171,11 @@ export class RoadScenariosTestComponent implements OnInit {
     //Break line
     this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
 
-
     let deck_item_sz = square_length * 0.5;
     
     this.load_scenarios_into_grid(this.fab);
 
     this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), deck_item_sz);
-
   }
 
   ngOnInit() {
@@ -147,21 +197,37 @@ export class RoadScenariosTestComponent implements OnInit {
           console.log("oh no the path doesn't exist. It should but the directions in use were rando...", scenario_path);
         } else {
           console.log(ref_component.width);
-          var group = fab.image_parser(oImg, ref_component.width, Canvas, scenario_path, false);
+          //var group = fab.image_parser(oImg, ref_component.width, Canvas, scenario_path, false);
+          oImg.crossOrigin = "Anonymous";
+
+          oImg.scale(ref_component.width).set({
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true,
+            lockUniScaling: true,
+            lockScalingY: true, 
+            lockScalingX: true,
+            hasControls: false
+          },);
+      
+          //oImg.scaleToWidth(img_length);
+          oImg.scaleToHeight(ref_component.width);
 
           let path_broken = scenario_path.split("/");
           let id_name =  path_broken[path_broken.length];
           
-          group.id = id_name;
-          group.type = "card";
-          group.selectable = false;
-          group.set({ left: ref_component.left, top: ref_component.top })
-          group.scaleToWidth(ref_component.width);
-          group.stroke = 'black';
-          group.strokeWidth = 3;
+          oImg.id = id_name;
+          oImg.selectable = false;
+          oImg.set({ left: ref_component.left, top: ref_component.top })
+          oImg.scaleToWidth(ref_component.width);
+          oImg.stroke = 'black';
+          oImg.strokeWidth = 3;
+
+          fab.addInteractionObjLogic(oImg, Canvas, "board" );
+
 
           //Deck.push(group);
-          Canvas.add(group);
+          Canvas.add(oImg);
         }
       }, { crossOrigin: 'Anonymous' });
     });
@@ -192,10 +258,7 @@ export class RoadScenariosTestComponent implements OnInit {
           Canvas.add(group);
         }
       }, { crossOrigin: 'Anonymous' });
-    });
-
-
-    
+    });  
   }
 
 

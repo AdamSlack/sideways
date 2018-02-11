@@ -47,8 +47,6 @@ export class FabricService {
 
   public image_parser(oImg, img_length : any, canvas : any, id : any, hasReactingStyle : boolean) {
 
-    oImg.crossOrigin = "Anonymous";
-
     oImg.scale(img_length).set({
       originX: 'left', 
       originY: 'top',
@@ -189,15 +187,15 @@ public addInteractionObjLogic(card: any, canvas: any, type: any) {
             // console.log("Needs to be less than: ", target.width/2);
 
             if(distance < target.width/2) {
-              //obj.set('opacity', 0.5);
+              obj.set('opacity', 0.5);
               // console.log(distance);
               obj.set( {fill: '#d3d3d3'});
             } else {
-//              obj.set('opacity', 1); 
+              obj.set('opacity', 1); 
               obj.set( {fill: '#ffffff'});
             }
           } else {
-            //obj.set('opacity', 1); 
+            obj.set('opacity', 1); 
             obj.set( {fill: '#ffffff'})
           }
 
