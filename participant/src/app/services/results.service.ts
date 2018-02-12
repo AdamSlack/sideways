@@ -6,7 +6,7 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:5000/';
+  public ROOT : string = 'http://localhost:5000/Test/';
   
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
@@ -15,14 +15,14 @@ export class ResultsService {
     return headers;
   }
 
-  public insertDotCancellationResults(t_id: number, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url =  this.ROOT + "Test/" +t_id + '/DotCancellationResult';
+  public insertDotCancellationResults(p_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
+    let url =  this.ROOT + p_id + '/results/dot_cancellation';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,
       'falsePos': false_pos,
       'falseNeg': false_neg,
-      'TestId' : t_id
+     // 'TestId' : t_id
     }
     console.log('DOT CANCELLATION RESULTS: ')
     console.log(body);
@@ -32,7 +32,7 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCarDirectionResults(p_id: number, time_taken: number, points: number) {
+  public insertCarDirectionResults(p_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/car_directions';
     let body = {
       'time_taken': time_taken,
@@ -46,8 +46,8 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCompassDirectionResults(p_id: number, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/compass_directions';
+  public insertCompassDirectionResults(p_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT + p_id + "/" +  "CompassDirectionResult" ;
     let body = {
       'time_taken': time_taken,
       'points': points
@@ -60,7 +60,7 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertRoadScenarioResults(p_id: number, time_taken: number, points: number) {
+  public insertRoadScenarioResults(p_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + p_id + '/results/road_scenarios';
     let body = {
       'time_taken': time_taken,
@@ -74,9 +74,8 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
-    console.log("Sending: ", time_taken, mistakes);
-    let url =  this.ROOT + 'Test/' + p_id + '/results/trail_making';
+  public insertTrailMaking(p_id: string, time_taken: number, mistakes: number) {
+    let url =  this.ROOT + p_id + '/results/road_scenarios';
     
     let body = {
       'TimeTaken': time_taken,

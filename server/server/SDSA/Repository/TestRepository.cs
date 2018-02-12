@@ -19,14 +19,19 @@ namespace SDSA.Repository
         {
             db = DBFactory.getConnection(config);
         }
+        //@deprecated because this is just wrong to be here. 
+        //Why all of sudden is there participant test creation code inside here like what standard
+        //Also regiosn, regions i hate this. if the code is that unsearchable it requires sectioning with 
+        ///Silly region tags then the semantics are all wrong
         #region participantTest
         public int SavePatricipantTest(ParticipantTest PT)
         => db.ExecuteScalar<int>(
-            "insert into participant_test (test_id, participant_id , clinician_id) " +
-            "Values (DEFAULT,@ParticipentId, @ClinicianId) " +
+            "insert into participant_tests (test_id, participant_id , clinician_id, test_date) " +
+            "Values (DEFAULT,@ParticipentId, @ClinicianId, CURRENT_TIME) " +
             "returning test_id",
             PT
             );
+
         public IEnumerable<ParticipantTest> GetParticipantsTests(int participantid)
         => db.Query<ParticipantTest>(
             "select test_id as TestId," +
@@ -37,6 +42,8 @@ namespace SDSA.Repository
             new { participantId = participantid }
 
             );
+        
+        //TODO: remvoe this one but apparently needed for some call
         public ParticipantTest GetParticipantsTest(int testId)
         => db.ExecuteScalar<ParticipantTest>(
             "select test_id as TestId, " +
@@ -47,7 +54,9 @@ namespace SDSA.Repository
             new { TestId = testId }
 
             );
+
         #endregion
+
         #region DCT
         public void SaveDotCancellationTest(DotCancellationTest DCT)
         {
@@ -72,6 +81,7 @@ namespace SDSA.Repository
 
                 ).FirstOrDefault();
         #endregion
+
         #region CaDT
         public CarDirectionsTest GetCarDirectionsTest(int TestId)
             => db.Query<CarDirectionsTest>(
@@ -85,11 +95,12 @@ namespace SDSA.Repository
                 ).FirstOrDefault();
         public void SaveCarDirectionTest(CarDirectionsTest CDT)
             => db.Execute(
-                "insert into car_directions (test_Id , time_taken, points)" +
-                "Values (@TestId , @TimeTaken, @Points)",
-                CDT
+                "insert into car_directions (test_Id , time_taken, points, test_date)" +
+                "Values (@TestId , @TimeTaken, @Points, now())",
+                new {TestId = CDT.TestId, TimeTaken = CDT.TimeTaken, Points = CDT.points }
                 );
         #endregion
+
         
         #region CoDT
         public CompassDirectionsTest GetCompassDirectionsTest(int TestId)
@@ -109,6 +120,8 @@ namespace SDSA.Repository
                 CDT
                 );
         #endregion
+
+
         
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)
@@ -130,6 +143,8 @@ namespace SDSA.Repository
                 );
                 
         #endregion RST
+
+
         #region TMT
         public TrailMakingTest GetTrailMakingTest(int TestId)
             => db.Query<TrailMakingTest>(
@@ -146,6 +161,7 @@ namespace SDSA.Repository
                 "Values (@TestId , @TimeTaken, @Mistakes)",
                 TMT);
         #endregion
+
 
         public string GetParticipantTestPresetName(int testID)
             => db.ExecuteScalar<string>(

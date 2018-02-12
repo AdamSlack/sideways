@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 
@@ -18,8 +18,15 @@ export class AssetRetrievalService {
     return headers;
   }
 
+  public isExisting(url : string) : boolean {
+    let headers = this.createHeaders();
+    this.http.get(url, {headers : headers});
+    return;
+  }
+
   public selectLocalisationDetails(testType : number, localeName : string) : Observable<any> {
-    let url = this.ROOT + '/Localisation/' + localeName + '/' + testType.toString();
+    let url = this.ROOT + '/' + 'Localisation/' + localeName + '/' + testType.toString();
+    console.log("gathering presets: ", url)
     let headers = this.createHeaders();
     return this.http.get(url, {headers : headers});
   }

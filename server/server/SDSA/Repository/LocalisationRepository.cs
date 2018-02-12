@@ -310,6 +310,13 @@ namespace SDSA.Repository
         public TestLocaleDetails SelectCarDirectionDetails(string PresetName) {
             Console.WriteLine("Selecting Car Directions Locale Preset Details: " + PresetName);
 
+            Console.WriteLine("select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions, " +
+                "preset.headings_label as HeadingsLabel, preset.deck_label as DeckLabel " + 
+                "from sdsa_test_types, (select sdsa_test_type, name, instructions, headings_label, deck_label from sdsa_test_details " +
+                "where sdsa_test_type = 3 " + 
+                "and preset_name = @PresetName) as preset " +
+                "where preset.sdsa_test_type = sdsa_test_types.id");
+                
             TestLocaleDetails Deets = (TestLocaleDetails) db.Query<TestLocaleDetails>(
                 "select sdsa_test_types.name as Type, preset.name as Name, preset.instructions as Instructions, " +
                 "preset.headings_label as HeadingsLabel, preset.deck_label as DeckLabel " + 

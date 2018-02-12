@@ -35,7 +35,8 @@ namespace SDSA.Controllers
         {
             //requests should already be logged
             //here is an example of how to do extra log messages
-            _logger.LogInformation("Some message that is usefull");
+            _logger.LogInformation("Dot Cancellation Results Post Request Recieved.");
+            Console.WriteLine("Results are: \n FN - " + DCT.falseNeg + "\n FP - " + DCT.falsePos + "\n TP - " + DCT.TruePos);
             DCT.TestId = TestId;
             Console.WriteLine("Request DCT recieved");
             Console.WriteLine("falseneg: " + DCT.falseNeg);
@@ -53,10 +54,18 @@ namespace SDSA.Controllers
 
             return StatusCode(422, Json(new { message = "Unprocessable entity", errors = ModelState.Values.SelectMany(v => v.Errors) }));
         }
-        [HttpPost]
-        public IActionResult CarDirectionResult(int TestId, CarDirectionsTest CDT)
+
+
+        // EXAMPLE CURL...
+        // Nice and Simple.          Set the headers         check body is correct          Check correct URI is used...
+        // curl -X POST -H "Content-Type: application/json" -d "{points : 1234}" "localhost:5000/Test/results/Cardirections/1"
+        
+        [HttpPost("[controller]/results/CarDirections/{TestId}")]
+        public IActionResult CarDirectionResult(int TestId, [FromBody] CarDirectionsTest CDT)
         {
             
+            _logger.LogInformation("Dot Cancellation Results Post Request Recieved.");
+            Console.WriteLine("Results Are : \n Points - " + CDT.points + "\nTime Taken - " + CDT.TimeTaken);
             CDT.TestId = TestId;
             if (ModelState.IsValid)
             {
@@ -83,22 +92,28 @@ namespace SDSA.Controllers
 
             return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-        [HttpPost]
-        public IActionResult RoadScenarioResult(int TestId, RoadScenariosTest RST)
+
+        [HttpPost("[controller]/results/RoadScenarios/{TestId}")]
+        public IActionResult RoadScenarioResult(int TestId, [FromBody] RoadScenariosTest RST)
         {
+            Console.WriteLine("Results Are : \n Points - " + RST.Points + "\nTime Taken - " + RST.TimeTaken);
+
             
             RST.TestId = TestId;
             if (ModelState.IsValid)
             {
                 _testService.SaveRoadScenarioTest(RST);
+                
                 return Ok();
             }
 
             return StatusCode(422, Json(ModelState.Values.SelectMany(v => v.Errors)));
         }
-        [HttpPost]
-        public IActionResult CompassDirectionResult(int TestId, CompassDirectionsTest CDT)
+
+        [HttpPost("[controller]/results/CompassDirections/{TestId}")]
+        public IActionResult CompassDirectionResult(int TestId, [FromBody] CompassDirectionsTest CDT)
         {
+            Console.WriteLine("Results Are : \n Points - " + CDT.Points + "\nTime Taken - " + CDT.TimeTaken);
             
             CDT.TestId = TestId;
             if (ModelState.IsValid)

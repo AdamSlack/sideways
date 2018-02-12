@@ -11,15 +11,24 @@ namespace SDSA.Repository.Interfaces
         RoadScenariosTest GetRoadScenarioTest(int TestId);
         TrailMakingTest GetTrailMakingTest(int TestId);
         DotCancellationTest GetDotCancellationTest(int TestId);
+
         void SaveCarDirectionTest(CarDirectionsTest CDT);
         void SaveCompassDirectionsTest(CompassDirectionsTest CDT);
         void SaveDotCancellationTest(DotCancellationTest DCT);
         void SaveRoadScenarioTest(RoadScenariosTest RST);
         void SaveTrailMakingTest(TrailMakingTest TMT);
+
+
+        //@dpericated why have participant interface if it's just going have to have this here...
         int SavePatricipantTest(ParticipantTest PT);
-        IEnumerable<ParticipantTest> GetParticipantsTests(int participantid);
         ParticipantTest GetParticipantsTest(int testId);
+
+        //Need this call whenshould be in the participant 
+        IEnumerable<ParticipantTest> GetParticipantsTests(int participantid);
+
+        
         string GetParticipantTestPresetName(int testID);
+
         AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true);
         void SaveAlgorithmReult(AlgorithmResult result);
         IEnumerable<Algorithm> GetAlgorithms();

@@ -262,7 +262,7 @@ insert into trail_making (test_id, time_taken, mistakes, test_date)
 
 -- CREATE USER sdsa_user WITH PASSWORD 'password';
 -- REVOKE ALL ON SCHEMA public FROM sdsa_user;
--- GRANT ALL ON SCHEMA public TO sdsa_user;
--- GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public TO sdsa_user;
+--  REVOKE ALL ON SCHEMA public FROM sdsa_user;
+--  REVOKE ALL ON SCHEMA public FROM sdsa_user;
 
 commit;

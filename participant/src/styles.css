@@ -21,3 +21,95 @@ html, body {
     width: 100%;
     display: block;
   }
+  
+  /* special centered button */ 
+  .btn-round {
+    background-color: #8eeec1;
+    border-radius: 999em;
+    
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    line-height: 1;
+    /* font-size: 36px; */
+    cursor: pointer;
+
+    animation: enter-intro 2.2s ease-out 0s;
+    position: relative;
+    margin: auto;
+    widows: 50%;
+
+}
+
+.btn-round p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+}
+
+  .btn-round:hover, .btn-round:focus {
+    background-color: #27ae60;
+  }
+  
+  .btn-round > * {
+    position: relative;
+  }
+
+  .btn-round:before {
+    content: "";
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    display: block;
+    width: 0;
+    padding-top: 0;
+      
+    border-radius: 100%;
+    
+    background-color: rgba(236, 240, 241, .3);
+    
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  
+
+
+
+/* Go go animations */ 
+@keyframes enter-intro {
+    0% {
+        transform: translate(-100px, 0px);
+        opacity: 0
+    }
+    42% {
+        transform: translate(-80px, 0px);
+        opacity: 0.8
+    }
+    60% {
+        transform: translate(3px, 0px) scale(0.96, 1.04);
+        opacity: 1
+    }
+    65% {
+        transform: translate(2px, 0px);
+        opacity: 1
+    }
+    80% {
+        transform: translate(-2px, 0px);
+        opacity: 1
+    }
+    90% {
+        transform: translate(1px, 0px);
+        opacity: 1
+    }
+    100% {
+        transform: translate(0px, 0px);
+        opacity: 1
+    }
+}

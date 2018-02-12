@@ -36,6 +36,7 @@ namespace SDSA.Controllers
 
             if (User.UserType == SDSAUser.loginuserType.Clinician && _clinicianService.ValidateClinician(User))
             {
+                Console.WriteLine("Processing a valid user: " + User.Email);
                 Clinician Clin = _clinicianService.GetClinician(User.Email);
                 var claims = new[]
                 {
@@ -44,6 +45,8 @@ namespace SDSA.Controllers
                //     new Claim("ID" , Clin.ID.ToString())
                     
                 };
+
+
                 var bytes = Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]);
                 var key = new SymmetricSecurityKey(bytes);
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
