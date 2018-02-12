@@ -2,91 +2,96 @@ import { Component, OnInit } from '@angular/core';
 import { RecordTimingService } from '../../services/record-timing.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { ResultsService } from '../../services/results.service';
-
-import 'fabric';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
+import 'fabric';
 declare const fabric: any;
-
-var test1timer : RecordTimingService;
-var test2timer : RecordTimingService;
-var test1Canvas: any;
-var test2Canvas: any;
-var test1Mistakes = 0;
-var test2Mistakes = 0;
-var test1data : string[] = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"];
-var test2data : string[] = ["1","A","2","B","3","C","4","D","5","E","6","F","7","G","8","H","9","I","10","J","11","K","12","L","13"];
-var test1coordinates = [
-  {x: 705, y: 720}, //1
-  {x: 357, y: 167}, //2
-  {x: 724, y: 390}, //3
-  {x: 510, y: 470}, //4
-  {x: 25,  y: 90 }, //5
-  {x: 250, y: 312}, //6
-  {x: 50, y: 770}, //7
-  {x: 105, y: 890}, //8
-  {x: 112, y: 600}, //9
-  {x: 143, y: 11 }, //10
-  {x: 320, y: 560}, //11
-  {x: 700, y: 30 }, //12
-  {x: 532, y: 70 }, //13
-  {x: 600, y: 292}, //14
-  {x: 480, y: 860}, //15
-  {x: 30,  y: 400}, //16
-  {x: 356, y: 30 }, //17
-  {x: 670, y: 522}, //18
-  {x: 515, y: 670}, //19
-  {x: 130, y: 205}, //20
-  {x: 700, y: 150}, //21
-  {x: 400, y: 310}, //22
-  {x: 180, y: 464}, //23
-  {x: 300, y: 800}, //24
-  {x: 700, y: 890}, //25
-]; 
-var test2coordinates = [
-  {x: 705, y: 720}, //1
-  {x: 357, y: 167}, //2
-  {x: 724, y: 390}, //3
-  {x: 510, y: 470}, //4
-  {x: 25,  y: 90 }, //5
-  {x: 250, y: 312}, //6
-  {x: 50, y: 770}, //7
-  {x: 105, y: 890}, //8
-  {x: 112, y: 600}, //9
-  {x: 143, y: 11 }, //10
-  {x: 320, y: 560}, //11
-  {x: 700, y: 30 }, //12
-  {x: 532, y: 70 }, //13
-  {x: 600, y: 292}, //14
-  {x: 480, y: 860}, //15
-  {x: 30,  y: 400}, //16
-  {x: 356, y: 30 }, //17
-  {x: 670, y: 522}, //18
-  {x: 515, y: 670}, //19
-  {x: 130, y: 205}, //20
-  {x: 700, y: 150}, //21
-  {x: 400, y: 310}, //22
-  {x: 180, y: 464}, //23
-  {x: 300, y: 800}, //24
-  {x: 700, y: 890}, //25
-];  
 
 @Component({
   selector: 'app-trail-making-test',
   templateUrl: './trail-making-test.component.html',
   styleUrls: ['./trail-making-test.component.css']
 })
+
 export class TrailMakingTestComponent implements OnInit 
 {
-  private timer : RecordTimingService;
-  private assetService : AssetRetrievalService;
-  private auth : AuthenticationService;
+  constructor(
+    private rs: ResultsService, 
+    public assetService : AssetRetrievalService, 
+    private auth : AuthenticationService, 
+    private test1timer : RecordTimingService, 
+    private test2timer : RecordTimingService,
+  ) {}
+  
+  title = 'app';
   public localisationSubscription : Subscription;
 
+  private test1Canvas: any;
+  private test2Canvas: any;
+  private test1data : string[] = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"];
+  private test2data : string[] = ["1","A","2","B","3","C","4","D","5","E","6","F","7","G","8","H","9","I","10","J","11","K","12","L","13"];
+  private testInstructions : string;
+  private test1Mistakes = 0;
+  private test2Mistakes = 0;
+  private test1IntersectedNodes : number[] = [];
+  private test2IntersectedNodes : number[] = [];
+  
+  private test1coordinates = [
+    {x: 705, y: 720}, //1
+    {x: 357, y: 167}, //2
+    {x: 724, y: 390}, //3
+    {x: 510, y: 470}, //4
+    {x: 25,  y: 90 }, //5
+    {x: 250, y: 312}, //6
+    {x: 50,  y: 770}, //7
+    {x: 105, y: 890}, //8
+    {x: 112, y: 600}, //9
+    {x: 143, y: 11 }, //10
+    {x: 320, y: 560}, //11
+    {x: 700, y: 30 }, //12
+    {x: 532, y: 70 }, //13
+    {x: 600, y: 292}, //14
+    {x: 480, y: 860}, //15
+    {x: 30,  y: 400}, //16
+    {x: 356, y: 30 }, //17
+    {x: 670, y: 522}, //18
+    {x: 515, y: 670}, //19
+    {x: 130, y: 205}, //20
+    {x: 700, y: 150}, //21
+    {x: 400, y: 310}, //22
+    {x: 180, y: 464}, //23
+    {x: 300, y: 800}, //24
+    {x: 700, y: 890}, //25
+  ]; 
+  private test2coordinates = [
+    {x: 705, y: 720}, //1
+    {x: 357, y: 167}, //2
+    {x: 724, y: 390}, //3
+    {x: 510, y: 470}, //4
+    {x: 25,  y: 90 }, //5
+    {x: 250, y: 312}, //6
+    {x: 50,  y: 770}, //7
+    {x: 105, y: 890}, //8
+    {x: 112, y: 600}, //9
+    {x: 143, y: 11 }, //10
+    {x: 320, y: 560}, //11
+    {x: 700, y: 30 }, //12
+    {x: 532, y: 70 }, //13
+    {x: 600, y: 292}, //14
+    {x: 480, y: 860}, //15
+    {x: 30,  y: 400}, //16
+    {x: 356, y: 30 }, //17
+    {x: 670, y: 522}, //18
+    {x: 515, y: 670}, //19
+    {x: 130, y: 205}, //20
+    {x: 700, y: 150}, //21
+    {x: 400, y: 310}, //22
+    {x: 180, y: 464}, //23
+    {x: 300, y: 800}, //24
+    {x: 700, y: 890}, //25
+  ];  
 
-  title = 'app';
 
-  constructor(private rs: ResultsService) {}
 
   ngOnInit() 
   {
@@ -106,86 +111,43 @@ export class TrailMakingTestComponent implements OnInit
       return;
     }
 
-    this.localisationSubscription = this.localisationSubscription.selectTrailMakingTestDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => 
+    this.localisationSubscription = this.assetService.selectTrailMakingDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => 
     {
       console.log('Response for Trail Making Test Localisation Data recieved from server.');
-
-      //WIP - Get this stuff converted into Trail making stuff
-      /*
-      this.testTitle = res['name'] ? res['name'] : 'Compass Directions';
-      this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
-      this.compassLabel = res['headingsLabel'] ? res['headingsLabel'] : 'Compass';
-      this.deckLabel = res['decklabel'] ? res['deckLabel'] : 'Deck of Cards';
-      console.log('Test title: ' + res['name']);
-      console.log('Test instructions: ' + res['instructions']);
-      console.log('Test compass label: ' + res['headingsLabel']);
-      console.log('Test deck label: ' + res['deckLabel']);
-      */
-
-      var trailA : string[] = res['TrailA'] ? res['TrailA'] : 'Failed To Obtain Trail A Data';
-      var trailB : string[] = res['TrailB'] ? res['TrailB'] : 'Failed To Obtain Trail B Data';
-      var testInstructions : string = res['instructions'] ? res['instructions'] : 'Failed To Obtain Instructions, Please restart the app';
-      
+      var trailA = res['trailA'] ? res['trailA'] : ['Failed To Obtain Trail A Data'];
+      var trailB = res['trailB'] ? res['trailB'] : ['Failed To Obtain Trail B Data'];
+      this.testInstructions = res['instructions'] ? res['instructions'] : 'Failed To Obtain Instructions, Please restart the app';
       this.title = res['name'] ? res['name'] : 'Trail Making Test';
-      if (trailA.length==25) {test1data = trailA;}
-      if (trailB.length==25) {test2data = trailB;}
-      document.body.innerText = testInstructions;
-
+      this.test1data = trailA;
+      this.test2data = trailB;
     });
   }
 
-  private enableDrawing() 
+  public beginTest1()
   {
-    test1Canvas.isDrawingMode = true;
-  }
-  private disableDrawing() 
-  {
-    test1Canvas.isDrawingMode = false;
-  }
-
-  private beginTest1()
-  {
+    //canvas background color
+    //background-color: #FFFFFF;
     //disable done button
     document.getElementById('test1donebutton').hidden = true;
 
-    //using fabric library
-    test1Canvas = new fabric.Canvas('test1',{isDrawingMode: true});
-
-    //retrieve server response of characters
-    //AssetRetrievalService
+    this.test1Canvas = new fabric.Canvas('test1',{isDrawingMode: true});
 
     //creates all the circle nodes
     var nodes : any = [];
-    for(var i = 0; i < test1data.length; i++)
+    for(var i = 0; i < this.test1data.length && i < 25; i++)
     {
-      nodes.push(this.createCircleNode(test1coordinates[i].x, test1coordinates[i].y, test1data[i], test1Canvas));
+      nodes.push(this.createCircleNode(this.test1coordinates[i].x, this.test1coordinates[i].y, this.test1data[i], this.test1Canvas));
     }
 
-    test1timer.recordStartTime();
+    this.test1timer.recordStartTime();
 
     //drawing path done event handler
-    test1Canvas.on('path:created', function (options) 
+    this.test1Canvas.on('path:created', (options) =>
     {
       console.log("path created");
-
-      //Checks if object intersects with the first node (1)
-      //bool return
-      //simple check, but provides no information on the sequence
-      /*
-      var intersectswith1 = options.path.intersectsWithObject(node01);
-      if(intersectswith1)
-      {
-        console.log("Drawing Path intersects with Object 1");
-      }*/
-
-      //options.path.path;
-      //stores numbers of every object that was drawn through (in order)
-      var intersectedNodes : number[] = [];
+      //stores numbers of every object that was drawn through (in ••••••order)
       //array of all coords of path created
       var pathCoordsArray = options.path.path;
-      
-      //25 false default array of bools to determine if each node found already - DEPRECATED
-      //var foundObjArray = Array(25).fill(false);
 
       //strange path class, uses nested arrays instead of raw points, 
       //possibly to be efficient if there are straight lines 
@@ -199,6 +161,7 @@ export class TrailMakingTestComponent implements OnInit
         //if it was previously found, dont count it again
 
         /*
+
         so apparently each element isnt a fabric.Point, 
         but from the object we can derive it by obtaining the numerical elements within the  object
         and attempt to reconstruct the point in order to perform a comparison
@@ -208,108 +171,142 @@ export class TrailMakingTestComponent implements OnInit
         //checks if current point collides with node, and if node collision was not detected previously
         for(var j = 0; j < nodes.length; j++)
         {
-          if (nodes[j].containsPoint(currentPoint) && (intersectedNodes.indexOf(j+1) == -1))
+          if (nodes[j].containsPoint(currentPoint) && (this.test1IntersectedNodes.indexOf(j+1) == -1))
           {
-            //console.log("Coordinate ", currentPoint, " was found to be inside object ", nodes[j]);
-            //push = push_back so dont worry
-            intersectedNodes.push(j+1);
-  
+            this.test1IntersectedNodes.push(j+1);
+              
             //check if error was made
-            if((intersectedNodes[intersectedNodes.length-1] - intersectedNodes[intersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
+            if((this.test1IntersectedNodes[this.test1IntersectedNodes.length-1] - this.test1IntersectedNodes[this.test1IntersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
             { 
-              console.log("intersectedNodes -1 = ", intersectedNodes[intersectedNodes.length-1], "\n intersected Nodes -2 = ", intersectedNodes[intersectedNodes.length-2]);
+              console.log("intersectedNodes -1 = ", this.test1IntersectedNodes[this.test1IntersectedNodes.length-1], "\n intersected Nodes -2 = ", this.test1IntersectedNodes[this.test1IntersectedNodes.length-2]);
               //special case if first node
-              if(intersectedNodes.length == 1 && intersectedNodes[0] == 1)
+              if(typeof this.test1IntersectedNodes[this.test1IntersectedNodes.length-2] == 'undefined')
               {
                 console.log("array is size 1 and contains 1");
                 //this is fine if the only object inside is "1"
+                //but actually we want to kill the path 
+                //this.test1Mistakes++;
+                //this.test1Canvas.remove(options.path);
               }
               else
               {                  
                 //error has been made
                 errorMade = true;
-                test1Mistakes++;
+                this.test1Mistakes++;
                 console.log("Error detected");
                 
 
                 //find index of current point in the array
                 var index = pathCoordsArray.indexOf(pathCoordsArrayArray);
                 //trim the array                   
-                var trimmedPathCoords = pathCoordsArray.splice(index);
-                
+                //var trimmedPathCoords = pathCoordsArray.splice(index);
+                var trimmedPathCoords = pathCoordsArray.slice(0,index);
+                console.log(pathCoordsArray);
+                console.log(trimmedPathCoords);
                 //reconstruct path using trimmed array
                 var newPath = new fabric.Path(trimmedPathCoords);
+
+                newPath.setGradient('fill',
+                {
+                  type: 'linear',
+                  x1: -newPath.width / 2,
+                  y1: 0,
+                  x2: newPath.width / 2,
+                  y2: 0,
+                  colorStops: {
+                    0: 'rgba(0,0,0,0)',
+                    0.5: 'rgba(0,0,0,0)',
+                    1: 'rgba(0,0,0,0)'
+                  }
+                });
+
+                newPath.set(
+                  {
+                    stroke: 'rgba(0,0,0,0.1)',
+                    strokeWidth: 2,
+                    selectable: false,
+                  });
                 console.log("attempting to delete old path");
 
                 //delete the old path
-                test1Canvas.remove(options.path);
+                this.test1Canvas.remove(options.path);
 
                 //add new path WIP FEATURE: BUGGY
-                //test1Canvas.add(newPath);
+                this.test1Canvas.add(newPath);
                 
                 //console.log(pathCoordsArray);
                 //test1Canvas.add(pathCoordsArray);
                 
-                //test1Canvas.renderAll();
+                this.test1Canvas.renderAll();
                 break;
               }
             }
           }
         }
       }
-      console.log("Path Crossed through the following nodes: ", intersectedNodes);
+      console.log("Path Crossed through the following nodes: ", this.test1IntersectedNodes);
 
       ///check if its crossed through nothing
-      if(intersectedNodes.length == 0)
+      if(this.test1IntersectedNodes.length == 0)
       {
         //delete path if so
         console.log("Crossed through nothing... deleting path");
-        test1Mistakes++;
-        test1Canvas.remove(options.path);
-        test1Canvas.renderAll();
+        this.test1Mistakes++;
+        this.test1Canvas.remove(options.path);
+        this.test1Canvas.renderAll();
       }
 
       //check if the path is equal to the correct sequence
-      var intersectedNodesString = intersectedNodes.map(String); //casts array to string elements
-      var equal = test1data.length == intersectedNodesString.length && test1data.every((element, index)=> element === intersectedNodesString[index] );
-      if(equal)
+      var intersectedNodesString = this.test1IntersectedNodes.map(String); //casts array to string elements
+      //var equal = this.test1data.length == intersectedNodesString.length && this.test1data.every((element, index)=> element === intersectedNodesString[index] );
+      var correctPath = true;
+      for (var k = 0; k < this.test1data.length - 1; k++)
+      {
+        if(this.test1IntersectedNodes[k] != (this.test1IntersectedNodes[k+1] - 1))
+        {
+          correctPath = false;
+        }
+      }
+
+      if(correctPath)
       {
         console.log("Path correctly went through all elements in sequence!");
-        test1timer.recordEndTime();
+        console.log("Test 1 Mistakes: ", this.test1Mistakes);
+        this.test1timer.recordEndTime();
+        document.getElementById('instructionsdiv').style.display = "block";
+        document.getElementById('beginbutton').style.display = "none";
         document.getElementById('test1donebutton').hidden = false;
-        test1Canvas.isDrawingMode = false;
+        this.test1Canvas.isDrawingMode = false;
+        this.test1Canvas.setHeight(0);
+        this.test1Canvas.setWidth(0);
       }
     });
 
-    test1Canvas.renderAll();
+    this.test1Canvas.renderAll();
   }
 
-  private beginTest2()
+  public beginTest2()
   {
-    //hide done button
-    document.getElementById('test2donebutton').hidden = false;
+    //hide done button and instructions
+    document.getElementById('test2donebutton').style.display = "none";
+    document.getElementById('instructionsdiv').style.display = "none";
 
-    test2Canvas = new fabric.Canvas('test2',{isDrawingMode: true});
-
-    //retrieve server response of characters
-    //AssetRetrievalService
-
+    this.test2Canvas = new fabric.Canvas('test2',{isDrawingMode: true});
+    document.getElementById('test2donebutton').style.display = "none";
     //creates all the circle nodes
     var nodes : any = [];
-    for(var i = 0; i < test2data.length; i++)
+    for(var i = 0; i < this.test2data.length; i++)
     {
-      nodes.push(this.createCircleNode(test2coordinates[i].x, test2coordinates[i].y, test2data[i], test2Canvas));
+      nodes.push(this.createCircleNode(this.test2coordinates[i].x, this.test2coordinates[i].y, this.test2data[i], this.test2Canvas));
     }
 
-    test2timer.recordStartTime();
+    this.test2timer.recordStartTime();
 
     //drawing path done event handler
-    test2Canvas.on('path:created', function (options) 
+    this.test2Canvas.on('path:created', (options) =>
     {
       console.log("path created");
-
-      //stores numbers of every object that was drawn through (in order)
-      var intersectedNodes : number[] = [];
+      //stores numbers of every object that was drawn through (in ••••••order)
       //array of all coords of path created
       var pathCoordsArray = options.path.path;
 
@@ -318,12 +315,14 @@ export class TrailMakingTestComponent implements OnInit
       for(var i = 0; i < pathCoordsArray.length; i++)
       {
         var pathCoordsArrayArray = pathCoordsArray[i];
+        
         //check if each point collides with 1, 
         //starting from the beginning and working through sequentially
         //each element is of type fabric.Point
         //if it was previously found, dont count it again
 
         /*
+
         so apparently each element isnt a fabric.Point, 
         but from the object we can derive it by obtaining the numerical elements within the  object
         and attempt to reconstruct the point in order to perform a comparison
@@ -333,87 +332,114 @@ export class TrailMakingTestComponent implements OnInit
         //checks if current point collides with node, and if node collision was not detected previously
         for(var j = 0; j < nodes.length; j++)
         {
-          if (nodes[j].containsPoint(currentPoint) && (intersectedNodes.indexOf(j+1) == -1))
+          if (nodes[j].containsPoint(currentPoint) && (this.test2IntersectedNodes.indexOf(j+1) == -1))
           {
-            //console.log("Coordinate ", currentPoint, " was found to be inside object ", nodes[j]);
-            //push = push_back so dont worry
-            intersectedNodes.push(j+1);
-  
+            this.test2IntersectedNodes.push(j+1);
+              
             //check if error was made
-            if((intersectedNodes[intersectedNodes.length-1] - intersectedNodes[intersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
+            if((this.test2IntersectedNodes[this.test2IntersectedNodes.length-1] - this.test2IntersectedNodes[this.test2IntersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
             { 
-              console.log("intersectedNodes -1 = ", intersectedNodes[intersectedNodes.length-1], "\n intersected Nodes -2 = ", intersectedNodes[intersectedNodes.length-2]);
+              console.log("intersectedNodes -1 = ", this.test2IntersectedNodes[this.test2IntersectedNodes.length-1], "\n intersected Nodes -2 = ", this.test2IntersectedNodes[this.test2IntersectedNodes.length-2]);
               //special case if first node
-              if(intersectedNodes.length == 1 && intersectedNodes[0] == 1)
+              if(typeof this.test2IntersectedNodes[this.test2IntersectedNodes.length-2] == 'undefined')
               {
                 console.log("array is size 1 and contains 1");
                 //this is fine if the only object inside is "1"
+                //but actually we want to kill the path 
+                //this.test2Mistakes++;
               }
               else
               {                  
                 //error has been made
                 errorMade = true;
-                test2Mistakes++;
+                this.test2Mistakes++;
                 console.log("Error detected");
                 
-
                 //find index of current point in the array
                 var index = pathCoordsArray.indexOf(pathCoordsArrayArray);
                 //trim the array                   
-                var trimmedPathCoords = pathCoordsArray.splice(index);
-                
+                //var trimmedPathCoords = pathCoordsArray.splice(index);
+                var trimmedPathCoords = pathCoordsArray.slice(0,index);
+                console.log(pathCoordsArray);
+                console.log(trimmedPathCoords);
                 //reconstruct path using trimmed array
                 var newPath = new fabric.Path(trimmedPathCoords);
+
+                newPath.setGradient('fill',
+                {
+                  type: 'linear',
+                  x1: -newPath.width / 2,
+                  y1: 0,
+                  x2: newPath.width / 2,
+                  y2: 0,
+                  colorStops: {
+                    0: 'rgba(0,0,0,0)',
+                    0.5: 'rgba(0,0,0,0)',
+                    1: 'rgba(0,0,0,0)'
+                  }
+                });
+
+                newPath.set(
+                  {
+                    stroke: 'rgba(0,0,0,0.1)',
+                    strokeWidth: 2,
+                    selectable: false,
+                  });
                 console.log("attempting to delete old path");
 
                 //delete the old path
-                test2Canvas.remove(options.path);
+                this.test2Canvas.remove(options.path);
 
                 //add new path WIP FEATURE: BUGGY
-                //test1Canvas.add(newPath);
+                this.test2Canvas.add(newPath);
                 
-                //console.log(pathCoordsArray);
-                //test1Canvas.add(pathCoordsArray);
-                
-                //test1Canvas.renderAll();
+                this.test2Canvas.renderAll();
                 break;
               }
             }
           }
         }
       }
-      console.log("Path Crossed through the following nodes: ", intersectedNodes);
+      console.log("Path Crossed through the following nodes: ", this.test2IntersectedNodes);
 
       ///check if its crossed through nothing
-      if(intersectedNodes.length == 0)
+      if(this.test2IntersectedNodes.length == 0)
       {
         //delete path if so
         console.log("Crossed through nothing... deleting path");
-        test2Mistakes++;
-        test2Canvas.remove(options.path);
-        test2Canvas.renderAll();
+        this.test2Mistakes++;
+        this.test2Canvas.remove(options.path);
+        this.test2Canvas.renderAll();
       }
 
       //check if the path is equal to the correct sequence
-      var intersectedNodesString = intersectedNodes.map(String); //casts array to string elements
-      var equal = test2data.length == intersectedNodesString.length && test2data.every((element, index)=> element === intersectedNodesString[index] );
-      if(equal)
+      var intersectedNodesString = this.test2IntersectedNodes.map(String); //casts array to string elements
+      console.log(intersectedNodesString);
+      console.log(this.test2data);
+      console.log(this.test2IntersectedNodes);
+      //var equal = this.test2data.length == intersectedNodesString.length && this.test2data.every((element, index)=> element === intersectedNodesString[index] );
+      var correctPath = true;
+      for (var k = 0; k < this.test2data.length - 1; k++)
+      {
+        if(this.test2IntersectedNodes[k] != (this.test2IntersectedNodes[k+1] - 1))
+        {
+          correctPath = false;
+        }
+      }
+      
+      if(correctPath)
       {
         console.log("Path correctly went through all elements in sequence!");
+        console.log("Test 2 Mistakes: ", this.test2Mistakes)
         console.log("Test 2 Complete, Sending Results...");
-        test2timer.recordEndTime();
-        document.getElementById('test2donebutton').hidden = false;
-        test2Canvas.isDrawingMode = false;
-
-        //Endpoint Expects:
-        //insertTrailMaking(p_id: number, time_taken: number, mistakes: number)
-        var timeTaken = test1timer.getTimeElapsed(true) + test2timer.getTimeElapsed(true);
-        var totalMistakes = test1Mistakes + test2Mistakes;
-        this.rs.insertTrailMaking(/*PATIENT ID*/ 1 ,timeTaken,totalMistakes);
-        //please change the 1... it needs to send the patient ID!
+        this.test2timer.recordEndTime();
+        document.getElementById('test2donebutton').style.display = "block";
+        this.test2Canvas.isDrawingMode = false;
+        this.test2Canvas.setHeight(0);
+        this.test2Canvas.setWidth(0);
       }
     });
-    test2Canvas.renderAll();
+    this.test2Canvas.renderAll();
   }
 
   private createCircleNode(x: number, y: number, text: string, canvas: any) 
@@ -470,5 +496,16 @@ export class TrailMakingTestComponent implements OnInit
     secondTest.style.display = "block";
 
     this.beginTest2();
+  }
+
+  sendResults()
+  {
+    //Endpoint Expects:
+    //insertTrailMaking(p_id: number, time_taken: number, mistakes: number)
+    var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
+    var totalMistakes = this.test1Mistakes + this.test2Mistakes;
+    var participantID : number = parseInt(this.auth.PARTICIPANT_TEST_ID);
+    this.rs.insertTrailMaking(participantID,timeTaken,totalMistakes);
+    console.log("Results sent");
   }
 }

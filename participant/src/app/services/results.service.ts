@@ -28,7 +28,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers: headers}).subscribe();
   }
 
   public insertCarDirectionResults(p_id: number, time_taken: number, points: number) {
@@ -42,7 +42,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers: headers}).subscribe();
   }
 
   public insertCompassDirectionResults(p_id: number, time_taken: number, points: number) {
@@ -56,7 +56,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers: headers}).subscribe();
   }
 
   public insertRoadScenarioResults(p_id: number, time_taken: number, points: number) {
@@ -70,7 +70,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers: headers}).subscribe();
   }
 
   public insertTrailMaking(p_id: number, time_taken: number, mistakes: number) {
@@ -87,7 +87,7 @@ export class ResultsService {
     
     let headers = this.createHeaders();
 
-    this.http.post(url, body, headers).subscribe();
+    this.http.post(url, body, {headers: headers}).subscribe();
   }
    
 }
