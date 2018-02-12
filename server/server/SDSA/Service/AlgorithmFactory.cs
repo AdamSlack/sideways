@@ -15,6 +15,8 @@ namespace SDSA.Service
             {
                 case AlgoritmEnum.SDSA1:
                     return new SDSA1();
+                case AlgoritmEnum.SDSAHard:
+                    return new SDSAHard();
                 default:
                     return null;
                     

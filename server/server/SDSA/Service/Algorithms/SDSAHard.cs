@@ -1,10 +1,14 @@
-﻿using SDSA.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using SDSA.Models;
 using SDSA.Models.Interfaces;
 using SDSA.Models.Enums;
 using Newtonsoft.Json;
 namespace SDSA.Service.Algorithms
 {
-    public class SDSA1 : IAlgorithm
+    public class SDSAHard : IAlgorithm
     {
         public AlgorithmResult Calulate(TestResults testResults)
         {
@@ -38,8 +42,8 @@ namespace SDSA.Service.Algorithms
         }
 
         private double passEquation(TestResults TR)
-            => (TR.DotCancellationTest.TimeTaken * 0.012) + (TR.DotCancellationTest.falsePos * 0.216) + (TR.CompassDirectionsTest.Points * 0.409) + (TR.RoadScenariosTest.Points * 1.168) - 13.79;
+            => (TR.DotCancellationTest.TimeTaken * 0.012) + (TR.DotCancellationTest.falsePos * 0.216) + (TR.CompassDirectionsTest.Points * 0.409) + (TR.RoadScenariosTest.Points * 1.168) - 23.79;
         private double faileEquation(TestResults TR)
-            => (TR.DotCancellationTest.TimeTaken * 0.017) + (TR.DotCancellationTest.falsePos * 0.035) + (TR.CompassDirectionsTest.Points * 0.185) + (TR.RoadScenariosTest.Points * 0.813) - 10.042;
+            => (TR.DotCancellationTest.TimeTaken * 0.017) + (TR.DotCancellationTest.falsePos * 0.035) + (TR.CompassDirectionsTest.Points * 0.185) + (TR.RoadScenariosTest.Points * 0.813) - 0.042;
     }
 }

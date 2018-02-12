@@ -180,7 +180,8 @@ insert into clinicians (email, hash, salt) values ('clinician@sdsa.com', 'jPMS7S
 ----
 --  Initial algorithm
 ----
-insert into algorithm (algorithm_name) values ('SDSA');
+insert into algorithm (algorithm_name) values ('SDSA'); 	--1
+insert into algorithm (algorithm_name) values ('SDSA hard'); 	--2
 ----
 --  Initial SDSA test types.
 ----
