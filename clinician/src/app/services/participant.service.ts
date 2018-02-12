@@ -30,9 +30,7 @@ export class ParticipantService {
     return this.http.get<any>(url);
   }
 
-  public requestTestResults(
-    t_id : number
-  ) : Observable<{
+  public requestTestResults( t_id : number ) : Observable<{
     dotCancellationTest : {testId : number, timeTaken : number, truePos : number, falsePos : number, falseNeg : number},
     compassDirectionsTest : {testId : number, timeTaken : number, points : number},
     carDirectionsTest : {testId : number, timeTaken : number, points : number},
@@ -48,10 +46,7 @@ export class ParticipantService {
     return this.http.get<any>(url);
   }
 
-  public requestAlgorithmScore(
-    tid : number,
-    aid : number
-  ) : Observable<{
+  public requestAlgorithmScore( tid : number, aid : number ) : Observable<{
     testId : number,
     algorithmId : number,
     r1 : number,

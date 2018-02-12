@@ -116,9 +116,9 @@ export class LocalisationCreatorComponent implements OnInit {
         b = this.roadSignUpladed[index],
         c = this.placementFinisihed[index];
 
-    this.scenarioComplete[index] = a && b && c
-    console.log(a && b && c)
-    return a && b && c;
+    this.scenarioComplete[index] = a && b
+    console.log(a && b)
+    return a && b;
   }
 
   public toggleScenario(index : number) {
@@ -203,7 +203,7 @@ export class LocalisationCreatorComponent implements OnInit {
     } else {
       this.trailBArray = arr;
     }
-  }
+}
 
   public onScenarioClick(event, index) {
     let target = event.target || event.srcElement,    
