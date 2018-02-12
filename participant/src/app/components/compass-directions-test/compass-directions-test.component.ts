@@ -117,6 +117,8 @@ var asset_link = "/test/compass_directions/";
 export class CompassDirectionsTestComponent implements OnInit {
 
   public time: number = 0;
+  public test_started : boolean = false;
+
   constructor(private rs: ResultsService,
     private timer: RecordTimingService,
     private fab: FabricService,
@@ -135,6 +137,11 @@ export class CompassDirectionsTestComponent implements OnInit {
   public deckLabel: string = '';
 
   public localeSubscription: Subscription;
+
+  public startTest() {
+    this.startTimer();
+    this.test_started = true;
+  }
 
   public startTimer() {
     this.timer.recordStartTime()
