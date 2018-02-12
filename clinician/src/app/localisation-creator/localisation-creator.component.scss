@@ -13,6 +13,7 @@ div {
     }
 }
 
+div.submit, 
 input.submit {
     margin-top: 5px;
     margin-left: 10px;
@@ -23,6 +24,62 @@ input.submit {
     font-weight: 400;
     box-sizing: border-box;
     border: 2px solid #227722;
+    background: #fff;
+    color: #eee;
+    background: #227722;
+    transition: 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+    &:hover {
+        outline: none;
+        border: 2px solid #447744;
+        background: #447744;
+        transition: 0.2s;
+    }
+    &:active {
+        outline: none;
+        border: 2px solid #225522;
+        background: #225522;
+        transition: 0.2s;
+    }
+}
+
+div.sequence-container {
+    padding:25px;
+}
+
+textarea.details,
+input.details,
+div.details {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);           
+    margin-top: 10px !important;
+    margin-left: 20px !important;
+    padding: 10px !important;
+    width: 90% !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: none;
+    background: #fff;
+    color: #222222;
+    transition: 0.2s;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #445544;
+        transition: 0.2s;
+    }
+    .icon .bar {
+        float: left;
+    }
+}
+
+div.hidey {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: 2px solid #227722;
+    padding:2px;
+    margin-top:0px;
+    margin-bottom: 2px;
     background: #fff;
     color: #eee;
     background: #227722;
@@ -98,7 +155,7 @@ div.indicator {
 div.trail-element {
     padding: 2.5px;
     margin: 2.5px;
-    float: left;
+    display: inline;
     font-family: 'Roboto', sans-serif;
 }
 
