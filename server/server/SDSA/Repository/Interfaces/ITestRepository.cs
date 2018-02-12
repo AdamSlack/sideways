@@ -1,7 +1,7 @@
 ﻿using SDSA.Models;
 using SDSA.Models.Tests;
 using System.Collections.Generic;
-
+using SDSA.Models.Enums;
 namespace SDSA.Repository.Interfaces
 {
     public interface ITestRepository
@@ -29,5 +29,8 @@ namespace SDSA.Repository.Interfaces
         
         string GetParticipantTestPresetName(int testID);
 
+        AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true);
+        void SaveAlgorithmReult(AlgorithmResult result);
+        IEnumerable<Algorithm> GetAlgorithms();
     }
 }

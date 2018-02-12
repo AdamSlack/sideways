@@ -8,8 +8,10 @@ using SDSA.Service.Interfaces;
 using SDSA.Models.Tests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SDSA.ViewModels;
+//using SDSA.ViewModels;
 using Microsoft.Extensions.Logging;
+using SDSA.Models.Enums;
+using SDSA.Models;
 
 namespace SDSA.Controllers
 {
@@ -139,14 +141,40 @@ namespace SDSA.Controllers
 
         [HttpGet("[controller]/participant/{testID}")]
         public IActionResult TestPreset(int testID) 
-            => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});   
+            => Json( new { PresetName = _testService.GetParticipantTestPresetName(testID)});
 
-        [HttpGet()]
-        public IActionResult whatislife() {
-            Console.WriteLine("whatislife");
-            var results = new { whatislife = "whatislife"};
-            return Json(results);
+        [HttpGet("[controller]/algorithms")]
+        public IActionResult Algorithms() {
+            Console.WriteLine("Recieved a request for a list of algorithms");
+
+            IEnumerable<Algorithm> algorithms =  _testService.GetAlgorithms();
+
+            return Json(new {algorithms = algorithms});
         }
-       
+
+        [HttpGet("[controller]/{TestId}/algorithm/{algorithmId}")]
+        public IActionResult AlgorithmResult (int TestId , AlgoritmEnum algorithmId) {
+            
+            Console.WriteLine("Algorithm Results Request Recieved.");
+            if( TestId == 0){
+                return StatusCode(422, "TestId required");
+            }
+            else if (algorithmId == 0 ){
+                return StatusCode(422, "Algorithm Id required");
+            }
+            
+            Console.WriteLine("Going to try and fetch Algothithm Results now.");
+            var result = _testService.GetAlgorithResult(TestId, algorithmId);
+
+            if ( result.error == AlgorithmErrorEnum.MissingAlgorithm){
+                return StatusCode(501, result);
+            }
+            else if (result.error == AlgorithmErrorEnum.MissingData){
+                return StatusCode(400, result);
+            }
+
+            return Json(result );
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System.Data;
 using Dapper;
 using SDSA.Repository.Interfaces;
 using SDSA.Models;
+using SDSA.Models.Enums;
 
 namespace SDSA.Repository
 {
@@ -73,7 +74,7 @@ namespace SDSA.Repository
                 "true_pos as TruePos," +
                 "false_pos as FalsePos," +
                 "false_neg as FalseNeg " +
-                "from dot_cancellation "  +
+                "from dot_cancellation " +
                 "where test_id = @TestId",
 
                 new { TestId = TestId }
@@ -100,6 +101,7 @@ namespace SDSA.Repository
                 );
         #endregion
 
+        
         #region CoDT
         public CompassDirectionsTest GetCompassDirectionsTest(int TestId)
             => db.Query<CompassDirectionsTest>(
@@ -110,6 +112,7 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
                 new { TestId = TestId }
                 ).FirstOrDefault();
+                
         public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
             => db.Execute(
                 "insert into compass_directions (test_Id , time_taken, points) " +
@@ -119,6 +122,7 @@ namespace SDSA.Repository
         #endregion
 
 
+        
         #region RST
         public RoadScenariosTest GetRoadScenarioTest(int TestId)
             => db.Query<RoadScenariosTest>
@@ -161,7 +165,47 @@ namespace SDSA.Repository
 
         public string GetParticipantTestPresetName(int testID)
             => db.ExecuteScalar<string>(
-                "select preset_name from participant_tests where test_id = @ID", new {ID = testID}
+                "select preset_name from participant_tests where test_id = @ID", new { ID = testID }
             );
+
+        public IEnumerable<Algorithm> GetAlgorithms() {
+            return db.Query<Algorithm>(
+                "select algorithm_id as AlgorithmId, algorithm_name as AlgorithmName from algorithm"
+            );
+        }
+        public AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true)
+        {
+            Console.WriteLine("Fetching Algorithm Results.");
+            var algorResult = db.Query<AlgorithmResult>(
+                "Select test_id as TestId, " +
+                " algorithm_id as AlgorithmId, " +
+                " r1 as R1, "+
+                " r2 as R2, "+
+                " passed as passed, " +
+                " result_json as resultJson " +
+                "  from algorithm_results " +
+                "   where algorithm_id = @algorithmId " + 
+                "    and test_id = @testId ",
+                new { algorithmId = algorithmId, testId = testId } 
+                ).FirstOrDefault();
+
+            Console.WriteLine("Checking if there are even any Algorithm Results.");
+
+            if (algorResult != null && getComponents)
+            {
+                algorResult.components.CarDirectionsTest = this.GetCarDirectionsTest(testId);
+                algorResult.components.CompassDirectionsTest = this.GetCompassDirectionsTest(testId);
+                algorResult.components.DotCancellationTest = this.GetDotCancellationTest(testId);
+                algorResult.components.TrailMakingTest = this.GetTrailMakingTest(testId);
+                algorResult.components.RoadScenariosTest = this.GetRoadScenarioTest(testId);
+            }
+            return algorResult;
+        }
+        public void SaveAlgorithmReult (AlgorithmResult result)
+        {
+            db.Execute("insert into algorithm_results (test_id , algorithm_id, r1, r2, passed, result_json) " +
+                "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) on conflict do nothing",
+                result);
+        }
     }
 }
