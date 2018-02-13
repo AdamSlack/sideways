@@ -115,8 +115,8 @@ namespace SDSA.Repository
                 
         public void SaveCompassDirectionsTest(CompassDirectionsTest CDT)
             => db.Execute(
-                "insert into compass_directions (test_Id , time_taken, points) " +
-                "Values (@TestId , @TimeTaken, @Points)",
+                "insert into compass_directions (test_Id , time_taken, points, test_date) " +
+                "Values (@TestId , @TimeTaken, @Points, now())",
                 CDT
                 );
         #endregion
@@ -136,9 +136,10 @@ namespace SDSA.Repository
                 ).FirstOrDefault();
                 
         public void SaveRoadScenarioTest(RoadScenariosTest RST)
+        
             => db.Execute(
-                "insert into road_Scenarios (test_Id , time_taken, points) " +
-                "Values (@TestId , @TimeTaken, @Points)",
+                "insert into road_Scenarios (test_Id , time_taken, points, test_date) " +
+                "Values (@TestId , @TimeTaken, @Points, now())",
                 RST
                 );
                 
@@ -155,11 +156,13 @@ namespace SDSA.Repository
                 "where test_id = @TestId",
                  new { TestId = TestId }
                 ).FirstOrDefault();
-        public void SaveTrailMakingTest(TrailMakingTest TMT)
-            => db.Execute(
-                "insert into trail_making (test_Id , time_taken, mistakes) " +
-                "Values (@TestId , @TimeTaken, @Mistakes)",
-                TMT);
+        public void SaveTrailMakingTest(TrailMakingTest TMT) {
+            Console.WriteLine("Repo Layer: " + TMT.TestId);
+            db.Execute(
+                "insert into trail_making (test_id, time_taken, mistakes, test_date) " +
+                    "values (@TestId,@TimeTaken, @Mistakes, NOW())",
+                new {TestId = TMT.TestId, TimeTaken = TMT.TimeTaken, Mistakes=TMT.Mistakes});
+        }
         #endregion
 
 

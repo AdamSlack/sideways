@@ -120,7 +120,7 @@ create table compass_directions(
 
 create table road_scenarios(
     test_id     serial  references participant_tests(test_id) primary key  not null,
-    time_taken   smallint   not null,
+    time_taken  smallint   not null,
     points      smallint   not null,
     test_date   date       not null
 );

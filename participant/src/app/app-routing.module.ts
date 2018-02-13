@@ -40,18 +40,18 @@ const test_game_routes : Routes = [{
   path:'road_scenarios', component: RoadScenariosTestComponent
 }]
 
-export const assessment_manager : Routes = [ 
+ const assessment_manager : Routes = [ 
   {  path:'test', component: AssessmentManagerComponent} //children: test_game_routes
 ]
 
-export const assessmentRouting: ModuleWithProviders = RouterModule.forChild(assessment_manager);
+ const assessmentRouting: ModuleWithProviders = RouterModule.forChild(assessment_manager);
 
 const re_routing : Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ]
 
 //Lol the cat
-const appRoutes: Routes = 
+export const appRoutes: Routes = 
 login
 .concat(home_route)
 .concat(assessment_manager)
