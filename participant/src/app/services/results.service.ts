@@ -7,7 +7,7 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:5000/Test/';
+  public ROOT : string = 'http://localhost:5000/';
   
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
@@ -16,14 +16,13 @@ export class ResultsService {
     return headers;
   }
 
-  public insertDotCancellationResults(p_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url =  this.ROOT + p_id + '/results/dot_cancellation';
+  public insertDotCancellationResults(t_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
+    let url = this.ROOT + '/Test/' + t_id + 'DotCancellationResult';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,
       'falsePos': false_pos,
       'falseNeg': false_neg,
-     // 'TestId' : t_id
     }
     console.log('DOT CANCELLATION RESULTS: ')
     console.log(body);
