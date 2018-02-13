@@ -32,5 +32,8 @@ namespace SDSA.Repository.Interfaces
         AlgorithmResult GetAlgorithmResult(int testId, AlgoritmEnum algorithmId, bool getComponents = true);
         void SaveAlgorithmReult(AlgorithmResult result);
         IEnumerable<Algorithm> GetAlgorithms();
+        void AddInteractionLog(int testID, int testType, TestInteraction TI);
+        IEnumerable<TestInteraction> getTestLogs(int testID);
+
     }
 }

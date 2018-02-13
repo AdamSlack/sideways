@@ -142,8 +142,10 @@ create table trail_making(
 --  Example: test_id: 1111, interaction: {dot_cancellation: [{type: 'mouse_down', x: 123, y: 321}, {type: 'mouse_move', x: 124, y: 322}]}
 -----
 create table test_interactions(
-    test_id      serial  references participant_tests(test_id) primary key not null ,
-    interaction  jsonb   not null
+    test_id      serial  references participant_tests(test_id) not null ,
+    test_type    int     references sdsa_test_types(id) not null,
+    interaction  text   not null,
+    primary key (test_id, test_type)
 );
 
 ----------------------------------------------------
@@ -260,6 +262,18 @@ insert into road_scenarios (test_id, time_taken, points, test_date)
 ----
 insert into trail_making (test_id, time_taken, mistakes, test_date)
     values (1,999,4,NOW()) on conflict do nothing;
+
+
+----
+--  Test interaction logs data.
+----
+
+insert into test_interactions (test_id, test_type, interaction) values (1,1,'{message: "This is a Test log for the dot cancellation test"}');
+insert into test_interactions (test_id, test_type, interaction) values (1,2,'{message: "This is a Test log for the Compass Test"}');
+insert into test_interactions (test_id, test_type, interaction) values (1,3,'{message: "This is a Test log for the Car Directions test"}');
+insert into test_interactions (test_id, test_type, interaction) values (1,4,'{message: "This is a Test log for the Road Signs Test"}');
+insert into test_interactions (test_id, test_type, interaction) values (1,5,'{message: "This is a Test log for the Trail Making Test"}');
+
 
 -- CREATE USER sdsa_user WITH PASSWORD 'password';
 -- REVOKE ALL ON SCHEMA public FROM sdsa_user;

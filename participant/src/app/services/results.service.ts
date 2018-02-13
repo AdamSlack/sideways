@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ResultsService {
@@ -90,4 +91,21 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
    
+
+  public insertInteractionLogs(testID : number, testType : number, interactionLog : string) : Observable<{message : string }>{
+    let url = this.ROOT + 'Test/Interaction/' + testID + '/' + testType;
+    let body = {
+      'TestId' : testID,
+      'TestType' : testType,
+      'Interaction' : interactionLog
+    };
+
+    console.log('Requesting Json Log be inserted into the SDSA System - TestID: ' + testID + ' - TestType: ' + testType);
+    console.log('JSON Log String being inserted into the server is :');
+    console.log(interactionLog);
+
+    let headers = this.createHeaders();
+    return this.http.post<{message : string}>(url, body, {headers:headers});
+  }
+
 }
