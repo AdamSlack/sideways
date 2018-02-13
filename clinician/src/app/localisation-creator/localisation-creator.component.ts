@@ -222,51 +222,118 @@ export class LocalisationCreatorComponent implements OnInit {
 
   public completeLocaleCreation() : void {
     console.log('Requesting Locale Preset be added.');
-    this.locale.addDotCancellation(
-      this.localeName,
-      this.localePreset.dotCancellation.general.testHeading,
-      this.localePreset.dotCancellation.general.testInstructions
-    ).subscribe((res) => {
-      console.log('Dot Cancellation Addition Request Processed');
-    });
-    this.locale.addCompassDirection(
-      this.localeName,
-      this.localePreset.compassDirections.general.testHeading,
-      this.localePreset.compassDirections.general.testInstructions,
-      this.localePreset.compassDirections.matrix.headingsLabel,
-      this.localePreset.compassDirections.matrix.deckLabel
-    ).subscribe((res) => {
-      console.log('Compass Direction Addition Request Processed');
-    });
-    this.locale.addCarDirection(
-      this.localeName,
-      this.localePreset.carDirections.general.testHeading,
-      this.localePreset.carDirections.general.testInstructions,
-      this.localePreset.carDirections.matrix.headingsLabel,
-      this.localePreset.carDirections.matrix.deckLabel
-    ).subscribe((res) => {
-      console.log('Car Direction Addition Request Processed');
-    });
-    this.locale.addTrailMaking(
-      this.localeName,
-      this.localePreset.trailMaking.general.testHeading,
-      this.localePreset.trailMaking.general.testInstructions,
-      this.trailAArray,
-      this.trailBArray
-    ).subscribe((res) => {
-      console.log('Compass Direction Addition Request Processed');
-    });
-    this.locale.addRoadSignScenario(
-      this.localeName,
-      this.localePreset.roadSigns.general.testHeading,
-      this.localePreset.roadSigns.general.testInstructions,
-      this.scenarioImages,
-      this.roadSignImages,
-      this.indicatorCoords.map((co) => co.x),
-      this.indicatorCoords.map((co) => co.y)
-    ).subscribe((res) => {
-      console.log('Road Sign Scenario Processed Request Recieved.');
-    })
+
+    if (this.localeName && this.localePreset.dotCancellation.general.testHeading && this.localePreset.dotCancellation.general.testInstructions) {
+      this.locale.addDotCancellation(
+        this.localeName,
+        this.localePreset.dotCancellation.general.testHeading,
+        this.localePreset.dotCancellation.general.testInstructions
+      ).subscribe(() => {
+        console.log('Dot Cancellation Addition Request Processed');
+      });
+    }
+    else {
+      alert('Please Check All Dot Cancellation Details are Filled Out.');
+      console.log(this.localeName,
+        this.localePreset.dotCancellation.general.testHeading,
+        this.localePreset.dotCancellation.general.testInstructions);
+    }
+
+    
+    if(this.localeName &&
+      this.localePreset.compassDirections.general.testHeading &&
+      this.localePreset.compassDirections.general.testInstructions &&
+      this.localePreset.compassDirections.matrix.headingsLabel &&
+      this.localePreset.compassDirections.matrix.deckLabel) {
+        this.locale.addCompassDirection(
+          this.localeName,
+          this.localePreset.compassDirections.general.testHeading,
+          this.localePreset.compassDirections.general.testInstructions,
+          this.localePreset.compassDirections.matrix.headingsLabel,
+          this.localePreset.compassDirections.matrix.deckLabel
+        ).subscribe(() => {
+          console.log('Compass Direction Addition Request Processed');
+        });
+    } else {
+      alert('Please Check all compass Direction Details are Complete.');
+    }
+
+
+
+    if (this.localeName &&
+      this.localePreset.carDirections.general.testHeading&&
+      this.localePreset.carDirections.general.testInstructions&&
+      this.localePreset.carDirections.matrix.headingsLabel&&
+      this.localePreset.carDirections.matrix.deckLabel){
+        this.locale.addCarDirection(
+          this.localeName,
+          this.localePreset.carDirections.general.testHeading,
+          this.localePreset.carDirections.general.testInstructions,
+          this.localePreset.carDirections.matrix.headingsLabel,
+          this.localePreset.carDirections.matrix.deckLabel
+        ).subscribe(() => {
+          console.log('Car Direction Addition Request Processed');
+        });
+      }
+      else {
+        alert('Please Check All Car Direction Details are Complete');
+      }
+
+      if(
+        this.localeName &&
+        this.localePreset.trailMaking.general.testHeading &&
+        this.localePreset.trailMaking.general.testInstructions &&
+        this.trailAArray &&
+        this.trailBArray
+      )
+      {
+        if(this.trailAArray.length != 25){
+          alert('Please Ensure that Trail A has 25 comma seperated elements');
+        }
+        else {
+          if(this.trailBArray.length != 25){
+            alert('Please Ensure that Trail B has 25 comma seperated elements.');
+          }
+          else {
+            this.locale.addTrailMaking(
+              this.localeName,
+              this.localePreset.trailMaking.general.testHeading,
+              this.localePreset.trailMaking.general.testInstructions,
+              this.trailAArray,
+              this.trailBArray
+            ).subscribe(() => {
+              console.log('Compass Direction Addition Request Processed');
+            });
+          }
+        }
+      }
+      else {
+        alert('Please Check that All Details of the Trail Making Test are Filled Out.');
+      }
+    
+      if (
+        !this.localeName ||
+        !this.localePreset.roadSigns.general.testHeading ||
+        !this.localePreset.roadSigns.general.testInstructions
+      ) {
+        alert('Please Make sure that you have filled out all Road Sign Scenario Details');
+      }
+      else if (this.scenarioImages.every((val) => val != '') && this.roadSignImages.every((val) => val != '')) {
+        alert('Please Make sure that all images have been uploaded for Road Sign Scenarios.');
+      }
+      else {
+        this.locale.addRoadSignScenario(
+          this.localeName,
+          this.localePreset.roadSigns.general.testHeading,
+          this.localePreset.roadSigns.general.testInstructions,
+          this.scenarioImages,
+          this.roadSignImages,
+          this.indicatorCoords.map((co) => co.x),
+          this.indicatorCoords.map((co) => co.y)
+        ).subscribe(() => {
+          console.log('Road Sign Scenario Processed Request Recieved.');
+        });
+      }
   }
 
   ngOnInit() {

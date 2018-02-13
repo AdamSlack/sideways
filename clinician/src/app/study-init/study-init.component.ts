@@ -41,6 +41,11 @@ export class StudyInitComponent implements OnInit {
       this.testInitSubscription.unsubscribe();
     }
 
+    if(!this.localeChoice) {
+      alert('Please Check All Details are filled Correctly.');
+      return;
+    }
+
     if(this.p_id && this.p_id != '' && parseInt(this.p_id) != 0) {
       this.testInitSubscription = this.init.requestStudyInit(parseInt(this.p_id), parseInt(this.auth.CLINICIAN_ID), this.localeChoice).subscribe((res) => {
         this.participant_test_id = res['testId'];
