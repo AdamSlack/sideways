@@ -17,12 +17,13 @@ export class ResultsService {
   }
 
   public insertDotCancellationResults(t_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url = this.ROOT + '/Test/' + t_id + 'DotCancellationResult';
+    let url = this.ROOT + '/Test/' + t_id + '/DotCancellationResult';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,
       'falsePos': false_pos,
       'falseNeg': false_neg,
+      'TestId' : t_id
     }
     console.log('DOT CANCELLATION RESULTS: ')
     console.log(body);
@@ -32,8 +33,8 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCarDirectionResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/car_directions';
+  public insertCarDirectionResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT +'/Test/results/CompassDirections/' + t_id;
     let body = {
       'time_taken': time_taken,
       'points': points
@@ -46,8 +47,8 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCompassDirectionResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + "/" +  "CompassDirectionResult" ;
+  public insertCompassDirectionResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT +'/Test/results/CompassDirections/' + t_id;
     let body = {
       'time_taken': time_taken,
       'points': points
@@ -60,8 +61,8 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertRoadScenarioResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+  public insertRoadScenarioResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT + 'Test/results/RoadScenarios'+ t_id;
     let body = {
       'time_taken': time_taken,
       'points': points
@@ -74,12 +75,13 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertTrailMaking(p_id: string, time_taken: number, mistakes: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+  public insertTrailMaking(t_id: string, time_taken: number, mistakes: number) {
+    let url =  this.ROOT + t_id + '/results/trail_making';
     
     let body = {
       'TimeTaken': time_taken,
-      'Mistakes': mistakes
+      'Mistakes': mistakes,
+      'TestId' : t_id
     }
 
     console.log('TRAIL MAKING: ')
