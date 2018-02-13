@@ -8,6 +8,7 @@ namespace SDSA.Models
     public class TestInteraction
     {
         public int TestId { get; set; }
+        public int TestType { get; set; }
         //Json representing the interaction data
         public string Interaction { get; set; }
     }

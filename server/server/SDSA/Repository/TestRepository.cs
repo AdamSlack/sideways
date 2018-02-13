@@ -207,5 +207,19 @@ namespace SDSA.Repository
                 "values (@TestId, @AlgorithmId, @R1, @R2, @passed, cast (@resultJson as Jsonb)) on conflict do nothing",
                 result);
         }
+
+        public void AddInteractionLog(int testID, int testType, TestInteraction TI) {
+            db.Execute("insert into test_interactions (test_id, test_type, interaction) values (@A, @B, @C) on conflict do nothing",
+            new {A = testID, B = testType, C = TI.Interaction});
+        }
+
+        public IEnumerable<TestInteraction> getTestLogs(int testID) {
+            return db.Query<TestInteraction>(
+                "select test_id as TestId, test_type as TestType, interaction as Interaction " +
+                " from test_interactions where test_id = @A",
+                new { A = testID }
+            );
+        }
+
     }
 }

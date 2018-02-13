@@ -176,5 +176,25 @@ namespace SDSA.Controllers
             return Json(result );
         }
 
-    }
+        [HttpPost("[Controller]/Interaction/{testID}/{testType}")]
+        public IActionResult TestInteraction(int testID, int testType, [FromBody] TestInteraction TI) {
+            Console.WriteLine("Recieved Request for inserting interaction logs.");
+            Console.WriteLine("TestID: " + testID);
+            Console.WriteLine("Test Type:" + testType);
+            Console.WriteLine("JSON Dump: " + TI.Interaction);
+
+            _testService.AddInteractionLog(testID, testType, TI);
+
+            return Json(new { Message = "JSON string added to the Database."} );
+        }
+
+        [HttpGet("[Controller]/Interaction/{testID}/")]
+        public IActionResult GetTestInteraction(int testID) {
+            Console.WriteLine("Request recieved for fetching interaction logs.");
+            Console.WriteLine("Test ID");
+            IEnumerable<TestInteraction> logs = _testService.getTestLogs(testID);
+            Console.WriteLine(logs.Count() + " Logs Retrieved.");
+            return Json( new { Logs = logs });
+        }
+    }   
 }

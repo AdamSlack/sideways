@@ -99,6 +99,15 @@ namespace SDSA.Service
             return result;
         }
 
+        public void AddInteractionLog(int testID, int testType, TestInteraction TI){
+            _testRepository.AddInteractionLog(testID, testType, TI);
+        }
+
+        public IEnumerable<TestInteraction> getTestLogs(int testID) {
+            return _testRepository.getTestLogs(testID);
+        }
+
+
         
     }
 }
