@@ -222,7 +222,7 @@ export class TrailMakingTestComponent implements OnInit
 
                 newPath.set(
                   {
-                    stroke: 'rgba(0,0,0,0.1)',
+                    stroke: 'rgba(255,0,0,0.1)',
                     strokeWidth: 2,
                     selectable: false,
                   });
@@ -381,7 +381,7 @@ export class TrailMakingTestComponent implements OnInit
 
                 newPath.set(
                   {
-                    stroke: 'rgba(0,0,0,0.1)',
+                    stroke: 'rgba(255,0,0,0.1)',
                     strokeWidth: 2,
                     selectable: false,
                   });
@@ -504,7 +504,8 @@ export class TrailMakingTestComponent implements OnInit
     //insertTrailMaking(p_id: number, time_taken: number, mistakes: number)
     var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
-    var participantID : number = parseInt(this.auth.PARTICIPANT_TEST_ID);
+    var participantID : string = parseInt(this.auth.PARTICIPANT_TEST_ID);
+    console.log("Participant ID: ", participantID);
     this.rs.insertTrailMaking(participantID,timeTaken,totalMistakes);
     console.log("Results sent");
   }
