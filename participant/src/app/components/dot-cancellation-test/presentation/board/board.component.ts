@@ -659,6 +659,7 @@ export class BoardComponent {
 		this.isBoardUnlocked = true;
 		this.startTest = true;
 		this.testButtonText = 'Finish Test';
+		
 
 		//Disable instructions button
 		this.disableInstructions = true;

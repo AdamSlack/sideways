@@ -2,6 +2,7 @@
 <app-login-screen></app-login-screen>
 
 <div *ngIf="auth.VALIDATED && auth.AUTH_TOKEN != '' && auth.PARTICIPANT_TEST_LOCALE != ''">
+    <router-outlet></router-outlet>    
    <div class="tests" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
       <div *ngFor="let test of game_routes">
         <button mat-button routerLink="{{test.path}}"> {{test.path}}</button>    
@@ -9,4 +10,3 @@
     </div>
 </div> 
 
-<router-outlet></router-outlet>

@@ -72,7 +72,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
   public sendResults(time_taken: number, score: number) {
     this.rs.insertCarDirectionResults("1", time_taken, score);
-    this._router.navigateByUrl('/compass_directions');
+    this._router.navigateByUrl('/roadSignScenarios');
   }
 
 

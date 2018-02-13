@@ -26,12 +26,25 @@ import { CellComponent} from './components/dot-cancellation-test/presentation/ce
 import { ResultsService } from './services/results.service';
 import { RecordTimingService } from './services/record-timing.service';
 import { FabricService } from './services/fabric.service';
-import { AppRoutingModule } from './app-routing.module';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AssetRetrievalService } from './services/asset-retrieval.service';
-import { RouterModule } from '@angular/router/src/router_module';
 
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: 'home', component: HomeSelectionComponent },
+  { path: 'dotCancellation',component: DotCancellationTestComponent },
+  { path: 'carDirections',component: CarDirectionsTestComponent },
+  { path: 'compassDirections',component: CompassDirectionsTestComponent },
+  { path: 'roadSignScenarios', component: RoadScenariosTestComponent },
+  { path: 'trailMaking', component: TrailMakingTestComponent},
+  { path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  { path: '**', component: HomeSelectionComponent }
+];
 
 @NgModule({
   declarations: [
@@ -52,10 +65,20 @@ import { RouterModule } from '@angular/router/src/router_module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     FormsModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // For Debugging.
+    )
   ],
-  providers: [ResultsService,RecordTimingService,AuthenticationService, FabricService, AssetRetrievalService],
+  providers: [
+    ResultsService,
+    RecordTimingService,
+    AuthenticationService,
+    FabricService,
+    AssetRetrievalService
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,9 +9,11 @@
   <div class="search">
     <input class="bar search" type="text"  [(ngModel)]=pt_id  placeholder="Enter a Test ID">
   </div>
-  <div class="submit">
-    <input class="button submit" type="button" (click)=connectToSDSA() value="login">
-  </div>
+  <a routerLink="/home">
+    <div class="submit">
+      <input class="button submit" type="button" (click)=connectToSDSA() value="login">
+    </div>
+  </a>
 </div>
 
 <div *ngIf="requestingDetails && (!auth.VALIDATED || auth.AUTH_TOKEN == '' || auth.PARTICIPANT_TEST_LOCALE == '') && !(!auth.VALIDATED && auth.AUTH_TOKEN == '' && auth.PARTICIPANT_TEST_LOCALE == '')">

@@ -46,7 +46,6 @@ export class LoginScreenComponent implements OnInit {
   public 
 
   ngOnInit() {
-    let asset_link : string = '/test/compass_directions/';
     //this.locale.fetchCompass();
 
   }

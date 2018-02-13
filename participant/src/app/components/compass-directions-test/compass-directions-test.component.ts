@@ -154,7 +154,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
   public sendResults(time_taken: number, score: number) {
     this.rs.insertCompassDirectionResults(this.auth.PARTICIPANT_TEST_ID, time_taken, score);
-    this._router.navigateByUrl('/road_scenarios');
+    this._router.navigateByUrl('/compassDirections');
   }
 
   public sendLogs(json_log_dump: {}, id: number) {
