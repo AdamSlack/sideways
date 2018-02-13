@@ -37,58 +37,58 @@ export class TrailMakingTestComponent implements OnInit
   private test2IntersectedNodes : number[] = [];
   
   private test1coordinates = [
-    {x: 705, y: 720}, //1
-    {x: 357, y: 167}, //2
-    {x: 724, y: 390}, //3
-    {x: 510, y: 470}, //4
-    {x: 25,  y: 90 }, //5
-    {x: 250, y: 312}, //6
-    {x: 50,  y: 770}, //7
-    {x: 105, y: 890}, //8
-    {x: 112, y: 600}, //9
-    {x: 143, y: 11 }, //10
-    {x: 320, y: 560}, //11
-    {x: 700, y: 30 }, //12
-    {x: 532, y: 70 }, //13
-    {x: 600, y: 292}, //14
-    {x: 480, y: 860}, //15
-    {x: 30,  y: 400}, //16
-    {x: 356, y: 30 }, //17
-    {x: 670, y: 522}, //18
-    {x: 515, y: 670}, //19
-    {x: 130, y: 205}, //20
-    {x: 700, y: 150}, //21
-    {x: 400, y: 310}, //22
-    {x: 180, y: 464}, //23
-    {x: 300, y: 800}, //24
-    {x: 700, y: 890}, //25
+    {x: 935, y: 720 }, //1
+    {x: 357, y: 1067}, //2
+    {x: 824, y: 390 }, //3
+    {x: 510, y: 470 }, //4
+    {x: 45,  y: 90  }, //5
+    {x: 270, y: 912 }, //6
+    {x: 50,  y: 770 }, //7
+    {x: 105, y: 990 }, //8
+    {x: 772, y: 900 }, //9
+    {x: 690, y: 1095}, //10
+    {x: 320, y: 560 }, //11
+    {x: 700, y: 30  }, //12
+    {x: 532, y: 1270}, //13
+    {x: 625, y: 250 }, //14
+    {x: 530, y: 990 }, //15
+    {x: 30,  y: 400 }, //16
+    {x: 366, y: 75  }, //17
+    {x: 740, y: 522 }, //18
+    {x: 575, y: 670 }, //19
+    {x: 130, y: 1205}, //20
+    {x: 900, y: 150 }, //21
+    {x: 300, y: 285 }, //22
+    {x: 180, y: 464 }, //23
+    {x: 350, y: 800 }, //24
+    {x: 870, y: 1160}, //25
   ]; 
   private test2coordinates = [
-    {x: 705, y: 720}, //1
-    {x: 357, y: 167}, //2
-    {x: 724, y: 390}, //3
-    {x: 510, y: 470}, //4
-    {x: 25,  y: 90 }, //5
-    {x: 250, y: 312}, //6
-    {x: 50,  y: 770}, //7
-    {x: 105, y: 890}, //8
-    {x: 112, y: 600}, //9
-    {x: 143, y: 11 }, //10
-    {x: 320, y: 560}, //11
-    {x: 700, y: 30 }, //12
-    {x: 532, y: 70 }, //13
-    {x: 600, y: 292}, //14
-    {x: 480, y: 860}, //15
-    {x: 30,  y: 400}, //16
-    {x: 356, y: 30 }, //17
-    {x: 670, y: 522}, //18
-    {x: 515, y: 670}, //19
-    {x: 130, y: 205}, //20
-    {x: 700, y: 150}, //21
-    {x: 400, y: 310}, //22
-    {x: 180, y: 464}, //23
-    {x: 300, y: 800}, //24
-    {x: 700, y: 890}, //25
+    {x: 130, y: 1205}, //20
+    {x: 772, y: 900 }, //9
+    {x: 320, y: 560 }, //11
+    {x: 366, y: 75  }, //17
+    {x: 625, y: 250 }, //14
+    {x: 824, y: 390 }, //3
+    {x: 870, y: 1160}, //25
+    {x: 25,  y: 90  }, //5
+    {x: 180, y: 464 }, //23
+    {x: 270, y: 912 }, //6
+    {x: 50,  y: 770 }, //7
+    {x: 300, y: 285 }, //22
+    {x: 105, y: 990 }, //8
+    {x: 510, y: 470 }, //4
+    {x: 357, y: 1067}, //2
+    {x: 690, y: 1095}, //10
+    {x: 935, y: 720 }, //1
+    {x: 700, y: 30  }, //12
+    {x: 532, y: 1270}, //13
+    {x: 30,  y: 400 }, //16
+    {x: 530, y: 990 }, //15
+    {x: 575, y: 670 }, //19
+    {x: 740, y: 522 }, //18
+    {x: 350, y: 800 }, //24   
+    {x: 900, y: 150 }, //21  
   ];  
 
 
@@ -140,6 +140,19 @@ export class TrailMakingTestComponent implements OnInit
     }
 
     this.test1timer.recordStartTime();
+
+    this.test1Canvas.on('mouse:up', (options) =>
+    {
+      console.log("mouse up detected");
+      var correctPath = true;
+      for (var k = 0; k < this.test1data.length - 1; k++)
+      {
+        if(this.test1IntersectedNodes[k] != (this.test1IntersectedNodes[k+1] - 1))
+        {
+          correctPath = false;
+        }
+      }
+    });
 
     //drawing path done event handler
     this.test1Canvas.on('path:created', (options) =>
@@ -233,6 +246,9 @@ export class TrailMakingTestComponent implements OnInit
 
                 //add new path WIP FEATURE: BUGGY
                 this.test1Canvas.add(newPath);
+
+                //clear the intersected nodes array
+                this.test1IntersectedNodes = [];
                 
                 //console.log(pathCoordsArray);
                 //test1Canvas.add(pathCoordsArray);
@@ -390,6 +406,9 @@ export class TrailMakingTestComponent implements OnInit
                 //delete the old path
                 this.test2Canvas.remove(options.path);
 
+                //clear the intersected nodes array
+                this.test2IntersectedNodes = [];
+
                 //add new path WIP FEATURE: BUGGY
                 this.test2Canvas.add(newPath);
                 
@@ -504,9 +523,9 @@ export class TrailMakingTestComponent implements OnInit
     //insertTrailMaking(p_id: number, time_taken: number, mistakes: number)
     var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
-    var participantID : string = parseInt(this.auth.PARTICIPANT_TEST_ID);
+    var participantID : number = parseInt(this.auth.PARTICIPANT_TEST_ID);
     console.log("Participant ID: ", participantID);
-    this.rs.insertTrailMaking(participantID,timeTaken,totalMistakes);
+    this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,timeTaken,totalMistakes);
     console.log("Results sent");
   }
 }
