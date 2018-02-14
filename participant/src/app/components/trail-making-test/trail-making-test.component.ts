@@ -522,7 +522,7 @@ export class TrailMakingTestComponent implements OnInit
     var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
 
-    this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,timeTaken,totalMistakes);
+    this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,parseInt(timeTaken.toString()),totalMistakes);
 
     console.log("Results sent");
   }
