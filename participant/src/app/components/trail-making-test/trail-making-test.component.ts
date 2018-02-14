@@ -532,6 +532,6 @@ export class TrailMakingTestComponent implements OnInit
     console.log("Results sent");
 
     //send interaction logs
-    this.rs.insertInteractionLogs(this.auth.PARTICIPANT_TEST_ID,"5",JSON.stringify(this.userDrawnPaths));
+    this.rs.insertInteractionLogs(this.auth.PARTICIPANT_TEST_ID,5,JSON.stringify(this.userDrawnPaths));
   }
 }
