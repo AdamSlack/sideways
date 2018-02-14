@@ -122,8 +122,8 @@ export class ResultsService {
   }
    
 
-  public insertInteractionLogs(testID : number, testType : number, interactionLog : string) : Observable<{message : string }>{
-    let url = this.ROOT + 'Test/Interaction/' + testID + '/' + testType;
+  public insertInteractionLogs(testID : string, testType : number, interactionLog : string) : Observable<{message : string }>{
+    let url = this.ROOT + '/Test/Interaction/' + testID + '/' + testType;
     let body = {
       'TestId' : testID,
       'TestType' : testType,
