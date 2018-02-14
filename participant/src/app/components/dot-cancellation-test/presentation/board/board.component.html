@@ -1,3 +1,8 @@
+
+<div> Dot Cancellation Localisation Assets:</div>
+<div> {{testTitle}} </div>
+<div> {{testInstructions}} </div>
+
 <div>
 
 	<!--Title of the Test will be displayed here -->
@@ -28,39 +33,35 @@
 		<br> INSTRUCTIONS
 		<br>
 		<br> {{testInstructions}}
+
+	 <br>
+	 
+
 	</div>
 
+	 
    <!--The results of the Dot Cancellation Test -->
 	<div class="results" [style.visibility]="showResults ? 'visible' : 'hidden'" [style.height.px]="resultsHeight">
-		RESULTS
-		<br>
+		
 		<br> Thank you for completing the Dot Cancellation Test
 		<br>
-		<br> Time Taken To Complete the Test: {{TimeTaken}} Seconds
+		RESULTS
+		<br>
+		<!--<br> Time Taken To Complete the Test: {{TimeTaken}} Seconds
 		<br> FalseNegatives : {{falseNegatives}}
 		<br> FalsePositives : {{falsePositives}}
 		<br> TrueNegatives : {{trueNegatives}}
 		<br> TruePositives : {{truePositives}}
 		<br> Clicks Per Cell (Cell: NoOfClicks)
 		<br> {{DictionaryOfCellClicks}}
+		<br>-->
 		<br>
-		<br>
 	</div>
 
-	<div *ngIf="!results.dotCancellationHasResults">			
-		<!--A button to show and hide instructions -->
-		<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
-
-		<!--A button to start test and finish Test -->
-		<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
-	</div>
-	
-	<div *ngIf="results.dotCancellationHasResults">
-
-	<div class="test-instructions">
-		This Test has already Been Completed
-	</div>
-
-		<a routerLink='/carDirections'><button class="restartTest">Continue To Next Test</button></a>
-	</div>
+    <!--A button to show and hide instructions--> 
+	<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
+	 
+	 
+     <!--A button to start test and finish Test -->
+	<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
 </div>
