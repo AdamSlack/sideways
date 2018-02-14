@@ -1,17 +1,23 @@
 
-
-<div> Compass Directions Instructions </div>
-<div> {{testInstructions}} </div>
-
-<br>
-
-    <canvas fxFill  id="canvas" >
-    </canvas>
-
-<div *ngIf='!test_started'>
-    <button (click)=startTest() class="button btn-round" id="end_test" > Start Test</button>
+<div *ngIf="!test_started">
+    <div class="test-title"> {{ testTitle }} </div>
+    <div class="test-instructions"> {{ testInstructions }} </div>
+    <button (click)=startTest() class="next-test-btn" id="end_test" *ngIf="!rs.compassDirectionsHasResults"> Start Test</button>    
 </div>
 
-<div *ngIf='test_started'>
-    <button (click)=gatherResults() class="button btn-round" id="end_test" > Test Finish</button>
+<canvas id="canvas">
+</canvas>
+
+<div *ngIf="test_started">
+    <div *ngIf="!rs.compassDirectionsHasResults">
+        <br>
+        <button (click)="gatherResults()" class="next-test-btn" id="end_test"> Test Finish </button>
+    </div>
+</div>
+
+<div *ngIf="rs.compassDirectionsHasResults">
+    <div class="test-instructions">
+        This Test has already Been Completed
+    </div>
+    <a routerLink="/roadSignScenarios"><button class="next-test-btn"> Continue To The Next Test </button></a>
 </div>

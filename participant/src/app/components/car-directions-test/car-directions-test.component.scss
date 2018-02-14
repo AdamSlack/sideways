@@ -1,0 +1,64 @@
+//Styling for Restart Test button
+.next-test-btn {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: 2px solid #227722;
+    background: #fff;
+    color: #eee;
+    background: #227722;
+    transition: 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);       
+    
+    &:hover {
+        outline: none;
+        border: 2px solid #447744;
+        background: #447744;
+        transition: 0.2s;
+    }
+    
+    &:active {
+        outline: none;
+        border: 2px solid #225522;
+        background: #225522;
+        transition: 0.2s;
+    }
+  }
+
+  //Styling for Test Title
+.test-title {
+    background-color: #227722;
+     color: #fff;
+     border: 0px;
+     font-family: 'Roboto', sans-serif;    
+     font-size: 1.4em;
+     outline: none;
+     margin: 0px;
+     padding: 15px;
+     width: 100%;
+     text-align: center;
+   }
+   
+//Styling for instructions Div
+.test-instructions
+{
+    font-family: 'Roboto', sans-serif;    
+    font-size: 1.4em;
+    outline: none;
+    width: 100%;
+  text-align: center;
+	overflow-x: scroll;
+	background-color: #fff;
+  color: #070707;
+  padding-top:15px;
+  padding-bottom: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+

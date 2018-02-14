@@ -119,6 +119,7 @@ export class CompassDirectionsTestComponent implements OnInit {
   public time: number = 0;
   public test_started : boolean = false;
 
+
   constructor(private rs: ResultsService,
     private timer: RecordTimingService,
     private fab: FabricService,
@@ -139,8 +140,34 @@ export class CompassDirectionsTestComponent implements OnInit {
   public localeSubscription: Subscription;
 
   public startTest() {
-    this.startTimer();
     this.test_started = true;
+    
+    Canvas = this.fab.generateFabricCanvas('canvas');
+    Deck = [];
+
+    //Need to check width and height and fit in the smallest 
+    var percentage_cover = 0.8;
+    var grid_length = (Canvas.width < Canvas.height ? Canvas.width : Canvas.height) * percentage_cover; //- 100 to account for offset
+    console.log("Grid Length: ", grid_length);
+    console.log("Grid Length Percent: ", grid_length * 0.5)
+
+    //TODO: fabric js has some alignment methods..
+    var x_grid_offset = Canvas.width * (1 - percentage_cover) / 2;
+    var y_grid_offset = 0;
+
+    var square_length = grid_length / 5
+    this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
+    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4, square_length * 0.1);
+
+    let line_padding = 5;
+    //Break line
+    this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
+
+    let deck_item_sz = square_length * 0.9;
+    this.createCompassDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
+
+    this.startTimer();
+    
   }
 
   public startTimer() {
@@ -153,8 +180,8 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   public sendResults(time_taken: number, score: number) {
-    this.rs.insertCompassDirectionResults(this.auth.PARTICIPANT_TEST_ID, time_taken, score);
-    this._router.navigateByUrl('/road_scenarios');
+    this.rs.insertCompassDirectionResults(this.auth.PARTICIPANT_TEST_ID, parseInt(time_taken.toString()), score);
+    this.rs.compassDirectionsHasResults = true;
   }
 
   public sendLogs(json_log_dump: {}, id: number) {
@@ -201,30 +228,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
     this.initLocaleSettings();
 
-    Canvas = this.fab.generateFabricCanvas('canvas');
-    Deck = [];
-
-    //Need to check width and height and fit in the smallest 
-    var percentage_cover = 0.8;
-    var grid_length = (Canvas.width < Canvas.height ? Canvas.width : Canvas.height) * percentage_cover; //- 100 to account for offset
-    console.log("Grid Length: ", grid_length);
-    console.log("Grid Length Percent: ", grid_length * 0.5)
-
-    //TODO: fabric js has some alignment methods..
-    var x_grid_offset = Canvas.width * (1 - percentage_cover) / 2;
-    var y_grid_offset = 0;
-
-    var square_length = grid_length / 5
-    this.addIdentifyingImages(Canvas, x_grid_offset, y_grid_offset, square_length);
-    GridSquares = this.fab.createGridBaseSquares(x_grid_offset + square_length, y_grid_offset + square_length, Canvas, square_length * 4, 4, square_length * 0.1);
-
-    let line_padding = 5;
-    //Break line
-    this.fab.createBreakLine(this.fab, Canvas, 0, grid_length + line_padding);
-
-    let deck_item_sz = square_length * 0.9;
-    this.createCompassDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), 28, deck_item_sz);
-
+   
   }
 
   private createCompassDeck(fab: FabricService, xOffset: number = 0, yOffset: number = 0, deckSize: number = 28, length: number) {
@@ -261,7 +265,6 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   private finishGame(score: number) {
-    this.stopTimer(); //should be called by button really
 
     //Now route to move game forward
     this.sendResults(this.time, score);

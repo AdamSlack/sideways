@@ -64,7 +64,7 @@ namespace SDSA.Controllers
         public IActionResult CarDirectionResult(int TestId, [FromBody] CarDirectionsTest CDT)
         {
             
-            _logger.LogInformation("Dot Cancellation Results Post Request Recieved.");
+            _logger.LogInformation("CarDirections Results Post Request Recieved.");
             Console.WriteLine("Results Are : \n Points - " + CDT.points + "\nTime Taken - " + CDT.TimeTaken);
             CDT.TestId = TestId;
             if (ModelState.IsValid)
@@ -77,13 +77,13 @@ namespace SDSA.Controllers
         }
         
         [HttpPost("[controller]/{id}/results/trail_making/")]
-        public IActionResult TrailMakingTest(int TestId, [FromBody]  TrailMakingTest TMT)
+        public IActionResult TrailMakingTest(int id, [FromBody]  TrailMakingTest TMT)
         {   
             Console.WriteLine("Received Mistakes: "+ TMT.Mistakes);
             Console.WriteLine("Received TimeTaken: "+ TMT.TimeTaken);
             Console.WriteLine("Received Testid: "+ TMT.TestId);
 
-            TMT.TestId = TestId;
+            TMT.TestId = id;
             if (ModelState.IsValid)
             {
                 _testService.SaveTrailMakingTest(TMT);

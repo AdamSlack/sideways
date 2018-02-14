@@ -7,7 +7,13 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:5000/Test/';
+  public ROOT : string = 'http://localhost:5000';
+
+  public dotCancellationHasResults : boolean = false;
+  public compassDirectionsHasResults : boolean = false;
+  public carDirectionsHasResults : boolean = false;
+  public roadSignScenariosHasResults : boolean = false;
+  public trailMakingHasResults : boolean = false;
   
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
@@ -16,14 +22,37 @@ export class ResultsService {
     return headers;
   }
 
-  public insertDotCancellationResults(p_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url =  this.ROOT + p_id + '/results/dot_cancellation';
+  public checkTestResults(t_id) : void {
+    let url = this.ROOT + '/Test/' + t_id + '/results';
+    let headers = this.createHeaders();
+    this.http.get(url, {headers : headers}).subscribe((res) => {
+      console.log(res);
+      if(res['dotCancellationTest']) {
+        this.dotCancellationHasResults = true;
+      }
+      if(res['compassDirectionsTest']) {
+        this.compassDirectionsHasResults = true;
+      }
+      if(res['carDirectionsTest']) {
+        this.carDirectionsHasResults = true;
+      }
+      if(res['roadScenariostest']) {
+        this.roadSignScenariosHasResults = true;
+      }
+      if(res['trailMakingTest']) {
+        this.trailMakingHasResults = true;
+      }
+    });
+  }
+
+  public insertDotCancellationResults(t_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
+    let url = this.ROOT + '/Test/' + t_id + '/DotCancellationResult';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,
       'falsePos': false_pos,
       'falseNeg': false_neg,
-     // 'TestId' : t_id
+      'TestId' : t_id
     }
     console.log('DOT CANCELLATION RESULTS: ')
     console.log(body);
@@ -33,10 +62,10 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCarDirectionResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/car_directions';
+  public insertCarDirectionResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT +'/Test/results/CarDirections/' + t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('CAR DIRECTIONS')
@@ -47,10 +76,10 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertCompassDirectionResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + "/" +  "CompassDirectionResult" ;
+  public insertCompassDirectionResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT +'/Test/results/CompassDirections/' + t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('COMPASS DIRECTIONS: ')
@@ -61,10 +90,10 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertRoadScenarioResults(p_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+  public insertRoadScenarioResults(t_id: string, time_taken: number, points: number) {
+    let url =  this.ROOT + '/Test/results/RoadScenarios/'+ t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('ROAD SCENARIOS: ')    
@@ -75,12 +104,13 @@ export class ResultsService {
     this.http.post(url, body, {headers:headers}).subscribe();
   }
 
-  public insertTrailMaking(p_id: string, time_taken: number, mistakes: number) {
-    let url =  this.ROOT + p_id + '/results/road_scenarios';
+  public insertTrailMaking(t_id: string, time_taken: number, mistakes: number) {
+    let url =  this.ROOT + t_id + '/results/trail_making';
     
     let body = {
       'TimeTaken': time_taken,
-      'Mistakes': mistakes
+      'Mistakes': mistakes,
+      'TestId' : t_id
     }
 
     console.log('TRAIL MAKING: ')

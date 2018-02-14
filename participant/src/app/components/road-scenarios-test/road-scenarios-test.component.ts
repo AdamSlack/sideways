@@ -43,6 +43,12 @@ export class RoadScenariosTestComponent implements OnInit {
 
   ) { }
 
+  public startTest() {
+    this.test_started = true;
+    this.initalise_board_components();
+    this.startTimer(); 
+  }
+
   public startTimer() {
     this.timer.recordStartTime()
   }
@@ -54,9 +60,8 @@ export class RoadScenariosTestComponent implements OnInit {
 
 
   public sendResults(time_taken: number, score: number) {
-    this.rs.insertRoadScenarioResults("1", time_taken, score);
-    this._router.navigateByUrl('/home');
-
+    this.rs.insertRoadScenarioResults(this.auth.PARTICIPANT_TEST_ID, parseInt(time_taken.toString()), score);
+    this.rs.roadSignScenariosHasResults = true;
   }
 
   private finishGame(score: number) {
@@ -125,6 +130,7 @@ export class RoadScenariosTestComponent implements OnInit {
   public testInstructions : string = '';
   public roadSigns : any[] = [];
   public roadScenarios : any[];
+  public test_started : boolean;
 
   /*
    * Subscribes to a request for localisation preset details.
@@ -147,8 +153,6 @@ export class RoadScenariosTestComponent implements OnInit {
     //   return;
     // }
 
-    this.auth.PARTICIPANT_TEST_LOCALE = 'test';
-
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
     this.localeSubscription = this.locale.selectRoadSignScenarioDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
       console.log('Response for Compass Direction game assets recieved from server.', res);
@@ -162,7 +166,6 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log("All road signs: ",this.roadSigns);
     
       //TODO: sorry, did not have time to fix and propagate through awits/promises
-      this.initalise_board_components();
     });
   }
 
