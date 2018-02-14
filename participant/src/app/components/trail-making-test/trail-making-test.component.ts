@@ -525,7 +525,7 @@ export class TrailMakingTestComponent implements OnInit
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
     var participantID : number = parseInt(this.auth.PARTICIPANT_TEST_ID);
     console.log("Participant ID: ", participantID);
-    this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,timeTaken,totalMistakes);
+    this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID, parseInt(timeTaken.toString()) ,totalMistakes);
     console.log("Results sent");
   }
 }
