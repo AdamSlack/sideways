@@ -775,7 +775,7 @@ export class BoardComponent {
 
 		let interactionLogsJson: string = this.GetInteractionLogs();
 	
-		this.results.insertInteractionLogs( parseInt(this.auth.PARTICIPANT_TEST_ID),1, interactionLogsJson ).subscribe((res) => {
+		this.results.insertInteractionLogs(this.auth.PARTICIPANT_TEST_ID,1, interactionLogsJson ).subscribe((res) => {
 			console.log(res);
 		});
         this.results.insertDotCancellationResults( (this.auth.PARTICIPANT_TEST_ID) , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
