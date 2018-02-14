@@ -11,19 +11,19 @@ export class CellComponent {
   state: string; 
   
   @Input('dotOne')
-  dotOne: string = "";
+  dotOne: string;
     
   @Input('dotTwo')
-  dotTwo: string = "";
+  dotTwo: string;
   
   @Input('dotThree')
-  dotThree: string = "";
+  dotThree: string;
   
   @Input('dotFour')
-  dotFour: string= "";
+  dotFour: string;
 
   @Input('dotFive')
-  dotFive: string= "";
+  dotFive: string;
   
 
   @Input('dotOneXValue')

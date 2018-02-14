@@ -758,6 +758,18 @@ export class BoardComponent {
 		//Time of cell clicks {cellnumber : Timeelasped}
 		var TimeOfCellClicks = this.dictionaryOfTimeOfCellClicks;
 
+		// for (let key in this.dictionaryOfCellClicks) {
+		// 	let value = this.dictionaryOfCellClicks[key];
+		// 	console.log("Cell: ", key.toString()," Clicked " , value.toString() , " times");
+		// }
+		
+		// for (let key in this.dictionaryOfCellPositions) {
+
+		// 	let CellPosition = this.dictionaryOfCellPositions[key];
+        //     let ClickTime = this.dictionaryOfTimeOfCellClicks[key];
+
+		// 	console.log("Cell: ", CellPosition.toString()," Clicked At Time:" , ClickTime );
+		// }
         console.log("FINALLL");
 		console.log(this.GetInteractionLogs());
 
