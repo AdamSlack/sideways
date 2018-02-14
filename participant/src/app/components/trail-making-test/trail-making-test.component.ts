@@ -519,12 +519,8 @@ export class TrailMakingTestComponent implements OnInit
 
   sendResults()
   {
-    //Endpoint Expects:
-    //insertTrailMaking(p_id: number, time_taken: number, mistakes: number)
     var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
-    var participantID : number = parseInt(this.auth.PARTICIPANT_TEST_ID);
-    console.log("Participant ID: ", participantID);
     this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,timeTaken,totalMistakes);
     console.log("Results sent");
   }
