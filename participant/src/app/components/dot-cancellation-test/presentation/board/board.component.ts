@@ -94,6 +94,8 @@ export class BoardComponent {
 	public testTitle : string = '';
 	public testInstructions : string = '';
 	public localeSubscription : Subscription;
+
+	
 	  
 
 	constructor(
@@ -659,7 +661,7 @@ export class BoardComponent {
 		this.isBoardUnlocked = true;
 		this.startTest = true;
 		this.testButtonText = 'Finish Test';
-		
+
 
 		//Disable instructions button
 		this.disableInstructions = true;
@@ -703,8 +705,8 @@ export class BoardComponent {
 		//Dictionary of all the clicks per cell {CellPosition : NoOfClicks}
 		var NoOfClicksPerCell = this.dictionaryOfCellClicks;
 
-       // this.results.insertDotCancellationResults( this.auth.PARTICIPANT_TEST_ID , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
-
+       this.results.insertDotCancellationResults( this.auth.PARTICIPANT_TEST_ID , this.TimeTaken , this.truePositives , this.trueNegatives , this.falsePositives ); 
+	   this.results.dotCancellationHasResults = true;
 	}
 
 	public RestartTest() : void {

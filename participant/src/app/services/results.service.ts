@@ -8,6 +8,12 @@ export class ResultsService {
   constructor(private http: HttpClient) {}
 
   public ROOT : string = 'http://localhost:5000/';
+
+  public dotCancellationHasResults : boolean = false;
+  public compassDirectionsHasResults : boolean = false;
+  public carDirectionsHasResults : boolean = false;
+  public roadSignScenariosHasResults : boolean = false;
+  public trailMakingHasResults : boolean = false;
   
   public createHeaders(contentType : string = 'application/json') : HttpHeaders {
     let headers = new HttpHeaders();
@@ -16,8 +22,31 @@ export class ResultsService {
     return headers;
   }
 
+  public checkTestResults(t_id) : void {
+    let url = this.ROOT + 'Test/' + t_id + '/results';
+    let headers = this.createHeaders();
+    this.http.get(url, {headers : headers}).subscribe((res) => {
+      console.log(res);
+      if(res['dotCancellationTest']) {
+        this.dotCancellationHasResults = true;
+      }
+      if(res['compassDirectionsTest']) {
+        this.compassDirectionsHasResults = true;
+      }
+      if(res['carDirectionsTest']) {
+        this.carDirectionsHasResults = true;
+      }
+      if(res['roadScenariostest']) {
+        this.roadSignScenariosHasResults = true;
+      }
+      if(res['trailMakingTest']) {
+        this.trailMakingHasResults = true;
+      }
+    });
+  }
+
   public insertDotCancellationResults(t_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url = this.ROOT + '/Test/' + t_id + '/DotCancellationResult';
+    let url = this.ROOT + 'Test/' + t_id + '/DotCancellationResult';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,

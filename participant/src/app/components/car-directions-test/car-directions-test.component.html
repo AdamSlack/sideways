@@ -1,13 +1,17 @@
-<div> Compass Directions Localisation Assets:</div>
-<div> {{testTitle}} </div>
-<div> {{testInstructions}} </div>
-<div> {{directionsLabel}} </div>
-<div> {{deckLabel}} </div>
 
-<br>
-<div> Car Directions Game:</div>
+
+<div class="test-title"> {{testTitle}} </div>
+<div class="test-instructions"> {{testInstructions}} </div>
+
+
 <canvas  id="canvas" >
 </canvas>
-<button (click)=gatherResults() class="button btn-round" id="end_test"> Test Finish</button>
+<div *ngIf="!rs.carDirectionsHasResults">
+    <br>
+    <button (click)=gatherResults() class="next-test-btn" id="end_test"> Test Finish</button>
+    
+</div>
 
-<a routerLink="/compassDirections"><button> PLACE HOLDER ROUTING BUTTON UNTILL THE OTHER STUFF IS DONE. </button></a>
+<div *ngIf="rs.carDirectionsHasResults">
+    <a routerLink="/compassDirections"><button class="next-test-btn"> Continue To The Next Test </button></a>
+</div>

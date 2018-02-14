@@ -54,7 +54,7 @@ export class CarDirectionsTestComponent implements OnInit {
   public time: number = 0;
 
   constructor(
-    private rs: ResultsService,
+    public rs: ResultsService,
     private timer: RecordTimingService,
     private fab: FabricService,
     public auth: AuthenticationService,

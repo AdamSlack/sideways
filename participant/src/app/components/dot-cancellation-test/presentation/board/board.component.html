@@ -1,8 +1,3 @@
-
-<div> Dot Cancellation Localisation Assets:</div>
-<div> {{testTitle}} </div>
-<div> {{testInstructions}} </div>
-
 <div>
 
 	<!--Title of the Test will be displayed here -->
@@ -52,10 +47,15 @@
 		<br>
 	</div>
 
-    <!--A button to show and hide instructions -->
-	<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
+	<div *ngIf="!results.dotCancellationHasResults">			
+		<!--A button to show and hide instructions -->
+		<button [disabled]="disableInstructions" class="restartTest" (click)="ToggleInstructionsandBoard()"> {{instructionsButtonText}} </button>
 
-     <!--A button to start test and finish Test -->
-	<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
-	<a routerLink='/carDirections'><button [disabled]="showResults" class="restartTest">Continue To Next Test</button></a>
+		<!--A button to start test and finish Test -->
+		<button [disabled]="showResults" class="restartTest" (click)="RestartTest()">{{testButtonText}} </button>
+	</div>
+	
+	<div *ngIf="results.dotCancellationHasResults">
+		<a routerLink='/carDirections'><button class="restartTest">Continue To Next Test</button></a>
+	</div>
 </div>

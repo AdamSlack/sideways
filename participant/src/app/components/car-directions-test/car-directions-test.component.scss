@@ -1,0 +1,40 @@
+//Styling for Restart Test button
+.next-test-btn {
+    background-color: #34495e;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 15px;
+    width: 100%;
+    align-self: center;
+  }
+
+  //Styling for Test Title
+.test-title {
+    background-color: #34495e;
+     color: #fff;
+     border: 0px;
+     font-family: 'Dosis', Helvetica, sans-serif;
+     font-size: 1.4em;
+     font-weight: bold;
+     margin: 0px;
+     padding: 15px;
+     width: 100%;
+     text-align: center;
+   }
+   
+//Styling for instructions Div
+.test-insructions
+{
+	font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.4em;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+	overflow-x: scroll;
+	background-color: #fff;
+  color: #070707;
+}

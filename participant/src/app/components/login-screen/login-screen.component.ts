@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssertionError } from 'assert';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
+import { ResultsService } from '../../services/results.service';
 
 @Component({
   selector: 'app-login-screen',
@@ -18,7 +19,7 @@ export class LoginScreenComponent implements OnInit {
 
   // test  
 
-  constructor(public auth : AuthenticationService, public locale : AssetRetrievalService) { }
+  constructor(public auth : AuthenticationService, public locale : AssetRetrievalService, public results : ResultsService) { }
 
   public connectToSDSA(){
     console.log("button pressed...")
@@ -30,6 +31,7 @@ export class LoginScreenComponent implements OnInit {
       if(res['presetName']) {
         this.auth.PARTICIPANT_TEST_LOCALE = res['presetName'];
         console.log('The selected localisation preset for this participant\'s test is: ' + res['presetName']);
+        this.results.checkTestResults(this.auth.PARTICIPANT_TEST_ID);
       }
       else {
         this.auth.PARTICIPANT_TEST_LOCALE = '';
