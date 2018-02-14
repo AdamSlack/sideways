@@ -1,15 +1,18 @@
 
+<div *ngIf="!testStarted">
+    <div class="test-title"> {{ testTitle }} </div>
+    <div class="test-instructions"> {{ testInstructions }} </div>
+    <button (click)=startTest() class="next-test-btn" id="end_test" *ngIf="!rs.carDirectionsHasResults"> Start Test</button>    
+</div>
 
-<div class="test-title"> {{testTitle}} </div>
-<div class="test-instructions"> {{testInstructions}} </div>
-
-
-<canvas  id="canvas" >
+<canvas id="canvas">
 </canvas>
-<div *ngIf="!rs.carDirectionsHasResults">
-    <br>
-    <button (click)=gatherResults() class="next-test-btn" id="end_test"> Test Finish</button>
-    
+
+<div *ngIf="testStarted">
+    <div *ngIf="!rs.carDirectionsHasResults">
+        <br>
+        <button (click)="gatherResults();stopTimer();" class="next-test-btn" id="end_test"> Test Finish </button>
+    </div>
 </div>
 
 <div *ngIf="rs.carDirectionsHasResults">

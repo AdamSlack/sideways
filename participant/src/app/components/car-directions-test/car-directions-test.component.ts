@@ -69,10 +69,12 @@ export class CarDirectionsTestComponent implements OnInit {
   public directionsLabel: string = '';
   public deckLabel: string = '';
 
+  public testStarted : boolean = false;
+  public testFinished : boolean = false;
 
   public sendResults(time_taken: number, score: number) {
-    this.rs.insertCarDirectionResults("1", time_taken, score);
-    this._router.navigateByUrl('/roadSignScenarios');
+    this.rs.insertCarDirectionResults(this.auth.PARTICIPANT_TEST_ID, parseInt(time_taken.toFixed(0)), score);
+    this.rs.carDirectionsHasResults = true;
   }
 
 
@@ -114,6 +116,13 @@ export class CarDirectionsTestComponent implements OnInit {
   ngOnInit() {
     this.initLocaleSettings();
 
+    
+    //this.testStarted = false;
+    //this.createDeck(this.fab, Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
+  }
+
+  public startTest() {
+    this.startTimer();
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 
@@ -138,7 +147,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
     let deck_item_sz = square_length * 0.9;
     this.createDeck(this.fab, (Canvas.width / 2) - deck_item_sz / 2, (Canvas.height * 0.8) + (line_padding * 2), deck_item_sz);
-    //this.createDeck(this.fab, Canvas.width - 250 - square_length, Canvas.height - 150 - square_length, 16, square_length * 0.9);
+    this.testStarted = true;
   }
   public addIdentifyingImages(canvas: any, xPos: number, yPos: number, arrow_length: number) {
     var group = [];
@@ -194,6 +203,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
     //Now route to move game forward
     this.sendResults(this.time, score);
+
   }
 
   private calculateResults(squareMatches: any[]) {
@@ -244,10 +254,12 @@ export class CarDirectionsTestComponent implements OnInit {
     console.log("dis fellow got dis reuslts: ", results_dump)
 
     //finish or return results_dump
-
+    this.finishGame(score);
 
   }
 
+
+  // Ready for some spaghet?
   public gatherResults() {
     var squareMatches = [...Array(GridSquares.length || 0)].map((v, i) => i)
 

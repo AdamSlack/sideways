@@ -7,7 +7,7 @@ export class ResultsService {
 
   constructor(private http: HttpClient) {}
 
-  public ROOT : string = 'http://localhost:5000/';
+  public ROOT : string = 'http://localhost:5000';
 
   public dotCancellationHasResults : boolean = false;
   public compassDirectionsHasResults : boolean = false;
@@ -23,7 +23,7 @@ export class ResultsService {
   }
 
   public checkTestResults(t_id) : void {
-    let url = this.ROOT + 'Test/' + t_id + '/results';
+    let url = this.ROOT + '/Test/' + t_id + '/results';
     let headers = this.createHeaders();
     this.http.get(url, {headers : headers}).subscribe((res) => {
       console.log(res);
@@ -46,7 +46,7 @@ export class ResultsService {
   }
 
   public insertDotCancellationResults(t_id: string, time_taken: number, true_pos: number, false_pos: number, false_neg: number ) {
-    let url = this.ROOT + 'Test/' + t_id + '/DotCancellationResult';
+    let url = this.ROOT + '/Test/' + t_id + '/DotCancellationResult';
     let body = {
       'TimeTaken': time_taken,
       'TruePos': true_pos,
@@ -63,9 +63,9 @@ export class ResultsService {
   }
 
   public insertCarDirectionResults(t_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT +'/Test/results/CompassDirections/' + t_id;
+    let url =  this.ROOT +'/Test/results/CarDirections/' + t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('CAR DIRECTIONS')
@@ -79,7 +79,7 @@ export class ResultsService {
   public insertCompassDirectionResults(t_id: string, time_taken: number, points: number) {
     let url =  this.ROOT +'/Test/results/CompassDirections/' + t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('COMPASS DIRECTIONS: ')
@@ -93,7 +93,7 @@ export class ResultsService {
   public insertRoadScenarioResults(t_id: string, time_taken: number, points: number) {
     let url =  this.ROOT + 'Test/results/RoadScenarios'+ t_id;
     let body = {
-      'time_taken': time_taken,
+      'TimeTaken': time_taken,
       'points': points
     }
     console.log('ROAD SCENARIOS: ')    
