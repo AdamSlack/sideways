@@ -36,6 +36,9 @@ export class TrailMakingTestComponent implements OnInit
   private test1IntersectedNodes : number[] = [];
   private test2IntersectedNodes : number[] = [];
   
+  //for interaction logging
+  private userDrawnPaths : any[] = [];
+
   private test1coordinates = [
     {x: 935, y: 720 }, //1
     {x: 357, y: 1067}, //2
@@ -158,7 +161,8 @@ export class TrailMakingTestComponent implements OnInit
     this.test1Canvas.on('path:created', (options) =>
     {
       console.log("path created");
-      //stores numbers of every object that was drawn through (in ••••••order)
+      //store the coordinates of path created
+      this.userDrawnPaths.push(JSON.stringify(options.path.path));
       //array of all coords of path created
       var pathCoordsArray = options.path.path;
 
@@ -174,7 +178,6 @@ export class TrailMakingTestComponent implements OnInit
         //if it was previously found, dont count it again
 
         /*
-
         so apparently each element isnt a fabric.Point, 
         but from the object we can derive it by obtaining the numerical elements within the  object
         and attempt to reconstruct the point in order to perform a comparison
@@ -322,7 +325,8 @@ export class TrailMakingTestComponent implements OnInit
     this.test2Canvas.on('path:created', (options) =>
     {
       console.log("path created");
-      //stores numbers of every object that was drawn through (in ••••••order)
+      //store the coordinates of path created
+      this.userDrawnPaths.push(JSON.stringify(options.path.path));
       //array of all coords of path created
       var pathCoordsArray = options.path.path;
 
@@ -519,11 +523,15 @@ export class TrailMakingTestComponent implements OnInit
 
   sendResults()
   {
+    //send test results
     var timeTaken = this.test1timer.getTimeElapsed(true) + this.test2timer.getTimeElapsed(true);
     var totalMistakes = this.test1Mistakes + this.test2Mistakes;
 
     this.rs.insertTrailMaking(this.auth.PARTICIPANT_TEST_ID,parseInt(timeTaken.toString()),totalMistakes);
 
     console.log("Results sent");
+
+    //send interaction logs
+    this.rs.insertInteractionLogs(this.auth.PARTICIPANT_TEST_ID,5,JSON.stringify(this.userDrawnPaths)).subscribe((res) => console.log(res));
   }
 }
