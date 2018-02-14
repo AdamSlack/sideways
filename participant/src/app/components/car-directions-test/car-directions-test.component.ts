@@ -73,7 +73,7 @@ export class CarDirectionsTestComponent implements OnInit {
   public testFinished : boolean = false;
 
   public sendResults(time_taken: number, score: number) {
-    this.rs.insertCarDirectionResults(this.auth.PARTICIPANT_TEST_ID, parseInt(time_taken.toFixed(0)), score);
+    this.rs.insertCarDirectionResults(this.auth.PARTICIPANT_TEST_ID, parseInt(time_taken.toString()), score);
     this.rs.carDirectionsHasResults = true;
   }
 
@@ -123,6 +123,7 @@ export class CarDirectionsTestComponent implements OnInit {
 
   public startTest() {
     this.startTimer();
+    console.log('Timer Started: ' + this.timer.startTime);
     Canvas = this.fab.generateFabricCanvas('canvas');
     Deck = [];
 

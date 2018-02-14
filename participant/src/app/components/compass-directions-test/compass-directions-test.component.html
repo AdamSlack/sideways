@@ -1,19 +1,20 @@
 
-
-<div> Compass Directions Instructions </div>
-<div> {{testInstructions}} </div>
-
-<br>
-
-    <canvas fxFill  id="canvas" >
-    </canvas>
-
-<div *ngIf='!test_started'>
-    <button (click)=startTest() class="button btn-round" id="end_test" > Start Test</button>
+<div *ngIf="!test_started">
+    <div class="test-title"> {{ testTitle }} </div>
+    <div class="test-instructions"> {{ testInstructions }} </div>
+    <button (click)=startTest() class="next-test-btn" id="end_test" *ngIf="!rs.compassDirectionsHasResults"> Start Test</button>    
 </div>
 
-<div *ngIf='test_started'>
-    <button (click)=gatherResults() class="button btn-round" id="end_test" > Test Finish</button>
+<canvas id="canvas">
+</canvas>
+
+<div *ngIf="test_started">
+    <div *ngIf="!rs.compassDirectionsHasResults">
+        <br>
+        <button (click)="gatherResults();stopTimer();" class="next-test-btn" id="end_test"> Test Finish </button>
+    </div>
 </div>
 
-<a routerLink="/roadSignScenarios"><button> PLACE HOLDER ROUTING BUTTON UNTILL THE OTHER STUFF IS DONE. </button></a>
+<div *ngIf="rs.compassDirectionsHasResults">
+    <a routerLink="/roadSignScenarios"><button class="next-test-btn"> Continue To The Next Test </button></a>
+</div>
