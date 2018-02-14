@@ -36,7 +36,7 @@ export class ResultsService {
       if(res['carDirectionsTest']) {
         this.carDirectionsHasResults = true;
       }
-      if(res['roadScenariostest']) {
+      if(res['roadScenariosTest']) {
         this.roadSignScenariosHasResults = true;
       }
       if(res['trailMakingTest']) {
@@ -105,7 +105,7 @@ export class ResultsService {
   }
 
   public insertTrailMaking(t_id: string, time_taken: number, mistakes: number) {
-    let url =  this.ROOT + t_id + '/results/trail_making';
+    let url =  this.ROOT + '/Test/' + t_id + '/results/trail_making';
     
     let body = {
       'TimeTaken': time_taken,
@@ -113,7 +113,7 @@ export class ResultsService {
       'TestId' : t_id
     }
 
-    console.log('TRAIL MAKING: ')
+    console.log('TRAIL MAKING: ');
     console.log(body);
     
     let headers = this.createHeaders();
