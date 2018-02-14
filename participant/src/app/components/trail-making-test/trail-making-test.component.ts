@@ -10,7 +10,7 @@ declare const fabric: any;
 @Component({
   selector: 'app-trail-making-test',
   templateUrl: './trail-making-test.component.html',
-  styleUrls: ['./trail-making-test.component.css']
+  styleUrls: ['./trail-making-test.component.scss']
 })
 
 export class TrailMakingTestComponent implements OnInit 
