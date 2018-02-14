@@ -91,7 +91,7 @@ export class ResultsService {
   }
 
   public insertRoadScenarioResults(t_id: string, time_taken: number, points: number) {
-    let url =  this.ROOT + 'Test/results/RoadScenarios'+ t_id;
+    let url =  this.ROOT + '/Test/results/RoadScenarios/'+ t_id;
     let body = {
       'TimeTaken': time_taken,
       'points': points
