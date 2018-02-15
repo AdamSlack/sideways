@@ -1,9 +1,9 @@
+<div class="" *ngIf="!creationStarted">    
 <div>
   <div class="heading">
   </div>
   <input class="bar search" type="text" [(ngModel)]=localeName (submit)=initialiseStudy() placeholder="Enter the name of the preset.">
 </div>
-<div class="" *ngIf="!creationStarted">
   <input class="button submit" type="button" (click)=startLocaleCreation() value="Begin Creation">
 </div>
 
