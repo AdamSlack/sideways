@@ -1,0 +1,35 @@
+.btn-round {
+    p {
+        width: 100%;
+        text-align: center;
+    }
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 95%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    border: 2px solid #227722;
+    background: #fff;
+    color: #eee;
+    background: #227722;
+    transition: 0.2s;
+
+    &:hover {
+        outline: none;
+        border: 2px solid #447744;
+        background: #447744;
+        transition: 0.2s;
+    }
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);       
+    
+    &:active {
+        outline: none;
+        border: 2px solid #225522;
+        background: #225522;
+        transition: 0.2s;
+    }
+}

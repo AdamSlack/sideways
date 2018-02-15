@@ -10,7 +10,7 @@ import { Route } from '@angular/compiler/src/core';
 @Component({
   selector: 'app-home-selection',
   templateUrl: './home-selection.component.html',
-  styleUrls: ['./home-selection.component.css']
+  styleUrls: ['./home-selection.component.scss']
 })
 export class HomeSelectionComponent implements OnInit {
   
