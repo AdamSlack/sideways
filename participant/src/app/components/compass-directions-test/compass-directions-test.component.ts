@@ -171,7 +171,7 @@ export class CompassDirectionsTestComponent implements OnInit {
   }
 
   public startTimer() {
-    this.timer.recordStartTime()
+    this.timer.recordStartTime();
   }
 
   public stopTimer() {
@@ -311,6 +311,7 @@ export class CompassDirectionsTestComponent implements OnInit {
 
 
     console.log("dis fellow got dis reuslts: ", results_dump)
+    this.stopTimer();
     //Rip let's log your score and also your cards matches because that is bull    
     this.finishGame(score);
 

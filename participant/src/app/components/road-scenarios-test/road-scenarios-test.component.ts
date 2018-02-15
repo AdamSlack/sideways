@@ -50,7 +50,7 @@ export class RoadScenariosTestComponent implements OnInit {
   }
 
   public startTimer() {
-    this.timer.recordStartTime()
+    this.timer.recordStartTime();
   }
 
   public stopTimer() {
