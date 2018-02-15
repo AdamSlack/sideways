@@ -30,7 +30,7 @@ export class AuthenticationService {
       'Password' : password,
       'UserType' : 1
     };
-    return this.http.post(url,body,{headers : headers, observe: 'response'}).subscribe((res) => {      
+    return this.http.post(url,body,{headers : headers}).subscribe((res) => {      
       if (res['message']) {
         this.VALIDATED = false;
         this.VALIDATION_FAILED = true;

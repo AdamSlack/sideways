@@ -62,7 +62,6 @@ namespace SDSA.Controllers
                 
                 var token2 = new JwtSecurityToken(new JwtHeader(new SigningCredentials(key, SecurityAlgorithms.HmacSha256)), new JwtPayload(claims));
                 var JWTToken= new JwtSecurityTokenHandler().WriteToken(token);
-               
                 return Ok(new
                 {
                     token = JWTToken,
