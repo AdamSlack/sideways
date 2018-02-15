@@ -171,9 +171,19 @@ export class LocalisationCreatorComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
-        let target : any = event.target;
+        let target : any = event.target;        
+        if(!target.result){
+          console.log('Not updating selected Road Sign');
+          console.log('previous road sign is:' + this.roadSignImages[index]);
+        }
+        else if (target.result == '') {
+          console.log('Not updating selected Road Sign');
+          console.log('previous road sign is:' + this.roadSignImages[index]);
+        }
+        else{
         this.scenarioImages[index] = target.result;
         this.scenarioUploaded[index] = true;
+        }
       }
     }
   }
@@ -187,9 +197,19 @@ export class LocalisationCreatorComponent implements OnInit {
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         let target : any = event.target;
-        this.roadSignImages[index] = target.result;
-        this.roadSignUpladed[index] = true;
-        this.scenarioCompleted(index);
+        if(!target.result){
+          console.log('Not updating selected Road Sign');
+          console.log('previous road sign is:' + this.roadSignImages[index]);
+        }
+        else if (target.result == '') {
+          console.log('Not updating selected Road Sign');
+          console.log('previous road sign is:' + this.roadSignImages[index]);
+        }
+        else{
+          this.roadSignImages[index] = target.result;
+          this.roadSignUpladed[index] = true;
+          this.scenarioCompleted(index);
+        }
       }
 
     }
