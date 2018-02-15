@@ -142,7 +142,7 @@
         <input class="search details" [(ngModel)]="trailAString" (keyup)="splitTrailString(trailAString, true)" type="text" placeholder="Enter a comma seperated Trail A Sequence (e.g. a,b,c,...)">
         <div class="details">Parsed Trail A (Comma Seperated):</div>                
         <div class="details">
-          <div class="trail-element">Length: {{trailAArray.length}}, Sequence:</div>
+          <div class="trail-element">Length: {{trailAArray.length}},<br>Sequence:</div>
           <div class="trail-element" *ngFor="let el of trailAArray">{{el}}</div>
         </div>
       </div>
@@ -153,7 +153,7 @@
         
         <div class="details">Parsed Trail B (Comma Seperated):</div>        
         <div class="details">
-          <div class="trail-element">Length: {{trailBArray.length}}, Sequence:</div>
+          <div class="trail-element">Length: {{trailBArray.length}},<br>Sequence:</div>
           <div class="trail-element" *ngFor="let el of trailBArray">{{el}}</div>
         </div>
       </div>
