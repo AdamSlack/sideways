@@ -7,8 +7,8 @@
 <div class="title"> {{pageTitle}} </div>
 
 <div *ngIf="!authService.VALIDATED">
-  <input type="email"  class="search" [(ngModel)]=email>
-  <input type="password" class="search" [(ngModel)]=password>
+  <input type="email"  class="search" [(ngModel)]=email placeholder="Please enter your email">
+  <input type="password" class="search" [(ngModel)]=password placeholder="Please enter your password">
   <div class="submit" (click)="login()">
     Login
   </div>

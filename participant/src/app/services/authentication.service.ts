@@ -58,6 +58,9 @@ export class AuthenticationService {
         this.VALIDATED = true;
         this.VALIDATION_FAILED = false;        
       }
+    },
+    (err) => {
+      alert('Please check your login details are correct');
     });
     return this.authSubscription;
   }
@@ -78,6 +81,9 @@ export class AuthenticationService {
       else {
         if(this.authSubscription) {
           this.authSubscription.unsubscribe();
+        }
+        if (this.AUTH_TOKEN == '' && this.VALIDATED) {
+          alert('Please check you have the correct Test ID');          
         }
         this.AUTH_TOKEN = '';
         this.PARTICIPANT_TEST_ID = '';

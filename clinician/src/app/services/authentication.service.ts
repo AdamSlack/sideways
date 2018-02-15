@@ -30,7 +30,7 @@ export class AuthenticationService {
       'Password' : password,
       'UserType' : 1
     };
-    return this.http.post(url,body,{headers : headers}).subscribe((res) => {
+    return this.http.post(url,body,{headers : headers, observe: 'response'}).subscribe((res) => {      
       if (res['message']) {
         this.VALIDATED = false;
         this.VALIDATION_FAILED = true;
@@ -41,6 +41,9 @@ export class AuthenticationService {
         this.VALIDATED = true;
         this.VALIDATION_FAILED = false;        
       }
+    },
+    (err) => {
+      alert('Please check your login details are correct');
     });
   }
 
