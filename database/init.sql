@@ -84,7 +84,8 @@ create table participant_tests(
     test_id         serial      primary key  not null,
     participant_id  smallint    references participants(participant_id)  not null,
     clinician_id    smallint    references clinicians(clinician_id) not null,
-    preset_name     text        references localisation_presets(preset_name) not null
+    preset_name     text        references localisation_presets(preset_name) not null,
+    test_date       date
 );
 
 ----------------------------------------------------
@@ -167,7 +168,7 @@ create table algorithm(
 -----
 create table algorithm_results(
     test_id         serial              primary key not null,
-    aid             smallint            references algorithm(algorithm_id) not null,
+    algorithm_id    smallint            references algorithm(algorithm_id) not null,
     r1 		        double precision,
     r2 		        double precision,
     passed 	        boolean,

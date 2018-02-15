@@ -98,7 +98,6 @@ export class CarDirectionsTestComponent implements OnInit {
     //   this.auth.PARTICIPANT_TEST_LOCALE = '';
     //   return;
     // }
-    this.auth.PARTICIPANT_TEST_LOCALE = "test";
     console.log('Requesting asset retrieval service fetches Compass Direction locale assets.');
     this.localeSubscription = this.locale.selectCarDirectionDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => {
       console.log('Response for Compass Direction game assets recieved from servr.');

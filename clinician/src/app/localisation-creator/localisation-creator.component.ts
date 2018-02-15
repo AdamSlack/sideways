@@ -191,7 +191,6 @@ export class LocalisationCreatorComponent implements OnInit {
         this.roadSignUpladed[index] = true;
         this.scenarioCompleted(index);
       }
-
     }
   }
 
@@ -318,7 +317,7 @@ export class LocalisationCreatorComponent implements OnInit {
       ) {
         alert('Please Make sure that you have filled out all Road Sign Scenario Details');
       }
-      else if (this.scenarioImages.every((val) => val != '') && this.roadSignImages.every((val) => val != '')) {
+      else if (this.scenarioImages.every((val) => !val) && this.roadSignImages.every((val) => !val)) {
         alert('Please Make sure that all images have been uploaded for Road Sign Scenarios.');
       }
       else {
