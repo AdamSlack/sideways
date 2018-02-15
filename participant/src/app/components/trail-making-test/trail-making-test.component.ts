@@ -23,7 +23,7 @@ export class TrailMakingTestComponent implements OnInit
     private test2timer : RecordTimingService,
   ) {}
   
-  title = 'app';
+  public title : string = 'app';
   public localisationSubscription : Subscription;
 
   private test1Canvas: any;
@@ -94,8 +94,6 @@ export class TrailMakingTestComponent implements OnInit
     {x: 900, y: 150 }, //21  
   ];  
 
-
-
   ngOnInit() 
   {
     console.log("Initialising Localisation Settings");
@@ -117,6 +115,7 @@ export class TrailMakingTestComponent implements OnInit
     this.localisationSubscription = this.assetService.selectTrailMakingDetails(this.auth.PARTICIPANT_TEST_LOCALE).subscribe((res) => 
     {
       console.log('Response for Trail Making Test Localisation Data recieved from server.');
+      console.log(res)
       var trailA = res['trailA'] ? res['trailA'] : ['Failed To Obtain Trail A Data'];
       var trailB = res['trailB'] ? res['trailB'] : ['Failed To Obtain Trail B Data'];
       this.testInstructions = res['instructions'] ? res['instructions'] : 'Failed To Obtain Instructions, Please restart the app';

@@ -1,7 +1,10 @@
-<div id="instructionsdiv" style="text-align:center;">
-    <body id="test-instructions" width="1024" height="1320">
+<div id="instructionsdiv">
+    <div class="test-title" width="1024" height="1320">
+        {{title}}
+      </div>
+    <div class="test-instructions" width="1024" height="1320">
       {{testInstructions}}
-    </body>
+    </div>
     <button (click)="clickHandlerInstructions()" type="button" id="beginbutton" class="next-test-btn" >Begin Test</button>
   </div>
   
