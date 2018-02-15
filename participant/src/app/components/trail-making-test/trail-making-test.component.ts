@@ -35,6 +35,8 @@ export class TrailMakingTestComponent implements OnInit
   private test2Mistakes = 0;
   private test1IntersectedNodes : number[] = [];
   private test2IntersectedNodes : number[] = [];
+  private test1CorrectPath = true;
+  private test2CorrectPath = true;
   
   //for interaction logging
   private userDrawnPaths : any[] = [];
@@ -146,19 +148,23 @@ export class TrailMakingTestComponent implements OnInit
     this.test1Canvas.on('mouse:up', (options) =>
     {
       console.log("mouse up detected");
-      var correctPath = true;
-      for (var k = 0; k < this.test1data.length - 1; k++)
+      
+      /*this.test1CorrectPath = true;
+      for (var k = 0; k < this.test1IntersectedNodes.length - 1; k++)
       {
         if(this.test1IntersectedNodes[k] != (this.test1IntersectedNodes[k+1] - 1))
         {
-          correctPath = false;
+          console.log(this.test1IntersectedNodes[k], " does not come before ", this.test1IntersectedNodes[k+1]);
+          this.test1CorrectPath = false;
+          this.test1IntersectedNodes = [];
         }
-      }
+      }*/
     });
 
     //drawing path done event handler
     this.test1Canvas.on('path:created', (options) =>
     {
+      var spammed = false;
       console.log("path created");
       //store the coordinates of path created
       this.userDrawnPaths.push(JSON.stringify(options.path.path));
@@ -188,8 +194,67 @@ export class TrailMakingTestComponent implements OnInit
         {
           if (nodes[j].containsPoint(currentPoint) && (this.test1IntersectedNodes.indexOf(j+1) == -1))
           {
-            this.test1IntersectedNodes.push(j+1);
+            if(this.test1IntersectedNodes.length > 0 && this.test1IntersectedNodes.indexOf(j) != -1 || this.test1IntersectedNodes.length == 0 && j+1 == 1 )
+            {
+              //only add if there is at least 1 pre-intersected node, and the decrement intersected node value that is to be inserted to the array, exists in the array
+              //*unless* there are 0 pre-intersecting nodes and the node to push is 1, then we also add it
+              this.test1IntersectedNodes.push(j+1);
+            }
+            else if(!spammed)
+            {
+              spammed = true;
+              //error has been made
+              errorMade = true;
+              this.test1Mistakes++;
+              console.log("Error detected");
+              //find index of current point in the array
+              var index = pathCoordsArray.indexOf(pathCoordsArrayArray);
+              //trim the array                   
+              //var trimmedPathCoords = pathCoordsArray.splice(index);
+              var trimmedPathCoords = pathCoordsArray.slice(0,index);
+              console.log(pathCoordsArray);
+              console.log(trimmedPathCoords);
+              //reconstruct path using trimmed array
+              var newPath = new fabric.Path(trimmedPathCoords);
               
+              newPath.setGradient('fill',
+              {
+                type: 'linear',
+                x1: -newPath.width / 2,
+                y1: 0,
+                x2: newPath.width / 2,
+                y2: 0,
+                colorStops: 
+                {
+                  0: 'rgba(0,0,0,0)',
+                  0.5: 'rgba(0,0,0,0)',
+                  1: 'rgba(0,0,0,0)'
+                }
+              });
+              
+              newPath.set(
+              {
+                stroke: 'rgba(255,0,0,0.1)',
+                strokeWidth: 2,
+                selectable: false,
+              });
+              console.log("attempting to delete old path");
+              
+              //delete the old path
+              this.test1Canvas.remove(options.path);
+              
+              //add new path WIP FEATURE: BUGGY
+              this.test1Canvas.add(newPath);
+              
+              //clear the intersected nodes array
+              //this.test1IntersectedNodes = [];
+              
+              //console.log(pathCoordsArray);
+              //test1Canvas.add(pathCoordsArray);
+              
+              this.test1Canvas.renderAll();
+            }            
+            
             //check if error was made
             if((this.test1IntersectedNodes[this.test1IntersectedNodes.length-1] - this.test1IntersectedNodes[this.test1IntersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
             { 
@@ -250,7 +315,7 @@ export class TrailMakingTestComponent implements OnInit
                 this.test1Canvas.add(newPath);
 
                 //clear the intersected nodes array
-                this.test1IntersectedNodes = [];
+                //this.test1IntersectedNodes = [];
                 
                 //console.log(pathCoordsArray);
                 //test1Canvas.add(pathCoordsArray);
@@ -277,16 +342,17 @@ export class TrailMakingTestComponent implements OnInit
       //check if the path is equal to the correct sequence
       var intersectedNodesString = this.test1IntersectedNodes.map(String); //casts array to string elements
       //var equal = this.test1data.length == intersectedNodesString.length && this.test1data.every((element, index)=> element === intersectedNodesString[index] );
-      var correctPath = true;
+      
+      /*var correctPath = true;
       for (var k = 0; k < this.test1data.length - 1; k++)
       {
         if(this.test1IntersectedNodes[k] != (this.test1IntersectedNodes[k+1] - 1))
         {
           correctPath = false;
         }
-      }
+      }*/
 
-      if(correctPath)
+      if(this.test1CorrectPath && this.test1IntersectedNodes.length == this.test1data.length)
       {
         console.log("Path correctly went through all elements in sequence!");
         console.log("Test 1 Mistakes: ", this.test1Mistakes);
@@ -323,6 +389,7 @@ export class TrailMakingTestComponent implements OnInit
     //drawing path done event handler
     this.test2Canvas.on('path:created', (options) =>
     {
+      var spammed = false;
       console.log("path created");
       //store the coordinates of path created
       this.userDrawnPaths.push(JSON.stringify(options.path.path));
@@ -353,8 +420,65 @@ export class TrailMakingTestComponent implements OnInit
         {
           if (nodes[j].containsPoint(currentPoint) && (this.test2IntersectedNodes.indexOf(j+1) == -1))
           {
-            this.test2IntersectedNodes.push(j+1);
+            if(this.test2IntersectedNodes.length > 0 && this.test2IntersectedNodes.indexOf(j) != -1 || this.test2IntersectedNodes.length == 0 && j+1 ==1)
+            {
+              this.test2IntersectedNodes.push(j+1);
+            }
+            
+            else if(!spammed)
+            {
+              spammed = true;
+              errorMade = true;
+              this.test2Mistakes++;
+              console.log("Error detected");
+              //find index of current point in the array
+              var index = pathCoordsArray.indexOf(pathCoordsArrayArray);
+              //trim the array                   
+              //var trimmedPathCoords = pathCoordsArray.splice(index);
+              var trimmedPathCoords = pathCoordsArray.slice(0,index);
+              console.log(pathCoordsArray);
+              console.log(trimmedPathCoords);
+              //reconstruct path using trimmed array
+              var newPath = new fabric.Path(trimmedPathCoords);
               
+              newPath.setGradient('fill',
+              {
+                type: 'linear',
+                x1: -newPath.width / 2,
+                y1: 0,
+                x2: newPath.width / 2,
+                y2: 0,
+                colorStops: 
+                {
+                  0: 'rgba(0,0,0,0)',
+                  0.5: 'rgba(0,0,0,0)',
+                  1: 'rgba(0,0,0,0)'
+                }
+              });
+              
+              newPath.set(
+              {
+                stroke: 'rgba(255,0,0,0.1)',
+                strokeWidth: 2,
+                selectable: false,
+              });
+              console.log("attempting to delete old path");
+              
+              //delete the old path
+              this.test2Canvas.remove(options.path);
+              
+              //add new path WIP FEATURE: BUGGY
+              this.test2Canvas.add(newPath);
+              
+              //clear the intersected nodes array
+              //this.test1IntersectedNodes = [];
+              
+              //console.log(pathCoordsArray);
+              //test1Canvas.add(pathCoordsArray);
+              
+              this.test2Canvas.renderAll();
+            }  
+
             //check if error was made
             if((this.test2IntersectedNodes[this.test2IntersectedNodes.length-1] - this.test2IntersectedNodes[this.test2IntersectedNodes.length-2]) != 1)  //e.g 17-14 != 1
             { 
@@ -410,7 +534,7 @@ export class TrailMakingTestComponent implements OnInit
                 this.test2Canvas.remove(options.path);
 
                 //clear the intersected nodes array
-                this.test2IntersectedNodes = [];
+                //this.test2IntersectedNodes = [];
 
                 //add new path WIP FEATURE: BUGGY
                 this.test2Canvas.add(newPath);
@@ -436,20 +560,19 @@ export class TrailMakingTestComponent implements OnInit
 
       //check if the path is equal to the correct sequence
       var intersectedNodesString = this.test2IntersectedNodes.map(String); //casts array to string elements
-      console.log(intersectedNodesString);
-      console.log(this.test2data);
-      console.log(this.test2IntersectedNodes);
+
       //var equal = this.test2data.length == intersectedNodesString.length && this.test2data.every((element, index)=> element === intersectedNodesString[index] );
-      var correctPath = true;
+      
+      /*var correctPath = true;
       for (var k = 0; k < this.test2data.length - 1; k++)
       {
         if(this.test2IntersectedNodes[k] != (this.test2IntersectedNodes[k+1] - 1))
         {
           correctPath = false;
         }
-      }
+      }*/
       
-      if(correctPath)
+      if(this.test2CorrectPath && this.test2IntersectedNodes.length == this.test2data.length)
       {
         console.log("Path correctly went through all elements in sequence!");
         console.log("Test 2 Mistakes: ", this.test2Mistakes)
