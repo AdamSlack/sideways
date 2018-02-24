@@ -1,15 +1,14 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class AssetRetrievalService {
 
   constructor(private http : HttpClient, private auth : AuthenticationService) { }
 
-  public ROOT : string = 'http://localhost:5000';
+  public ROOT : string = environment.APIBaseUri;
   
   public createHeaders() : HttpHeaders {
     let headers = new HttpHeaders();

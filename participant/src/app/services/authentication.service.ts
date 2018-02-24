@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RecordTimingService } from './record-timing.service';
 import { Observable } from 'rxjs/Observable';
 import { interval } from 'rxjs/observable/interval';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -22,7 +22,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, public timer : RecordTimingService) {}
   
-  public ROOT : string = 'http://localhost:5000';
+  public ROOT : string = environment.APIBaseUri;
 
   public timerSubscription : Subscription ;
   public authSubscription : Subscription ;
