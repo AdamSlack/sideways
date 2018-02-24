@@ -14,6 +14,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace SDSA
 {
@@ -97,6 +98,10 @@ namespace SDSA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseAuthentication();
 
             app.UseCors("AllowAllCORS");
