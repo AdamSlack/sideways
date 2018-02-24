@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class InitialisationService {
 
     constructor(private http: HttpClient) {}
 
-    public ROOT : string = 'http://localhost:5000';
+    public ROOT : string = environment.APIBaseUri;
     
     public createHeaders() : HttpHeaders {
         let headers = new HttpHeaders();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
   
-  public ROOT : string = 'http://localhost:5000/';
+  public ROOT : string = environment.APIBaseUri;
   
   public createHeaders() : HttpHeaders {
     let headers = new HttpHeaders();

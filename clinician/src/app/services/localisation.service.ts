@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { post } from 'selenium-webdriver/http';
+import { environment } from '../../environments/environment';
 
 export class GeneralDetails {
     public testHeading: string = '';
@@ -104,7 +105,7 @@ export class LocalisationService {
 
     constructor(private http : HttpClient, private auth : AuthenticationService) { }
 
-    public ROOT : string = 'http://localhost:5000';
+    public ROOT : string = environment.APIBaseUri;
     
     public localePreset : LocalePreset = new LocalePreset();
 
