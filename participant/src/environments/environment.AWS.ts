@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   APIBaseUri: "http://ec2-35-176-147-214.eu-west-2.compute.amazonaws.com/API/",
-  IMGBaseUri: "http://ec2-35-176-147-214.eu-west-2.compute.amazonaws.com/"
+  ImageBaseUri: "http://ec2-35-176-147-214.eu-west-2.compute.amazonaws.com/"
 };
