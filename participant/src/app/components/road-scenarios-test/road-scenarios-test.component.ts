@@ -10,6 +10,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { AssetRetrievalService } from '../../services/asset-retrieval.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import { environment } from '../../../environments/environment';
+
+
 import "fabric"
 import { element } from 'protractor';
 import { sendRequest } from 'selenium-webdriver/http';
@@ -30,7 +33,7 @@ export class RoadScenariosTestComponent implements OnInit {
   
   public time : number = 0;
 
-  private assets_url = '';  // URL to web api
+  private assets_url = environment.ImageBaseUri;  // URL to web api
   
   constructor(
     private rs: ResultsService, 
@@ -160,9 +163,9 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log('Test title: ' + res['name']);
       this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
       console.log('Test instructions: ' + res['instructions']);
-      this.roadScenarios = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['sceneImage'] + '.png');
+      this.roadScenarios = res['roadSignScenarios'].map((asset) => assets_url + asset['sceneImage'] + '.png');
       console.log("All road scenarios: ",this.roadScenarios);
-      this.roadSigns = res['roadSignScenarios'].map((asset) => 'http://localhost:5000/' + asset['signImage'] + '.png');
+      this.roadSigns = res['roadSignScenarios'].map((asset) => assets_url + asset['signImage'] + '.png');
       console.log("All road signs: ",this.roadSigns);
     
       //TODO: sorry, did not have time to fix and propagate through awits/promises
