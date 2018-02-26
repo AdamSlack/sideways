@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  APIBaseUri: "ec2-35-176-147-214.eu-west-2.compute.amazonaws.com/"
+  APIBaseUri: "http://ec2-35-176-147-214.eu-west-2.compute.amazonaws.com/API/"
 };
