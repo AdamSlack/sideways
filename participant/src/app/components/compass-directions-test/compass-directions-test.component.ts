@@ -12,7 +12,7 @@ import { race } from 'q';
 import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 import "fabric"
