@@ -4,6 +4,8 @@ import { RecordTimingService } from '../../services/record-timing.service';
 import { FabricService } from '../../services/fabric.service'
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { environment } from '../../../environments/environment';
+
 
 import "fabric"
 import { Subscription } from 'rxjs/Subscription';
@@ -40,7 +42,7 @@ const square_keys = [
   "L" + "_" + "B"
 ];
 
-var server_root = 'http://localhost:5000/';
+var server_root = environment.ImageBaseUri;
 
 var asset_link = "/test/cardirections/";
 
