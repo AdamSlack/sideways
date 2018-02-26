@@ -12,6 +12,9 @@ import { race } from 'q';
 import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { environment } from '../../../../environments/environment';
+
+
 import "fabric"
 
 declare const fabric: any;
@@ -103,7 +106,7 @@ const card_keys = [
   "SW" + "_" + "NW",
   "NW" + "_" + "W"]
 
-var server_root = 'http://localhost:5000/';
+var server_root = = environment.ImageBaseUri;
 
 var asset_link = "/test/compass_directions/";
 
