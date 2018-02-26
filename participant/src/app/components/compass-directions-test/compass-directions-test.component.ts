@@ -106,7 +106,7 @@ const card_keys = [
   "SW" + "_" + "NW",
   "NW" + "_" + "W"]
 
-var server_root = = environment.ImageBaseUri;
+var server_root = environment.ImageBaseUri;
 
 var asset_link = "/test/compass_directions/";
 
