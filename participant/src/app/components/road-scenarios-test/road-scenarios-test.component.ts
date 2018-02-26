@@ -163,9 +163,9 @@ export class RoadScenariosTestComponent implements OnInit {
       console.log('Test title: ' + res['name']);
       this.testInstructions = res['instructions'] ? res['instructions'] : 'No Instructions Found. Please restart the app.';
       console.log('Test instructions: ' + res['instructions']);
-      this.roadScenarios = res['roadSignScenarios'].map((asset) => assets_url + asset['sceneImage'] + '.png');
+      this.roadScenarios = res['roadSignScenarios'].map((asset) => this.assets_url + asset['sceneImage'] + '.png');
       console.log("All road scenarios: ",this.roadScenarios);
-      this.roadSigns = res['roadSignScenarios'].map((asset) => assets_url + asset['signImage'] + '.png');
+      this.roadSigns = res['roadSignScenarios'].map((asset) => this.assets_url + asset['signImage'] + '.png');
       console.log("All road signs: ",this.roadSigns);
     
       //TODO: sorry, did not have time to fix and propagate through awits/promises
